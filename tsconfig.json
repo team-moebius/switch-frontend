@@ -3,14 +3,11 @@
   "compilerOptions": {
     "jsx": "react",
     "strict": true,
-    "baseUrl": "./src",
+    "baseUrl": ".",
     "paths": {
-      "@components/*": ["./components/*"],
-      "@screens/*": ["./screens/*"],
-      "@services/*": ["./services/*"],
-      "@utils/*": ["./utils/*"]
+      "src": ["src"]
     }
   },
-  "include": ["src/*.ts", "src/*.tsx"],
+  "include": ["src/**/*.ts", "src/**/*.tsx"],
   "exclude": ["node_modules"]
 }
