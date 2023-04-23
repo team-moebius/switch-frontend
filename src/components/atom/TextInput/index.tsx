@@ -11,13 +11,13 @@ export interface InputProps {
 }
 
 const TextInput = ({ width, ...props }: InputProps) => {
-  return <BasicInput style={[style.input, { width }]} {...props} />;
+  return <BasicInput {...props} style={[style.defaultInput, { width }]} />;
 };
 
 export default TextInput;
 
 const style = StyleSheet.create({
-  input: {
+  defaultInput: {
     height: 35,
     width: 250,
     margin: 12,
