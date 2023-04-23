@@ -13,7 +13,7 @@ const Template: ComponentStory<typeof Typography> = (args) => (
 
 export const WithTypography = Template.bind({});
 
-WithTypography.storyName = 'With button';
+WithTypography.storyName = 'With Typography';
 WithTypography.args = {
   children: '기본 타이포',
 };
