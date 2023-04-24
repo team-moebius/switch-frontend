@@ -1,5 +1,7 @@
 import Button from 'src/components/atom/Button';
 import Typography from 'src/components/atom/Typography';
+import TextInput from 'src/components/atom/TextInput';
 
-console.log(Button);
-export { Button, Typography };
+
+export { Button, TextInput, Typography };
+
