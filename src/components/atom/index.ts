@@ -1,4 +1,3 @@
 import Button from 'src/components/atom/Button';
-
-console.log(Button);
-export { Button };
+import Icon from 'src/components/atom/Icon';
+export { Button, Icon };
