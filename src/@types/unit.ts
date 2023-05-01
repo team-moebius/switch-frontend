@@ -37,6 +37,21 @@ type BorderWidth = number;
 
 type Border = `${BorderWidth} ${BorderStyle} ${BorderColor}`;
 
+//Direction
+type Direction = 'row' | 'column';
+type ReverseDirection = `${Direction}-reverse`;
+type FlexDirection = Direction | ReverseDirection;
+
+//Alignment
+type JustifyContent =
+  | 'flex-start'
+  | 'flex-end'
+  | 'center'
+  | 'space-between'
+  | 'space-around'
+  | 'space-evenly';
+type FlexAlign = 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline';
+
 export {
   Pixel,
   Percent,
@@ -49,4 +64,7 @@ export {
   BorderColor,
   BorderWidth,
   Border,
+  FlexDirection,
+  JustifyContent,
+  FlexAlign,
 };
