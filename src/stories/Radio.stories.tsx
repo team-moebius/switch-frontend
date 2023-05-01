@@ -13,7 +13,6 @@ export const BasicRadio = Template.bind({});
 
 BasicRadio.storyName = 'Basic Radio';
 BasicRadio.args = {
-  label: '테스트',
-  selected: '',
+  selected: true,
   onPress: () => {},
 };

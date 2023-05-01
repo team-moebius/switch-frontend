@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { forwardRef } from 'react';
 import { TouchableOpacity, View } from 'react-native';
 
 interface RadioProps {
-  label: string;
-  selected: string;
+  selected: boolean;
   onPress: () => void;
   radius?: number;
 }
 
-const Radio = ({ label, selected, onPress, radius = 10 }: RadioProps) => {
+const Radio = ({ selected, onPress, radius = 10 }: RadioProps) => {
+  const innerRadius = radius - 4;
+
   return (
     <TouchableOpacity onPress={onPress}>
       <View
@@ -25,11 +26,11 @@ const Radio = ({ label, selected, onPress, radius = 10 }: RadioProps) => {
         <View
           style={[
             {
-              width: radius - 4,
-              height: radius - 4,
-              borderRadius: radius - 4,
+              width: innerRadius,
+              height: innerRadius,
+              borderRadius: innerRadius,
             },
-            selected === label
+            selected
               ? { backgroundColor: 'black' }
               : { backgroundColor: 'transparent' },
           ]}
@@ -38,5 +39,4 @@ const Radio = ({ label, selected, onPress, radius = 10 }: RadioProps) => {
     </TouchableOpacity>
   );
 };
-
 export default Radio;
