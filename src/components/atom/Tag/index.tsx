@@ -11,24 +11,19 @@ export interface TagProps {
   color: string;
   children: string;
   onDelete?: () => void;
+  backgroundColor: string;
+  width: number;
+  onTextLayout: (event: LayoutChangeEvent) => void;
 }
 
-const Tag = ({ color, children, onDelete }: TagProps) => {
-  const [width, setWidth] = useState<number>(0);
-  const [backgroundColor, setBackgroundColor] = useState<string>('#797979'); // Default color is gray
-
-  const onTextLayout = (event: LayoutChangeEvent) => {
-    const { width } = event.nativeEvent.layout;
-    setWidth(width + 10);
-  };
-
-  useEffect(() => {
-    const randomHexColor = `#${Math.floor(Math.random() * 16777215).toString(
-      16
-    )}`;
-    setBackgroundColor(randomHexColor);
-  }, []);
-
+const Tag = ({
+  color,
+  children,
+  onDelete,
+  backgroundColor,
+  width,
+  onTextLayout,
+}: TagProps) => {
   return (
     <View style={[style.defaultWrapper, { backgroundColor, width }]}>
       <Pressable onPress={onDelete}>
