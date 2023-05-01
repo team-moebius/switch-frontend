@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import { Box, Button } from 'src/components/atom';
 
 export default {
-  title: 'Button/basic',
+  title: 'Box',
   component: Box,
 } as ComponentMeta<typeof Box>;
 
@@ -20,7 +20,7 @@ const Template: ComponentStory<typeof Box> = (args) => (
 
 export const BoxTemplate = Template.bind({});
 
-BoxTemplate.storyName = '레이아웃 - Box';
+BoxTemplate.storyName = 'default';
 BoxTemplate.args = {
   background: '#000000',
   border: '1 solid orange',
