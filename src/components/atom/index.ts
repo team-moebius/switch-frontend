@@ -5,4 +5,3 @@ import TextInput from 'src/components/atom/TextInput';
 import Radio from 'src/components/atom/Radio';
 
 export { Button, TextInput, Typography, Icon, Radio };
-
