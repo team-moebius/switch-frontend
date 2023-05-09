@@ -1,23 +1,13 @@
-import React, { useState } from 'react';
-import { Animated, Pressable, View } from 'react-native';
-import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { Pressable, View } from 'react-native';
+import Icon from '../Icon';
 
-const Toggle = () => {
-  const [toggleValue, setToggleValue] = useState<string>('copy-outline');
-  const moveX = new Animated.Value(0);
+export interface ToggleProps {
+  toggleValue: string;
+  handleOnPress: () => void;
+}
 
-  const handleOnPress = () => {
-    setToggleValue((prev) =>
-      prev === 'copy-outline' ? 'timer-outline' : 'copy-outline'
-    );
-    const toValue = toggleValue === 'copy-outline' ? 0 : 1;
-    Animated.timing(moveX, {
-      toValue,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
+const Toggle = ({ toggleValue, handleOnPress }: ToggleProps) => {
   return (
     <View>
       <Pressable
@@ -26,34 +16,32 @@ const Toggle = () => {
           flexDirection: 'row',
           backgroundColor: 'gray',
           justifyContent: 'space-around',
-          width: 80,
-          position: 'relative',
+          width: 75,
+          height: 28,
           borderRadius: 15,
         }}
       >
-        <Animated.View
+        <View
           style={[
             {
               position: 'absolute',
               backgroundColor: 'skyblue',
-              width: 45,
+              width: 40,
               height: 28,
               borderRadius: 15,
             },
-            toggleValue === 'timer-outline' ? { right: 0 } : { left: 0 },
+            toggleValue === 'copy-outline' ? { left: 0 } : { right: 0 },
           ]}
         />
-        <Ionicons
+        <Icon
           name='copy-outline'
           size={24}
           color={toggleValue === 'copy-outline' ? 'white' : 'black'}
-          style={{ zIndex: 1 }}
         />
-        <Ionicons
+        <Icon
           name='timer-outline'
           size={24}
           color={toggleValue === 'timer-outline' ? 'white' : 'black'}
-          style={{ zIndex: 1 }}
         />
       </Pressable>
     </View>
