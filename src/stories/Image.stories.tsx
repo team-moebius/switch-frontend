@@ -16,4 +16,7 @@ export const WithImageBox = Template.bind({});
 WithImageBox.storyName = 'With ImageBox';
 WithImageBox.args = {
   imageUrl: 'http://www.sputnik.kr/article_img/202301/article_1672729818.jpg',
+  width: 200,
+  height: 200,
+  resizeMode: 'contain',
 };
