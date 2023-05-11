@@ -10,24 +10,17 @@ type ImageProps = {
 
 const ImageBox = ({ imageUrl, width, height, resizeMode }: ImageProps) => {
   return (
-    <View style={style.defaultWrap}>
-      <Image
-        style={[style.defaultImage, { width, height }]}
-        source={{ uri: `${imageUrl}` }}
-        resizeMode={resizeMode}
-      />
-    </View>
+    <Image
+      style={[style.defaultImage, { width, height }]}
+      source={{ uri: imageUrl }}
+      resizeMode={resizeMode}
+    />
   );
 };
 
 export default ImageBox;
 
 const style = StyleSheet.create({
-  defaultWrap: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
   defaultImage: {
     height: 200,
     width: 200,
