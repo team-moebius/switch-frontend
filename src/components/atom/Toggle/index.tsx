@@ -3,11 +3,11 @@ import { Pressable, View } from 'react-native';
 import Icon from '../Icon';
 
 export interface ToggleProps {
-  toggleValue: string;
+  toggle: boolean;
   handleOnPress: () => void;
 }
 
-const Toggle = ({ toggleValue, handleOnPress }: ToggleProps) => {
+const Toggle = ({ toggle, handleOnPress }: ToggleProps) => {
   return (
     <View>
       <Pressable
@@ -30,18 +30,18 @@ const Toggle = ({ toggleValue, handleOnPress }: ToggleProps) => {
               height: 28,
               borderRadius: 15,
             },
-            toggleValue === 'copy-outline' ? { left: 0 } : { right: 0 },
+            toggle ? { left: 0 } : { right: 0 },
           ]}
         />
         <Icon
           name='copy-outline'
           size={24}
-          color={toggleValue === 'copy-outline' ? 'white' : 'black'}
+          color={toggle ? 'white' : 'black'}
         />
         <Icon
           name='timer-outline'
           size={24}
-          color={toggleValue === 'timer-outline' ? 'white' : 'black'}
+          color={toggle ? 'black' : 'white'}
         />
       </Pressable>
     </View>
