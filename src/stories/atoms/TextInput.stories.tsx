@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import TextInput from 'src/components/atom/TextInput';
 
 export default {
-  title: 'Input/basic',
+  title: 'TextInput',
   component: TextInput,
 } as ComponentMeta<typeof TextInput>;
 
@@ -26,10 +26,10 @@ const Template: ComponentStory<typeof TextInput> = (args) => {
   );
 };
 
-export const WithTextInput = Template.bind({});
+export const story = Template.bind({});
 
-WithTextInput.storyName = 'With TextInput';
-WithTextInput.args = {
+story.storyName = 'default';
+story.args = {
   name: 'name',
   placeholder: 'name',
   value: 'Switch',
