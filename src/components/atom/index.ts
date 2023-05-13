@@ -6,7 +6,7 @@ import Box from './Box';
 import FlexBox from './FlexBox';
 import Radio from 'src/components/atom/Radio';
 import ImageBox from './Image';
-import Select from 'src/components/atom/Select';
+import Modal from './Modal';
 
 export {
   Button,
@@ -16,6 +16,6 @@ export {
   FlexBox,
   Icon,
   Radio,
-  Select,
   ImageBox,
+  Modal,
 };
