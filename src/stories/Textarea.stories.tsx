@@ -10,20 +10,13 @@ export default {
 const Template: ComponentStory<typeof Textarea> = (args) => {
   const [value, setValue] = useState<string>('');
 
-  return (
-    <Textarea
-      {...args}
-      placeholder='이름을 입력하세요'
-      value={value}
-      onChangeText={setValue}
-    />
-  );
+  return <Textarea {...args} value={value} onChangeText={setValue} />;
 };
 
-export const WithTextInput = Template.bind({});
+export const story = Template.bind({});
 
-WithTextInput.storyName = 'default';
-WithTextInput.args = {
+story.storyName = 'default';
+story.args = {
   placeholder: 'placeholder test',
-  style: { backgroundColor: 'red', borderRadius: 10 },
+  style: {},
 };

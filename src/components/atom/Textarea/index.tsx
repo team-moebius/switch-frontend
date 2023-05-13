@@ -1,5 +1,5 @@
 import React from 'react';
-import { TextInput, TextStyle } from 'react-native';
+import { StyleSheet, TextInput, TextStyle } from 'react-native';
 
 interface TextareaProps {
   editable?: boolean;
@@ -13,11 +13,16 @@ interface TextareaProps {
       | 'borderColor'
       | 'backgroundColor'
       | 'width'
+      | 'fontSize'
+      | 'fontFamily'
+      | 'fontWeight'
+      | 'fontStyle'
       | 'height'
       | 'maxHeight'
       | 'maxWidth'
       | 'borderRadius'
       | 'borderStyle'
+      | 'padding'
     >
   >;
 }
@@ -25,12 +30,24 @@ interface TextareaProps {
 const Textarea = ({ maxLength = 100, style, ...props }: TextareaProps) => {
   return (
     <TextInput
-      style={{ height: 100, ...style }}
-      multiline
       {...props}
+      style={[defaultStyles, style]}
       maxLength={maxLength}
+      multiline
+      placeholderTextColor={'gray'}
     />
   );
 };
+
+const { default: defaultStyles } = StyleSheet.create({
+  default: {
+    width: '100%',
+    height: 100,
+    backgroundColor: 'white',
+    paddingHorizontal: '10px',
+    paddingVertical: '20px',
+    border: 'none',
+  },
+});
 
 export default Textarea;
