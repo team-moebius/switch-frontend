@@ -1,47 +1,22 @@
 import React from 'react';
-import { Pressable, View } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
 import Icon from '../Icon';
 
 export interface ToggleProps {
-  toggle: boolean;
+  value: boolean;
   handleOnPress: () => void;
 }
 
-const Toggle = ({ toggle, handleOnPress }: ToggleProps) => {
+const Toggle = ({ value, handleOnPress }: ToggleProps) => {
   return (
     <View>
-      <Pressable
-        onPress={handleOnPress}
-        style={{
-          flexDirection: 'row',
-          backgroundColor: 'gray',
-          justifyContent: 'space-around',
-          width: 75,
-          height: 28,
-          borderRadius: 15,
-        }}
-      >
-        <View
-          style={[
-            {
-              position: 'absolute',
-              backgroundColor: 'skyblue',
-              width: 40,
-              height: 28,
-              borderRadius: 15,
-            },
-            toggle ? { left: 0 } : { right: 0 },
-          ]}
-        />
-        <Icon
-          name='copy-outline'
-          size={24}
-          color={toggle ? 'white' : 'black'}
-        />
+      <Pressable onPress={handleOnPress} style={defaultToggleContainer}>
+        <View style={[defaultToggle, value ? { left: 0 } : { right: 0 }]} />
+        <Icon name='copy-outline' size={24} color={value ? 'white' : 'black'} />
         <Icon
           name='timer-outline'
           size={24}
-          color={toggle ? 'black' : 'white'}
+          color={value ? 'black' : 'white'}
         />
       </Pressable>
     </View>
@@ -49,3 +24,21 @@ const Toggle = ({ toggle, handleOnPress }: ToggleProps) => {
 };
 
 export default Toggle;
+
+const { defaultToggleContainer, defaultToggle } = StyleSheet.create({
+  defaultToggleContainer: {
+    flexDirection: 'row',
+    backgroundColor: 'gray',
+    justifyContent: 'space-around',
+    width: 75,
+    height: 28,
+    borderRadius: 15,
+  },
+  defaultToggle: {
+    position: 'absolute',
+    backgroundColor: 'skyblue',
+    width: 40,
+    height: 28,
+    borderRadius: 15,
+  },
+});
