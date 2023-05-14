@@ -4,7 +4,7 @@ import Tag from 'src/components/atom/Tag';
 import { useSetWidth } from 'src/common/hooks/useSetWidth';
 
 export default {
-  title: 'Tag/basic',
+  title: 'Tag',
   component: Tag,
 } as ComponentMeta<typeof Tag>;
 
@@ -25,10 +25,10 @@ const Template: ComponentStory<typeof Tag> = (args) => {
   );
 };
 
-export const WithTag = Template.bind({});
+export const story = Template.bind({});
 
-WithTag.storyName = 'With Tag';
-WithTag.args = {
+story.storyName = 'default';
+story.args = {
   color: '#fff',
   children: '다 좋아요',
   backgroundColor: '#797979',
