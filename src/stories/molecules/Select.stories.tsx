@@ -4,7 +4,7 @@ import Select from 'src/components/molecule/Select';
 import { Box } from 'src/components/atom';
 
 export default {
-  title: 'Select/basic',
+  title: 'Select',
   component: Select,
 } as ComponentMeta<typeof Select>;
 
@@ -18,7 +18,7 @@ const Template: ComponentStory<typeof Select> = (args) => {
 
 export const BasicSelect = Template.bind({});
 
-BasicSelect.storyName = 'Basic Select';
+BasicSelect.storyName = 'default';
 BasicSelect.args = {
   options: ['무작위', '최신순', '내 위치와 가까운 순'],
   padding: 10,

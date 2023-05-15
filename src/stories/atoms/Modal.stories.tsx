@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { Box, Button, Modal, Typography } from 'src/components/atom';
 
 export default {
-  title: 'Modal/basic',
+  title: 'Modal',
   component: Modal,
 } as ComponentMeta<typeof Modal>;
 
@@ -33,7 +33,7 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 
 export const BasicModal = Template.bind({});
 
-BasicModal.storyName = 'Basic Modal';
+BasicModal.storyName = 'default';
 BasicModal.args = {
   children:
     'The Modal component is a basic way to present content above an enclosing view.',
