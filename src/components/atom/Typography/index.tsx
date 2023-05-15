@@ -2,7 +2,7 @@ import { View, Text } from 'react-native';
 import React from 'react';
 
 // TODO : fontSize, fontColor 구체화 하기
-interface TypographyProps {
+export interface TypographyProps {
   children: string;
   fontSize?: number;
   fontColor?: string;

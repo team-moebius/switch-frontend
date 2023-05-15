@@ -27,7 +27,7 @@ interface BoxStyleProps {
   mr?: MarginElement;
   //Width and Height
   width?: LengthElement;
-  height?: LengthElement;
+  height?: LengthElement | 'auto';
   background?: Color;
   //Border
   border?: Border;
