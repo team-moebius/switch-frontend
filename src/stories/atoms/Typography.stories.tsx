@@ -3,7 +3,7 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Typography from 'src/components/atom/Typography';
 
 export default {
-  title: 'Typography/basic',
+  title: 'Typography',
   component: Typography,
 } as ComponentMeta<typeof Typography>;
 
@@ -11,9 +11,9 @@ const Template: ComponentStory<typeof Typography> = (args) => (
   <Typography {...args} />
 );
 
-export const WithTypography = Template.bind({});
+export const story = Template.bind({});
 
-WithTypography.storyName = 'With Typography';
-WithTypography.args = {
+story.storyName = 'default';
+story.args = {
   children: '기본 타이포',
 };

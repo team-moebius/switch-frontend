@@ -3,16 +3,16 @@ import { ComponentStory, ComponentMeta } from '@storybook/react';
 import Radio from 'src/components/atom/Radio';
 
 export default {
-  title: 'Radio/basic',
+  title: 'Radio',
   component: Radio,
 } as ComponentMeta<typeof Radio>;
 
 const Template: ComponentStory<typeof Radio> = (args) => <Radio {...args} />;
 
-export const BasicRadio = Template.bind({});
+export const story = Template.bind({});
 
-BasicRadio.storyName = 'Basic Radio';
-BasicRadio.args = {
+story.storyName = 'default';
+story.args = {
   selected: true,
   onPress: () => {},
 };
