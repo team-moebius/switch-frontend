@@ -1,55 +1,40 @@
 import React from 'react';
-import {
-  View,
-  Text,
-  StyleSheet,
-  Pressable,
-  LayoutChangeEvent,
-} from 'react-native';
+import { LayoutChangeEvent } from 'react-native';
+import { Color, LengthElement } from 'src/@types/unit';
+import FlexBox from '../FlexBox';
+import Typography from '../Typography';
 
 export interface TagProps {
   color: string;
   children: string;
   onDelete?: () => void;
-  backgroundColor: string;
-  width: number;
+  backgroundColor: Color;
+  width: LengthElement;
   onTextLayout: (event: LayoutChangeEvent) => void;
 }
 
 const Tag = ({
   color,
   children,
-  onDelete,
-  backgroundColor,
-  width,
+  backgroundColor = '#797979',
+  width = 100,
   onTextLayout,
 }: TagProps) => {
   return (
-    <View style={[style.defaultWrapper, { backgroundColor, width }]}>
-      <Pressable onPress={onDelete}>
-        <Text style={[style.defaultText, { color }]} onLayout={onTextLayout}>
-          {children}
-        </Text>
-      </Pressable>
-    </View>
+    <FlexBox
+      width={width}
+      height={14}
+      padding={5}
+      borderRadius={15}
+      backgroundColor={backgroundColor}
+      justifyContent={'center'}
+      alignItems={'center'}
+    >
+      <Typography fontSize={12} fontColor={color} onLayout={onTextLayout}>
+        {children}
+      </Typography>
+    </FlexBox>
   );
 };
 
 export default Tag;
-
-const style = StyleSheet.create({
-  defaultWrapper: {
-    height: 14,
-    width: 100,
-    borderRadius: 15,
-    flex: 1,
-    backgroundColor: '#797979',
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  defaultText: {
-    color: '#fff',
-    fontSize: 12,
-    textAlign: 'center',
-  },
-});
