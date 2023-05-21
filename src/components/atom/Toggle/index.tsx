@@ -1,5 +1,7 @@
-import React from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import React, { useMemo } from 'react';
+import { Pressable, StyleSheet } from 'react-native';
+import Box from '../Box';
+
 import Icon from '../Icon';
 
 export interface ToggleProps {
@@ -8,25 +10,28 @@ export interface ToggleProps {
 }
 
 const Toggle = ({ value, handleOnPress }: ToggleProps) => {
+  const absolutePositions = useMemo(() => {
+    return value ? { left: 0 } : { right: 0 };
+  }, [value]);
   return (
-    <View>
-      <Pressable onPress={handleOnPress} style={defaultToggleContainer}>
-        <View style={[defaultToggle, value ? { left: 0 } : { right: 0 }]} />
-        <Icon name='copy-outline' size={24} color={value ? 'white' : 'black'} />
-        <Icon
-          name='timer-outline'
-          size={24}
-          color={value ? 'black' : 'white'}
-        />
-      </Pressable>
-    </View>
+    <Pressable onPress={handleOnPress} style={defaultWrapper}>
+      <Box
+        position={'absolute'}
+        backgroundColor={'blue'}
+        width={40}
+        height={28}
+        borderRadius={15}
+        {...absolutePositions}
+      />
+      <Icon name='copy-outline' size={24} color={value ? 'white' : 'black'} />
+      <Icon name='timer-outline' size={24} color={value ? 'black' : 'white'} />
+    </Pressable>
   );
 };
 
-export default Toggle;
-
-const { defaultToggleContainer, defaultToggle } = StyleSheet.create({
-  defaultToggleContainer: {
+const { defaultWrapper } = StyleSheet.create({
+  defaultWrapper: {
+    position: 'relative',
     flexDirection: 'row',
     backgroundColor: 'gray',
     justifyContent: 'space-around',
@@ -34,11 +39,6 @@ const { defaultToggleContainer, defaultToggle } = StyleSheet.create({
     height: 28,
     borderRadius: 15,
   },
-  defaultToggle: {
-    position: 'absolute',
-    backgroundColor: 'skyblue',
-    width: 40,
-    height: 28,
-    borderRadius: 15,
-  },
 });
+
+export default Toggle;

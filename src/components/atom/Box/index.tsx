@@ -13,6 +13,12 @@ import {
 //import { FlexStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 interface BoxStyleProps {
+  //Position
+  position?: 'absolute' | 'relative' | 'static';
+  left?: LengthElement;
+  right?: LengthElement;
+  top?: LengthElement;
+  bottom?: LengthElement;
   //Padding
   padding?: Padding;
   pt?: LengthElement;
