@@ -19,7 +19,6 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  width: 100,
   color: '#fff',
   children: '다 좋아요',
   backgroundColor: '#797979',
