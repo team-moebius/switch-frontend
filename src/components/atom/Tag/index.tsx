@@ -1,6 +1,6 @@
 import React from 'react';
 import { Pressable } from 'react-native';
-import { Color, LengthElement } from 'src/@types/unit';
+import { Color } from 'src/@types/unit';
 import FlexBox from '../FlexBox';
 import Typography from '../Typography';
 
