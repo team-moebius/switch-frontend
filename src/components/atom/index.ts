@@ -6,7 +6,7 @@ import Box from './Box';
 import FlexBox from './FlexBox';
 import Radio from 'src/components/atom/Radio';
 import Toggle from 'src/components/atom/Toggle';
-import ImageBox from './Image';
+import Image from './Image';
 import Modal from './Modal';
 import Textarea from './Textarea';
 
@@ -18,9 +18,8 @@ export {
   FlexBox,
   Icon,
   Radio,
-  ImageBox,
+  Image,
   Textarea,
   Toggle,
-  Modal
+  Modal,
 };
-
