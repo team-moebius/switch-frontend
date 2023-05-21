@@ -1,5 +1,5 @@
 import React from 'react';
-import { LayoutChangeEvent } from 'react-native';
+import { Pressable } from 'react-native';
 import { Color, LengthElement } from 'src/@types/unit';
 import FlexBox from '../FlexBox';
 import Typography from '../Typography';
@@ -7,22 +7,19 @@ import Typography from '../Typography';
 export interface TagProps {
   color: string;
   children: string;
-  onDelete?: () => void;
+  onPress?: () => void;
   backgroundColor: Color;
-  width: LengthElement;
-  onTextLayout: (event: LayoutChangeEvent) => void;
 }
 
 const Tag = ({
   color,
   children,
   backgroundColor = '#797979',
-  width = 100,
-  onTextLayout,
+  onPress,
 }: TagProps) => {
   return (
     <FlexBox
-      width={width}
+      width={'fit-content'}
       height={14}
       padding={5}
       borderRadius={15}
@@ -30,9 +27,11 @@ const Tag = ({
       justifyContent={'center'}
       alignItems={'center'}
     >
-      <Typography fontSize={12} fontColor={color} onLayout={onTextLayout}>
-        {children}
-      </Typography>
+      <Pressable onPress={onPress}>
+        <Typography fontSize={12} fontColor={color}>
+          {children}
+        </Typography>
+      </Pressable>
     </FlexBox>
   );
 };
