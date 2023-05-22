@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React, { useState } from 'react';
-import { Box, Button, Modal, Typography } from 'src/components/atom';
+import { Button, FlexBox, Modal } from 'src/components/atom';
 
 export default {
   title: 'Modal',
@@ -15,17 +15,11 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 
   return (
     <>
-      <Button title='Show' onPress={handleModalOpen}></Button>
-      <Modal
-        {...args}
-        visible={modalVisible}
-        modalPadding={args.modalPadding}
-        modalHeight={args.modalHeight}
-      >
-        <Typography>{args.children as string}</Typography>
-        <Box margin={20} width={60}>
-          <Button title='Hide' onPress={handleModalOpen}></Button>
-        </Box>
+      <FlexBox justifyContent={'center'}>
+        <Button title='Show' onPress={handleModalOpen}></Button>
+      </FlexBox>
+      <Modal {...args} visible={modalVisible}>
+        <Button title='Hide' onPress={handleModalOpen}></Button>
       </Modal>
     </>
   );
@@ -35,10 +29,11 @@ export const BasicModal = Template.bind({});
 
 BasicModal.storyName = 'default';
 BasicModal.args = {
-  children:
-    'The Modal component is a basic way to present content above an enclosing view.',
-  animationType: 'none',
-  modalPadding: 20,
-  modalHeight: 100,
-  visible: false,
+  mode: 'slideUp',
+  width: '100%',
+  height: '80%',
+  position: 'bottom',
+  onPressBack: () => {
+    alert('back pressed!');
+  },
 };
