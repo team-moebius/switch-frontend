@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, TextInput, TextStyle } from 'react-native';
+import { StyleSheet, TextInput } from 'react-native';
 
 interface TextareaProps {
   editable?: boolean;
@@ -7,31 +7,13 @@ interface TextareaProps {
   onChangeText?: (value: string) => void;
   value?: string;
   placeholder?: string;
-  style?: Partial<
-    Pick<
-      TextStyle,
-      | 'borderColor'
-      | 'backgroundColor'
-      | 'width'
-      | 'fontSize'
-      | 'fontFamily'
-      | 'fontWeight'
-      | 'fontStyle'
-      | 'height'
-      | 'maxHeight'
-      | 'maxWidth'
-      | 'borderRadius'
-      | 'borderStyle'
-      | 'padding'
-    >
-  >;
 }
 
-const Textarea = ({ maxLength = 100, style, ...props }: TextareaProps) => {
+const Textarea = ({ maxLength = 100, ...props }: TextareaProps) => {
   return (
     <TextInput
       {...props}
-      style={[defaultStyles, style]}
+      style={[defaultStyles]}
       maxLength={maxLength}
       multiline
       placeholderTextColor={'gray'}
@@ -46,7 +28,9 @@ const { default: defaultStyles } = StyleSheet.create({
     backgroundColor: 'white',
     paddingHorizontal: '10px',
     paddingVertical: '20px',
-    border: 'none',
+    borderColor: 'gray',
+    borderWidth: 1,
+    borderRadius: 8,
   },
 });
 

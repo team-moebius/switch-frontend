@@ -1,27 +1,28 @@
 import React from 'react';
-import { View, Image, StyleSheet } from 'react-native';
+import { Image as OriginalImage, StyleSheet } from 'react-native';
+import { LengthElement } from 'src/@types/unit';
 
 type ImageProps = {
-  imageUrl: string;
-  width: number;
-  height: number;
+  src: string;
+  width: LengthElement;
+  height: LengthElement;
   resizeMode?: 'contain' | 'center';
 };
 
-const ImageBox = ({ imageUrl, width, height, resizeMode }: ImageProps) => {
+const Image = ({ src, width, height, resizeMode }: ImageProps) => {
   return (
-    <Image
-      style={[style.defaultImage, { width, height }]}
-      source={{ uri: imageUrl }}
+    <OriginalImage
+      style={[ImageStyle.default, { width, height }]}
+      source={{ uri: src }}
       resizeMode={resizeMode}
     />
   );
 };
 
-export default ImageBox;
+export default Image;
 
-const style = StyleSheet.create({
-  defaultImage: {
+const ImageStyle = StyleSheet.create({
+  default: {
     height: 200,
     width: 200,
   },

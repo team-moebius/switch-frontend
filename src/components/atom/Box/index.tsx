@@ -1,5 +1,5 @@
 import React, { ReactNode } from 'react';
-import { View, ViewStyle } from 'react-native';
+import { View, ViewStyle, StyleSheet } from 'react-native';
 import {
   Border,
   BorderStyle,
@@ -13,6 +13,12 @@ import {
 //import { FlexStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
 
 interface BoxStyleProps {
+  //Position
+  position?: 'absolute' | 'relative' | 'static';
+  left?: LengthElement;
+  right?: LengthElement;
+  top?: LengthElement;
+  bottom?: LengthElement;
   //Padding
   padding?: Padding;
   pt?: LengthElement;
@@ -26,15 +32,14 @@ interface BoxStyleProps {
   ml?: MarginElement;
   mr?: MarginElement;
   //Width and Height
-  width?: LengthElement;
+  width?: LengthElement | 'fit-content';
   height?: LengthElement | 'auto';
-  background?: Color;
+  backgroundColor?: Color;
   //Border
   border?: Border;
   borderRadius?: LengthElement;
 }
 export interface BoxProps extends BoxStyleProps {
-  style?: Omit<ViewStyle, 'borderRadius'>;
   children?: ReactNode;
 }
 
@@ -63,44 +68,51 @@ export const bindBoxStyle = ({
   pb,
   pl,
   pr,
-  margin,
   mt,
   mb,
   ml,
   mr,
-  width = '100%',
-  height = 'auto',
-  background,
   border,
+  ...props
 }: BoxStyleProps): ViewStyle => {
   const [borderWidth, borderStyle, borderColor] = (() => {
     const splits = (border || '').split(' ');
     return [...splits];
   })();
   return {
+    ...props,
     padding,
     paddingTop: pt,
     paddingBottom: pb,
     paddingRight: pr,
     paddingLeft: pl,
-    margin,
+    borderColor,
     marginTop: mt,
     marginBottom: mb,
     marginLeft: ml,
     marginRight: mr,
-    width,
-    height,
-    backgroundColor: background,
-    borderColor,
     borderStyle: borderStyle as BorderStyle,
     borderWidth: pixelToNumber(borderWidth),
   } as unknown as ViewStyle;
 };
 
-const Box = ({ style, children, ...props }: BoxProps) => {
+const Box = ({ children, ...props }: BoxProps) => {
   return (
-    <View style={{ ...style, ...bindBoxStyle({ ...props }) }}>{children}</View>
+    <View style={[BoxStyle.default, { ...bindBoxStyle({ ...props }) }]}>
+      {children}
+    </View>
   );
 };
+
+export const BoxStyle = StyleSheet.create({
+  default: {
+    width: '100%',
+    height: 'auto',
+    padding: 0,
+    border: 'none',
+    textAlign: 'center',
+    backgorundColor: 'none',
+  },
+});
 
 export default Box;

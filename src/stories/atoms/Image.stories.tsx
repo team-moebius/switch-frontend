@@ -1,21 +1,19 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import ImageBox from 'src/components/atom/Image';
+import { Image } from 'src/components/atom';
 
 export default {
   title: 'Image',
-  component: ImageBox,
-} as ComponentMeta<typeof ImageBox>;
+  component: Image,
+} as ComponentMeta<typeof Image>;
 
-const Template: ComponentStory<typeof ImageBox> = (args) => (
-  <ImageBox {...args} />
-);
+const Template: ComponentStory<typeof Image> = (args) => <Image {...args} />;
 
 export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  imageUrl: 'http://www.sputnik.kr/article_img/202301/article_1672729818.jpg',
+  src: 'http://www.sputnik.kr/article_img/202301/article_1672729818.jpg',
   width: 200,
   height: 200,
   resizeMode: 'contain',

@@ -1,18 +1,24 @@
-import { View, Text } from 'react-native';
+import { Text, LayoutChangeEvent } from 'react-native';
 import React from 'react';
 
 // TODO : fontSize, fontColor 구체화 하기
 export interface TypographyProps {
   children: string;
+  onLayout?: (event: LayoutChangeEvent) => void;
   fontSize?: number;
   fontColor?: string;
 }
 
-const Typography = ({ children, ...props }: TypographyProps) => {
+const Typography = ({
+  fontColor,
+  fontSize,
+  children,
+  ...props
+}: TypographyProps) => {
   return (
-    <View>
-      <Text style={props}>{children}</Text>
-    </View>
+    <Text {...props} style={{ color: fontColor, fontSize }}>
+      {children}
+    </Text>
   );
 };
 
