@@ -9,6 +9,7 @@ import Toggle from 'src/components/atom/Toggle';
 import Image from './Image';
 import Modal from './Modal';
 import Textarea from './Textarea';
+import Select from './Select';
 
 export {
   Button,
@@ -22,4 +23,5 @@ export {
   Textarea,
   Toggle,
   Modal,
+  Select,
 };
