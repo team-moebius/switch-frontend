@@ -10,7 +10,7 @@ interface WithLabelProps {
   onPress?: () => void;
   labelPosition?: keyof typeof labelPositionStyle;
   labelAlign?: keyof typeof labelAlignStyle;
-  children: ReactNode;
+  children?: ReactNode;
 }
 
 const labelPositionStyle = StyleSheet.create({
