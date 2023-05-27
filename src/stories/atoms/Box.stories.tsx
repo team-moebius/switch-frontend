@@ -22,7 +22,7 @@ export const BoxTemplate = Template.bind({});
 
 BoxTemplate.storyName = 'default';
 BoxTemplate.args = {
-  background: '#000000',
+  backgroundColor: '#000000',
   border: '1 solid orange',
   padding: 12,
 };
