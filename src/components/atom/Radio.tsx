@@ -1,9 +1,10 @@
 import React from 'react';
-import Box from '../Box';
-import { CheckboxProps, typeStyle } from '../Check';
-import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-type RadioProps = Omit<CheckboxProps, 'boxType'>;
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
+import { Box } from './Box';
+import { CheckProps, typeStyle } from './Check';
+
+type RadioProps = Omit<CheckProps, 'boxType'>;
 
 const Radio = ({
   type = 'normal',
@@ -33,5 +34,4 @@ const Radio = ({
     />
   );
 };
-export { RadioProps };
-export default Radio;
+export { Radio, RadioProps };

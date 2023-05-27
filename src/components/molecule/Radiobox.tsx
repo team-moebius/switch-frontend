@@ -1,16 +1,15 @@
 import React, { ReactNode } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { LengthElement } from 'src/@types/unit';
-import { FlexBox } from 'src/components/atom';
-import Radio, { RadioProps } from 'src/components/atom/Radio';
+import { Flexbox } from 'src/components/atom';
+import { Radio, RadioProps } from 'src/components/atom/Radio';
 
-type LabelPosition = 'top' | 'left' | 'right' | 'bottom';
 interface Radiobox extends RadioProps {
   width?: LengthElement;
   height?: LengthElement;
   label?: ReactNode;
-  labelPosition?: LabelPosition;
-  labelAlign?: 'left' | 'right';
+  labelPosition?: keyof typeof labelPositionStyle;
+  labelAlign?: keyof typeof labelAlignStyle;
 }
 
 const labelPositionStyle = StyleSheet.create({
@@ -57,22 +56,22 @@ const Radiobox = ({
   ...props
 }: Radiobox) => {
   return (
-    <FlexBox
+    <Flexbox
       {...labelPositionStyle[labelPosition]}
       width={width}
       height={height}
       gap={8}
     >
-      <FlexBox.Item>
+      <Flexbox.Item>
         <Radio {...props} onPress={onPress} />
-      </FlexBox.Item>
-      <FlexBox.Item width={'100%'} flex={1}>
-        <FlexBox {...labelAlignStyle[labelAlign]}>
+      </Flexbox.Item>
+      <Flexbox.Item width={'100%'} flex={1}>
+        <Flexbox {...labelAlignStyle[labelAlign]}>
           <Pressable onPress={onPress}>{label}</Pressable>
-        </FlexBox>
-      </FlexBox.Item>
-    </FlexBox>
+        </Flexbox>
+      </Flexbox.Item>
+    </Flexbox>
   );
 };
 
-export default Radiobox;
+export { Radiobox };

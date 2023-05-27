@@ -2,6 +2,19 @@ import React, { FunctionComponent } from 'react';
 import { StyleSheet } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
+const typeStyle = {
+  warning: { color: 'red' },
+  normal: { color: 'orange' },
+  info: { color: 'blue' },
+} as const;
+
+const boxTypeStyle = StyleSheet.create({
+  square: {
+    borderRadius: 0,
+  },
+  circle: {},
+});
+
 interface CheckProps {
   type?: keyof typeof typeStyle;
   boxType?: keyof typeof boxTypeStyle;
@@ -10,17 +23,7 @@ interface CheckProps {
   onPress?: () => void;
   innerComponent?: FunctionComponent;
 }
-const typeStyle = {
-  warning: { color: 'red' },
-  normal: { color: 'orange' },
-  info: { color: 'blue' },
-} as const;
-const boxTypeStyle = StyleSheet.create({
-  square: {
-    borderRadius: 0,
-  },
-  circle: {},
-});
+
 const Check = ({
   boxType = 'square',
   type = 'normal',
@@ -41,5 +44,4 @@ const Check = ({
   );
 };
 
-export { CheckProps, typeStyle };
-export default Check;
+export { Check, CheckProps, typeStyle };

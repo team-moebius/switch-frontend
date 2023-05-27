@@ -1,3 +1,3 @@
-import Radiobox from './Radiobox';
+import { Radiobox } from './Radiobox';
 
 export { Radiobox };
