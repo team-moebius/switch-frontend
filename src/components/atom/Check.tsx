@@ -28,12 +28,14 @@ const Check = ({
   boxType = 'square',
   type = 'normal',
   checked,
+  size = 25,
   innerComponent,
   ...props
 }: CheckProps) => {
   return (
     <BouncyCheckbox
       {...props}
+      style={{ width: size }}
       isChecked={checked}
       disableBuiltInState={true}
       fillColor={typeStyle[type].color}
