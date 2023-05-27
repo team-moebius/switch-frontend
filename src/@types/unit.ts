@@ -27,7 +27,8 @@ type NamedColor =
   | 'transparent'
   | 'green'
   | 'yellow'
-  | 'orange';
+  | 'orange'
+  | 'gray';
 type Color = HexColor | RgbColor | RgbaColor | NamedColor;
 
 //Border Type

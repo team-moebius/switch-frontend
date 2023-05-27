@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Select from 'src/components/molecule/Select';
-import { Box } from 'src/components/atom';
+import Select from 'src/components/atom/Select';
 
 export default {
   title: 'Select',
@@ -9,11 +8,8 @@ export default {
 } as ComponentMeta<typeof Select>;
 
 const Template: ComponentStory<typeof Select> = (args) => {
-  return (
-    <Box>
-      <Select {...args} />
-    </Box>
-  );
+  const [value, setValue] = useState(args.value);
+  return <Select {...args} value={value} onPressItem={setValue} />;
 };
 
 export const BasicSelect = Template.bind({});
@@ -21,11 +17,6 @@ export const BasicSelect = Template.bind({});
 BasicSelect.storyName = 'default';
 BasicSelect.args = {
   options: ['무작위', '최신순', '내 위치와 가까운 순'],
-  padding: 10,
-  modalPadding: 20,
-  fontSize: 15,
-  fontColor: '#000000',
-  optionHeight: 35,
-  optionWidth: 200,
-  border: '1 solid #393939',
+  value: '무작위',
+  disabled: false,
 };

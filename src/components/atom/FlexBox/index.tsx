@@ -59,6 +59,7 @@ const FlexContainerStyles = StyleSheet.create({
   default: {
     ...BoxStyle.default,
     display: 'flex',
+    flexDirection: 'row',
   },
   center: {
     justifyContent: 'center',

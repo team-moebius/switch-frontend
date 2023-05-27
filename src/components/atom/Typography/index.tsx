@@ -3,7 +3,7 @@ import React from 'react';
 
 // TODO : fontSize, fontColor 구체화 하기
 export interface TypographyProps {
-  children: string;
+  children: string | number;
   onLayout?: (event: LayoutChangeEvent) => void;
   fontSize?: number;
   fontColor?: string;

@@ -1,67 +1,135 @@
-import React from 'react';
-import { Modal, View, Pressable, StyleSheet, Text } from 'react-native';
+import React, {
+  FunctionComponent,
+  useCallback,
+  useMemo,
+  useState,
+} from 'react';
+import { Pressable } from 'react-native';
+import { Color } from 'src/@types/unit';
+import { Box, FlexBox, Icon, Modal, Typography } from 'src/components/atom';
 
-export interface SelectProps {
-  modalVisible: boolean;
-  setSelectedOption: React.Dispatch<React.SetStateAction<string>>;
-  onPress: () => void;
-  options: string[];
+type OptionValue = string | number;
+type OptionProps<T = OptionValue> = Omit<OptionObject<T>, 'render'> & {
+  selected: boolean;
+};
+type OptionRenderer<T = OptionValue> = FunctionComponent<OptionProps<T>>;
+
+type OptionObject<T> = {
+  value: T;
+  disabled?: boolean;
+  render?: OptionRenderer<T>;
+};
+
+type Option<T = OptionValue> = T | OptionObject<T>;
+
+const BasicOption = ({ value, selected, disabled }: OptionProps) => {
+  const [fontColor, backgroundColor] = useMemo((): [Color, Color] => {
+    if (selected) {
+      return ['white', 'blue'];
+    } else if (disabled) {
+      return ['gray', 'white'];
+    } else {
+      return ['black', 'white'];
+    }
+  }, [selected, disabled]);
+  return (
+    <FlexBox
+      backgroundColor={backgroundColor}
+      justifyContent={'flex-start'}
+      alignItems={'center'}
+      height={60}
+      padding={16}
+    >
+      <FlexBox.Item flex={1}>
+        <Typography fontSize={14} fontColor={fontColor}>
+          {value}
+        </Typography>
+      </FlexBox.Item>
+    </FlexBox>
+  );
+};
+
+interface SelectProps<T = OptionValue> {
+  options: T[] | Option<T>[];
+  onPressItem: (value: T) => void;
+  disabled?: boolean;
+  value: T;
 }
 
-const Select = ({
-  modalVisible,
-  setSelectedOption,
-  onPress,
-  options,
-}: SelectProps) => {
+const useToggle = (defaultValue: boolean): [boolean, () => void] => {
+  const [value, setValue] = useState(defaultValue);
+  const toggle = useCallback(() => {
+    setValue((prev) => !prev);
+  }, []);
+  return [value, toggle];
+};
+const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
+  const [modalVisible, toggleModal] = useToggle(false);
+
   return (
-    <View style={style.centeredView}>
-      <Modal animationType='slide' visible={modalVisible}>
-        <View style={style.defaultModal}>
-          {options.map((option) => (
+    <>
+      <Pressable onPress={!disabled ? toggleModal : null}>
+        <FlexBox
+          height={24}
+          border={'1 solid black'}
+          borderRadius={4}
+          width={120}
+          pt={4}
+          pb={4}
+          pl={8}
+          pr={8}
+          alignItems={'center'}
+        >
+          <FlexBox.Item flex={1}>
+            <Typography fontSize={14} fontColor={disabled ? 'black' : 'gray'}>
+              {value}
+            </Typography>
+          </FlexBox.Item>
+          <Box width={10}>
+            <Icon
+              name={
+                modalVisible ? 'chevron-up-outline' : 'chevron-down-outline'
+              }
+            />
+          </Box>
+        </FlexBox>
+      </Pressable>
+      <Modal visible={modalVisible} onPressBack={toggleModal}>
+        {options.map((option) => {
+          const {
+            value: optionValue,
+            disabled: optionDisabled = false,
+            InnerCommponent,
+          } = typeof option === 'object'
+            ? {
+                ...option,
+                InnerCommponent: option?.render || BasicOption,
+              }
+            : {
+                InnerCommponent: BasicOption,
+                value: option,
+              };
+          return (
             <Pressable
-              key={option}
+              key={optionValue}
               onPress={() => {
-                onPress();
-                setSelectedOption(option);
+                if (!optionDisabled) {
+                  onPressItem(optionValue);
+                  toggleModal();
+                }
               }}
             >
-              <View style={style.defaultText}>
-                <Text>{option}</Text>
-              </View>
+              <InnerCommponent
+                value={optionValue}
+                disabled={disabled}
+                selected={optionValue === value}
+              />
             </Pressable>
-          ))}
-        </View>
+          );
+        })}
       </Modal>
-    </View>
+    </>
   );
 };
 
 export default Select;
-
-const style = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    marginTop: 22,
-  },
-  defaultModal: {
-    margin: 20,
-    backgroundColor: 'white',
-    borderRadius: 5,
-    padding: 35,
-    alignItems: 'center',
-    shadowColor: '#000',
-    shadowOffset: {
-      width: 0,
-      height: 2,
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5,
-  },
-  defaultText: {
-    padding: 10,
-  },
-});

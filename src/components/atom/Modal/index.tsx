@@ -19,7 +19,7 @@ const animationModeMap: Record<string, Partial<ReactNativeModalProps>> = {
 type Mode = keyof typeof animationModeMap;
 
 interface ModalProps {
-  mode: Mode;
+  mode?: Mode;
   visible: boolean;
   width?: LengthElement;
   height?: LengthElement;
