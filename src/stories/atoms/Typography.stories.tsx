@@ -15,5 +15,8 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
+  fontSize: 20,
+  color: 'black',
+  fontWeight: 'bold',
   children: '기본 타이포',
 };
