@@ -28,7 +28,7 @@ const Tag = ({
       alignItems={'center'}
     >
       <Pressable onPress={onPress}>
-        <Typography fontSize={12} fontColor={color}>
+        <Typography fontSize={12} color={color}>
           {children}
         </Typography>
       </Pressable>

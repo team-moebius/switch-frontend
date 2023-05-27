@@ -45,7 +45,7 @@ const BasicOption = ({ value, selected, disabled }: OptionProps) => {
       padding={16}
     >
       <Flexbox.Item flex={1}>
-        <Typography fontSize={14} fontColor={fontColor}>
+        <Typography fontSize={14} color={fontColor}>
           {value}
         </Typography>
       </Flexbox.Item>
@@ -86,7 +86,7 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
           alignItems={'center'}
         >
           <Flexbox.Item flex={1}>
-            <Typography fontSize={14} fontColor={disabled ? 'black' : 'gray'}>
+            <Typography fontSize={14} color={disabled ? 'black' : 'gray'}>
               {value}
             </Typography>
           </Flexbox.Item>
