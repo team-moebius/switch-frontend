@@ -4,7 +4,7 @@ import { Radio, RadioProps } from 'src/components/atom/Radio';
 import { WithLabel } from '../template';
 import { WithLabelProps } from '../template/WithLabel';
 
-interface Radiobox extends RadioProps, WithLabelProps {}
+interface RadioboxProps extends RadioProps, WithLabelProps {}
 
 const Radiobox = ({
   labelPosition = 'right',
@@ -14,7 +14,7 @@ const Radiobox = ({
   label,
   onPress,
   ...props
-}: Radiobox) => {
+}: RadioboxProps) => {
   return (
     <WithLabel
       onPress={onPress}
@@ -29,4 +29,4 @@ const Radiobox = ({
   );
 };
 
-export { Radiobox };
+export { Radiobox, RadioboxProps };
