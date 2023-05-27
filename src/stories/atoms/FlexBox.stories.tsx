@@ -1,27 +1,27 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { FlexBox } from 'src/components/atom';
+import { Flexbox } from 'src/components/atom';
 
 export default {
-  title: 'FlexBox',
-  component: FlexBox,
-} as ComponentMeta<typeof FlexBox>;
+  title: 'Flexbox',
+  component: Flexbox,
+} as ComponentMeta<typeof Flexbox>;
 
-const Template: ComponentStory<typeof FlexBox> = (args) => (
-  <FlexBox {...args}>
-    <FlexBox.Item flex={1} backgroundColor={'red'}>
+const Template: ComponentStory<typeof Flexbox> = (args) => (
+  <Flexbox {...args}>
+    <Flexbox.Item flex={1} backgroundColor={'red'}>
       item 1
-    </FlexBox.Item>
-    <FlexBox.Item flex={2} backgroundColor={'green'}>
+    </Flexbox.Item>
+    <Flexbox.Item flex={2} backgroundColor={'green'}>
       item 2
-    </FlexBox.Item>
-    <FlexBox.Item flex={3} backgroundColor={'orange'}>
+    </Flexbox.Item>
+    <Flexbox.Item flex={3} backgroundColor={'orange'}>
       item 3
-    </FlexBox.Item>
-    <FlexBox.Item flex={1} backgroundColor={'blue'}>
+    </Flexbox.Item>
+    <Flexbox.Item flex={1} backgroundColor={'blue'}>
       item 4
-    </FlexBox.Item>
-  </FlexBox>
+    </Flexbox.Item>
+  </Flexbox>
 );
 
 export const FlexBoxTemplate = Template.bind({});

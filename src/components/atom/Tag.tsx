@@ -1,10 +1,10 @@
 import React from 'react';
 import { Pressable } from 'react-native';
 import { Color } from 'src/@types/unit';
-import FlexBox from '../FlexBox';
-import Typography from '../Typography';
+import Flexbox from './Flexbox';
+import { Typography } from './Typograph';
 
-export interface TagProps {
+interface TagProps {
   color: string;
   children: string;
   onPress?: () => void;
@@ -18,7 +18,7 @@ const Tag = ({
   onPress,
 }: TagProps) => {
   return (
-    <FlexBox
+    <Flexbox
       width={'fit-content'}
       height={14}
       padding={5}
@@ -32,8 +32,8 @@ const Tag = ({
           {children}
         </Typography>
       </Pressable>
-    </FlexBox>
+    </Flexbox>
   );
 };
 
-export default Tag;
+export { Tag };

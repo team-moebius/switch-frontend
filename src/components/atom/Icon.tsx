@@ -16,4 +16,4 @@ const Icon = ({ color, size, name }: IconProps) => {
   return <Ionicons color={color} size={size} name={name} />;
 };
 
-export default Icon;
+export { Icon };

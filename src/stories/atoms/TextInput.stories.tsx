@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import TextInput from 'src/components/atom/TextInput';
+import { TextInput } from 'src/components/atom';
 
 export default {
   title: 'TextInput',

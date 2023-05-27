@@ -1,10 +1,25 @@
 import React, { ReactNode } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import ReactNativeModal, {
   ModalProps as ReactNativeModalProps,
 } from 'react-native-modal';
 import { LengthElement } from 'src/@types/unit';
-import Box from '../Box';
+import { Box } from './Box';
+
+const { default: defaultStyle } = StyleSheet.create({
+  default: {
+    padding: 0,
+    margin: 0,
+  },
+});
+
+const positionStyle = StyleSheet.create({
+  center: { justifyContent: 'center', alignItems: 'center' },
+  top: { justifyContent: 'flex-start' },
+  bottom: {
+    justifyContent: 'flex-end',
+  },
+});
 
 const animationModeMap: Record<string, Partial<ReactNativeModalProps>> = {
   slideUp: {
@@ -16,7 +31,9 @@ const animationModeMap: Record<string, Partial<ReactNativeModalProps>> = {
     animationOut: 'slideOutUp',
   },
 } as const;
+
 type Mode = keyof typeof animationModeMap;
+type Position = keyof typeof positionStyle;
 
 interface ModalProps {
   mode?: Mode;
@@ -50,20 +67,5 @@ const Modal = ({
     </ReactNativeModal>
   );
 };
-const { default: defaultStyle } = StyleSheet.create({
-  default: {
-    padding: 0,
-    margin: 0,
-  },
-});
 
-const positionStyle = StyleSheet.create({
-  center: { justifyContent: 'center', alignItems: 'center' },
-  top: { justifyContent: 'flex-start' },
-  bottom: {
-    justifyContent: 'flex-end',
-  },
-});
-type Position = keyof typeof positionStyle;
-
-export default Modal;
+export { Modal };

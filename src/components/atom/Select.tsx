@@ -6,7 +6,11 @@ import React, {
 } from 'react';
 import { Pressable } from 'react-native';
 import { Color } from 'src/@types/unit';
-import { Box, FlexBox, Icon, Modal, Typography } from 'src/components/atom';
+import { Box } from './Box';
+import Flexbox from './Flexbox';
+import { Icon } from './Icon';
+import { Modal } from './Modal';
+import { Typography } from './Typograph';
 
 type OptionValue = string | number;
 type OptionProps<T = OptionValue> = Omit<OptionObject<T>, 'render'> & {
@@ -33,19 +37,19 @@ const BasicOption = ({ value, selected, disabled }: OptionProps) => {
     }
   }, [selected, disabled]);
   return (
-    <FlexBox
+    <Flexbox
       backgroundColor={backgroundColor}
       justifyContent={'flex-start'}
       alignItems={'center'}
       height={60}
       padding={16}
     >
-      <FlexBox.Item flex={1}>
+      <Flexbox.Item flex={1}>
         <Typography fontSize={14} fontColor={fontColor}>
           {value}
         </Typography>
-      </FlexBox.Item>
-    </FlexBox>
+      </Flexbox.Item>
+    </Flexbox>
   );
 };
 
@@ -63,13 +67,14 @@ const useToggle = (defaultValue: boolean): [boolean, () => void] => {
   }, []);
   return [value, toggle];
 };
+
 const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
   const [modalVisible, toggleModal] = useToggle(false);
 
   return (
     <>
       <Pressable onPress={!disabled ? toggleModal : null}>
-        <FlexBox
+        <Flexbox
           height={24}
           border={'1 solid black'}
           borderRadius={4}
@@ -80,11 +85,11 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
           pr={8}
           alignItems={'center'}
         >
-          <FlexBox.Item flex={1}>
+          <Flexbox.Item flex={1}>
             <Typography fontSize={14} fontColor={disabled ? 'black' : 'gray'}>
               {value}
             </Typography>
-          </FlexBox.Item>
+          </Flexbox.Item>
           <Box width={10}>
             <Icon
               name={
@@ -92,7 +97,7 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
               }
             />
           </Box>
-        </FlexBox>
+        </Flexbox>
       </Pressable>
       <Modal visible={modalVisible} onPressBack={toggleModal}>
         {options.map((option) => {
@@ -132,4 +137,4 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
   );
 };
 
-export default Select;
+export { Select };
