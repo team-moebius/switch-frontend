@@ -13,6 +13,6 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  selected: true,
-  onPress: () => {},
+  checked: true,
+  size: 25,
 };

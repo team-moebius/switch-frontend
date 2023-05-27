@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { FunctionComponent } from 'react';
 import { StyleSheet } from 'react-native';
 import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
@@ -8,6 +8,7 @@ interface CheckboxProps {
   size?: number;
   checked?: boolean;
   onPress?: () => void;
+  innerComponent?: FunctionComponent;
 }
 const typeStyle = {
   warning: { color: 'red' },
@@ -24,6 +25,7 @@ const Checkbox = ({
   boxType = 'square',
   type = 'normal',
   checked,
+  innerComponent,
   ...props
 }: CheckboxProps) => {
   return (
@@ -34,8 +36,11 @@ const Checkbox = ({
       fillColor={typeStyle[type].color}
       innerIconStyle={boxTypeStyle[boxType]}
       iconStyle={boxTypeStyle[boxType]}
+      ImageComponent={innerComponent}
     />
   );
 };
+
+export { CheckboxProps, typeStyle };
 
 export default Checkbox;
