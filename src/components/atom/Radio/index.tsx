@@ -1,32 +1,36 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { FlexBox } from 'src/components/atom';
+import Box from '../Box';
+import { CheckboxProps, typeStyle } from '../Checkbox';
+import BouncyCheckbox from 'react-native-bouncy-checkbox';
 
-interface RadioProps {
-  selected: boolean;
-  radius?: number;
-  onPress?: () => void;
-}
+type RadioProps = Omit<CheckboxProps, 'boxType'>;
 
-const Radio = ({ selected, onPress, radius = 12 }: RadioProps) => {
+const Radio = ({
+  type = 'normal',
+  size = 25,
+  checked,
+  ...props
+}: RadioProps) => {
   return (
-    <FlexBox
-      width={radius}
-      height={radius}
-      border={'1 solid black'}
-      justifyContent={'center'}
-      alignItems={'center'}
-      borderRadius={'50%'}
-    >
-      <TouchableOpacity onPress={onPress}>
-        <FlexBox.Item
-          width={radius * 0.5}
-          height={radius * 0.5}
+    <BouncyCheckbox
+      {...props}
+      {...props}
+      size={size}
+      isChecked={checked}
+      disableBuiltInState={true}
+      fillColor={'white'}
+      iconStyle={{ borderColor: typeStyle[type].color, borderWidth: 2 }}
+      ImageComponent={() => (
+        <Box
+          width={size * 0.5}
+          height={size * 0.5}
           borderRadius={'50%'}
-          backgroundColor={selected ? 'black' : 'transparent'}
-        ></FlexBox.Item>
-      </TouchableOpacity>
-    </FlexBox>
+          backgroundColor={checked ? typeStyle[type].color : 'white'}
+        >
+          {' '}
+        </Box>
+      )}
+    />
   );
 };
 export default Radio;
