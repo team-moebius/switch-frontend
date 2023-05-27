@@ -9,18 +9,6 @@ interface TextareaProps {
   placeholder?: string;
 }
 
-const Textarea = ({ maxLength = 100, ...props }: TextareaProps) => {
-  return (
-    <TextInput
-      {...props}
-      style={[defaultStyles]}
-      maxLength={maxLength}
-      multiline
-      placeholderTextColor={'gray'}
-    />
-  );
-};
-
 const { default: defaultStyles } = StyleSheet.create({
   default: {
     width: '100%',
@@ -34,4 +22,16 @@ const { default: defaultStyles } = StyleSheet.create({
   },
 });
 
-export default Textarea;
+const Textarea = ({ maxLength = 100, ...props }: TextareaProps) => {
+  return (
+    <TextInput
+      {...props}
+      style={[defaultStyles]}
+      maxLength={maxLength}
+      multiline
+      placeholderTextColor={'gray'}
+    />
+  );
+};
+
+export { Textarea };

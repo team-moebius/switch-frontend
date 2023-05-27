@@ -1,9 +1,25 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import { FlexAlign, FlexDirection, JustifyContent } from 'src/@types/unit';
-import { bindBoxStyle, BoxProps, BoxStyle } from '../Box';
+import { bindBoxStyle, BoxProps, BoxStyle } from './Box';
 
-interface FlexContainerProps extends BoxProps {
+const FlexContainerStyles = StyleSheet.create({
+  default: {
+    ...BoxStyle.default,
+    display: 'flex',
+    flexDirection: 'row',
+  },
+  center: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+});
+
+const FlexboxStyles = {
+  container: FlexContainerStyles,
+};
+
+interface FlexboxProps extends BoxProps {
   flexDirection?: FlexDirection;
   justifyContent?: JustifyContent;
   alignItems?: FlexAlign;
@@ -12,7 +28,12 @@ interface FlexContainerProps extends BoxProps {
   gap?: number;
 }
 
-const FlexBox = ({
+interface FlexItemProps extends BoxProps {
+  alignSelf?: FlexAlign | 'auto';
+  flex?: number;
+}
+
+const Flexbox = ({
   flexDirection,
   justifyContent,
   alignItems,
@@ -21,11 +42,11 @@ const FlexBox = ({
   gap,
   children,
   ...props
-}: FlexContainerProps) => {
+}: FlexboxProps) => {
   return (
     <View
       style={[
-        FlexBoxStyles.container.default,
+        FlexboxStyles.container.default,
         {
           ...bindBoxStyle(props),
           flexDirection,
@@ -42,11 +63,6 @@ const FlexBox = ({
   );
 };
 
-interface FlexItemProps extends BoxProps {
-  alignSelf?: FlexAlign | 'auto';
-  flex?: number;
-}
-
 const FlexItem = ({ children, alignSelf, flex, ...props }: FlexItemProps) => {
   return (
     <View style={[{ ...bindBoxStyle(props) }, { alignSelf, flex }]}>
@@ -55,25 +71,6 @@ const FlexItem = ({ children, alignSelf, flex, ...props }: FlexItemProps) => {
   );
 };
 
-const FlexContainerStyles = StyleSheet.create({
-  default: {
-    ...BoxStyle.default,
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-const FlexItemStyles = StyleSheet.create({});
-
-const FlexBoxStyles = {
-  container: FlexContainerStyles,
-  item: FlexItemStyles,
-};
-
-export default Object.assign(FlexBox, {
+export default Object.assign(Flexbox, {
   Item: FlexItem,
 });

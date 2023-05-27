@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Radio from 'src/components/atom/Radio';
+import { Radio } from 'src/components/atom';
 
 export default {
   title: 'Radio',

@@ -4,7 +4,8 @@ import { useFonts } from 'expo-font';
 // import * as Notosans from 'src/assets/fonts/Noto_Sans';
 
 // TODO : fontSize, fontColor 구체화 하기
-export interface TypographyProps
+
+interface TypographyProps
   extends Pick<TextStyle, 'fontFamily' | 'color' | 'fontSize' | 'fontWeight'> {
   children: string | number;
   onLayout?: (event: LayoutChangeEvent) => void;
@@ -45,4 +46,4 @@ const Typography = ({
   );
 };
 
-export default Typography;
+export { Typography };

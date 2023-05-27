@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import Select from 'src/components/atom/Select';
+import { Select } from 'src/components/atom';
 
 export default {
   title: 'Select',

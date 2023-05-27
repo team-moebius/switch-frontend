@@ -1,3 +1,3 @@
 import * as atoms from './atom';
-
-export { atoms };
+import * as molecules from './molecule';
+export { atoms, molecules };

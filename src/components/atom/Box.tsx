@@ -10,38 +10,16 @@ import {
   Padding,
 } from 'src/@types/unit';
 
-//import { FlexStyle } from 'react-native/Libraries/StyleSheet/StyleSheetTypes';
-
-interface BoxStyleProps {
-  //Position
-  position?: 'absolute' | 'relative' | 'static';
-  left?: LengthElement;
-  right?: LengthElement;
-  top?: LengthElement;
-  bottom?: LengthElement;
-  //Padding
-  padding?: Padding;
-  pt?: LengthElement;
-  pb?: LengthElement;
-  pl?: LengthElement;
-  pr?: LengthElement;
-  //margin
-  margin?: Margin;
-  mt?: MarginElement;
-  mb?: MarginElement;
-  ml?: MarginElement;
-  mr?: MarginElement;
-  //Width and Height
-  width?: LengthElement | 'fit-content';
-  height?: LengthElement | 'auto';
-  backgroundColor?: Color;
-  //Border
-  border?: Border;
-  borderRadius?: LengthElement;
-}
-export interface BoxProps extends BoxStyleProps {
-  children?: ReactNode;
-}
+const BoxStyle = StyleSheet.create({
+  default: {
+    width: '100%',
+    height: 'auto',
+    padding: 0,
+    border: 'none',
+    textAlign: 'center',
+    backgorundColor: 'none',
+  },
+});
 
 const pixelToNumber = (
   pixelLike?: `${number}px` | string
@@ -96,6 +74,37 @@ export const bindBoxStyle = ({
   } as unknown as ViewStyle;
 };
 
+interface BoxStyleProps {
+  //Position
+  position?: 'absolute' | 'relative' | 'static';
+  left?: LengthElement;
+  right?: LengthElement;
+  top?: LengthElement;
+  bottom?: LengthElement;
+  //Padding
+  padding?: Padding;
+  pt?: LengthElement;
+  pb?: LengthElement;
+  pl?: LengthElement;
+  pr?: LengthElement;
+  //margin
+  margin?: Margin;
+  mt?: MarginElement;
+  mb?: MarginElement;
+  ml?: MarginElement;
+  mr?: MarginElement;
+  //Width and Height
+  width?: LengthElement | 'fit-content';
+  height?: LengthElement | 'auto';
+  backgroundColor?: Color;
+  //Border
+  border?: Border;
+  borderRadius?: LengthElement;
+}
+interface BoxProps extends BoxStyleProps {
+  children?: ReactNode;
+}
+
 const Box = ({ children, ...props }: BoxProps) => {
   return (
     <View style={[BoxStyle.default, { ...bindBoxStyle({ ...props }) }]}>
@@ -104,15 +113,4 @@ const Box = ({ children, ...props }: BoxProps) => {
   );
 };
 
-export const BoxStyle = StyleSheet.create({
-  default: {
-    width: '100%',
-    height: 'auto',
-    padding: 0,
-    border: 'none',
-    textAlign: 'center',
-    backgorundColor: 'none',
-  },
-});
-
-export default Box;
+export { Box, BoxProps, BoxStyle, BoxStyleProps };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory } from '@storybook/react';
-import Icon from 'src/components/atom/Icon';
+import { Icon } from 'src/components/atom';
 
 export default {
   title: 'Icon',

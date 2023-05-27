@@ -1,6 +1,6 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React, { useState } from 'react';
-import { Button, FlexBox, Modal } from 'src/components/atom';
+import { Button, Flexbox, Modal } from 'src/components/atom';
 
 export default {
   title: 'Modal',
@@ -15,9 +15,9 @@ const Template: ComponentStory<typeof Modal> = (args) => {
 
   return (
     <>
-      <FlexBox justifyContent={'center'}>
+      <Flexbox justifyContent={'center'}>
         <Button title='Show' onPress={handleModalOpen}></Button>
-      </FlexBox>
+      </Flexbox>
       <Modal {...args} visible={modalVisible}>
         <Button title='Hide' onPress={handleModalOpen}></Button>
       </Modal>
