@@ -10,6 +10,7 @@ import Image from './Image';
 import Modal from './Modal';
 import Textarea from './Textarea';
 import Select from './Select';
+import Checkbox from './Checkbox';
 
 export {
   Button,
@@ -24,4 +25,5 @@ export {
   Toggle,
   Modal,
   Select,
+  Checkbox,
 };
