@@ -17,7 +17,7 @@ const BoxStyle = StyleSheet.create({
     padding: 0,
     border: 'none',
     textAlign: 'center',
-    backgorundColor: 'none',
+    backgroundColor: 'none',
   },
 });
 

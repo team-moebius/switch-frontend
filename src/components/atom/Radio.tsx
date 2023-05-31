@@ -27,9 +27,7 @@ const Radio = ({
           height={size * 0.5}
           borderRadius={'50%'}
           backgroundColor={checked ? typeStyle[type].color : 'white'}
-        >
-          {' '}
-        </Box>
+        ></Box>
       )}
     />
   );

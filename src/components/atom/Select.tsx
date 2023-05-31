@@ -104,14 +104,14 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
           const {
             value: optionValue,
             disabled: optionDisabled = false,
-            InnerCommponent,
+            InnerComponent,
           } = typeof option === 'object'
             ? {
                 ...option,
-                InnerCommponent: option?.render || BasicOption,
+                InnerComponent: option?.render || BasicOption,
               }
             : {
-                InnerCommponent: BasicOption,
+                InnerComponent: BasicOption,
                 value: option,
               };
           return (
@@ -124,7 +124,7 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
                 }
               }}
             >
-              <InnerCommponent
+              <InnerComponent
                 value={optionValue}
                 disabled={disabled}
                 selected={optionValue === value}
