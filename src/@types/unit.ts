@@ -3,17 +3,17 @@ type Percent = `${number}%`;
 
 //Padding Type
 type LengthElement = Pixel | Percent | number;
-type PaddingTupple = `${LengthElement} ${LengthElement}`;
-type PaddingQuater =
+type PaddingTuple = `${LengthElement} ${LengthElement}`;
+type PaddingQuarter =
   `${LengthElement} ${LengthElement} ${LengthElement} ${LengthElement}`;
-type Padding = 'inherit' | PaddingTupple | PaddingQuater | LengthElement;
+type Padding = 'inherit' | PaddingTuple | PaddingQuarter | LengthElement;
 
 //Margin Type
 type MarginElement = LengthElement | 'auto';
-type MarginTupple = `${MarginElement} ${MarginElement}`;
-type MarginQuater =
+type MarginTuple = `${MarginElement} ${MarginElement}`;
+type MarginQuarter =
   `${MarginElement} ${MarginElement} ${MarginElement} ${MarginElement}`;
-type Margin = 'inherit' | MarginTupple | MarginQuater | MarginElement;
+type Margin = 'inherit' | MarginTuple | MarginQuarter | MarginElement;
 
 //Color Type
 type HexColor = `#${string}`;
