@@ -54,7 +54,7 @@ const BasicOption = ({ value, selected, disabled }: OptionProps) => {
 };
 
 interface SelectProps<T = OptionValue> {
-  options: T[] | Option<T>[];
+  options: Option<T>[];
   onPressItem: (value: T) => void;
   disabled?: boolean;
   value: T;
