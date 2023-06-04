@@ -7,7 +7,7 @@ import { useFonts } from 'expo-font';
 
 interface TypographyProps
   extends Pick<TextStyle, 'fontFamily' | 'color' | 'fontSize' | 'fontWeight'> {
-  children: string | number;
+  children: string | number | string[];
   onLayout?: (event: LayoutChangeEvent) => void;
   fontFamily?: keyof typeof fontMap;
 }
