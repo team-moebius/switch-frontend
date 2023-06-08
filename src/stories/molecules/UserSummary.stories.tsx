@@ -3,10 +3,10 @@ import React from 'react';
 import { UserSummary } from 'src/components/molecule';
 
 export type UserSummaryData = {
-  userName: string;
+  user: string;
   verified: boolean;
-  switchCount: string;
-  switchRate: string;
+  countSwitch: string;
+  userRate: string;
   bio: string;
 };
 
@@ -15,9 +15,9 @@ export default {
   component: UserSummary,
 } as ComponentMeta<typeof UserSummary>;
 
-const Template: ComponentStory<typeof UserSummary> = (args) => {
-  return <UserSummary {...args} />;
-};
+const Template: ComponentStory<typeof UserSummary> = (args) => (
+  <UserSummary {...args} />
+);
 
 export const story = Template.bind({});
 
@@ -25,10 +25,10 @@ story.storyName = 'default';
 story.args = {
   tagColor: '#2c98c6',
   data: {
-    userName: '집오리',
+    user: '집오리',
     verified: true,
-    switchCount: '15',
-    switchRate: '5',
+    countSwitch: '15',
+    userRate: '5/5',
     bio: '제 꿈은 클립으로 집까지 바꾸는거예요 :)',
   },
 };
