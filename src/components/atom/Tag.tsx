@@ -36,4 +36,4 @@ const Tag = ({
   );
 };
 
-export { Tag };
+export { Tag, TagProps };

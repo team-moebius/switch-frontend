@@ -14,7 +14,6 @@ const style = StyleSheet.create({
   defaultInput: {
     height: 35,
     width: 250,
-    margin: 12,
     borderWidth: 1,
     borderRadius: 4,
     padding: 8,
@@ -27,4 +26,4 @@ const TextInput = ({ width, ...props }: InputProps) => {
   return <BasicInput {...props} style={[style.defaultInput, { width }]} />;
 };
 
-export { TextInput };
+export { TextInput, InputProps };
