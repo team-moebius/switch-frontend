@@ -7,13 +7,14 @@ export default {
   component: Button,
 } as ComponentMeta<typeof Button>;
 
-const Template: ComponentStory<typeof Button> = (args) => <Button {...args} />;
+const Template: ComponentStory<typeof Button> = (args) => (
+  <Button {...args}>안녕하세요</Button>
+);
 
 export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  title: '기본 버튼',
   onPress: () => {
     alert('버튼 클릭');
   },
