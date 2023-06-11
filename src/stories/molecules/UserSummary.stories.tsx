@@ -23,7 +23,6 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  tagColor: '#2c98c6',
   data: {
     user: '집오리',
     verified: true,
