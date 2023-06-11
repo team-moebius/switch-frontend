@@ -7,10 +7,11 @@ interface UserSummaryProps {
   data: UserSummaryData;
 }
 
+const VERIFIED_COLOR = '#449afc';
+const UNVERIFIED_COLOR = '#ed692c';
+
 const UserSummary = ({ data }: UserSummaryProps) => {
   const { user, verified, countSwitch, userRate, bio } = data;
-  const VERIFIED_COLOR = '#449afc';
-  const UNVERIFIED_COLOR = '#ed692c';
   const tagColor = verified ? VERIFIED_COLOR : UNVERIFIED_COLOR;
 
   return (
