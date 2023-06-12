@@ -20,9 +20,55 @@ export const story = Template.bind({});
 story.storyName = 'default';
 story.args = {
   placeholder: '스위치를 희망하는 물품이나 종류를 작성해주세요.',
-  onPress: () => {
-    alert('누르면 삭제가 됩니다');
-  },
-  tags: ['여성의류', '패션', '잡화', '직거래', '내고가능', '아이폰이면더좋음'],
+  tags: [
+    {
+      children: '여성의류',
+      backgroundColor: '#797979',
+      color: 'white',
+      onPress: () => {
+        alert('삭제됩니다');
+      },
+    },
+    {
+      children: '패션',
+      backgroundColor: '#797979',
+      color: 'white',
+      onPress: () => {
+        alert('삭제됩니다');
+      },
+    },
+    {
+      children: '잡화',
+      backgroundColor: '#797979',
+      color: 'white',
+      onPress: () => {
+        alert('삭제됩니다');
+      },
+    },
+    {
+      children: '직거래',
+      backgroundColor: '#797979',
+      color: 'white',
+      onPress: () => {
+        alert('삭제됩니다');
+      },
+    },
+    {
+      children: '내고가능',
+      backgroundColor: '#797979',
+      color: 'white',
+      onPress: () => {
+        alert('삭제됩니다');
+      },
+    },
+    {
+      children: '아이폰이면더좋음',
+      backgroundColor: '#797979',
+      color: 'white',
+      onPress: () => {
+        alert('삭제됩니다');
+      },
+    },
+  ],
   disabled: false,
 };

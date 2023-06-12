@@ -2,12 +2,9 @@ import React from 'react';
 import { Box, Flexbox, Tag, TextInput, Typography } from '../atom';
 import { InputProps } from '../atom/TextInput';
 import { TagProps } from '../atom/Tag';
-import { ScrollView } from 'react-native';
 
-interface TagInputProps
-  extends Omit<InputProps, 'name' | 'width'>,
-    Pick<TagProps, 'onPress'> {
-  tags: string[];
+interface TagInputProps extends Omit<InputProps, 'name' | 'width'> {
+  tags: TagProps[];
   width?: number;
 }
 
@@ -18,7 +15,6 @@ const TagInput = ({
   onChangeText,
   placeholder = '스위치를 희망하는 물품이나 종류를 작성해주세요.',
   width = 300,
-  onPress,
   tags,
   disabled,
 }: TagInputProps) => {
@@ -32,25 +28,23 @@ const TagInput = ({
         width={width}
         disabled={disabled}
       />
-      <Flexbox flexDirection={'row'} mt={10} gap={10}>
+      <Flexbox mt={5}>
         <Flexbox.Item flex={1}>
-          <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-            <Flexbox gap={5}>
-              {tags.map((tag) => {
-                return (
-                  <Flexbox.Item alignSelf='center'>
-                    <Tag
-                      color={'white'}
-                      backgroundColor={'#797979'}
-                      onPress={onPress}
-                    >
-                      {tag}
-                    </Tag>
-                  </Flexbox.Item>
-                );
-              })}
-            </Flexbox>
-          </ScrollView>
+          <Flexbox gap={5} flexWrap='wrap'>
+            {tags.map(({ onPress, backgroundColor, color, children }) => {
+              return (
+                <Flexbox.Item alignSelf='center'>
+                  <Tag
+                    color={color}
+                    backgroundColor={backgroundColor}
+                    onPress={onPress}
+                  >
+                    {children}
+                  </Tag>
+                </Flexbox.Item>
+              );
+            })}
+          </Flexbox>
         </Flexbox.Item>
         <Flexbox.Item>
           <Typography children={`${tags.length}/${TAG_LIMIT}`} />
