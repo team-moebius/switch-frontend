@@ -17,12 +17,6 @@ const Tag = ({
   backgroundColor = '#797979',
   onPress,
 }: TagProps) => {
-  const handlePress = () => {
-    if (onPress instanceof Function) {
-      onPress();
-    }
-  };
-
   return (
     <Flexbox
       width={'fit-content'}
@@ -33,7 +27,7 @@ const Tag = ({
       justifyContent={'center'}
       alignItems={'center'}
     >
-      <Pressable onPress={handlePress}>
+      <Pressable onPress={onPress}>
         <Typography fontSize={12} color={color}>
           {children}
         </Typography>

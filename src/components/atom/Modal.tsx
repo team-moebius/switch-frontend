@@ -54,16 +54,11 @@ const Modal = ({
   onPressBack,
   children,
 }: ModalProps) => {
-  const handlePress = () => {
-    if (onPressBack instanceof Function) {
-      onPressBack();
-    }
-  };
   return (
     <ReactNativeModal
       {...animationModeMap[mode]}
       isVisible={visible}
-      onBackdropPress={handlePress}
+      onBackdropPress={onPressBack}
       style={[defaultStyle, positionStyle[position], { width, height }]}
     >
       <Box backgroundColor={'white'} height={'80%'} width={'100%'}>

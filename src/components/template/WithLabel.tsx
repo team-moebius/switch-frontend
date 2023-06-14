@@ -56,11 +56,6 @@ const WithLabel = ({
   label,
   labelAlign = 'left',
 }: WithLabelProps) => {
-  const handlePress = () => {
-    if (onPress instanceof Function) {
-      onPress();
-    }
-  };
   return (
     <Flexbox
       {...labelPositionStyle[labelPosition]}
@@ -71,7 +66,7 @@ const WithLabel = ({
       <Flexbox.Item>{children}</Flexbox.Item>
       <Flexbox.Item width={'100%'} flex={1}>
         <Flexbox {...labelAlignStyle[labelAlign]}>
-          <Pressable onPress={handlePress}>{label}</Pressable>
+          <Pressable onPress={onPress}>{label}</Pressable>
         </Flexbox>
       </Flexbox.Item>
     </Flexbox>
