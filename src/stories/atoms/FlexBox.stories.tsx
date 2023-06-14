@@ -8,20 +8,36 @@ export default {
 } as ComponentMeta<typeof Flexbox>;
 
 const Template: ComponentStory<typeof Flexbox> = (args) => (
-  <Flexbox {...args}>
-    <Flexbox.Item flex={1} backgroundColor={'red'}>
-      item 1
-    </Flexbox.Item>
-    <Flexbox.Item flex={2} backgroundColor={'green'}>
-      item 2
-    </Flexbox.Item>
-    <Flexbox.Item flex={3} backgroundColor={'orange'}>
-      item 3
-    </Flexbox.Item>
-    <Flexbox.Item flex={1} backgroundColor={'blue'}>
-      item 4
-    </Flexbox.Item>
-  </Flexbox>
+  <>
+    <Flexbox {...args}>
+      <Flexbox.Item flex={1} backgroundColor={'red'}>
+        item 1
+      </Flexbox.Item>
+      <Flexbox.Item flex={2} backgroundColor={'green'}>
+        item 2
+      </Flexbox.Item>
+      <Flexbox.Item flex={3} backgroundColor={'orange'}>
+        item 3
+      </Flexbox.Item>
+      <Flexbox.Item flex={1} backgroundColor={'blue'}>
+        item 4
+      </Flexbox.Item>
+    </Flexbox>
+    <Flexbox {...args} width={200}>
+      <Flexbox.Item width={100} backgroundColor={'red'}>
+        item 1
+      </Flexbox.Item>
+      <Flexbox.Item width={100} backgroundColor={'green'}>
+        item 2
+      </Flexbox.Item>
+      <Flexbox.Item width={100} backgroundColor={'orange'}>
+        item 3
+      </Flexbox.Item>
+      <Flexbox.Item width={100} backgroundColor={'blue'}>
+        item 4
+      </Flexbox.Item>
+    </Flexbox>
+  </>
 );
 
 export const FlexBoxTemplate = Template.bind({});

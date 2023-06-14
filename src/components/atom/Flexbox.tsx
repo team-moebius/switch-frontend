@@ -26,6 +26,7 @@ interface FlexboxProps extends BoxProps {
   rowGap?: number;
   columnGap?: number;
   gap?: number;
+  flexWrap?: 'wrap' | 'nowrap' | 'wrap-reverse';
 }
 
 interface FlexItemProps extends BoxProps {
@@ -41,6 +42,7 @@ const Flexbox = ({
   columnGap,
   gap,
   children,
+  flexWrap,
   ...props
 }: FlexboxProps) => {
   return (
@@ -55,6 +57,7 @@ const Flexbox = ({
           rowGap,
           gap,
           alignItems,
+          flexWrap,
         },
       ]}
     >
