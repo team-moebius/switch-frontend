@@ -2,10 +2,11 @@ import React from 'react';
 import { Box, Flexbox, Tag, TextInput, Typography } from '../atom';
 import { InputProps } from '../atom/TextInput';
 import { TagProps } from '../atom/Tag';
+import { LengthElement } from 'src/@types/unit';
 
 interface TagInputProps extends Omit<InputProps, 'name' | 'width'> {
   tags: TagProps[];
-  width?: number;
+  width?: LengthElement;
 }
 
 const TAG_LIMIT = 20;

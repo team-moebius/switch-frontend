@@ -1,12 +1,13 @@
 import React from 'react';
 import { TextInput as BasicInput, StyleSheet } from 'react-native';
+import { LengthElement } from 'src/@types/unit';
 
 interface InputProps {
   name: string;
   onChangeText: (value: string) => void;
   placeholder: string;
   value: string | undefined;
-  width: number;
+  width: LengthElement;
   disabled?: boolean;
 }
 
