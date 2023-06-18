@@ -19,7 +19,6 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  placeholder: '스위치를 희망하는 물품이나 종류를 작성해주세요.',
   tags: [
     {
       children: '여성의류',
@@ -71,4 +70,5 @@ story.args = {
     },
   ],
   disabled: false,
+  tagsLimit: 20,
 };
