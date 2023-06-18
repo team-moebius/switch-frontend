@@ -6,8 +6,9 @@ import { useFonts } from 'expo-font';
 // TODO : fontSize, fontColor 구체화 하기
 
 interface TypographyProps
-  extends Pick<TextStyle, 'fontFamily' | 'color' | 'fontSize' | 'fontWeight'> {
+  extends Pick<TextStyle, 'fontFamily' | 'color' | 'fontWeight'> {
   children: string | number;
+  fontSize: TextStyle['fontSize'] | 'inherit';
   onLayout?: (event: LayoutChangeEvent) => void;
   fontFamily?: keyof typeof fontMap;
 }
@@ -34,12 +35,14 @@ const Typography = ({
   return (
     <Text
       {...props}
-      style={{
-        color,
-        fontFamily,
-        fontSize,
-        fontWeight,
-      }}
+      style={
+        {
+          color,
+          fontFamily,
+          fontSize,
+          fontWeight,
+        } as TextStyle
+      }
     >
       {children}
     </Text>
