@@ -40,7 +40,7 @@ const UserSummary = ({ data }: UserSummaryProps) => {
         </Flexbox>
       </Flexbox>
       <Box>
-        <Typography>{bio}</Typography>
+        <Typography fontSize={13}>{bio}</Typography>
       </Box>
     </Flexbox>
   );
