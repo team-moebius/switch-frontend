@@ -11,6 +11,8 @@ interface TypographyProps
   fontSize: TextStyle['fontSize'] | 'inherit';
   onLayout?: (event: LayoutChangeEvent) => void;
   fontFamily?: keyof typeof fontMap;
+  ellipsizeMode?: 'tail';
+  numberOfLines?: number;
 }
 
 const fontMap = {

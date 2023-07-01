@@ -24,4 +24,4 @@ const NotiListItem = ({ ago, children, ...props }: NotiListItemProps) => {
   );
 };
 
-export { NotiListItem };
+export { NotiListItem, NotiListItemProps };

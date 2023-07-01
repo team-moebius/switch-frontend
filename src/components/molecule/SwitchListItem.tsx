@@ -66,6 +66,6 @@ const SwitchListItem = ({ data, onPress, ...props }: SwitchListItemProps) => {
   );
 };
 
-export { SwitchListItem };
+export { SwitchListItem, SwitchListItemProps, ItemDetail };
 
 //Flexbox.Item은 Flexbox 안에 들어가는 요소를 모두 감싸주어야 하는 건지?
