@@ -41,7 +41,7 @@ const ChattingListItem = ({ data, ...props }: ChattingListItemProps) => {
           </Flexbox.Item>
         </Flexbox>
       </Flexbox>
-      <Flexbox.Item pl={34} alignSelf='center'>
+      <Flexbox.Item alignSelf='center'>
         <Typography fontSize={13}>{ago}</Typography>
       </Flexbox.Item>
     </Flexbox>

@@ -6,6 +6,7 @@ import { TagInput } from './TagInput';
 import { NotiListItem } from './NotiListItem';
 import { SwitchListItem } from './SwitchListItem';
 import { ChattingListItem } from './ChattingListItem';
+import { HistoryListItem } from './HistoryListItem';
 
 export {
   Radiobox,
@@ -16,4 +17,5 @@ export {
   NotiListItem,
   SwitchListItem,
   ChattingListItem,
+  HistoryListItem,
 };
