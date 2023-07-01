@@ -34,4 +34,4 @@ const HistoryListItem = ({ data, ...props }: HistoryListItemProps) => {
   );
 };
 
-export { HistoryListItem };
+export { HistoryListItem, HistoryListItemProps };

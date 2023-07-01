@@ -48,4 +48,4 @@ const ChattingListItem = ({ data, ...props }: ChattingListItemProps) => {
   );
 };
 
-export { ChattingListItem as ChattingListItem };
+export { ChattingListItem, ChattingListItemProps };

@@ -7,6 +7,7 @@ import { NotiListItem } from './NotiListItem';
 import { SwitchListItem } from './SwitchListItem';
 import { ChattingListItem } from './ChattingListItem';
 import { HistoryListItem } from './HistoryListItem';
+import { TradingListItem } from './TradingListItem';
 
 export {
   Radiobox,
@@ -18,4 +19,5 @@ export {
   SwitchListItem,
   ChattingListItem,
   HistoryListItem,
+  TradingListItem,
 };
