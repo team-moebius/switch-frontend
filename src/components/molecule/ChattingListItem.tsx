@@ -1,6 +1,7 @@
 import React from 'react';
 import { Flexbox, Icon, Typography } from '../atom';
 import { ItemDetail } from './SwitchListItem';
+import SwitchList from '../template/SwitchList';
 
 interface ChattingListItemProps {
   data: {
@@ -14,19 +15,9 @@ interface ChattingListItemProps {
 const ChattingListItem = ({ data, ...props }: ChattingListItemProps) => {
   const { username, selectedItem, message, ago } = data;
   return (
-    <Flexbox>
-      <Flexbox flexDirection='column' gap={20}>
-        <Flexbox gap={10} alignItems='center'>
-          <Flexbox.Item>
-            <Typography fontSize={15}>{username}</Typography>
-          </Flexbox.Item>
-          <Flexbox.Item>
-            <Icon name='code-outline' size={20} />
-          </Flexbox.Item>
-          <Flexbox.Item>
-            <Typography fontSize={15}>{selectedItem}</Typography>
-          </Flexbox.Item>
-        </Flexbox>
+    <Flexbox gap={20}>
+      <Flexbox flexDirection='column' gap={10}>
+        <SwitchList itemA={username} itemB={selectedItem} />
         <Flexbox gap={10}>
           <Flexbox.Item
             width={6}
