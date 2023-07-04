@@ -1,6 +1,7 @@
 import React from 'react';
-import { Flexbox, Icon, Typography } from '../atom';
-import SwitchList from '../template/SwitchList';
+import { Flexbox, Typography } from '../atom';
+import { SwitchList } from '../template/SwitchList';
+import WithSwitchList from '../template/WithSwitchList';
 
 interface HistoryListItemProps {
   data: {
@@ -13,14 +14,15 @@ interface HistoryListItemProps {
 const HistoryListItem = ({ data, ...props }: HistoryListItemProps) => {
   const { myItem, selectedItem, ago } = data;
   return (
-    <Flexbox flexDirection='column' gap={10}>
-      <Flexbox flexDirection='column'>
-        <SwitchList itemA={myItem} itemB={selectedItem} />
-      </Flexbox>
-      <Flexbox.Item>
-        <Typography fontSize={13}>{ago}</Typography>
-      </Flexbox.Item>
-    </Flexbox>
+    <WithSwitchList itemA={myItem} itemB={selectedItem} ago={ago} />
+    // <Flexbox flexDirection='column' gap={10}>
+    //   <Flexbox.Item>
+    //     <SwitchList itemA={myItem} itemB={selectedItem} />
+    //   </Flexbox.Item>
+    //   <Flexbox.Item>
+    //     <Typography fontSize={13}>{ago}</Typography>
+    //   </Flexbox.Item>
+    // </Flexbox>
   );
 };
 

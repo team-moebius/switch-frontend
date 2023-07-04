@@ -8,7 +8,7 @@ interface SwitchListProps {
 
 const SwitchList = ({ itemA, itemB }: SwitchListProps) => {
   return (
-    <Flexbox gap={10} alignItems='center'>
+    <Flexbox alignItems='center' gap={10}>
       <Flexbox.Item>
         <Typography fontSize={15}>{itemA}</Typography>
       </Flexbox.Item>
@@ -22,4 +22,4 @@ const SwitchList = ({ itemA, itemB }: SwitchListProps) => {
   );
 };
 
-export default SwitchList;
+export { SwitchList, SwitchListProps };
