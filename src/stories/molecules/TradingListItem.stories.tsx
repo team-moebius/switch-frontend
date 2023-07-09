@@ -20,4 +20,7 @@ story.args = {
     title: '이브이',
     location: '대구 달서구',
   },
+  onPress: () => {
+    alert('list click');
+  },
 };

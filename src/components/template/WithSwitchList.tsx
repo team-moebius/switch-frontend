@@ -1,63 +1,92 @@
 import React from 'react';
 import { Flexbox, Typography } from '../atom';
 import { SwitchList, SwitchListProps } from './SwitchList';
-import { FlexAlign } from 'src/@types/unit';
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 
 interface WithSwitchListProps extends SwitchListProps {
   message?: string;
-  ago?: string | number;
+  ago?: string;
   isUnread?: boolean;
-  alignSelf?: FlexAlign | 'auto';
+  agoAlign?: keyof typeof agoAlignStyle;
+  agoPosition?: keyof typeof agoPositionStyle;
+  onPress?: () => void;
 }
 
-const style = StyleSheet.create({});
+const agoPositionStyle = StyleSheet.create({
+  default: {
+    flexDirection: undefined,
+    gap: 20,
+  },
+  column: {
+    flexDirection: 'column',
+    gap: 10,
+  },
+});
+
+const agoAlignStyle = StyleSheet.create({
+  default: {
+    alignSelf: undefined,
+  },
+  center: {
+    alignSelf: 'center',
+  },
+});
 
 const WithSwitchList = ({
-  itemA,
-  itemB,
+  childrenA,
+  childrenB,
   message,
   ago,
   isUnread,
-  alignSelf,
+  agoAlign = 'default',
+  agoPosition = 'default',
+  onPress,
 }: WithSwitchListProps) => {
   return (
-    <Flexbox gap={20}>
-      <Flexbox flexDirection='column' gap={10}>
-        <Flexbox.Item>
-          <SwitchList itemA={itemA} itemB={itemB} />
-        </Flexbox.Item>
-        <Flexbox.Item>
-          {message && (
-            <Flexbox gap={10}>
-              {isUnread && (
-                <Flexbox.Item
-                  width={6}
-                  height={6}
-                  backgroundColor='red'
-                  borderRadius={50}
-                />
-              )}
-              <Flexbox.Item flex={1}>
-                <Typography
-                  fontSize={15}
-                  numberOfLines={1}
-                  ellipsizeMode='tail'
-                >
-                  {message}
-                </Typography>
-              </Flexbox.Item>
-            </Flexbox>
-          )}
-        </Flexbox.Item>
+    <Pressable onPress={onPress}>
+      <Flexbox {...agoPositionStyle[agoPosition]}>
+        <Flexbox flexDirection={'column'} gap={10}>
+          <Flexbox.Item>
+            <SwitchList
+              childrenA={childrenA}
+              childrenB={childrenB}
+              listDirection={'default'}
+              iconName={'code-outline'}
+              iconSize={20}
+            />
+          </Flexbox.Item>
+          <Flexbox.Item>
+            {message && (
+              <Flexbox gap={10}>
+                {isUnread && (
+                  <Flexbox.Item
+                    width={6}
+                    height={6}
+                    backgroundColor={'red'}
+                    borderRadius={50}
+                  />
+                )}
+                <Flexbox.Item flex={1}>
+                  <Typography
+                    fontSize={15}
+                    numberOfLines={1}
+                    ellipsizeMode={'tail'}
+                  >
+                    {message}
+                  </Typography>
+                </Flexbox.Item>
+              </Flexbox>
+            )}
+          </Flexbox.Item>
+        </Flexbox>
+        {ago && (
+          <Flexbox.Item {...agoAlignStyle[agoAlign]}>
+            <Typography fontSize={13}>{ago}</Typography>
+          </Flexbox.Item>
+        )}
       </Flexbox>
-      {ago && (
-        <Flexbox.Item alignSelf={alignSelf}>
-          <Typography fontSize={13}>{ago}</Typography>
-        </Flexbox.Item>
-      )}
-    </Flexbox>
+    </Pressable>
   );
 };
 
-export default WithSwitchList;
+export { WithSwitchList, WithSwitchListProps };

@@ -22,4 +22,7 @@ story.args = {
 This is usually because the modules which have changed (and their parents) do not know how to hot reload themselves. See https://webpack.js.org/concepts/hot-module-replacement/ for more details.`,
     ago: '20분전',
   },
+  onPress: () => {
+    alert('list click');
+  },
 };

@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { Flexbox, Typography } from '../atom';
 import { SwitchList } from '../template/SwitchList';
-import WithSwitchList from '../template/WithSwitchList';
+import { WithSwitchList } from '../template/WithSwitchList';
 
 interface ChattingListItemProps {
   data: {
@@ -10,41 +10,41 @@ interface ChattingListItemProps {
     message: string;
     ago: string;
   };
+  onPress?: () => void;
 }
 
-const ChattingListItem = ({ data, ...props }: ChattingListItemProps) => {
+const ChattingListItem = ({ data, onPress }: ChattingListItemProps) => {
   const { username, selectedItem, message, ago } = data;
+
+  const childrenA = useMemo(() => {
+    return (
+      <Flexbox alignItems={'center'} gap={10}>
+        <Flexbox.Item>
+          <Typography fontSize={15}>{username}</Typography>
+        </Flexbox.Item>
+      </Flexbox>
+    );
+  }, []);
+
+  const childrenB = useMemo(() => {
+    return (
+      <Flexbox alignItems={'center'} gap={10}>
+        <Flexbox.Item>
+          <Typography fontSize={15}>{selectedItem}</Typography>
+        </Flexbox.Item>
+      </Flexbox>
+    );
+  }, []);
+
   return (
     <WithSwitchList
-      itemA={username}
-      itemB={selectedItem}
+      childrenA={childrenA as ReactNode}
+      childrenB={childrenB as ReactNode}
       message={message}
       ago={ago}
+      agoAlign={'center'}
+      onPress={onPress}
     />
-
-    // <Flexbox gap={20}>
-    //   <Flexbox flexDirection='column' gap={10}>
-    //     <Flexbox.Item>
-    //       <SwitchList itemA={username} itemB={selectedItem} />
-    //     </Flexbox.Item>
-    //     <Flexbox gap={10}>
-    //       <Flexbox.Item
-    //         width={6}
-    //         height={6}
-    //         backgroundColor='red'
-    //         borderRadius={50}
-    //       />
-    //       <Flexbox.Item flex={1}>
-    //         <Typography fontSize={15} numberOfLines={1} ellipsizeMode='tail'>
-    //           {message}
-    //         </Typography>
-    //       </Flexbox.Item>
-    //     </Flexbox>
-    //   </Flexbox>
-    //   <Flexbox.Item alignSelf='center'>
-    //     <Typography fontSize={13}>{ago}</Typography>
-    //   </Flexbox.Item>
-    // </Flexbox>
   );
 };
 

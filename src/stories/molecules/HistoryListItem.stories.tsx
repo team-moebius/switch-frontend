@@ -20,4 +20,7 @@ story.args = {
     selectedItem: '국민은행 달력',
     ago: '20분전',
   },
+  onPress: () => {
+    alert('list click');
+  },
 };

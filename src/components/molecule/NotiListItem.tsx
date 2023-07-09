@@ -2,11 +2,11 @@ import React from 'react';
 import { Flexbox, Icon, Typography } from '../atom';
 
 interface NotiListItemProps {
-  ago: string | number;
-  children: string;
+  ago?: string;
+  children?: string;
 }
 
-const NotiListItem = ({ ago, children, ...props }: NotiListItemProps) => {
+const NotiListItem = ({ ago, children }: NotiListItemProps) => {
   return (
     <Flexbox flexDirection='column' gap={10}>
       <Flexbox gap={10}>
@@ -14,11 +14,11 @@ const NotiListItem = ({ ago, children, ...props }: NotiListItemProps) => {
           <Icon name='megaphone-outline' size={20} />
         </Flexbox.Item>
         <Flexbox.Item alignSelf='center' flexWrap='wrap'>
-          <Typography fontSize={13}>{children}</Typography>
+          <Typography fontSize={13}>{String(children)}</Typography>
         </Flexbox.Item>
       </Flexbox>
       <Flexbox.Item>
-        <Typography fontSize={13}>{ago}</Typography>
+        <Typography fontSize={13}>{String(ago)}</Typography>
       </Flexbox.Item>
     </Flexbox>
   );
