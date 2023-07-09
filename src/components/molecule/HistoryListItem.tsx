@@ -1,8 +1,7 @@
 import React, { ReactNode, useMemo } from 'react';
 import { Flexbox, Typography } from '../atom';
-import { SwitchList } from '../template/SwitchList';
 import { WithSwitchList } from '../template/WithSwitchList';
-import { ItemDetail } from './SwitchListItem';
+import { Pressable } from 'react-native';
 
 interface HistoryListItemProps {
   data: {
@@ -27,21 +26,24 @@ const HistoryListItem = ({ data, onPress }: HistoryListItemProps) => {
   const { myItem, selectedItem, ago } = data;
 
   const childrenA = useMemo(() => {
-    renderChildren(myItem);
+    return renderChildren(myItem);
   }, [myItem]);
 
   const childrenB = useMemo(() => {
-    renderChildren(selectedItem);
+    return renderChildren(selectedItem);
   }, [selectedItem]);
 
   return (
-    <WithSwitchList
-      childrenA={childrenA as ReactNode}
-      childrenB={childrenB as ReactNode}
-      ago={ago}
-      agoPosition={'column'}
-      onPress={onPress}
-    />
+    <Pressable onPress={onPress}>
+      <WithSwitchList
+        childrenA={childrenA as ReactNode}
+        childrenB={childrenB as ReactNode}
+        ago={ago}
+        agoPosition={'column'}
+        agoAlign={'default'}
+        listDirection={'default'}
+      />
+    </Pressable>
   );
 };
 

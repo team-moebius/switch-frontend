@@ -1,5 +1,5 @@
 import React, { ReactNode, useMemo } from 'react';
-import { Button, Flexbox, Icon, Image, Typography } from '../atom';
+import { Button, Flexbox, Image, Typography } from '../atom';
 import { SwitchList } from '../template/SwitchList';
 
 export type ItemDetail = {
@@ -46,17 +46,19 @@ const SwitchListItem = ({ data, onPress }: SwitchListItemProps) => {
   const childrenB = useMemo(() => renderChildren(selectedItem), [selectedItem]);
 
   return (
-    <Flexbox gap={20} flexDirection='column'>
-      <SwitchList
-        childrenA={childrenA as ReactNode}
-        childrenB={childrenB as ReactNode}
-        listDirection={'column'}
-        iconName={'code-outline'}
-        iconSize={20}
-      />
+    <Flexbox gap={20} flexDirection={'column'}>
       <Flexbox.Item>
-        <Button type='transparent' size='middle' onPress={onPress}>
-          <Typography fontSize={15} color='blue'>
+        <SwitchList
+          childrenA={childrenA as ReactNode}
+          childrenB={childrenB as ReactNode}
+          listDirection={'column'}
+          iconName={'code-outline'}
+          iconSize={20}
+        />
+      </Flexbox.Item>
+      <Flexbox.Item>
+        <Button type={'transparent'} size={'middle'} onPress={onPress}>
+          <Typography fontSize={15} color={'blue'}>
             평가남기기
           </Typography>
         </Button>
