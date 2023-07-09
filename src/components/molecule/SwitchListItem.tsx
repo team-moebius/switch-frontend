@@ -21,44 +21,29 @@ interface SwitchListItemProps {
   onPress: () => void;
 }
 
+const renderChildren = (item: ItemDetail) => {
+  return (
+    <Flexbox gap={20} alignItems='center' justifyContent='center'>
+      <Flexbox.Item>
+        <Image
+          src={String(item.src)}
+          width={100}
+          height={100}
+          resizeMode='center'
+        />
+      </Flexbox.Item>
+      <Flexbox.Item alignSelf='center'>
+        <Typography fontSize={13}>{String(item?.name)}</Typography>
+      </Flexbox.Item>
+    </Flexbox>
+  );
+};
+
 const SwitchListItem = ({ data, onPress }: SwitchListItemProps) => {
   const { myItem, selectedItem } = data;
 
-  const childrenA = useMemo(() => {
-    return (
-      <Flexbox gap={20} alignItems='center' justifyContent='center'>
-        <Flexbox.Item>
-          <Image
-            src={String(myItem.src)}
-            width={100}
-            height={100}
-            resizeMode='center'
-          />
-        </Flexbox.Item>
-        <Flexbox.Item alignSelf='center'>
-          <Typography fontSize={13}>{String(myItem?.name)}</Typography>
-        </Flexbox.Item>
-      </Flexbox>
-    );
-  }, []);
-
-  const childrenB = useMemo(() => {
-    return (
-      <Flexbox gap={20} alignItems='center' justifyContent='center'>
-        <Flexbox.Item>
-          <Image
-            src={String(selectedItem.src)}
-            width={100}
-            height={100}
-            resizeMode='center'
-          />
-        </Flexbox.Item>
-        <Flexbox.Item alignSelf='center'>
-          <Typography fontSize={13}>{String(selectedItem?.name)}</Typography>
-        </Flexbox.Item>
-      </Flexbox>
-    );
-  }, []);
+  const childrenA = useMemo(() => renderChildren(myItem), [myItem]);
+  const childrenB = useMemo(() => renderChildren(selectedItem), [selectedItem]);
 
   return (
     <Flexbox gap={20} flexDirection='column'>

@@ -13,28 +13,26 @@ interface HistoryListItemProps {
   onPress?: () => void;
 }
 
+const renderChildren = (children: string) => {
+  return (
+    <Flexbox alignItems={'center'} gap={10}>
+      <Flexbox.Item>
+        <Typography fontSize={15}>{children}</Typography>
+      </Flexbox.Item>
+    </Flexbox>
+  );
+};
+
 const HistoryListItem = ({ data, onPress }: HistoryListItemProps) => {
   const { myItem, selectedItem, ago } = data;
 
   const childrenA = useMemo(() => {
-    return (
-      <Flexbox alignItems={'center'} gap={10}>
-        <Flexbox.Item>
-          <Typography fontSize={15}>{myItem}</Typography>
-        </Flexbox.Item>
-      </Flexbox>
-    );
-  }, []);
+    renderChildren(myItem);
+  }, [myItem]);
 
   const childrenB = useMemo(() => {
-    return (
-      <Flexbox alignItems={'center'} gap={10}>
-        <Flexbox.Item>
-          <Typography fontSize={15}>{selectedItem}</Typography>
-        </Flexbox.Item>
-      </Flexbox>
-    );
-  }, []);
+    renderChildren(selectedItem);
+  }, [selectedItem]);
 
   return (
     <WithSwitchList

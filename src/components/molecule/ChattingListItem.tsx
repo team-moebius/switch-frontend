@@ -13,28 +13,26 @@ interface ChattingListItemProps {
   onPress?: () => void;
 }
 
+const renderChildren = (children: string) => {
+  return (
+    <Flexbox alignItems={'center'} gap={10}>
+      <Flexbox.Item>
+        <Typography fontSize={15}>{children}</Typography>
+      </Flexbox.Item>
+    </Flexbox>
+  );
+};
+
 const ChattingListItem = ({ data, onPress }: ChattingListItemProps) => {
   const { username, selectedItem, message, ago } = data;
 
   const childrenA = useMemo(() => {
-    return (
-      <Flexbox alignItems={'center'} gap={10}>
-        <Flexbox.Item>
-          <Typography fontSize={15}>{username}</Typography>
-        </Flexbox.Item>
-      </Flexbox>
-    );
-  }, []);
+    renderChildren(username);
+  }, [username]);
 
   const childrenB = useMemo(() => {
-    return (
-      <Flexbox alignItems={'center'} gap={10}>
-        <Flexbox.Item>
-          <Typography fontSize={15}>{selectedItem}</Typography>
-        </Flexbox.Item>
-      </Flexbox>
-    );
-  }, []);
+    renderChildren(selectedItem);
+  }, [selectedItem]);
 
   return (
     <WithSwitchList
