@@ -1,26 +1,69 @@
 import React from 'react';
 import { Flexbox, Image, Typography } from '../atom';
+import { ImageProps } from '../atom/Image';
+import { StyleSheet } from 'react-native';
 
-interface SwitchItemProps {
-  src: string;
-  name: string;
-  location: string;
+type modifiedImageProps = {
+  imageWidth?: ImageProps['width'];
+  imageHeight?: ImageProps['height'];
+  imageResizeMode?: ImageProps['resizeMode'];
+};
+interface SwitchItemProps extends modifiedImageProps {
+  src?: string;
+  name?: string;
+  location?: string;
+  itemJustify?: keyof typeof itemJustifyStyle;
+  nameFontSize?: keyof typeof nameFontSizeStyle;
 }
+
+const itemJustifyStyle = StyleSheet.create({
+  default: {
+    gap: 20,
+    alignItems: 'center',
+    justifyContent: undefined,
+  },
+  center: {
+    gap: 20,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});
+
+const nameFontSizeStyle = StyleSheet.create({
+  cardList: {
+    fontSize: 15,
+  },
+  switchList: {
+    fontSize: 17,
+  },
+});
 
 const SwitchItem = ({
   src = '',
   name = '',
   location = '',
+  itemJustify = 'default',
+  imageWidth,
+  imageHeight,
+  imageResizeMode,
+  nameFontSize = 'cardList',
 }: SwitchItemProps) => {
   return (
-    <Flexbox gap={20} alignItems={'center'}>
-      <Flexbox.Item>
-        <Image width={100} height={70} src={src} resizeMode={'center'} />
-      </Flexbox.Item>
+    <Flexbox {...itemJustifyStyle[itemJustify]}>
+      {src && (
+        <Flexbox.Item>
+          <Image
+            width={imageWidth}
+            height={imageHeight}
+            src={src}
+            resizeMode={imageResizeMode}
+          />
+        </Flexbox.Item>
+      )}
       <Flexbox.Item>
         <Flexbox flexDirection={'column'} gap={10}>
           <Flexbox.Item>
-            <Typography fontSize={15}>{name}</Typography>
+            <Typography {...nameFontSizeStyle[nameFontSize]}>{name}</Typography>
           </Flexbox.Item>
           {location && (
             <Flexbox.Item>

@@ -1,7 +1,7 @@
 import React, { ReactNode, useMemo } from 'react';
-import { Flexbox, Typography } from '../atom';
 import { WithSwitchList } from '../template/WithSwitchList';
 import { Pressable } from 'react-native';
+import { SwitchItem } from '../template';
 
 interface ChattingListItemProps {
   data: {
@@ -14,13 +14,7 @@ interface ChattingListItemProps {
 }
 
 const renderChildren = (children: string) => {
-  return (
-    <Flexbox alignItems={'center'} gap={10}>
-      <Flexbox.Item>
-        <Typography fontSize={15}>{children}</Typography>
-      </Flexbox.Item>
-    </Flexbox>
-  );
+  return <SwitchItem name={children} nameFontSize={'cardList'} />;
 };
 
 const ChattingListItem = ({ data, onPress }: ChattingListItemProps) => {

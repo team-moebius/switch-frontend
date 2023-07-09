@@ -14,9 +14,19 @@ interface TradingListItemProps {
 
 const TradingListItem = ({ data, onPress }: TradingListItemProps) => {
   const { src, title, location } = data;
+
   return (
     <Pressable onPress={onPress}>
-      <SwitchItem name={title} src={src} location={location} />
+      <SwitchItem
+        name={title}
+        src={src}
+        location={location}
+        itemJustify={'default'}
+        imageWidth={100}
+        imageHeight={70}
+        imageResizeMode={'center'}
+        nameFontSize={'cardList'}
+      />
     </Pressable>
   );
 };
