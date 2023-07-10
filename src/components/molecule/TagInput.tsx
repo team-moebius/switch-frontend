@@ -1,26 +1,37 @@
 import React from 'react';
-import { WithTag, WithTagProps } from '../template/WithTag';
 
-interface TagInputProps extends WithTagProps {}
+import { Tag } from '../atom';
+import { WithInputCreator } from '../template';
+
+import { TagProps } from '../atom/Tag';
+import { WithInputCreatorProps } from '../template/WithInputCreator';
+
+interface TagInputProps extends Omit<WithInputCreatorProps, 'items'> {
+  tags: TagProps[];
+}
 
 const TagInput = ({
-  value,
-  onChangeText,
-  placeholder = '스위치를 희망하는 물품이나 종류를 작성해주세요.',
-  width = 300,
+  placeholder,
   tags,
+  itemsWrap,
+  name,
+  onChangeText,
+  value,
+  width = 300,
   disabled,
-  tagsLimit,
 }: TagInputProps) => {
   return (
-    <WithTag
+    <WithInputCreator
+      width={width}
+      name={name}
+      placeholder={placeholder}
+      disabled={disabled}
       value={value}
       onChangeText={onChangeText}
-      placeholder={placeholder}
-      width={width}
-      tags={tags}
-      disabled={disabled}
-      tagsLimit={tagsLimit}
+      itemsWrap={itemsWrap}
+      items={tags.map(({ children, ...props }) => (
+        <Tag {...props}>{children}</Tag>
+      ))}
     />
   );
 };

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { TagInput } from 'src/components/molecule';
+import { Tag } from 'src/components/atom';
 
 export default {
   title: 'TagInput',
@@ -12,6 +13,7 @@ const Template: ComponentStory<typeof TagInput> = (args) => {
   const onChangeText = (inputValue: string) => {
     setValue(inputValue);
   };
+
   return <TagInput {...args} value={value} onChangeText={onChangeText} />;
 };
 
@@ -19,6 +21,11 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
+  placeholder: '스위치를 희망하는 물품이나 종류를 작성해주세요.',
+  itemsWrap: 'wrap',
+  name: 'tagInput',
+  width: 300,
+  disabled: false,
   tags: [
     {
       children: '여성의류',
@@ -30,7 +37,7 @@ story.args = {
     },
     {
       children: '패션',
-      backgroundColor: '#797979',
+      backgroundColor: '#7979ae',
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -38,7 +45,7 @@ story.args = {
     },
     {
       children: '잡화',
-      backgroundColor: '#797979',
+      backgroundColor: '#79ef79',
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -46,7 +53,7 @@ story.args = {
     },
     {
       children: '직거래',
-      backgroundColor: '#797979',
+      backgroundColor: '#37f3bc',
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -54,7 +61,7 @@ story.args = {
     },
     {
       children: '내고가능',
-      backgroundColor: '#797979',
+      backgroundColor: '#bfa89b',
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -62,13 +69,11 @@ story.args = {
     },
     {
       children: '아이폰이면더좋음',
-      backgroundColor: '#797979',
+      backgroundColor: '#ff480084',
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
       },
     },
   ],
-  disabled: false,
-  tagsLimit: 20,
 };
