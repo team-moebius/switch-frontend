@@ -8,7 +8,7 @@ type modifiedImageProps = {
   imageHeight?: ImageProps['height'];
   imageResizeMode?: ImageProps['resizeMode'];
 };
-interface SwitchItemProps extends modifiedImageProps {
+interface WithSwitchItemProps extends modifiedImageProps {
   src?: string;
   name?: string;
   location?: string;
@@ -38,7 +38,7 @@ const nameFontSizeStyle = StyleSheet.create({
   },
 });
 
-const SwitchItem = ({
+const WithSwitchItem = ({
   src = '',
   name = '',
   location = '',
@@ -47,7 +47,7 @@ const SwitchItem = ({
   imageHeight,
   imageResizeMode,
   nameFontSize = 'cardList',
-}: SwitchItemProps) => {
+}: WithSwitchItemProps) => {
   return (
     <Flexbox {...itemJustifyStyle[itemJustify]}>
       {src && (
@@ -76,4 +76,4 @@ const SwitchItem = ({
   );
 };
 
-export { SwitchItem, SwitchItemProps };
+export { WithSwitchItem, WithSwitchItemProps };

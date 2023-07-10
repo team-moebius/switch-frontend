@@ -1,7 +1,6 @@
 import React from 'react';
-import { Flexbox, Image, Typography } from '../atom';
 import { Pressable } from 'react-native';
-import { SwitchItem } from '../template';
+import { WithSwitchItem } from '../template';
 
 interface TradingListItemProps {
   data: {
@@ -17,7 +16,7 @@ const TradingListItem = ({ data, onPress }: TradingListItemProps) => {
 
   return (
     <Pressable onPress={onPress}>
-      <SwitchItem
+      <WithSwitchItem
         name={title}
         src={src}
         location={location}

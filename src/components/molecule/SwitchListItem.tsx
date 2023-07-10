@@ -1,7 +1,7 @@
 import React, { ReactNode, useMemo } from 'react';
-import { Button, Flexbox, Image, Typography } from '../atom';
+import { Button, Flexbox, Typography } from '../atom';
 import { SwitchList } from '../template/SwitchList';
-import { SwitchItem } from '../template';
+import { WithSwitchItem } from '../template';
 
 export type ItemDetail = {
   name?: string;
@@ -24,14 +24,14 @@ interface SwitchListItemProps {
 
 const renderChildren = (item: ItemDetail) => {
   return (
-    <SwitchItem
+    <WithSwitchItem
       name={String(item?.name)}
+      nameFontSize={'switchList'}
       src={String(item.src)}
       itemJustify={'center'}
       imageWidth={100}
       imageHeight={100}
       imageResizeMode={'center'}
-      nameFontSize={'switchList'}
     />
   );
 };

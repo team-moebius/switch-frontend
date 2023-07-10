@@ -89,3 +89,4 @@ const WithSwitchList = ({
 export { WithSwitchList, WithSwitchListProps };
 
 // ago, message properties는 WithSwitchList 안에 종속 되어있는게 좋을까?
+// SwitchList도 앞에 With가 붙어야할 것 같은데 WithSwitchList는 이름을 뭘로 해야하지?

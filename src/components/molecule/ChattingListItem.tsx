@@ -1,7 +1,7 @@
 import React, { ReactNode, useMemo } from 'react';
 import { WithSwitchList } from '../template/WithSwitchList';
 import { Pressable } from 'react-native';
-import { SwitchItem } from '../template';
+import { WithSwitchItem } from '../template';
 
 interface ChattingListItemProps {
   data: {
@@ -14,7 +14,7 @@ interface ChattingListItemProps {
 }
 
 const renderChildren = (children: string) => {
-  return <SwitchItem name={children} nameFontSize={'cardList'} />;
+  return <WithSwitchItem name={children} nameFontSize={'cardList'} />;
 };
 
 const ChattingListItem = ({ data, onPress }: ChattingListItemProps) => {
