@@ -1,13 +1,57 @@
 import React, { ReactNode } from 'react';
-import { Box, Flexbox, TextInput } from '../atom';
-import { InputProps } from '../atom/TextInput';
-import { FlexWrap } from 'src/@types/unit';
 
-interface WithInputCreatorProps extends InputProps {
+import { Flexbox, TextInput } from '../atom';
+import { InputProps } from '../atom/TextInput';
+
+import { FlexWrap, LengthElement } from 'src/@types/unit';
+import { StyleSheet } from 'react-native';
+
+interface WithInputCreatorProps extends Omit<InputProps, 'width'> {
   items: ReactNode;
   itemsWrap?: FlexWrap;
   children?: ReactNode;
+  width: LengthElement;
+  inputPosition?: keyof typeof inputPositionStyle;
+  itemsPosition?: keyof typeof itemsPositionStyle;
 }
+
+const inputPositionStyle = StyleSheet.create({
+  top: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  bottom: {
+    flexDirection: 'column-reverse',
+    alignItems: 'center',
+  },
+  left: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  right: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'center',
+  },
+});
+
+const itemsPositionStyle = StyleSheet.create({
+  top: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
+  bottom: {
+    flexDirection: 'column-reverse',
+    alignItems: 'center',
+  },
+  left: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+  },
+  right: {
+    flexDirection: 'row-reverse',
+    justifyContent: 'center',
+  },
+});
 
 const WithInputCreator = ({
   items,
@@ -18,21 +62,33 @@ const WithInputCreator = ({
   width,
   disabled,
   itemsWrap = 'wrap',
+  children,
+  inputPosition = 'top',
+  itemsPosition = 'left',
 }: WithInputCreatorProps) => {
   return (
-    <Box width={width}>
-      <TextInput
-        name={name}
-        placeholder={placeholder}
-        onChangeText={onChangeText}
-        value={value}
-        width={width}
-        disabled={disabled}
-      />
-      <Flexbox gap={5} flexWrap={itemsWrap}>
-        {items}
-      </Flexbox>
-    </Box>
+    <Flexbox width={width} {...inputPositionStyle[inputPosition]} gap={5}>
+      <Flexbox.Item alignSelf='stretch' flex={1}>
+        <TextInput
+          name={name}
+          placeholder={placeholder}
+          onChangeText={onChangeText}
+          value={value}
+          width={'100%'}
+          disabled={disabled}
+        />
+      </Flexbox.Item>
+      <Flexbox.Item flex={1}>
+        <Flexbox {...itemsPositionStyle[itemsPosition]} gap={5}>
+          <Flexbox.Item flex={1}>
+            <Flexbox gap={5} flexWrap={itemsWrap}>
+              {items}
+            </Flexbox>
+          </Flexbox.Item>
+          {children ? <Flexbox.Item>{children}</Flexbox.Item> : null}
+        </Flexbox>
+      </Flexbox.Item>
+    </Flexbox>
   );
 };
 

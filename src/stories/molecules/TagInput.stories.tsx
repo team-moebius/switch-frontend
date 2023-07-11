@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
 import { TagInput } from 'src/components/molecule';
-import { Tag } from 'src/components/atom';
 
 export default {
   title: 'TagInput',
@@ -24,8 +24,8 @@ story.args = {
   placeholder: '스위치를 희망하는 물품이나 종류를 작성해주세요.',
   itemsWrap: 'wrap',
   name: 'tagInput',
-  width: 300,
   disabled: false,
+  width: 350,
   tags: [
     {
       children: '여성의류',

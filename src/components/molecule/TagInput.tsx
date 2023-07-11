@@ -12,13 +12,16 @@ interface TagInputProps extends Omit<WithInputCreatorProps, 'items'> {
 
 const TagInput = ({
   placeholder,
-  tags,
-  itemsWrap,
   name,
   onChangeText,
   value,
-  width = 300,
   disabled,
+  itemsWrap,
+  inputPosition,
+  itemsPosition: tagsPosition,
+  width,
+  children,
+  tags,
 }: TagInputProps) => {
   return (
     <WithInputCreator
@@ -29,6 +32,9 @@ const TagInput = ({
       value={value}
       onChangeText={onChangeText}
       itemsWrap={itemsWrap}
+      inputPosition={inputPosition}
+      itemsPosition={tagsPosition}
+      children={children}
       items={tags.map(({ children, ...props }) => (
         <Tag {...props}>{children}</Tag>
       ))}

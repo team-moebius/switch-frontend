@@ -1,29 +1,43 @@
 import React from 'react';
-import { WithTag, WithTagProps } from '../template/WithTag';
 
-// interface
-interface HashTagInputProps extends WithTagProps {}
+import { Tag } from '../atom';
+import { WithInputCreator } from '../template';
 
-// default style
+import { TagProps } from '../atom/Tag';
+import { WithInputCreatorProps } from '../template/WithInputCreator';
+
+interface HashTagInputProps extends Omit<WithInputCreatorProps, 'items'> {
+  hashTags: TagProps[];
+}
 
 const HashTagInput = ({
-  value,
+  placeholder,
+  name,
   onChangeText,
-  placeholder = '물품에 대한 해시태그를 작성해주세요.(선택사항)',
-  width = 300,
-  tags,
+  value,
   disabled,
-  tagsLimit,
+  itemsWrap,
+  inputPosition,
+  itemsPosition: tagsPosition,
+  width,
+  children,
+  hashTags,
 }: HashTagInputProps) => {
   return (
-    <WithTag
+    <WithInputCreator
+      width={width}
+      name={name}
+      placeholder={placeholder}
+      disabled={disabled}
       value={value}
       onChangeText={onChangeText}
-      placeholder={placeholder}
-      width={width}
-      tags={tags}
-      disabled={disabled}
-      tagsLimit={tagsLimit}
+      itemsWrap={itemsWrap}
+      inputPosition={inputPosition}
+      itemsPosition={tagsPosition}
+      children={children}
+      items={hashTags.map(({ children, ...props }) => (
+        <Tag {...props}>{children}</Tag>
+      ))}
     />
   );
 };

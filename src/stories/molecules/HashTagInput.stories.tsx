@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { HashTagInput } from 'src/components/molecule/HashTagInput';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
+
+import { Typography } from 'src/components/atom';
+import { HashTagInput } from 'src/components/molecule';
 
 export default {
   title: 'HashTagInput',
@@ -9,17 +11,33 @@ export default {
 
 const Template: ComponentStory<typeof HashTagInput> = (args) => {
   const [value, setValue] = useState<string>('');
+
   const onChangeText = (inputValue: string) => {
     setValue(inputValue);
   };
-  return <HashTagInput {...args} value={value} onChangeText={onChangeText} />;
+
+  return (
+    <HashTagInput
+      {...args}
+      value={value}
+      onChangeText={onChangeText}
+      children={
+        <Typography color={'black'} children={`${args.hashTags.length}/20`} />
+      }
+    />
+  );
 };
 
 export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  tags: [
+  placeholder: '물품에 대한 해시태그를 작성해주세요.(선택사항)',
+  disabled: false,
+  itemsWrap: 'wrap',
+  name: 'tagInput',
+  width: 350,
+  hashTags: [
     {
       children: '#여성의류',
       backgroundColor: 'transparent',
@@ -69,6 +87,4 @@ story.args = {
       },
     },
   ],
-  disabled: false,
-  tagsLimit: 20,
 };
