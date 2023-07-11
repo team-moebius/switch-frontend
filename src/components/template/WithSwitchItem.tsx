@@ -14,10 +14,10 @@ interface WithSwitchItemProps extends modifiedImageProps {
   location?: string;
   itemJustify?: keyof typeof itemJustifyStyle;
   nameFontSize?: keyof typeof nameFontSizeStyle;
-  descPosition?: keyof typeof descPositionStyle;
+  descDirection?: keyof typeof descDirectionStyle;
 }
 
-const itemJustifyStyle = StyleSheet.create({
+export const itemJustifyStyle = StyleSheet.create({
   left: {
     alignItems: 'center',
     justifyContent: undefined,
@@ -32,7 +32,7 @@ const itemJustifyStyle = StyleSheet.create({
   },
 });
 
-const nameFontSizeStyle = StyleSheet.create({
+export const nameFontSizeStyle = StyleSheet.create({
   cardList: {
     fontSize: 15,
   },
@@ -41,7 +41,7 @@ const nameFontSizeStyle = StyleSheet.create({
   },
 });
 
-const descPositionStyle = StyleSheet.create({
+export const descDirectionStyle = StyleSheet.create({
   column: {
     flexDirection: 'column',
   },
@@ -60,7 +60,7 @@ const WithSwitchItem = ({
   imageHeight,
   imageResizeMode,
   nameFontSize = 'cardList',
-  descPosition = 'row',
+  descDirection = 'row',
 }: WithSwitchItemProps) => {
   return (
     <Flexbox {...itemJustifyStyle[itemJustify]} gap={20}>
@@ -75,7 +75,7 @@ const WithSwitchItem = ({
         </Flexbox.Item>
       )}
       <Flexbox.Item>
-        <Flexbox {...descPositionStyle[descPosition]} gap={10}>
+        <Flexbox {...descDirectionStyle[descDirection]} gap={10}>
           <Flexbox.Item>
             <Typography {...nameFontSizeStyle[nameFontSize]}>{name}</Typography>
           </Flexbox.Item>

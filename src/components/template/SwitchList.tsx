@@ -13,7 +13,7 @@ interface SwitchListProps extends ModifiedIconProps {
   listDirection?: keyof typeof listDirectionStyle;
 }
 
-const listDirectionStyle = StyleSheet.create({
+export const listDirectionStyle = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',

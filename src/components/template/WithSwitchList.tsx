@@ -9,10 +9,10 @@ interface WithSwitchListProps extends SwitchListProps {
   isUnread?: boolean;
   agoAlign?: keyof typeof agoAlignStyle;
   agoPosition?: keyof typeof agoPositionStyle;
-  messagePosition?: keyof typeof messageDirectionStyle;
+  messagePosition?: keyof typeof messagePositionStyle;
 }
 
-const agoPositionStyle = StyleSheet.create({
+export const agoPositionStyle = StyleSheet.create({
   top: {
     flexDirection: 'column-reverse',
     gap: 10,
@@ -31,7 +31,7 @@ const agoPositionStyle = StyleSheet.create({
   },
 });
 
-const agoAlignStyle = StyleSheet.create({
+export const agoAlignStyle = StyleSheet.create({
   noAlign: {
     alignSelf: undefined,
   },
@@ -40,7 +40,7 @@ const agoAlignStyle = StyleSheet.create({
   },
 });
 
-const messageDirectionStyle = StyleSheet.create({
+export const messagePositionStyle = StyleSheet.create({
   top: {
     flexDirection: 'column-reverse',
   },
@@ -71,7 +71,7 @@ const WithSwitchList = ({
   return (
     <Flexbox {...agoPositionStyle[agoPosition]}>
       <Flexbox.Item flex={1}>
-        <Flexbox gap={10} {...messageDirectionStyle[messagePosition]}>
+        <Flexbox gap={10} {...messagePositionStyle[messagePosition]}>
           <Flexbox.Item>
             <SwitchList
               childrenA={childrenA}
@@ -81,7 +81,7 @@ const WithSwitchList = ({
               iconSize={20}
             />
           </Flexbox.Item>
-          <Flexbox.Item>
+          <Flexbox.Item flex={1}>
             {message && (
               <Flexbox gap={10}>
                 {isUnread && (

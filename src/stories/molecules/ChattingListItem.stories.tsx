@@ -25,4 +25,8 @@ This is usually because the modules which have changed (and their parents) do no
   onPress: () => {
     alert('list click');
   },
+  agoPosition: 'right',
+  agoAlign: 'center',
+  listDirection: 'row',
+  messagePosition: 'bottom',
 };

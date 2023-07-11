@@ -23,4 +23,7 @@ story.args = {
   onPress: () => {
     alert('list click');
   },
+  descDirection: 'column',
+  itemJustify: 'left',
+  nameFontSize: 'cardList',
 };

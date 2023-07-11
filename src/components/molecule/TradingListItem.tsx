@@ -1,6 +1,11 @@
 import React from 'react';
 import { Pressable } from 'react-native';
 import { WithSwitchItem } from '../template';
+import {
+  descDirectionStyle,
+  itemJustifyStyle,
+  nameFontSizeStyle,
+} from '../template/WithSwitchItem';
 
 interface TradingListItemProps {
   data: {
@@ -9,9 +14,18 @@ interface TradingListItemProps {
     location: string;
   };
   onPress?: () => void;
+  descDirection?: keyof typeof descDirectionStyle;
+  itemJustify?: keyof typeof itemJustifyStyle;
+  nameFontSize?: keyof typeof nameFontSizeStyle;
 }
 
-const TradingListItem = ({ data, onPress }: TradingListItemProps) => {
+const TradingListItem = ({
+  data,
+  onPress,
+  descDirection,
+  itemJustify,
+  nameFontSize,
+}: TradingListItemProps) => {
   const { src, title, location } = data;
 
   return (
@@ -20,12 +34,12 @@ const TradingListItem = ({ data, onPress }: TradingListItemProps) => {
         name={title}
         src={src}
         location={location}
-        itemJustify={'left'}
         imageWidth={100}
         imageHeight={70}
         imageResizeMode={'center'}
-        nameFontSize={'cardList'}
-        descPosition={'column'}
+        itemJustify={itemJustify}
+        nameFontSize={nameFontSize}
+        descDirection={descDirection}
       />
     </Pressable>
   );

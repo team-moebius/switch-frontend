@@ -1,7 +1,11 @@
-import React, { ReactNode, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import { Button, Flexbox, Typography } from '../atom';
-import { SwitchList } from '../template/SwitchList';
+import { SwitchList, listDirectionStyle } from '../template/SwitchList';
 import { WithSwitchItem } from '../template';
+import {
+  itemJustifyStyle,
+  nameFontSizeStyle,
+} from '../template/WithSwitchItem';
 
 export type ItemDetail = {
   name?: string;
@@ -20,15 +24,19 @@ type MyData = {
 interface SwitchListItemProps {
   data: MyData;
   onPress: () => void;
+  itemJustify?: keyof typeof itemJustifyStyle;
+  nameFontSize?: keyof typeof nameFontSizeStyle;
+  listDirection?: keyof typeof listDirectionStyle;
 }
 
-const renderChildren = (item: ItemDetail) => {
+const renderChildren = (item: any) => {
+  const { myItem, itemJustify, nameFontSize } = item;
   return (
     <WithSwitchItem
-      name={item?.name}
-      src={item.src}
-      nameFontSize={'switchList'}
-      itemJustify={'center'}
+      name={myItem?.name}
+      src={myItem?.src}
+      nameFontSize={nameFontSize}
+      itemJustify={itemJustify}
       imageWidth={100}
       imageHeight={100}
       imageResizeMode={'center'}
@@ -36,11 +44,23 @@ const renderChildren = (item: ItemDetail) => {
   );
 };
 
-const SwitchListItem = ({ data, onPress }: SwitchListItemProps) => {
+const SwitchListItem = ({
+  data,
+  onPress,
+  listDirection,
+  itemJustify,
+  nameFontSize,
+}: SwitchListItemProps) => {
   const { myItem, selectedItem } = data;
 
-  const childrenA = useMemo(() => renderChildren(myItem), [myItem]);
-  const childrenB = useMemo(() => renderChildren(selectedItem), [selectedItem]);
+  const childrenA = useMemo(
+    () => renderChildren({ myItem, itemJustify, nameFontSize }),
+    [myItem]
+  );
+  const childrenB = useMemo(
+    () => renderChildren({ selectedItem, itemJustify, nameFontSize }),
+    [selectedItem]
+  );
 
   return (
     <Flexbox gap={20} flexDirection={'column'}>
@@ -48,7 +68,7 @@ const SwitchListItem = ({ data, onPress }: SwitchListItemProps) => {
         <SwitchList
           childrenA={childrenA}
           childrenB={childrenB}
-          listDirection={'column'}
+          listDirection={listDirection}
           iconName={'code-outline'}
           iconSize={20}
         />

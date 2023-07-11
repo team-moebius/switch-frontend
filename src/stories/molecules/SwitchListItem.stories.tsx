@@ -28,4 +28,7 @@ story.args = {
   onPress: () => {
     window.alert('링크 이동');
   },
+  itemJustify: 'center',
+  nameFontSize: 'switchList',
+  listDirection: 'column',
 };
