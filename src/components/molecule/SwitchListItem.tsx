@@ -25,9 +25,9 @@ interface SwitchListItemProps {
 const renderChildren = (item: ItemDetail) => {
   return (
     <WithSwitchItem
-      name={String(item?.name)}
+      name={item?.name}
+      src={item.src}
       nameFontSize={'switchList'}
-      src={String(item.src)}
       itemJustify={'center'}
       imageWidth={100}
       imageHeight={100}
@@ -65,5 +65,3 @@ const SwitchListItem = ({ data, onPress }: SwitchListItemProps) => {
 };
 
 export { SwitchListItem, SwitchListItemProps };
-
-//Flexbox.Item은 Flexbox 안에 들어가는 요소를 모두 감싸주어야 하는 건지?

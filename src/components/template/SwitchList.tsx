@@ -14,27 +14,25 @@ interface SwitchListProps extends ModifiedIconProps {
 }
 
 const listDirectionStyle = StyleSheet.create({
-  default: {
-    flexDirection: undefined,
+  row: {
+    flexDirection: 'row',
     alignItems: 'center',
-    gap: 10,
   },
   column: {
     flexDirection: 'column',
     alignItems: 'center',
-    gap: 10,
   },
 });
 
 const SwitchList = ({
   childrenA,
   childrenB,
-  listDirection = 'default',
+  listDirection = 'row',
   iconName = 'code-outline',
   iconSize = 20,
 }: SwitchListProps) => {
   return (
-    <Flexbox {...listDirectionStyle[listDirection]}>
+    <Flexbox {...listDirectionStyle[listDirection]} gap={10}>
       <Flexbox.Item>{childrenA}</Flexbox.Item>
       <Flexbox.Item>
         <Icon name={iconName} size={iconSize} />

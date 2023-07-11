@@ -33,9 +33,9 @@ const HistoryListItem = ({ data, onPress }: HistoryListItemProps) => {
         childrenA={childrenA as ReactNode}
         childrenB={childrenB as ReactNode}
         ago={ago}
-        agoPosition={'column'}
-        agoAlign={'default'}
-        listDirection={'default'}
+        agoPosition={'bottom'}
+        agoAlign={'noAlign'}
+        listDirection={'row'}
       />
     </Pressable>
   );

@@ -20,11 +20,12 @@ const TradingListItem = ({ data, onPress }: TradingListItemProps) => {
         name={title}
         src={src}
         location={location}
-        itemJustify={'default'}
+        itemJustify={'left'}
         imageWidth={100}
         imageHeight={70}
         imageResizeMode={'center'}
         nameFontSize={'cardList'}
+        descPosition={'column'}
       />
     </Pressable>
   );

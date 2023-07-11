@@ -35,9 +35,10 @@ const ChattingListItem = ({ data, onPress }: ChattingListItemProps) => {
         childrenB={childrenB as ReactNode}
         message={message}
         ago={ago}
-        agoPosition={'default'}
+        agoPosition={'right'}
         agoAlign={'center'}
-        listDirection={'default'}
+        listDirection={'row'}
+        messagePosition={'bottom'}
       />
     </Pressable>
   );

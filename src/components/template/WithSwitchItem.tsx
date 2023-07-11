@@ -14,18 +14,21 @@ interface WithSwitchItemProps extends modifiedImageProps {
   location?: string;
   itemJustify?: keyof typeof itemJustifyStyle;
   nameFontSize?: keyof typeof nameFontSizeStyle;
+  descPosition?: keyof typeof descPositionStyle;
 }
 
 const itemJustifyStyle = StyleSheet.create({
-  default: {
-    gap: 20,
+  left: {
     alignItems: 'center',
     justifyContent: undefined,
   },
   center: {
-    gap: 20,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  right: {
+    alignItems: 'center',
+    justifyContent: 'flex-end',
   },
 });
 
@@ -38,18 +41,29 @@ const nameFontSizeStyle = StyleSheet.create({
   },
 });
 
+const descPositionStyle = StyleSheet.create({
+  column: {
+    flexDirection: 'column',
+  },
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+});
+
 const WithSwitchItem = ({
   src = '',
   name = '',
   location = '',
-  itemJustify = 'default',
+  itemJustify = 'left',
   imageWidth,
   imageHeight,
   imageResizeMode,
   nameFontSize = 'cardList',
+  descPosition = 'row',
 }: WithSwitchItemProps) => {
   return (
-    <Flexbox {...itemJustifyStyle[itemJustify]}>
+    <Flexbox {...itemJustifyStyle[itemJustify]} gap={20}>
       {src && (
         <Flexbox.Item>
           <Image
@@ -61,7 +75,7 @@ const WithSwitchItem = ({
         </Flexbox.Item>
       )}
       <Flexbox.Item>
-        <Flexbox flexDirection={'column'} gap={10}>
+        <Flexbox {...descPositionStyle[descPosition]} gap={10}>
           <Flexbox.Item>
             <Typography {...nameFontSizeStyle[nameFontSize]}>{name}</Typography>
           </Flexbox.Item>
