@@ -78,7 +78,7 @@ const WithInputCreator = ({
           disabled={disabled}
         />
       </Flexbox.Item>
-      <Flexbox.Item flex={1}>
+      <Flexbox.Item alignSelf='stretch' flex={1}>
         <Flexbox {...itemsPositionStyle[itemsPosition]} gap={5}>
           <Flexbox.Item flex={1}>
             <Flexbox gap={5} flexWrap={itemsWrap}>
