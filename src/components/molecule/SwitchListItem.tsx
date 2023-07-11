@@ -46,8 +46,8 @@ const SwitchListItem = ({ data, onPress }: SwitchListItemProps) => {
     <Flexbox gap={20} flexDirection={'column'}>
       <Flexbox.Item>
         <SwitchList
-          childrenA={childrenA as ReactNode}
-          childrenB={childrenB as ReactNode}
+          childrenA={childrenA}
+          childrenB={childrenB}
           listDirection={'column'}
           iconName={'code-outline'}
           iconSize={20}

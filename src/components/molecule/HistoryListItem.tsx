@@ -30,8 +30,8 @@ const HistoryListItem = ({ data, onPress }: HistoryListItemProps) => {
   return (
     <Pressable onPress={onPress}>
       <WithSwitchList
-        childrenA={childrenA as ReactNode}
-        childrenB={childrenB as ReactNode}
+        childrenA={childrenA}
+        childrenB={childrenB}
         ago={ago}
         agoPosition={'bottom'}
         agoAlign={'noAlign'}

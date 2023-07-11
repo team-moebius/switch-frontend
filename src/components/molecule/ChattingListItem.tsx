@@ -31,8 +31,8 @@ const ChattingListItem = ({ data, onPress }: ChattingListItemProps) => {
   return (
     <Pressable onPress={onPress}>
       <WithSwitchList
-        childrenA={childrenA as ReactNode}
-        childrenB={childrenB as ReactNode}
+        childrenA={childrenA}
+        childrenB={childrenB}
         message={message}
         ago={ago}
         agoPosition={'right'}
