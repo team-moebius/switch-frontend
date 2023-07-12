@@ -27,4 +27,4 @@ const TextInput = ({ width, ...props }: InputProps) => {
   return <BasicInput {...props} style={[style.defaultInput, { width }]} />;
 };
 
-export { TextInput };
+export { TextInput, InputProps };

@@ -19,7 +19,7 @@ interface CheckProps {
   type?: keyof typeof typeStyle;
   boxType?: keyof typeof boxTypeStyle;
   size?: number;
-  checked?: boolean;
+  checked: boolean;
   onPress?: () => void;
   innerComponent?: FunctionComponent;
 }
