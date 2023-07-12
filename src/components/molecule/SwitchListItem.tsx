@@ -2,10 +2,8 @@ import React, { useMemo } from 'react';
 import { Button, Flexbox, Typography } from '../atom';
 import { SwitchList, listDirectionStyle } from '../template/SwitchList';
 import { WithSwitchItem } from '../template';
-import {
-  itemJustifyStyle,
-  nameFontSizeStyle,
-} from '../template/WithSwitchItem';
+import { nameFontSizeStyle } from '../template/WithSwitchItem';
+import { FlexAlign, FlexDirection, JustifyContent } from 'src/@types/unit';
 
 export type ItemDetail = {
   name?: string;
@@ -24,19 +22,22 @@ type MyData = {
 interface SwitchListItemProps {
   data: MyData;
   onPress: () => void;
-  itemJustify?: keyof typeof itemJustifyStyle;
   nameFontSize?: keyof typeof nameFontSizeStyle;
   listDirection?: keyof typeof listDirectionStyle;
+  flexDirection?: FlexDirection;
+  alignItems?: FlexAlign;
+  justifyContent?: JustifyContent;
 }
 
-const renderChildren = (item: any) => {
-  const { myItem, itemJustify, nameFontSize } = item;
+const renderChildren = (
+  item: ItemDetail,
+  nameFontSize: keyof typeof nameFontSizeStyle = 'switchList'
+) => {
   return (
     <WithSwitchItem
-      name={myItem?.name}
-      src={myItem?.src}
+      name={item?.name}
+      src={item?.src}
       nameFontSize={nameFontSize}
-      itemJustify={itemJustify}
       imageWidth={100}
       imageHeight={100}
       imageResizeMode={'center'}
@@ -48,22 +49,29 @@ const SwitchListItem = ({
   data,
   onPress,
   listDirection,
-  itemJustify,
   nameFontSize,
+  flexDirection,
+  alignItems,
+  justifyContent,
 }: SwitchListItemProps) => {
   const { myItem, selectedItem } = data;
 
   const childrenA = useMemo(
-    () => renderChildren({ myItem, itemJustify, nameFontSize }),
-    [myItem]
+    () => renderChildren(myItem, nameFontSize),
+    [myItem, nameFontSize]
   );
   const childrenB = useMemo(
-    () => renderChildren({ selectedItem, itemJustify, nameFontSize }),
-    [selectedItem]
+    () => renderChildren(selectedItem, nameFontSize),
+    [selectedItem, nameFontSize]
   );
 
   return (
-    <Flexbox gap={20} flexDirection={'column'}>
+    <Flexbox
+      gap={20}
+      flexDirection={flexDirection}
+      alignItems={alignItems}
+      justifyContent={justifyContent}
+    >
       <Flexbox.Item>
         <SwitchList
           childrenA={childrenA}
