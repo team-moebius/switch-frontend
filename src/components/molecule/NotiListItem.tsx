@@ -6,7 +6,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 interface NotiListItemProps {
   data: {
     ago?: string;
-    children?: string;
+    notification?: string;
     iconName?: keyof typeof Ionicons.glyphMap;
     iconSize?: 20 | 24 | 32;
   };
@@ -16,7 +16,7 @@ interface NotiListItemProps {
 const NotiListItem = ({ data, onPress }: NotiListItemProps) => {
   const {
     ago = '',
-    children = '',
+    notification = '',
     iconName = 'megaphone-outline',
     iconSize = 20,
   } = data;
@@ -28,7 +28,7 @@ const NotiListItem = ({ data, onPress }: NotiListItemProps) => {
             <Icon name={iconName} size={iconSize} />
           </Flexbox.Item>
           <Flexbox.Item alignSelf={'center'}>
-            <Typography fontSize={13}>{children}</Typography>
+            <Typography fontSize={13}>{notification}</Typography>
           </Flexbox.Item>
         </Flexbox>
         <Flexbox.Item>
