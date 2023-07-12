@@ -27,7 +27,7 @@ const NotiListItem = ({ data, onPress }: NotiListItemProps) => {
           <Flexbox.Item>
             <Icon name={iconName} size={iconSize} />
           </Flexbox.Item>
-          <Flexbox.Item alignSelf={'center'} flexWrap={'wrap'}>
+          <Flexbox.Item alignSelf={'center'}>
             <Typography fontSize={13}>{children}</Typography>
           </Flexbox.Item>
         </Flexbox>
