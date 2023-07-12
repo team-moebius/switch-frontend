@@ -15,12 +15,8 @@ type Data = {
   selectedItem: ItemDetail;
 };
 
-type MyData = {
-  [Key in keyof Data]: ItemDetail;
-};
-
 interface SwitchListItemProps {
-  data: MyData;
+  data: Data;
   onPress: () => void;
   nameFontSize?: keyof typeof nameFontSizeStyle;
   listDirection?: keyof typeof listDirectionStyle;
