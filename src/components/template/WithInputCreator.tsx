@@ -9,7 +9,7 @@ import { StyleSheet } from 'react-native';
 interface WithInputCreatorProps extends Omit<InputProps, 'width'> {
   items: ReactNode;
   itemsWrap?: FlexWrap;
-  children?: ReactNode;
+  functionalElement?: ReactNode;
   width: LengthElement;
   inputPosition?: keyof typeof inputPositionStyle;
   itemsPosition?: keyof typeof itemsPositionStyle;
@@ -62,7 +62,7 @@ const WithInputCreator = ({
   width,
   disabled,
   itemsWrap = 'wrap',
-  children,
+  functionalElement,
   inputPosition = 'top',
   itemsPosition = 'left',
 }: WithInputCreatorProps) => {
@@ -85,7 +85,9 @@ const WithInputCreator = ({
               {items}
             </Flexbox>
           </Flexbox.Item>
-          {children ? <Flexbox.Item>{children}</Flexbox.Item> : null}
+          {functionalElement ? (
+            <Flexbox.Item>{functionalElement}</Flexbox.Item>
+          ) : null}
         </Flexbox>
       </Flexbox.Item>
     </Flexbox>

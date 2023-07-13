@@ -13,7 +13,7 @@ export default {
 const Template: ComponentStory<typeof HashTagInput> = (args) => {
   const [value, setValue] = useState<string>('');
   const [showMore, setShowMore] = useState<boolean>(false);
-  const mappedTags = args.hashTags.slice(0, 3);
+  const slicedHashTags = args.hashTags.slice(0, 3);
 
   const onChangeText = (inputValue: string) => {
     setValue(inputValue);
@@ -29,23 +29,20 @@ const Template: ComponentStory<typeof HashTagInput> = (args) => {
       value={value}
       onChangeText={onChangeText}
       hashTags={
-        showMore ? (args.hashTags as TagProps[]) : (mappedTags as TagProps[])
+        showMore
+          ? (args.hashTags as TagProps[])
+          : (slicedHashTags as TagProps[])
       }
-      children={
-        <>
-          <Flexbox
-            flexDirection='column'
-            justifyContent='space-between'
-            height={'100%'}
-            gap={5}
-          >
-            <Typography
-              color={'black'}
-              children={`${args.hashTags.length}/30`}
-            />
-            <Button title='더보기' onPress={showMoreHandler} />
-          </Flexbox>
-        </>
+      functionalElement={
+        <Flexbox
+          flexDirection='column'
+          justifyContent='space-between'
+          height={'100%'}
+          gap={5}
+        >
+          <Typography color={'black'} children={`${args.hashTags.length}/30`} />
+          <Button title='더보기' onPress={showMoreHandler} />
+        </Flexbox>
       }
     />
   );
