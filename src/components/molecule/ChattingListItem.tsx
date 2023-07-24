@@ -1,13 +1,8 @@
 import React, { useMemo } from 'react';
-import {
-  WithSwitchList,
-  agoAlignStyle,
-  agoPositionStyle,
-  messagePositionStyle,
-} from '../template/WithSwitchList';
 import { Pressable } from 'react-native';
-import { WithSwitchItem } from '../template';
-import { listDirectionStyle } from '../template/SwitchList';
+import { WithImage } from '../template';
+import { Flexbox, Icon, Typography } from '../atom';
+import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
 
 interface ChattingListItemProps {
   data: {
@@ -15,27 +10,22 @@ interface ChattingListItemProps {
     selectedItem: string;
     message: string;
     ago: string;
+    isUnread: boolean;
   };
   onPress?: () => void;
-  agoPosition?: keyof typeof agoPositionStyle;
-  agoAlign?: keyof typeof agoAlignStyle;
-  messagePosition?: keyof typeof messagePositionStyle;
-  listDirection?: keyof typeof listDirectionStyle;
+  mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
 
 const renderChildren = (children: string) => {
-  return <WithSwitchItem name={children} nameFontSize={'cardList'} />;
+  return <WithImage name={children} nameFontSize={'cardList'} />;
 };
 
 const ChattingListItem = ({
   data,
   onPress,
-  agoPosition,
-  agoAlign,
-  listDirection,
-  messagePosition,
+  mirrorDirection,
 }: ChattingListItemProps) => {
-  const { username, selectedItem, message, ago } = data;
+  const { username, selectedItem, message, ago, isUnread = false } = data;
 
   const childrenA = useMemo(() => {
     return renderChildren(username);
@@ -47,16 +37,47 @@ const ChattingListItem = ({
 
   return (
     <Pressable onPress={onPress}>
-      <WithSwitchList
-        childrenA={childrenA}
-        childrenB={childrenB}
-        message={message}
-        ago={ago}
-        agoPosition={agoPosition}
-        agoAlign={agoAlign}
-        listDirection={listDirection}
-        messagePosition={messagePosition}
-      />
+      <Flexbox flexDirection={'row'} gap={20}>
+        <Flexbox.Item flex={1}>
+          <Flexbox gap={10} flexDirection={'column'}>
+            <Flexbox.Item>
+              <WithMirror
+                children={[childrenA, childrenB]}
+                mirrorDirection={mirrorDirection}
+                centerAxis={<Icon name={'code-outline'} size={20} />}
+              />
+            </Flexbox.Item>
+            <Flexbox.Item flex={1}>
+              {message && (
+                <Flexbox gap={10}>
+                  {isUnread && (
+                    <Flexbox.Item
+                      width={6}
+                      height={6}
+                      backgroundColor={'red'}
+                      borderRadius={50}
+                    />
+                  )}
+                  <Flexbox.Item flex={1}>
+                    <Typography
+                      fontSize={15}
+                      numberOfLines={1}
+                      ellipsizeMode={'tail'}
+                    >
+                      {message}
+                    </Typography>
+                  </Flexbox.Item>
+                </Flexbox>
+              )}
+            </Flexbox.Item>
+          </Flexbox>
+        </Flexbox.Item>
+        {ago && (
+          <Flexbox.Item alignSelf={'center'}>
+            <Typography fontSize={13}>{ago}</Typography>
+          </Flexbox.Item>
+        )}
+      </Flexbox>
     </Pressable>
   );
 };

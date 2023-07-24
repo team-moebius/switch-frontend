@@ -8,7 +8,7 @@ type modifiedImageProps = {
   imageHeight?: ImageProps['height'];
   imageResizeMode?: ImageProps['resizeMode'];
 };
-interface WithSwitchItemProps extends modifiedImageProps {
+interface WithImageProps extends modifiedImageProps {
   src?: string;
   name?: string;
   location?: string;
@@ -51,17 +51,17 @@ export const descDirectionStyle = StyleSheet.create({
   },
 });
 
-const WithSwitchItem = ({
+const WithImage = ({
   src = '',
   name = '',
   location = '',
   itemJustify = 'left',
-  imageWidth,
-  imageHeight,
-  imageResizeMode,
+  imageWidth = 100,
+  imageHeight = 70,
+  imageResizeMode = 'center',
   nameFontSize = 'cardList',
   descDirection = 'row',
-}: WithSwitchItemProps) => {
+}: WithImageProps) => {
   return (
     <Flexbox {...itemJustifyStyle[itemJustify]} gap={20}>
       {src && (
@@ -90,4 +90,4 @@ const WithSwitchItem = ({
   );
 };
 
-export { WithSwitchItem, WithSwitchItemProps };
+export { WithImage, WithImageProps };

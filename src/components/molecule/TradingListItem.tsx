@@ -1,11 +1,11 @@
 import React from 'react';
 import { Pressable } from 'react-native';
-import { WithSwitchItem } from '../template';
+import { WithImage } from '../template';
 import {
   descDirectionStyle,
   itemJustifyStyle,
   nameFontSizeStyle,
-} from '../template/WithSwitchItem';
+} from '../template/WithImage';
 
 interface TradingListItemProps {
   data: {
@@ -30,7 +30,7 @@ const TradingListItem = ({
 
   return (
     <Pressable onPress={onPress}>
-      <WithSwitchItem
+      <WithImage
         name={title}
         src={src}
         location={location}

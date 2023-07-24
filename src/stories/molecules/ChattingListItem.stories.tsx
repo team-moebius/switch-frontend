@@ -21,12 +21,10 @@ story.args = {
     message: `The following modules couldn't be hot updated: (Full reload needed)
 This is usually because the modules which have changed (and their parents) do not know how to hot reload themselves. See https://webpack.js.org/concepts/hot-module-replacement/ for more details.`,
     ago: '20분전',
+    isUnread: true,
   },
   onPress: () => {
     alert('list click');
   },
-  agoPosition: 'right',
-  agoAlign: 'center',
-  listDirection: 'row',
-  messagePosition: 'bottom',
+  mirrorDirection: 'row',
 };

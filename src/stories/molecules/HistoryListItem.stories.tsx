@@ -23,7 +23,5 @@ story.args = {
   onPress: () => {
     alert('list click');
   },
-  agoPosition: 'bottom',
-  agoAlign: 'noAlign',
-  listDirection: 'row',
+  mirrorDirection: 'row',
 };

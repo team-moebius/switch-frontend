@@ -1,7 +1,6 @@
 import { ScreenWrapper } from './ScreenWrapper';
-import { WithSwitchItem } from './WithSwitchItem';
-import { SwitchList } from './SwitchList';
+import { WithImage } from './WithImage';
 import { WithLabel } from './WithLabel';
-import { WithSwitchList } from './WithSwitchList';
+import { WithMirror } from './WithMirror';
 
-export { WithLabel, ScreenWrapper, SwitchList, WithSwitchList, WithSwitchItem };
+export { WithLabel, ScreenWrapper, WithImage, WithMirror };

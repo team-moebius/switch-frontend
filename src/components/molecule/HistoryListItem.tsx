@@ -1,12 +1,8 @@
 import React, { useMemo } from 'react';
-import {
-  WithSwitchList,
-  agoAlignStyle,
-  agoPositionStyle,
-} from '../template/WithSwitchList';
 import { Pressable } from 'react-native';
-import { WithSwitchItem } from '../template';
-import { listDirectionStyle } from '../template/SwitchList';
+import { WithImage } from '../template';
+import { Flexbox, Icon, Typography } from '../atom';
+import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
 
 interface HistoryListItemProps {
   data: {
@@ -15,21 +11,17 @@ interface HistoryListItemProps {
     ago: string;
   };
   onPress?: () => void;
-  agoPosition?: keyof typeof agoPositionStyle;
-  agoAlign?: keyof typeof agoAlignStyle;
-  listDirection?: keyof typeof listDirectionStyle;
+  mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
 
 const renderChildren = (children: string) => {
-  return <WithSwitchItem name={children} nameFontSize={'cardList'} />;
+  return <WithImage name={children} nameFontSize={'cardList'} />;
 };
 
 const HistoryListItem = ({
   data,
   onPress,
-  agoPosition,
-  agoAlign,
-  listDirection,
+  mirrorDirection,
 }: HistoryListItemProps) => {
   const { myItem, selectedItem, ago } = data;
 
@@ -43,14 +35,24 @@ const HistoryListItem = ({
 
   return (
     <Pressable onPress={onPress}>
-      <WithSwitchList
-        childrenA={childrenA}
-        childrenB={childrenB}
-        ago={ago}
-        agoPosition={agoPosition}
-        agoAlign={agoAlign}
-        listDirection={listDirection}
-      />
+      <Flexbox flexDirection={'column'} gap={10}>
+        <Flexbox.Item flex={1}>
+          <Flexbox>
+            <Flexbox.Item>
+              <WithMirror
+                children={[childrenA, childrenB]}
+                mirrorDirection={mirrorDirection}
+                centerAxis={<Icon name={'code-outline'} size={20} />}
+              />
+            </Flexbox.Item>
+          </Flexbox>
+        </Flexbox.Item>
+        {ago && (
+          <Flexbox.Item>
+            <Typography fontSize={13}>{ago}</Typography>
+          </Flexbox.Item>
+        )}
+      </Flexbox>
     </Pressable>
   );
 };

@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
-import { Button, Flexbox, Typography } from '../atom';
-import { SwitchList, listDirectionStyle } from '../template/SwitchList';
-import { WithSwitchItem } from '../template';
-import { nameFontSizeStyle } from '../template/WithSwitchItem';
-import { FlexAlign, FlexDirection, JustifyContent } from 'src/@types/unit';
+import { Button, Flexbox, Icon, Typography } from '../atom';
+import { WithImage } from '../template';
+import { nameFontSizeStyle } from '../template/WithImage';
+import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
 
 export type ItemDetail = {
   name?: string;
@@ -19,18 +18,15 @@ interface SwitchListItemProps {
   data: Data;
   onPress: () => void;
   nameFontSize?: keyof typeof nameFontSizeStyle;
-  listDirection?: keyof typeof listDirectionStyle;
-  flexDirection?: FlexDirection;
-  alignItems?: FlexAlign;
-  justifyContent?: JustifyContent;
+  mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
 
 const renderChildren = (
   item: ItemDetail,
-  nameFontSize: keyof typeof nameFontSizeStyle = 'switchList'
+  nameFontSize?: keyof typeof nameFontSizeStyle
 ) => {
   return (
-    <WithSwitchItem
+    <WithImage
       name={item?.name}
       src={item?.src}
       nameFontSize={nameFontSize}
@@ -44,11 +40,8 @@ const renderChildren = (
 const SwitchListItem = ({
   data,
   onPress,
-  listDirection,
+  mirrorDirection,
   nameFontSize,
-  flexDirection,
-  alignItems,
-  justifyContent,
 }: SwitchListItemProps) => {
   const { myItem, selectedItem } = data;
 
@@ -64,17 +57,15 @@ const SwitchListItem = ({
   return (
     <Flexbox
       gap={20}
-      flexDirection={flexDirection}
-      alignItems={alignItems}
-      justifyContent={justifyContent}
+      flexDirection={'column'}
+      alignItems={'center'}
+      justifyContent={'center'}
     >
       <Flexbox.Item>
-        <SwitchList
-          childrenA={childrenA}
-          childrenB={childrenB}
-          listDirection={listDirection}
-          iconName={'code-outline'}
-          iconSize={20}
+        <WithMirror
+          children={[childrenA, childrenB]}
+          mirrorDirection={mirrorDirection}
+          centerAxis={<Icon name={'code-outline'} size={20} />}
         />
       </Flexbox.Item>
       <Flexbox.Item>
