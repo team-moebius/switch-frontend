@@ -23,7 +23,8 @@ interface SwitchListItemProps {
 
 const renderChildren = (
   item: ItemDetail,
-  fontSize?: keyof typeof fontSizeStyle
+  fontSize?: keyof typeof fontSizeStyle,
+  mirrorDirection?: keyof typeof mirrorDirectionStyle
 ) => {
   return (
     <WithImage
@@ -33,6 +34,7 @@ const renderChildren = (
       imageWidth={100}
       imageHeight={100}
       imageResizeMode={'center'}
+      mirrorDirection={mirrorDirection}
     />
   );
 };
@@ -46,11 +48,11 @@ const SwitchListItem = ({
   const { myItem, selectedItem } = data;
 
   const childrenA = useMemo(
-    () => renderChildren(myItem, fontSize),
+    () => renderChildren(myItem, fontSize, mirrorDirection),
     [myItem, fontSize]
   );
   const childrenB = useMemo(
-    () => renderChildren(selectedItem, fontSize),
+    () => renderChildren(selectedItem, fontSize, mirrorDirection),
     [selectedItem, fontSize]
   );
 
