@@ -77,9 +77,9 @@ const WithImage = ({
           />
         </Flexbox.Item>
       )}
-      <Flexbox.Item flex={mirrorDirection && 1}>
+      <Flexbox.Item flex={mirrorDirection === 'row' ? 1 : undefined}>
         <Flexbox {...descDirectionStyle[descDirection]} gap={10}>
-          <Flexbox.Item flex={mirrorDirection && 1}>
+          <Flexbox.Item flex={mirrorDirection === 'row' ? 1 : undefined}>
             <Typography {...fontSizeStyle[fontSize]} numberOfLines={5}>
               {content}
             </Typography>
