@@ -29,5 +29,5 @@ story.args = {
     window.alert('링크 이동');
   },
   mirrorDirection: 'column',
-  nameFontSize: 'switchList',
+  fontSize: 'switchList',
 };

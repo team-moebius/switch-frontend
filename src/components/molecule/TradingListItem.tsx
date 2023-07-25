@@ -4,7 +4,7 @@ import { WithImage } from '../template';
 import {
   descDirectionStyle,
   itemJustifyStyle,
-  nameFontSizeStyle,
+  fontSizeStyle,
 } from '../template/WithImage';
 
 interface TradingListItemProps {
@@ -16,7 +16,7 @@ interface TradingListItemProps {
   onPress?: () => void;
   descDirection?: keyof typeof descDirectionStyle;
   itemJustify?: keyof typeof itemJustifyStyle;
-  nameFontSize?: keyof typeof nameFontSizeStyle;
+  fontSize?: keyof typeof fontSizeStyle;
 }
 
 const TradingListItem = ({
@@ -24,21 +24,21 @@ const TradingListItem = ({
   onPress,
   descDirection,
   itemJustify,
-  nameFontSize,
+  fontSize,
 }: TradingListItemProps) => {
   const { src, title, location } = data;
 
   return (
     <Pressable onPress={onPress}>
       <WithImage
-        name={title}
+        content={title}
         src={src}
         location={location}
         imageWidth={100}
         imageHeight={70}
         imageResizeMode={'center'}
         itemJustify={itemJustify}
-        nameFontSize={nameFontSize}
+        fontSize={fontSize}
         descDirection={descDirection}
       />
     </Pressable>

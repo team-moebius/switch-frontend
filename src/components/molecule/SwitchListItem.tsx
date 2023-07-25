@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Button, Flexbox, Icon, Typography } from '../atom';
 import { WithImage } from '../template';
-import { nameFontSizeStyle } from '../template/WithImage';
+import { fontSizeStyle } from '../template/WithImage';
 import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
 
 export type ItemDetail = {
@@ -17,19 +17,19 @@ type Data = {
 interface SwitchListItemProps {
   data: Data;
   onPress: () => void;
-  nameFontSize?: keyof typeof nameFontSizeStyle;
+  fontSize?: keyof typeof fontSizeStyle;
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
 
 const renderChildren = (
   item: ItemDetail,
-  nameFontSize?: keyof typeof nameFontSizeStyle
+  fontSize?: keyof typeof fontSizeStyle
 ) => {
   return (
     <WithImage
-      name={item?.name}
+      content={item?.name}
       src={item?.src}
-      nameFontSize={nameFontSize}
+      fontSize={fontSize}
       imageWidth={100}
       imageHeight={100}
       imageResizeMode={'center'}
@@ -41,17 +41,17 @@ const SwitchListItem = ({
   data,
   onPress,
   mirrorDirection,
-  nameFontSize,
+  fontSize,
 }: SwitchListItemProps) => {
   const { myItem, selectedItem } = data;
 
   const childrenA = useMemo(
-    () => renderChildren(myItem, nameFontSize),
-    [myItem, nameFontSize]
+    () => renderChildren(myItem, fontSize),
+    [myItem, fontSize]
   );
   const childrenB = useMemo(
-    () => renderChildren(selectedItem, nameFontSize),
-    [selectedItem, nameFontSize]
+    () => renderChildren(selectedItem, fontSize),
+    [selectedItem, fontSize]
   );
 
   return (

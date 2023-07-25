@@ -25,5 +25,5 @@ story.args = {
   },
   descDirection: 'column',
   itemJustify: 'left',
-  nameFontSize: 'cardList',
+  fontSize: 'cardList',
 };

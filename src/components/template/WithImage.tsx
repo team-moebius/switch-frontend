@@ -2,6 +2,7 @@ import React from 'react';
 import { Flexbox, Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { StyleSheet } from 'react-native';
+import { mirrorDirectionStyle } from './WithMirror';
 
 type modifiedImageProps = {
   imageWidth?: ImageProps['width'];
@@ -10,11 +11,12 @@ type modifiedImageProps = {
 };
 interface WithImageProps extends modifiedImageProps {
   src?: string;
-  name?: string;
+  content?: string;
   location?: string;
   itemJustify?: keyof typeof itemJustifyStyle;
-  nameFontSize?: keyof typeof nameFontSizeStyle;
+  fontSize?: keyof typeof fontSizeStyle;
   descDirection?: keyof typeof descDirectionStyle;
+  mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
 
 export const itemJustifyStyle = StyleSheet.create({
@@ -32,7 +34,7 @@ export const itemJustifyStyle = StyleSheet.create({
   },
 });
 
-export const nameFontSizeStyle = StyleSheet.create({
+export const fontSizeStyle = StyleSheet.create({
   cardList: {
     fontSize: 15,
   },
@@ -53,14 +55,15 @@ export const descDirectionStyle = StyleSheet.create({
 
 const WithImage = ({
   src = '',
-  name = '',
+  content = '',
   location = '',
   itemJustify = 'left',
   imageWidth = 100,
   imageHeight = 70,
   imageResizeMode = 'center',
-  nameFontSize = 'cardList',
+  fontSize = 'cardList',
   descDirection = 'row',
+  mirrorDirection,
 }: WithImageProps) => {
   return (
     <Flexbox {...itemJustifyStyle[itemJustify]} gap={20}>
@@ -74,10 +77,12 @@ const WithImage = ({
           />
         </Flexbox.Item>
       )}
-      <Flexbox.Item>
+      <Flexbox.Item flex={mirrorDirection && 1}>
         <Flexbox {...descDirectionStyle[descDirection]} gap={10}>
-          <Flexbox.Item>
-            <Typography {...nameFontSizeStyle[nameFontSize]}>{name}</Typography>
+          <Flexbox.Item flex={mirrorDirection && 1}>
+            <Typography {...fontSizeStyle[fontSize]} numberOfLines={5}>
+              {content}
+            </Typography>
           </Flexbox.Item>
           {location && (
             <Flexbox.Item>

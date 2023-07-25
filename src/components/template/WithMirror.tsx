@@ -1,7 +1,6 @@
 import React, { ReactNode } from 'react';
-import { Flexbox, Icon } from '../atom';
+import { Flexbox } from '../atom';
 import { StyleSheet } from 'react-native';
-import { IconProps } from '../atom/Icon';
 
 interface WithMirrorProps {
   children: [ReactNode, ReactNode];
@@ -20,6 +19,12 @@ export const mirrorDirectionStyle = StyleSheet.create({
   },
 });
 
+export const contentStyle = StyleSheet.create({
+  default: {
+    maxWidth: '50%',
+  },
+});
+
 const WithMirror = ({
   children,
   mirrorDirection = 'row',
@@ -27,7 +32,7 @@ const WithMirror = ({
 }: WithMirrorProps) => {
   return (
     <Flexbox {...mirrorDirectionStyle[mirrorDirection]} gap={10}>
-      <Flexbox.Item>{children[0]}</Flexbox.Item>
+      <Flexbox.Item {...contentStyle.default}>{children[0]}</Flexbox.Item>
       <Flexbox.Item>{centerAxis}</Flexbox.Item>
       <Flexbox.Item>{children[1]}</Flexbox.Item>
     </Flexbox>

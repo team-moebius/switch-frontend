@@ -15,7 +15,7 @@ interface HistoryListItemProps {
 }
 
 const renderChildren = (children: string) => {
-  return <WithImage name={children} nameFontSize={'cardList'} />;
+  return <WithImage content={children} fontSize={'cardList'} />;
 };
 
 const HistoryListItem = ({
