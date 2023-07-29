@@ -2,10 +2,11 @@ import React from 'react';
 import { Pressable } from 'react-native';
 import { WithImage } from '../template';
 import {
-  descDirectionStyle,
+  childDirectionStyle,
   itemJustifyStyle,
   fontSizeStyle,
 } from '../template/WithImage';
+import { Typography } from '../atom';
 
 interface TradingListItemProps {
   data: {
@@ -14,7 +15,7 @@ interface TradingListItemProps {
     location: string;
   };
   onPress?: () => void;
-  descDirection?: keyof typeof descDirectionStyle;
+  childDirection?: keyof typeof childDirectionStyle;
   itemJustify?: keyof typeof itemJustifyStyle;
   fontSize?: keyof typeof fontSizeStyle;
 }
@@ -22,7 +23,7 @@ interface TradingListItemProps {
 const TradingListItem = ({
   data,
   onPress,
-  descDirection,
+  childDirection,
   itemJustify,
   fontSize,
 }: TradingListItemProps) => {
@@ -31,15 +32,15 @@ const TradingListItem = ({
   return (
     <Pressable onPress={onPress}>
       <WithImage
-        content={title}
+        text={title}
         src={src}
-        location={location}
+        fontSize={fontSize}
         imageWidth={100}
         imageHeight={70}
         imageResizeMode={'center'}
         itemJustify={itemJustify}
-        fontSize={fontSize}
-        descDirection={descDirection}
+        children={<Typography fontSize={13}>{location}</Typography>}
+        childDirection={childDirection}
       />
     </Pressable>
   );

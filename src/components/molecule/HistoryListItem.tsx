@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import { Pressable } from 'react-native';
-import { WithImage } from '../template';
 import { Flexbox, Icon, Typography } from '../atom';
 import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
+import { fontSizeStyle } from '../template/WithImage';
 
 interface HistoryListItemProps {
   data: {
@@ -11,27 +11,36 @@ interface HistoryListItemProps {
     ago: string;
   };
   onPress?: () => void;
+  fontSize?: keyof typeof fontSizeStyle;
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
 
-const renderChildren = (children: string) => {
-  return <WithImage content={children} fontSize={'cardList'} />;
+const renderChildren = (
+  children: string,
+  fontSize: keyof typeof fontSizeStyle
+) => {
+  return (
+    <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+      {children}
+    </Typography>
+  );
 };
 
 const HistoryListItem = ({
   data,
   onPress,
+  fontSize = 'cardList',
   mirrorDirection,
 }: HistoryListItemProps) => {
   const { myItem, selectedItem, ago } = data;
 
   const childrenA = useMemo(() => {
-    return renderChildren(myItem);
-  }, [myItem]);
+    return renderChildren(myItem, fontSize);
+  }, [myItem, fontSize]);
 
   const childrenB = useMemo(() => {
-    return renderChildren(selectedItem);
-  }, [selectedItem]);
+    return renderChildren(selectedItem, fontSize);
+  }, [selectedItem, fontSize]);
 
   return (
     <Pressable onPress={onPress}>
@@ -47,11 +56,9 @@ const HistoryListItem = ({
             </Flexbox.Item>
           </Flexbox>
         </Flexbox.Item>
-        {ago && (
-          <Flexbox.Item>
-            <Typography fontSize={13}>{ago}</Typography>
-          </Flexbox.Item>
-        )}
+        <Flexbox.Item>
+          <Typography fontSize={13}>{ago}</Typography>
+        </Flexbox.Item>
       </Flexbox>
     </Pressable>
   );

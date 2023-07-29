@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { Flexbox, Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { StyleSheet } from 'react-native';
@@ -11,11 +11,11 @@ type modifiedImageProps = {
 };
 interface WithImageProps extends modifiedImageProps {
   src?: string;
-  content?: string;
-  location?: string;
+  text?: string;
+  children?: ReactNode;
   itemJustify?: keyof typeof itemJustifyStyle;
   fontSize?: keyof typeof fontSizeStyle;
-  descDirection?: keyof typeof descDirectionStyle;
+  childDirection?: keyof typeof childDirectionStyle;
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
 
@@ -43,7 +43,7 @@ export const fontSizeStyle = StyleSheet.create({
   },
 });
 
-export const descDirectionStyle = StyleSheet.create({
+export const childDirectionStyle = StyleSheet.create({
   column: {
     flexDirection: 'column',
   },
@@ -55,40 +55,33 @@ export const descDirectionStyle = StyleSheet.create({
 
 const WithImage = ({
   src = '',
-  content = '',
-  location = '',
+  text = '',
+  children,
   itemJustify = 'left',
   imageWidth = 100,
   imageHeight = 70,
   imageResizeMode = 'center',
   fontSize = 'cardList',
-  descDirection = 'row',
-  mirrorDirection,
+  childDirection = 'row',
 }: WithImageProps) => {
   return (
     <Flexbox {...itemJustifyStyle[itemJustify]} gap={20}>
-      {src && (
-        <Flexbox.Item>
-          <Image
-            width={imageWidth}
-            height={imageHeight}
-            src={src}
-            resizeMode={imageResizeMode}
-          />
-        </Flexbox.Item>
-      )}
-      <Flexbox.Item flex={mirrorDirection === 'row' ? 1 : undefined}>
-        <Flexbox {...descDirectionStyle[descDirection]} gap={10}>
-          <Flexbox.Item flex={mirrorDirection === 'row' ? 1 : undefined}>
-            <Typography {...fontSizeStyle[fontSize]} numberOfLines={5}>
-              {content}
+      <Flexbox.Item>
+        <Image
+          width={imageWidth}
+          height={imageHeight}
+          src={src}
+          resizeMode={imageResizeMode}
+        />
+      </Flexbox.Item>
+      <Flexbox.Item flex={1}>
+        <Flexbox {...childDirectionStyle[childDirection]} gap={10}>
+          <Flexbox.Item flex={1}>
+            <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+              {text}
             </Typography>
           </Flexbox.Item>
-          {location && (
-            <Flexbox.Item>
-              <Typography fontSize={13}>{location}</Typography>
-            </Flexbox.Item>
-          )}
+          {children}
         </Flexbox>
       </Flexbox.Item>
     </Flexbox>

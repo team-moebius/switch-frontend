@@ -28,7 +28,7 @@ const renderChildren = (
 ) => {
   return (
     <WithImage
-      content={item?.name}
+      text={item?.name}
       src={item?.src}
       fontSize={fontSize}
       imageWidth={100}
@@ -49,11 +49,11 @@ const SwitchListItem = ({
 
   const childrenA = useMemo(
     () => renderChildren(myItem, fontSize, mirrorDirection),
-    [myItem, fontSize]
+    [myItem, fontSize, mirrorDirection]
   );
   const childrenB = useMemo(
     () => renderChildren(selectedItem, fontSize, mirrorDirection),
-    [selectedItem, fontSize]
+    [selectedItem, fontSize, mirrorDirection]
   );
 
   return (

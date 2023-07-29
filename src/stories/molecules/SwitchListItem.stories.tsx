@@ -17,11 +17,11 @@ story.storyName = 'default';
 story.args = {
   data: {
     myItem: {
-      name: '이브이',
+      name: '이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이이브이',
       src: 'https://cdn-gq.github.io/pokemon/133.webp',
     },
     selectedItem: {
-      name: '꼬부기',
+      name: '꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기꼬부기',
       src: 'https://cdn-gq.github.io/pokemon/7.webp',
     },
   },

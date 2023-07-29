@@ -12,16 +12,18 @@ export const mirrorDirectionStyle = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
+    justifyContent: 'space-between',
   },
   column: {
     flexDirection: 'column',
     alignItems: 'center',
+    gap: 10,
   },
 });
 
-export const contentStyle = StyleSheet.create({
+export const WidthStyle = StyleSheet.create({
   default: {
-    maxWidth: '50%',
+    maxWidth: '45%',
   },
 });
 
@@ -31,10 +33,10 @@ const WithMirror = ({
   centerAxis,
 }: WithMirrorProps) => {
   return (
-    <Flexbox {...mirrorDirectionStyle[mirrorDirection]} gap={10}>
-      <Flexbox.Item {...contentStyle.default}>{children[0]}</Flexbox.Item>
+    <Flexbox {...mirrorDirectionStyle[mirrorDirection]}>
+      <Flexbox.Item {...WidthStyle.default}>{children[0]}</Flexbox.Item>
       <Flexbox.Item>{centerAxis}</Flexbox.Item>
-      <Flexbox.Item>{children[1]}</Flexbox.Item>
+      <Flexbox.Item {...WidthStyle.default}>{children[1]}</Flexbox.Item>
     </Flexbox>
   );
 };
