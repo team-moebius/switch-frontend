@@ -1,6 +1,11 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
-import { FlexAlign, FlexDirection, JustifyContent } from 'src/@types/unit';
+import {
+  FlexAlign,
+  FlexDirection,
+  JustifyContent,
+  FlexWrap,
+} from 'src/@types/unit';
 import { bindBoxStyle, BoxProps, BoxStyle } from './Box';
 
 const FlexContainerStyles = StyleSheet.create({
@@ -23,10 +28,10 @@ interface FlexboxProps extends BoxProps {
   flexDirection?: FlexDirection;
   justifyContent?: JustifyContent;
   alignItems?: FlexAlign;
+  flexWrap?: FlexWrap;
   rowGap?: number;
   columnGap?: number;
   gap?: number;
-  flexWrap?: 'wrap' | 'nowrap' | 'wrap-reverse';
 }
 
 interface FlexItemProps extends BoxProps {
@@ -52,12 +57,12 @@ const Flexbox = ({
         {
           ...bindBoxStyle(props),
           flexDirection,
+          flexWrap,
           justifyContent,
+          alignItems,
           columnGap,
           rowGap,
           gap,
-          alignItems,
-          flexWrap,
         },
       ]}
     >
