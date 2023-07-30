@@ -10,29 +10,13 @@ type modifiedImageProps = {
   imageResizeMode?: ImageProps['resizeMode'];
 };
 interface WithImageProps extends modifiedImageProps {
-  src?: string;
+  src: string;
   text?: string;
   children?: ReactNode;
-  itemJustify?: keyof typeof itemJustifyStyle;
   fontSize?: keyof typeof fontSizeStyle;
   childDirection?: keyof typeof childDirectionStyle;
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
 }
-
-export const itemJustifyStyle = StyleSheet.create({
-  left: {
-    alignItems: 'center',
-    justifyContent: undefined,
-  },
-  center: {
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  right: {
-    alignItems: 'center',
-    justifyContent: 'flex-end',
-  },
-});
 
 export const fontSizeStyle = StyleSheet.create({
   cardList: {
@@ -57,7 +41,6 @@ const WithImage = ({
   src = '',
   text = '',
   children,
-  itemJustify = 'left',
   imageWidth = 100,
   imageHeight = 70,
   imageResizeMode = 'center',
@@ -65,7 +48,7 @@ const WithImage = ({
   childDirection = 'row',
 }: WithImageProps) => {
   return (
-    <Flexbox {...itemJustifyStyle[itemJustify]} gap={20}>
+    <Flexbox gap={20} alignItems={'center'}>
       <Flexbox.Item>
         <Image
           width={imageWidth}

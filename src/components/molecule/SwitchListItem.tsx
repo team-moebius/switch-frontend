@@ -29,7 +29,7 @@ const renderChildren = (
   return (
     <WithImage
       text={item?.name}
-      src={item?.src}
+      src={item?.src || ''}
       fontSize={fontSize}
       imageWidth={100}
       imageHeight={100}
