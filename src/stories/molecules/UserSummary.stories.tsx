@@ -2,14 +2,6 @@ import { ComponentMeta, ComponentStory } from '@storybook/react';
 import React from 'react';
 import { UserSummary } from 'src/components/molecule';
 
-export type UserSummaryData = {
-  user: string;
-  verified: boolean;
-  countSwitch: string;
-  userRate: string;
-  bio: string;
-};
-
 export default {
   title: 'UserSummary',
   component: UserSummary,

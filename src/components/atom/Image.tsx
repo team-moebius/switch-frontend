@@ -10,9 +10,9 @@ const ImageStyle = StyleSheet.create({
 });
 
 type ImageProps = {
-  src: string;
-  width: LengthElement;
-  height: LengthElement;
+  src?: string;
+  width?: LengthElement;
+  height?: LengthElement;
   resizeMode?: 'contain' | 'center';
 };
 
@@ -26,4 +26,4 @@ const Image = ({ src, width, height, resizeMode }: ImageProps) => {
   );
 };
 
-export { Image };
+export { Image, ImageProps };

@@ -1,8 +1,13 @@
 import React from 'react';
 import { Box, Flexbox, Tag, Typography } from '../atom';
-import { Color } from 'src/@types/unit';
-import { UserSummaryData } from 'src/stories/molecules/UserSummary.stories';
 
+type UserSummaryData = {
+  user: string;
+  verified: boolean;
+  countSwitch: string;
+  userRate: string;
+  bio: string;
+};
 interface UserSummaryProps {
   data: UserSummaryData;
 }
@@ -40,10 +45,10 @@ const UserSummary = ({ data }: UserSummaryProps) => {
         </Flexbox>
       </Flexbox>
       <Box>
-        <Typography>{bio}</Typography>
+        <Typography fontSize={13}>{bio}</Typography>
       </Box>
     </Flexbox>
   );
 };
 
-export { UserSummary };
+export { UserSummary, UserSummaryProps };
