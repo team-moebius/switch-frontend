@@ -53,6 +53,9 @@ type JustifyContent =
   | 'space-evenly';
 type FlexAlign = 'stretch' | 'flex-start' | 'flex-end' | 'center' | 'baseline';
 
+//Wrap
+type FlexWrap = 'wrap' | 'wrap-reverse' | 'nowrap';
+
 export {
   Pixel,
   Percent,
@@ -68,4 +71,5 @@ export {
   FlexDirection,
   JustifyContent,
   FlexAlign,
+  FlexWrap,
 };

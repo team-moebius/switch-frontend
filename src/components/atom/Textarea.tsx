@@ -34,4 +34,4 @@ const Textarea = ({ maxLength = 100, ...props }: TextareaProps) => {
   );
 };
 
-export { Textarea };
+export { Textarea, TextareaProps };

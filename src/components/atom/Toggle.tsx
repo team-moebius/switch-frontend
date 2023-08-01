@@ -40,4 +40,4 @@ const Toggle = ({ value, handleOnPress }: ToggleProps) => {
   );
 };
 
-export { Toggle };
+export { Toggle, ToggleProps };
