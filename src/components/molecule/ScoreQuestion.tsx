@@ -8,24 +8,24 @@ import { IconProps } from '../atom/Icon';
 interface ScoreQuestionProps
   extends Pick<TypographyProps, 'children' | 'fontSize'> {
   maxScore: number;
-  scoreSize: IconProps['size'];
+  ratingSize: IconProps['size'];
   onPressHandler: (idx: number) => void;
-  idxNumber: number;
+  rating: number;
 }
 
 const ScoreQuestion = ({
   children,
   fontSize,
-  scoreSize = 20,
+  ratingSize = 20,
   maxScore,
   onPressHandler,
-  idxNumber,
+  rating,
 }: ScoreQuestionProps) => {
   const renderStars = Array.from({ length: maxScore }, (_, idx) => (
     <Pressable onPress={() => onPressHandler(idx)}>
       <Icon
-        size={scoreSize}
-        name={idx <= idxNumber ? 'star-sharp' : 'star-outline'}
+        size={ratingSize}
+        name={idx <= rating ? 'star-sharp' : 'star-outline'}
       />
     </Pressable>
   ));

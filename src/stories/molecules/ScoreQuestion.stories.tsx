@@ -8,17 +8,13 @@ export default {
 } as ComponentMeta<typeof ScoreQuestion>;
 
 const Template: ComponentStory<typeof ScoreQuestion> = (args) => {
-  const [idxNumber, setIdxNumber] = useState(-1);
+  const [rating, setRating] = useState(-1);
   const onPressHandler = (idx: number) => {
-    setIdxNumber(idx);
+    setRating(idx);
   };
 
   return (
-    <ScoreQuestion
-      {...args}
-      onPressHandler={onPressHandler}
-      idxNumber={idxNumber}
-    />
+    <ScoreQuestion {...args} onPressHandler={onPressHandler} rating={rating} />
   );
 };
 
@@ -28,6 +24,6 @@ story.storyName = 'default';
 story.args = {
   children: '상대방의 매너는 어땠나요?',
   fontSize: 'inherit',
-  scoreSize: 20,
+  ratingSize: 20,
   maxScore: 5,
 };
