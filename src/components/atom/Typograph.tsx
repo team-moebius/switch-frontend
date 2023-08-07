@@ -51,4 +51,4 @@ const Typography = ({
   );
 };
 
-export { Typography };
+export { Typography, TypographyProps };
