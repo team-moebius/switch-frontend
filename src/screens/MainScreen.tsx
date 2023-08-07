@@ -8,7 +8,6 @@ import { ThemeContext } from 'src/context/theme';
 type MainScreenProps = NativeStackScreenProps<StackParams, 'Main'>;
 const MainScreen = ({ navigation }: MainScreenProps) => {
   const { color } = useContext(ThemeContext);
-
   return (
     <ScreenWrapper>
       <Flexbox
