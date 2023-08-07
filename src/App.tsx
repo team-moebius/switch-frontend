@@ -19,18 +19,22 @@ export default function App() {
   const [assetLoaded] = useAssets({ fonts: FONT_MAP });
   return (
     <ThemeContextProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName='Main'>
-          <Stack.Screen
-            name={'Main'}
-            navigationKey='Main'
-            component={MainScreen}
-            options={{ title: '' }}
-          />
-          {/* add screens */}
-          <Stack.Screen name={'Sample'} component={SampleScreen} />
-        </Stack.Navigator>
-      </NavigationContainer>
+      {assetLoaded ? (
+        <SplashScreen />
+      ) : (
+        <NavigationContainer>
+          <Stack.Navigator initialRouteName='Main'>
+            <Stack.Screen
+              name={'Main'}
+              navigationKey='Main'
+              component={MainScreen}
+              options={{ title: '' }}
+            />
+            {/* add screens */}
+            <Stack.Screen name={'Sample'} component={SampleScreen} />
+          </Stack.Navigator>
+        </NavigationContainer>
+      )}
     </ThemeContextProvider>
   );
 }
