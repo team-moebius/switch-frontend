@@ -1,7 +1,6 @@
 import { Text, LayoutChangeEvent, TextStyle } from 'react-native';
-import React, { useEffect } from 'react';
-import { useFonts } from 'expo-font';
-// import * as Notosans from 'src/assets/fonts/Noto_Sans';
+import React from 'react';
+import { Font } from 'src/assets/fonts';
 
 // TODO : fontSize, fontColor 구체화 하기
 
@@ -10,15 +9,10 @@ interface TypographyProps
   children: string | number;
   fontSize: TextStyle['fontSize'] | 'inherit';
   onLayout?: (event: LayoutChangeEvent) => void;
-  fontFamily?: keyof typeof fontMap;
+  fontFamily?: Font;
   ellipsizeMode?: 'tail' | 'head' | 'middle' | 'clip';
   numberOfLines?: number;
 }
-
-const fontMap = {
-  'noto-sans-reg': require('src/assets/fonts/Noto_Sans/NotoSans-Regular.ttf'),
-  'dancing-script-reg': require('src/assets/fonts/Dancing_Script/DancingScript-Regular.ttf'),
-};
 
 const Typography = ({
   color,
@@ -28,12 +22,6 @@ const Typography = ({
   children,
   ...props
 }: TypographyProps) => {
-  const [loaded] = useFonts(fontMap);
-  useEffect(() => {
-    if (loaded) {
-      console.info('Fonts successfully loaded');
-    }
-  }, [loaded]);
   return (
     <Text
       {...props}
