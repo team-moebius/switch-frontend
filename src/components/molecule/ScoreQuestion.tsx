@@ -25,7 +25,7 @@ const ScoreQuestion = ({
     <Pressable onPress={() => onPressHandler(idx)}>
       <Icon
         size={ratingSize}
-        name={idx <= rating ? 'star-sharp' : 'star-outline'}
+        name={idx < rating ? 'star-sharp' : 'star-outline'}
       />
     </Pressable>
   ));

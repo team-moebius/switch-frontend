@@ -10,7 +10,7 @@ export default {
 const Template: ComponentStory<typeof ScoreQuestion> = (args) => {
   const [rating, setRating] = useState(-1);
   const onPressHandler = (idx: number) => {
-    setRating(idx);
+    setRating(idx + 1);
   };
 
   return (
