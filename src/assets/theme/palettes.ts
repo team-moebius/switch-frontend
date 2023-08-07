@@ -18,7 +18,8 @@ const SYSTEM_COLORS = {
 } as const;
 
 const COMPONENT_COLORS = {
-  text: SYSTEM_COLORS.neutral[100],
+  text: SYSTEM_COLORS.neutral[300],
+  container_background: SYSTEM_COLORS.neutral['100'],
 } as const;
 
 const PALETTE = {
