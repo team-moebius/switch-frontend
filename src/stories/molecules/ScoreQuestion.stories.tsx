@@ -7,23 +7,13 @@ export default {
   component: ScoreQuestion,
 } as ComponentMeta<typeof ScoreQuestion>;
 
-const Template: ComponentStory<typeof ScoreQuestion> = (args) => {
-  const [rating, setRating] = useState(-1);
-  const onPressHandler = (idx: number) => {
-    setRating(idx + 1);
-  };
-
-  return (
-    <ScoreQuestion {...args} onPressHandler={onPressHandler} rating={rating} />
-  );
+const Template: ComponentStory<typeof ScoreQuestion> = () => {
+  return <ScoreQuestion />;
 };
 
 export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  children: '상대방의 매너는 어땠나요?',
-  fontSize: 'inherit',
-  ratingSize: 20,
-  maxScore: 5,
+  maxStars: 5,
 };
