@@ -1,11 +1,11 @@
-import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useContext } from 'react';
 import { StackParams } from 'src/App';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template/ScreenWrapper';
 import { ThemeContext } from 'src/context/theme';
 
-type MainScreenProps = NativeStackScreenProps<StackParams, 'Main'>;
+type MainScreenProps = StackScreenProps<StackParams, 'Main'>;
 const MainScreen = ({ navigation }: MainScreenProps) => {
   const { color } = useContext(ThemeContext);
   return (

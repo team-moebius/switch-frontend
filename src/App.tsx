@@ -1,6 +1,6 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createStackNavigator } from '@react-navigation/stack';
 import { MainScreen, SampleScreen, SplashScreen } from './screens';
 import useAssets from './hooks/useAssets';
 import FONT_MAP from './assets/fonts';
@@ -8,7 +8,7 @@ import { ThemeContextProvider } from './context/theme';
 import { UserContextProvider } from './context/user';
 import { wait } from './utils/wait';
 
-const Stack = createNativeStackNavigator();
+const Stack = createStackNavigator();
 
 type StackParams = {
   Main: undefined;
