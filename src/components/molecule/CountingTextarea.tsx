@@ -24,7 +24,9 @@ const CountingTextarea = ({
       />
       <Flexbox justifyContent='flex-end' pt={10}>
         <Flexbox.Item>
-          <Typography fontSize={12}>{value.length + '/200'}</Typography>
+          <Typography fontSize={12}>
+            {value.length + '/' + maxLength}
+          </Typography>
         </Flexbox.Item>
       </Flexbox>
     </Box>
