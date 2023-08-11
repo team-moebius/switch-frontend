@@ -7,7 +7,7 @@ interface TextareaProps {
   onChangeText?: (value: string) => void;
   value?: string;
   placeholder?: string;
-  customStyle: ViewStyle;
+  style?: ViewStyle;
 }
 
 const { default: defaultStyles } = StyleSheet.create({
@@ -23,15 +23,11 @@ const { default: defaultStyles } = StyleSheet.create({
   },
 });
 
-const Textarea = ({
-  maxLength = 100,
-  customStyle,
-  ...props
-}: TextareaProps) => {
+const Textarea = ({ maxLength = 100, style, ...props }: TextareaProps) => {
   return (
     <TextInput
       {...props}
-      style={[defaultStyles, customStyle]}
+      style={[defaultStyles, style]}
       maxLength={maxLength}
       multiline
       placeholderTextColor={'gray'}
