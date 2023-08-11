@@ -30,7 +30,7 @@ const sizeStyle = StyleSheet.create({
 const typeStyle = StyleSheet.create({
   normal: {
     backgroundColor: '#3489eb',
-    color: 'white',
+    color: '#ffffff',
   },
   transparent: {
     backgroundColor: 'transparent',
@@ -57,13 +57,16 @@ const Button = ({
 }: ButtonProps) => {
   const title = useMemo(() => {
     return typeof children === 'string' ? (
-      <Typography fontSize={'inherit'} color={'inherit'}>
+      <Typography
+        fontSize={sizeStyle[size].fontSize}
+        color={typeStyle[type].color}
+      >
         {children}
       </Typography>
     ) : (
       children
     );
-  }, [children]);
+  }, [children, type, size]);
   return (
     <Pressable
       {...props}

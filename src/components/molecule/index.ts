@@ -11,6 +11,8 @@ import { ChattingListItem } from './ChattingListItem';
 import { HistoryListItem } from './HistoryListItem';
 import { TradingListItem } from './TradingListItem';
 import { CountingTextarea } from './CountingTextarea';
+import { ScoreQuestion } from './ScoreQuestion';
+
 
 export {
   Radiobox,
@@ -26,4 +28,6 @@ export {
   HistoryListItem,
   TradingListItem,
   CountingTextarea,
+  ScoreQuestion
 };
+
