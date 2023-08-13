@@ -1,59 +1,68 @@
-import React, { useState, useRef } from 'react';
-import { View, PanResponder, StyleSheet, Text } from 'react-native';
+import React, { useRef } from 'react';
+import { View, PanResponder } from 'react-native';
 
-const ScoreQuestion = ({ maxStars = 5 }) => {
-  const [rating, setRating] = useState(0);
+import { Flexbox, Icon, Typography } from '../atom';
+import { IconProps } from '../atom/Icon';
+import { TypographyProps } from '../atom/Typograph';
+
+interface ScoreQuestionProps
+  extends Pick<TypographyProps, 'children' | 'fontSize'> {
+  maxRating: number;
+  rating: number;
+  ratingHandler: (rating: number) => void;
+  ratingSize: IconProps['size'];
+}
+
+const ScoreQuestion = ({
+  children,
+  maxRating,
+  rating,
+  ratingHandler,
+  fontSize,
+  ratingSize,
+}: ScoreQuestionProps) => {
   const prevRating = useRef(0);
   const startPoint = useRef(0);
   const ratingRef = useRef<View>(null);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
-    onPanResponderGrant: (e, gestureState) => {
+    onPanResponderGrant: (_, gestureState) => {
       startPoint.current = gestureState.x0;
 
-      ratingRef.current?.measure((fx, fy, width) => {
+      ratingRef.current?.measure((fx, _fy, width) => {
         const gap = startPoint.current - fx;
-        const initRating = Math.ceil((gap / width) * maxStars);
+        const initRating = Math.ceil((gap / width) * maxRating);
         prevRating.current = initRating;
-        setRating(initRating);
+        ratingHandler(initRating);
       });
     },
-    onPanResponderMove: (e, gestureState) => {
+    onPanResponderMove: (_, gestureState) => {
       const touchX = gestureState.moveX - startPoint.current;
-      ratingRef.current?.measure((fx, fy, width) => {
+      ratingRef.current?.measure((_fx, _fy, width) => {
         const newRating =
-          prevRating.current + Math.ceil((touchX / width) * maxStars);
-        if (newRating > 5) setRating(5);
-        else if (newRating < 0) setRating(0);
-        else setRating(newRating);
+          prevRating.current + Math.ceil((touchX / width) * maxRating);
+        if (newRating > maxRating) ratingHandler(maxRating);
+        else if (newRating < 0) ratingHandler(0);
+        else ratingHandler(newRating);
       });
     },
   });
 
+  const renderStars = Array.from({ length: maxRating }, (_, idx) => (
+    <Icon
+      key={idx}
+      size={ratingSize}
+      name={idx < rating ? 'star-sharp' : 'star-outline'}
+    />
+  ));
+
   return (
-    <View
-      ref={ratingRef}
-      {...panResponder.panHandlers}
-      style={styles.container}
-    >
-      {Array.from({ length: maxStars }, (_, index) => (
-        <Text key={index} style={styles.star}>
-          {index < rating ? '★' : '☆'}
-        </Text>
-      ))}
+    <View ref={ratingRef} {...panResponder.panHandlers}>
+      <Typography fontSize={fontSize}>{children}</Typography>
+      <Flexbox flexDirection='row'>{renderStars}</Flexbox>
     </View>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flexDirection: 'row',
-  },
-  star: {
-    fontSize: 30,
-    color: 'gold',
-  },
-});
 
 export { ScoreQuestion };
