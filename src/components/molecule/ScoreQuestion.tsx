@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { View, PanResponder } from 'react-native';
+import { View, PanResponder, StyleSheet } from 'react-native';
 
 import { Flexbox, Icon, Typography } from '../atom';
 import { IconProps } from '../atom/Icon';
@@ -13,6 +13,12 @@ interface ScoreQuestionProps
   ratingSize: IconProps['size'];
 }
 
+const containerStyle = StyleSheet.create({
+  default: {
+    width: 'fit-content',
+  },
+});
+
 const ScoreQuestion = ({
   children,
   maxRating,
@@ -23,15 +29,15 @@ const ScoreQuestion = ({
 }: ScoreQuestionProps) => {
   const prevRating = useRef(0);
   const startPoint = useRef(0);
-  const ratingRef = useRef<View>(null);
+  const containerRef = useRef<View>(null);
 
   const panResponder = PanResponder.create({
     onStartShouldSetPanResponder: () => true,
     onPanResponderGrant: (_, gestureState) => {
       startPoint.current = gestureState.x0;
 
-      ratingRef.current?.measure((fx, _fy, width) => {
-        const gap = startPoint.current - fx;
+      containerRef.current?.measure((_fx, _fy, width, _h, pageX) => {
+        const gap = startPoint.current - pageX;
         const initRating = Math.ceil((gap / width) * maxRating);
         prevRating.current = initRating;
         ratingHandler(initRating);
@@ -39,7 +45,7 @@ const ScoreQuestion = ({
     },
     onPanResponderMove: (_, gestureState) => {
       const touchX = gestureState.moveX - startPoint.current;
-      ratingRef.current?.measure((_fx, _fy, width) => {
+      containerRef.current?.measure((_fx, _fy, width) => {
         const newRating =
           prevRating.current + Math.ceil((touchX / width) * maxRating);
         if (newRating > maxRating) ratingHandler(maxRating);
@@ -50,15 +56,20 @@ const ScoreQuestion = ({
   });
 
   const renderStars = Array.from({ length: maxRating }, (_, idx) => (
-    <Icon
-      key={idx}
-      size={ratingSize}
-      name={idx < rating ? 'star-sharp' : 'star-outline'}
-    />
+    <Flexbox.Item flex={1}>
+      <Icon
+        size={ratingSize}
+        name={idx < rating ? 'star-sharp' : 'star-outline'}
+      />
+    </Flexbox.Item>
   ));
 
   return (
-    <View ref={ratingRef} {...panResponder.panHandlers}>
+    <View
+      ref={containerRef}
+      {...panResponder.panHandlers}
+      style={containerStyle.default}
+    >
       <Typography fontSize={fontSize}>{children}</Typography>
       <Flexbox flexDirection='row'>{renderStars}</Flexbox>
     </View>
