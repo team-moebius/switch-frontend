@@ -35,7 +35,7 @@ interface FlexboxProps extends BoxProps {
 }
 
 interface FlexItemProps extends BoxProps {
-  alignSelf?: 'auto' | FlexAlign;
+  alignSelf?: FlexAlign | 'auto';
   alignItems?: FlexAlign;
   justifyContent?: JustifyContent;
   flex?: number;
