@@ -8,13 +8,12 @@ export default {
 } as ComponentMeta<typeof ScoreQuestion>;
 
 const Template: ComponentStory<typeof ScoreQuestion> = (args) => {
-  const [rating, setRating] = useState(-1);
-  const onPressHandler = (idx: number) => {
-    setRating(idx + 1);
+  const [rating, setRating] = useState(0);
+  const ratingHandler = (rating: number) => {
+    setRating(rating);
   };
-
   return (
-    <ScoreQuestion {...args} onPressHandler={onPressHandler} rating={rating} />
+    <ScoreQuestion {...args} rating={rating} ratingHandler={ratingHandler} />
   );
 };
 
@@ -23,7 +22,7 @@ export const story = Template.bind({});
 story.storyName = 'default';
 story.args = {
   children: '상대방의 매너는 어땠나요?',
+  maxRating: 5,
   fontSize: 'inherit',
-  ratingSize: 20,
-  maxScore: 5,
+  ratingSize: 32,
 };
