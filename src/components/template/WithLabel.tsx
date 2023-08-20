@@ -63,12 +63,14 @@ const WithLabel = ({
       height={height}
       gap={8}
     >
-      <Flexbox.Item>{children}</Flexbox.Item>
-      <Flexbox.Item width={'100%'} flex={1}>
-        <Flexbox {...labelAlignStyle[labelAlign]}>
-          <Pressable onPress={onPress}>{label}</Pressable>
-        </Flexbox>
-      </Flexbox.Item>
+      <Flexbox.Item flex={1}>{children}</Flexbox.Item>
+      {label && (
+        <Flexbox.Item width={'100%'} flex={1}>
+          <Flexbox {...labelAlignStyle[labelAlign]}>
+            <Pressable onPress={onPress}>{label}</Pressable>
+          </Flexbox>
+        </Flexbox.Item>
+      )}
     </Flexbox>
   );
 };
