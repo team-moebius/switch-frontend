@@ -19,7 +19,7 @@ const Tag = ({
 }: TagProps) => {
   return (
     <Flexbox
-      width={'fit-content'}
+      width={'auto'}
       height={14}
       padding={5}
       borderRadius={15}

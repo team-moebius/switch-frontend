@@ -94,7 +94,7 @@ interface BoxStyleProps {
   ml?: MarginElement;
   mr?: MarginElement;
   //Width and Height
-  width?: LengthElement | 'fit-content';
+  width?: LengthElement | 'auto';
   height?: LengthElement | 'auto';
   backgroundColor?: Color;
   //Border

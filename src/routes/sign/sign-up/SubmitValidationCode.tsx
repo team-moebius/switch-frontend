@@ -54,7 +54,7 @@ const SubmitValidationCode = () => {
                 가입
               </Button>
             </Flexbox.Item>
-            <Flexbox.Item width={'fit-content'}>
+            <Flexbox.Item width={'auto'}>
               <Button
                 type={'transparent'}
                 size={'middle'}

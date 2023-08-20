@@ -54,13 +54,6 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const title = useMemo(() => {
-    console.debug(
-      '뭐지?',
-      typeof children,
-      type,
-      children,
-      typeStyle[type].color
-    );
     return typeof children === 'string' ? (
       <Typography
         fontSize={sizeStyle[size].fontSize}
@@ -78,11 +71,11 @@ const Button = ({
       style={[
         sizeStyle[size],
         typeStyle[type],
-        { width: wide ? '100%' : 'fit-content' },
+        { width: wide ? '100%' : 'auto' },
       ]}
     >
       <Flexbox
-        width={wide ? '100%' : 'fit-content'}
+        width={wide ? '100%' : 'auto'}
         height={'100%'}
         alignItems={'center'}
         justifyContent={'center'}

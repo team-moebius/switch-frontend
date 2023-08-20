@@ -1,5 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { SubmitPhoneNumber } from './SubmitPhoneNumber';
+
 import { SubmitValidationCode } from './SubmitValidationCode';
 
 const Stack = createStackNavigator();
