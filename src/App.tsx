@@ -1,38 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import { MainScreen, SampleScreen, SplashScreen } from './screens';
+
+import { SplashScreen } from './screens';
 import useAssets from './hooks/useAssets';
 import FONT_MAP from './assets/fonts';
 import { ThemeContextProvider } from './context/theme';
 import { UserContextProvider } from './context/user';
 import { wait } from './utils/wait';
 
-const Stack = createStackNavigator();
-
-type StackParams = {
-  Main: undefined;
-  Sample: undefined;
-};
-
-export { StackParams };
-
-const NavigationRouter = () => {
-  return (
-    <NavigationContainer>
-      <Stack.Navigator initialRouteName='Main'>
-        <Stack.Screen
-          name={'Main'}
-          navigationKey='Main'
-          component={MainScreen}
-          options={{ title: '' }}
-        />
-        {/* add screens */}
-        <Stack.Screen name={'Sample'} component={SampleScreen} />
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-};
+import NavigationRouter from './routes';
 
 export default function App() {
   const [loading, setLoading] = useState(true);
