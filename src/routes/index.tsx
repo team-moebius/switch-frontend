@@ -1,10 +1,26 @@
+import { useContext } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { MainRoutes } from './Main';
+
+import { createStackNavigator } from '@react-navigation/stack';
+
+import { UserContext } from 'src/context/user';
+
+import { SignRoute } from './sign';
+import { RootTabs } from './root';
+
+const Stack = createStackNavigator();
 
 const NavigationRouter = () => {
+  const { user } = useContext(UserContext);
   return (
     <NavigationContainer>
-      <MainRoutes />
+      <Stack.Navigator screenOptions={{ headerShown: false }}>
+        {/* if user signed in, route home */}
+        <Stack.Group navigationKey={user === null ? 'Sign' : 'Main'}>
+          <Stack.Screen name={'Sign'} component={SignRoute} />
+          <Stack.Screen name={'Root'} component={RootTabs} />
+        </Stack.Group>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };

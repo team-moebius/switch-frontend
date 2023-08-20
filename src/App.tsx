@@ -1,6 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
 
-import { SplashScreen } from './screens';
 import useAssets from './hooks/useAssets';
 import FONT_MAP from './assets/fonts';
 import { ThemeContextProvider } from './context/theme';
@@ -8,6 +7,7 @@ import { UserContextProvider } from './context/user';
 import { wait } from './utils/wait';
 
 import NavigationRouter from './routes';
+import { SplashScreen } from './routes/sign/SplashScreen';
 
 export default function App() {
   const [loading, setLoading] = useState(true);

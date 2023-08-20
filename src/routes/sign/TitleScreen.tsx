@@ -1,13 +1,14 @@
-import { StackScreenProps } from '@react-navigation/stack';
+// import { StackScreenProps } from '@react-navigation/stack
 import React, { useContext } from 'react';
-import { StackParams } from 'src/App';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template/ScreenWrapper';
 import { ThemeContext } from 'src/context/theme';
+import { UserContext } from 'src/context/user';
 
-type MainScreenProps = StackScreenProps<StackParams, 'Main'>;
-const MainScreen = ({ navigation }: MainScreenProps) => {
+const TitleScreen = ({ navigation }) => {
   const { color } = useContext(ThemeContext);
+  const { login } = useContext(UserContext);
+
   return (
     <ScreenWrapper>
       <Flexbox
@@ -29,6 +30,7 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
         justifyContent={'center'}
         bottom={'30%'}
         width={'100%'}
+        gap={8}
         position={'absolute'}
       >
         <Button
@@ -38,7 +40,14 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
         >
           가입하기
         </Button>
-        <Button type={'normal'} size={'middle'} onPress={() => alert('로그인')}>
+        <Button
+          type={'transparent'}
+          size={'middle'}
+          onPress={async () => {
+            await login();
+            navigation.navigate('Root');
+          }}
+        >
           로그인
         </Button>
       </Flexbox>
@@ -46,4 +55,4 @@ const MainScreen = ({ navigation }: MainScreenProps) => {
   );
 };
 
-export { MainScreen };
+export { TitleScreen };

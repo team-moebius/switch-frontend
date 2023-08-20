@@ -1,17 +1,18 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { MainScreen } from 'src/screens';
+import { TitleScreen } from './TitleScreen';
 
 const Stack = createStackNavigator();
 
-const MainRoutes = () => {
+const SignRoute = () => {
   return (
     <Stack.Navigator
-      initialRouteName={'Main'}
+      initialRouteName={'Title'}
       screenOptions={{ headerShown: false }}
     >
-      <Stack.Screen name={'Main'} component={MainScreen} />
+      <Stack.Screen name={'Title'} component={TitleScreen} />
+      {/* In */}
     </Stack.Navigator>
   );
 };
 
-export { MainRoutes };
+export { SignRoute };
