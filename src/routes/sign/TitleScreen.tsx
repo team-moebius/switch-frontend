@@ -27,29 +27,35 @@ const TitleScreen = ({ navigation }) => {
         </Typography>
       </Flexbox>
       <Flexbox
+        flexDirection={'column'}
         justifyContent={'center'}
+        alignItems={'center'}
         bottom={'30%'}
         width={'100%'}
         gap={8}
         position={'absolute'}
       >
-        <Button
-          type={'normal'}
-          size={'middle'}
-          onPress={() => navigation.navigate('Sample')}
-        >
-          가입하기
-        </Button>
-        <Button
-          type={'transparent'}
-          size={'middle'}
-          onPress={async () => {
-            await login();
-            navigation.navigate('Root');
-          }}
-        >
-          로그인
-        </Button>
+        <Flexbox.Item width={'80%'}>
+          <Button
+            type={'normal'}
+            size={'middle'}
+            onPress={() => navigation.navigate('Sample')}
+          >
+            가입하기
+          </Button>
+        </Flexbox.Item>
+        <Flexbox.Item width={'80%'}>
+          <Button
+            type={'transparent'}
+            size={'middle'}
+            onPress={async () => {
+              await login();
+              navigation.navigate('Root');
+            }}
+          >
+            로그인
+          </Button>
+        </Flexbox.Item>
       </Flexbox>
     </ScreenWrapper>
   );
