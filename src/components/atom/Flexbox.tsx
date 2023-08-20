@@ -36,6 +36,8 @@ interface FlexboxProps extends BoxProps {
 
 interface FlexItemProps extends BoxProps {
   alignSelf?: FlexAlign | 'auto';
+  alignItems?: FlexAlign;
+  justifyContent?: JustifyContent;
   flex?: number;
 }
 
@@ -71,9 +73,21 @@ const Flexbox = ({
   );
 };
 
-const FlexItem = ({ children, alignSelf, flex, ...props }: FlexItemProps) => {
+const FlexItem = ({
+  children,
+  alignSelf,
+  flex,
+  alignItems,
+  justifyContent,
+  ...props
+}: FlexItemProps) => {
   return (
-    <View style={[{ ...bindBoxStyle(props) }, { alignSelf, flex }]}>
+    <View
+      style={[
+        { ...bindBoxStyle(props) },
+        { alignSelf, flex, alignItems, justifyContent },
+      ]}
+    >
       {children}
     </View>
   );
