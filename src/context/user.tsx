@@ -1,6 +1,4 @@
 import { createContext, ReactNode, useState } from 'react';
-import React from 'react';
-import { wait } from 'src/utils/wait';
 
 // TODO: DTO 설계 참고하여 추후 설계 필요
 interface User {
@@ -31,7 +29,6 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
   const login = async () => {
     setLoading(true);
-    await wait(2000);
     setLoading(false);
     setUser({ name: 'Test' });
   };
