@@ -15,6 +15,7 @@
     "npm": "npm 대신 yarn 혹은 expo를 사용해주세요"
   },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.17",
     "expo": "~48.0.9",
