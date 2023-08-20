@@ -35,8 +35,6 @@ const typeStyle = StyleSheet.create({
   transparent: {
     backgroundColor: 'transparent',
     color: 'gray',
-    width: 'auto',
-    height: 'auto',
   },
 });
 
@@ -56,6 +54,13 @@ const Button = ({
   ...props
 }: ButtonProps) => {
   const title = useMemo(() => {
+    console.debug(
+      '뭐지?',
+      typeof children,
+      type,
+      children,
+      typeStyle[type].color
+    );
     return typeof children === 'string' ? (
       <Typography
         fontSize={sizeStyle[size].fontSize}

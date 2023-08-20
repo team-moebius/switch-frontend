@@ -48,6 +48,7 @@ const Flexbox = ({
   gap,
   children,
   flexWrap,
+  width = '100%',
   ...props
 }: FlexboxProps) => {
   return (
@@ -55,7 +56,7 @@ const Flexbox = ({
       style={[
         FlexboxStyles.container.default,
         {
-          ...bindBoxStyle(props),
+          ...bindBoxStyle({ ...props, width }),
           flexDirection,
           flexWrap,
           justifyContent,
@@ -71,9 +72,17 @@ const Flexbox = ({
   );
 };
 
-const FlexItem = ({ children, alignSelf, flex, ...props }: FlexItemProps) => {
+const FlexItem = ({
+  children,
+  alignSelf,
+  flex,
+  width = '100%',
+  ...props
+}: FlexItemProps) => {
   return (
-    <View style={[{ ...bindBoxStyle(props) }, { alignSelf, flex }]}>
+    <View
+      style={[{ ...bindBoxStyle({ ...props, width }) }, { alignSelf, flex }]}
+    >
       {children}
     </View>
   );
