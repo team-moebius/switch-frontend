@@ -39,7 +39,7 @@ const TitleScreen = ({ navigation }) => {
           <Button
             type={'normal'}
             size={'middle'}
-            onPress={() => navigation.navigate('Sample')}
+            onPress={() => navigation.navigate('SignUp')}
           >
             가입하기
           </Button>
