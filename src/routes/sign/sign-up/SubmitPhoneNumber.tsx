@@ -41,7 +41,7 @@ const SubmitPhoneNumber = ({ navigation }) => {
                 type={'normal'}
                 size={'middle'}
                 onPress={() => {
-                  navigation.navigate('SubmitValidationCode');
+                  navigation?.navigate('SubmitValidationCode');
                 }}
               >
                 다음
