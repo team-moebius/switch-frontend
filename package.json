@@ -11,9 +11,13 @@
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
+  "engines": {
+    "npm": "npm 대신 yarn 혹은 expo를 사용해주세요"
+  },
   "dependencies": {
+    "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.6",
-    "@react-navigation/native-stack": "^6.9.12",
+    "@react-navigation/stack": "^6.3.17",
     "expo": "~48.0.9",
     "expo-font": "~11.1.1",
     "expo-splash-screen": "~0.18.2",
@@ -21,6 +25,7 @@
     "react": "18.2.0",
     "react-native": "0.71.4",
     "react-native-bouncy-checkbox": "^3.0.7",
+    "react-native-gesture-handler": "^2.12.1",
     "react-native-modal": "^13.0.1",
     "react-native-screens": "~3.20.0"
   },
@@ -41,6 +46,7 @@
     "babel-loader": "^8.3.0",
     "babel-plugin-react-native-web": "^0.19.2",
     "cache": "^3.0.0",
+    "eslint": "^8.46.0",
     "eslint-plugin-json": "^3.1.0",
     "eslint-plugin-prettier": "^4.2.1",
     "jsonc-eslint-parser": "^2.2.0",

@@ -35,8 +35,6 @@ const typeStyle = StyleSheet.create({
   transparent: {
     backgroundColor: 'transparent',
     color: 'gray',
-    width: 'auto',
-    height: 'auto',
   },
 });
 
@@ -73,11 +71,11 @@ const Button = ({
       style={[
         sizeStyle[size],
         typeStyle[type],
-        { width: wide ? '100%' : 'fit-content' },
+        { width: wide ? '100%' : 'auto' },
       ]}
     >
       <Flexbox
-        width={wide ? '100%' : 'fit-content'}
+        width={wide ? '100%' : 'auto'}
         height={'100%'}
         alignItems={'center'}
         justifyContent={'center'}
