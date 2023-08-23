@@ -9,6 +9,7 @@ interface TagProps {
   children: string;
   onPress?: () => void;
   backgroundColor: Color;
+  disabled?: boolean;
 }
 
 const Tag = ({
@@ -16,6 +17,7 @@ const Tag = ({
   children,
   backgroundColor = '#797979',
   onPress,
+  disabled,
 }: TagProps) => {
   return (
     <Flexbox
@@ -27,7 +29,7 @@ const Tag = ({
       justifyContent={'center'}
       alignItems={'center'}
     >
-      <Pressable onPress={onPress}>
+      <Pressable onPress={onPress} disabled={disabled}>
         <Typography fontSize={12} color={color}>
           {children}
         </Typography>

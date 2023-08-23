@@ -1,40 +1,78 @@
-import React from 'react';
-import { Pressable } from 'react-native';
+import React, { useRef } from 'react';
+import { View, PanResponder, StyleSheet } from 'react-native';
 
-import { Box, Flexbox, Icon, Typography } from '../atom';
-import { TypographyProps } from '../atom/Typograph';
+import { Flexbox, Icon, Typography } from '../atom';
 import { IconProps } from '../atom/Icon';
+import { TypographyProps } from '../atom/Typograph';
 
 interface ScoreQuestionProps
   extends Pick<TypographyProps, 'children' | 'fontSize'> {
-  maxScore: number;
-  ratingSize: IconProps['size'];
-  onPressHandler: (idx: number) => void;
+  maxRating: number;
   rating: number;
+  ratingHandler: (rating: number) => void;
+  ratingSize: IconProps['size'];
 }
+
+const containerStyle = StyleSheet.create({
+  default: {
+    width: 'fit-content',
+  },
+});
 
 const ScoreQuestion = ({
   children,
-  fontSize,
-  ratingSize = 20,
-  maxScore,
-  onPressHandler,
+  maxRating,
   rating,
+  ratingHandler,
+  fontSize,
+  ratingSize,
 }: ScoreQuestionProps) => {
-  const renderStars = Array.from({ length: maxScore }, (_, idx) => (
-    <Pressable onPress={() => onPressHandler(idx)}>
+  const prevRating = useRef(0);
+  const startPoint = useRef(0);
+  const containerRef = useRef<View>(null);
+
+  const panResponder = PanResponder.create({
+    onStartShouldSetPanResponder: () => true,
+    onPanResponderGrant: (_, gestureState) => {
+      startPoint.current = gestureState.x0;
+
+      containerRef.current?.measure((_fx, _fy, width, _h, pageX) => {
+        const gap = startPoint.current - pageX;
+        const initRating = Math.ceil((gap / width) * maxRating);
+        prevRating.current = initRating;
+        ratingHandler(initRating);
+      });
+    },
+    onPanResponderMove: (_, gestureState) => {
+      const touchX = gestureState.moveX - startPoint.current;
+      containerRef.current?.measure((_fx, _fy, width) => {
+        const newRating =
+          prevRating.current + Math.ceil((touchX / width) * maxRating);
+        if (newRating > maxRating) ratingHandler(maxRating);
+        else if (newRating < 0) ratingHandler(0);
+        else ratingHandler(newRating);
+      });
+    },
+  });
+
+  const renderStars = Array.from({ length: maxRating }, (_, idx) => (
+    <Flexbox.Item flex={1}>
       <Icon
         size={ratingSize}
         name={idx < rating ? 'star-sharp' : 'star-outline'}
       />
-    </Pressable>
+    </Flexbox.Item>
   ));
 
   return (
-    <Box>
+    <View
+      ref={containerRef}
+      {...panResponder.panHandlers}
+      style={containerStyle.default}
+    >
       <Typography fontSize={fontSize}>{children}</Typography>
-      <Flexbox gap={5}>{renderStars}</Flexbox>
-    </Box>
+      <Flexbox flexDirection='row'>{renderStars}</Flexbox>
+    </View>
   );
 };
 
