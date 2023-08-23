@@ -13,7 +13,7 @@ type ImageProps = {
   src?: string;
   width?: LengthElement;
   height?: LengthElement;
-  resizeMode?: 'contain' | 'center';
+  resizeMode?: 'contain' | 'center' | 'cover';
 };
 
 const Image = ({ src, width, height, resizeMode }: ImageProps) => {

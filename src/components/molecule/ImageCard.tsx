@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { Card } from './Card';
@@ -12,36 +12,52 @@ interface ImageCardProps extends ImageProps {
   onClickHandler?: () => void;
 }
 
-const ImageCard = ({
-  title = '',
-  desc = '',
-  src = '',
-  width,
-  height,
-  margin,
-  resizeMode,
-  onClickHandler,
-}: ImageCardProps) => {
-  const header = <Typography fontSize={15}>{desc}</Typography>;
-  const content = (
-    <Image width={width} height={height} src={src} resizeMode={resizeMode} />
-  );
-  const footer = <Typography fontSize={15}>{title}</Typography>;
+const ImageCard = React.memo(
+  ({
+    title = '',
+    desc = '',
+    src = '',
+    width,
+    height,
+    margin,
+    resizeMode,
+    onClickHandler,
+  }: ImageCardProps) => {
+    const header = useMemo(
+      () => <Typography fontSize={15}>{desc}</Typography>,
+      [desc]
+    );
+    const content = useMemo(
+      () => (
+        <Image
+          width={width}
+          height={height}
+          src={src}
+          resizeMode={resizeMode}
+        />
+      ),
+      [width, height, src, resizeMode]
+    );
+    const footer = useMemo(
+      () => <Typography fontSize={15}>{title}</Typography>,
+      [title]
+    );
 
-  return (
-    <Pressable onPress={onClickHandler}>
-      <Card
-        width={width}
-        margin={margin}
-        headerAlign={'flex-start'}
-        contentAlign={'center'}
-        footerAlign={'center'}
-        header={header}
-        content={content}
-        footer={footer}
-      />
-    </Pressable>
-  );
-};
+    return (
+      <Pressable onPress={onClickHandler}>
+        <Card
+          width={width}
+          margin={margin}
+          headerWrapperStyle={{ align: 'flex-start' }}
+          contentWrapperStyle={{ align: 'center' }}
+          footerWrapperStyle={{ align: 'center' }}
+          header={header}
+          content={content}
+          footer={footer}
+        />
+      </Pressable>
+    );
+  }
+);
 
 export { ImageCard, ImageCardProps };
