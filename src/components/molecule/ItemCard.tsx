@@ -19,25 +19,25 @@ interface ItemCardProps {
   onLikeHandler?: () => void;
 }
 
-const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
-  const {
-    title = '',
-    date = '',
-    desc = '',
-    wantedItem = '',
-    location = '',
-    hashTags = [],
-    liked = false,
-  } = data;
-
-  const header = (
+const Header = ({ title, date }: { title: string; date: string }) => {
+  return (
     <Flexbox flexDirection='column' gap={10}>
       <Typography fontSize={20}>{title}</Typography>
       <Typography fontSize={15}>{date}</Typography>
     </Flexbox>
   );
+};
 
-  const content = (
+const Content = ({
+  desc,
+  wantedItem,
+  location,
+}: {
+  desc: string;
+  wantedItem: string;
+  location: string;
+}) => {
+  return (
     <Flexbox flexDirection='column' gap={10}>
       <Flexbox.Item pb={20}>
         <Typography fontSize={15}>{desc}</Typography>
@@ -52,12 +52,21 @@ const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
       </Flexbox>
     </Flexbox>
   );
-
-  const footer = (
+};
+const Footer = ({
+  hashTags,
+  onLikeHandler,
+  liked,
+}: {
+  hashTags: TagProps[];
+  onLikeHandler: () => void;
+  liked: boolean;
+}) => {
+  return (
     <Flexbox alignItems='center' justifyContent='space-between'>
       <Flexbox.Item>
         <Flexbox>
-          {hashTags.map(({ children, ...props }) => (
+          {hashTags.map(({ children, ...props }: any) => (
             <Tag {...props} disabled>
               {children}
             </Tag>
@@ -71,8 +80,37 @@ const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
       </Flexbox.Item>
     </Flexbox>
   );
+};
 
-  return <Card gap={30} header={header} content={content} footer={footer} />;
+const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
+  const {
+    title = '',
+    date = '',
+    desc = '',
+    wantedItem = '',
+    location = '',
+    hashTags = [],
+    liked = false,
+  } = data;
+
+  return (
+    <Card
+      gap={30}
+      header={<Header title={title} date={date} />}
+      content={
+        <Content desc={desc} wantedItem={wantedItem} location={location} />
+      }
+      footer={
+        <Footer
+          hashTags={hashTags}
+          onLikeHandler={() => {
+            if (onLikeHandler) onLikeHandler();
+          }}
+          liked={liked}
+        />
+      }
+    />
+  );
 };
 
 export { ItemCard, ItemCardProps };
