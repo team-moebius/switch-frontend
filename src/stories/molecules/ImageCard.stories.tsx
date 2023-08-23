@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { ComponentMeta, ComponentStory } from '@storybook/react';
 import { ImageCard } from 'src/components/molecule';
-import { FlatList } from 'react-native';
+import { FlatList, TouchableOpacity } from 'react-native';
 import { Flexbox } from 'src/components/atom';
 
 export default {
@@ -110,11 +110,8 @@ const Template: ComponentStory<typeof ImageCard> = (args) => {
   const itemsPerPage = 6;
   const totalPages = Math.ceil(DATA.length / itemsPerPage);
 
-  // 현재 페이지에 해당하는 데이터만 필터링
-  const currentData = DATA.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
+  // 데이터 필터링
+  const currentData = DATA.slice(0, currentPage * itemsPerPage);
 
   // 다음 페이지로 이동하는 함수
   const loadMoreData = () => {
@@ -125,7 +122,7 @@ const Template: ComponentStory<typeof ImageCard> = (args) => {
 
   return (
     <Flexbox alignItems='center' justifyContent='center'>
-      <Flexbox.Item>
+      <Flexbox.Item height={600}>
         <FlatList
           data={currentData}
           renderItem={({ item }) => <ImageCard {...item} {...args} />}
