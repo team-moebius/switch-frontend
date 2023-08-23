@@ -73,21 +73,9 @@ const Flexbox = ({
   );
 };
 
-const FlexItem = ({
-  children,
-  alignSelf,
-  flex,
-  alignItems,
-  justifyContent,
-  ...props
-}: FlexItemProps) => {
+const FlexItem = ({ children, alignSelf, flex, ...props }: FlexItemProps) => {
   return (
-    <View
-      style={[
-        { ...bindBoxStyle(props) },
-        { alignSelf, flex, alignItems, justifyContent },
-      ]}
-    >
+    <View style={[{ ...bindBoxStyle(props) }, { alignSelf, flex }]}>
       {children}
     </View>
   );
