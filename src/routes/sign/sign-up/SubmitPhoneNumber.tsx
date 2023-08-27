@@ -1,8 +1,32 @@
+import {
+  UserVerificationRequest,
+  UserVerificationResponse,
+} from '@team-moebius/api-typescript';
+import { useState } from 'react';
+
+import { UserApi } from 'src/api';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+import { useCommonMutation } from 'src/hooks/useCommomMutation';
 
 const SubmitPhoneNumber = ({ navigation }) => {
+  const [state, setState] = useState<UserVerificationRequest>({ phone: '' });
+
+  const { mutate, data, isLoading, isError } = useCommonMutation<
+    UserVerificationResponse,
+    UserVerificationRequest
+  >({
+    api: UserApi.requestUserVerification,
+    onSuccess(data, variables) {
+      console.debug('on success:', data, variables);
+    },
+    onError(error, variables) {
+      console.debug('error', error, variables);
+    },
+  });
+
+  console.debug('result:', data, isLoading, isError);
   return (
     <ScreenWrapper>
       <Flexbox
@@ -26,12 +50,13 @@ const SubmitPhoneNumber = ({ navigation }) => {
             <Flexbox.Item>
               <Field
                 width={'100%'}
-                name={'phoneNumber'}
+                name={'phone'}
                 fieldType={'textInput'}
                 placeholder={'휴대폰 번호 입력'}
-                value={''}
-                onChange={() => {
-                  console.debug('change phone number');
+                value={state.phone}
+                onChange={(value) => {
+                  setState((prev) => ({ ...prev, ...value }));
+                  // console.debug('change phone number');
                 }}
               />
             </Flexbox.Item>
@@ -41,7 +66,8 @@ const SubmitPhoneNumber = ({ navigation }) => {
                 type={'normal'}
                 size={'middle'}
                 onPress={() => {
-                  navigation?.navigate('SubmitValidationCode');
+                  mutate(state);
+                  // navigation?.navigate('SubmitValidationCode');
                 }}
               >
                 다음
