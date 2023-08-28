@@ -1,6 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
+import { MyInfoMainScreen } from './MyInfoMainScreen';
 
 const Stack = createStackNavigator();
 
@@ -18,7 +19,7 @@ const MyInfoMain = () => {
 const MyInfoRoute = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
-      <Stack.Screen name={'MyInfoHome'} component={MyInfoMain} />
+      <Stack.Screen name={'MyInfoHome'} component={MyInfoMainScreen} />
     </Stack.Navigator>
   );
 };

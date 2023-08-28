@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import { Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
-import { Card, CardProps } from './Card';
+import { Card } from './Card';
 import { Margin } from 'src/@types/unit';
 import { Pressable } from 'react-native';
 
@@ -22,7 +22,6 @@ const ImageCard = React.memo(
     margin,
     resizeMode,
     onClickHandler,
-    ...props
   }: ImageCardProps) => {
     const header = useMemo(
       () => <Typography fontSize={15}>{desc}</Typography>,
@@ -55,7 +54,6 @@ const ImageCard = React.memo(
           header={header}
           content={content}
           footer={footer}
-          {...props}
         />
       </Pressable>
     );

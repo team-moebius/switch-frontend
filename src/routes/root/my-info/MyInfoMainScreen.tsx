@@ -230,8 +230,8 @@ const MyInfoMainScreen = () => {
 
   return (
     <ScreenWrapper>
-      <Box>
-        <Flexbox flexDirection='row' mb={'2%'}>
+      <Box padding={10}>
+        <Flexbox flexDirection='row' mb={20}>
           <Flexbox.Item flex={1} alignItems='center'>
             <Typography fontSize={30}>집오리</Typography>
             <Box width={65} mt={3}>
@@ -245,23 +245,22 @@ const MyInfoMainScreen = () => {
           </Flexbox.Item>
           <Flexbox.Item flex={1}>
             <Flexbox
-              height={'100%'}
               justifyContent='center'
               alignItems='center'
               flexDirection='column'
               gap={10}
             >
               <Typography fontSize={13}>스위치 횟수 : 1회</Typography>
-              <Typography fontSize={13}>스위치 점수 : 4 / 5</Typography>
+              <Typography fontSize={13}>스위치 점수 : 4/5</Typography>
             </Flexbox>
           </Flexbox.Item>
         </Flexbox>
-        <Box mb={'2%'}>
+        <Box mb={20}>
           <Typography fontSize={15}>
             {`제 꿈은 클립으로 집까지 바꾸는거에요:)`}
           </Typography>
         </Box>
-        <Flexbox justifyContent='center'>
+        <Flexbox justifyContent='center' alignItems='center'>
           <Box width={200}>
             <Button
               type={'normal'}
@@ -287,26 +286,34 @@ const MyInfoMainScreen = () => {
           data={mock}
           renderItem={({ item }) => (
             <Flexbox.Item flex={1} position='relative' padding={10}>
-              <Box position='absolute' width={30} zIndex={1} right={15} top={3}>
+              <Flexbox
+                position='absolute'
+                width={30}
+                zIndex={1}
+                right={15}
+                top={3}
+                justifyContent='center'
+                alignItems='center'
+              >
                 <Tag
                   disabled={false}
                   color={'#FFFFFF'}
                   backgroundColor={'#21BD9E'}
                   children={`+${item.waitingCount}`}
                 />
-              </Box>
+              </Flexbox>
               <Image
                 src={item.images[0]}
                 height={150}
                 width={'100%'}
                 resizeMode='cover'
               />
-              <Flexbox justifyContent='center' mt={5}>
+              <Flexbox justifyContent='center' alignItems='center' mt={5}>
                 <Typography children={item.name} fontSize={15} />
               </Flexbox>
             </Flexbox.Item>
           )}
-          keyExtractor={(item) => String(item)}
+          keyExtractor={(item) => String(item.id)}
           numColumns={2}
           onEndReached={onFetchDataHandler}
           onEndReachedThreshold={0.1}
