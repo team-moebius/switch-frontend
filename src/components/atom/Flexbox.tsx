@@ -78,17 +78,12 @@ const FlexItem = ({
   children,
   alignSelf,
   flex,
-  alignItems,
-  justifyContent,
   width = '100%',
   ...props
 }: FlexItemProps) => {
   return (
     <View
-      style={[
-        { ...bindBoxStyle({ ...props, width }) },
-        { alignSelf, flex, alignItems, justifyContent },
-      ]}
+      style={[{ ...bindBoxStyle({ ...props, width }) }, { alignSelf, flex }]}
     >
       {children}
     </View>
