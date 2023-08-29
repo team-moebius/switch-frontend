@@ -1,52 +1,46 @@
 import React, { ReactElement } from 'react';
 import { Flexbox } from '../atom';
-import { FlexAlign, LengthElement, Margin } from 'src/@types/unit';
+import { JustifyContent } from 'src/@types/unit';
 
 interface WrapperStyle {
-  align?: FlexAlign;
+  justify?: JustifyContent;
   pt?: number;
 }
 
 interface CardProps {
-  width?: LengthElement;
-  margin?: Margin;
   headerWrapperStyle?: WrapperStyle;
   contentWrapperStyle?: WrapperStyle;
   footerWrapperStyle?: WrapperStyle;
-  gap?: number;
   header?: ReactElement;
   content?: ReactElement;
   footer?: ReactElement;
 }
 
 const Card = ({
-  width,
-  margin,
   headerWrapperStyle,
   contentWrapperStyle,
   footerWrapperStyle,
-  gap,
   header,
   content,
   footer,
 }: CardProps) => {
   return (
-    <Flexbox width={width} margin={margin}>
-      <Flexbox.Item>
+    <Flexbox>
+      <Flexbox.Item width={'100%'}>
         <Flexbox
-          alignItems={headerWrapperStyle?.align}
+          justifyContent={headerWrapperStyle?.justify}
           pt={headerWrapperStyle?.pt}
         >
           {header}
         </Flexbox>
         <Flexbox
-          alignItems={contentWrapperStyle?.align}
+          justifyContent={contentWrapperStyle?.justify}
           pt={contentWrapperStyle?.pt}
         >
           {content}
         </Flexbox>
         <Flexbox
-          alignItems={footerWrapperStyle?.align}
+          justifyContent={footerWrapperStyle?.justify}
           pt={footerWrapperStyle?.pt}
         >
           {footer}
