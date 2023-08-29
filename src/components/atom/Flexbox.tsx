@@ -8,22 +8,6 @@ import {
 } from 'src/@types/unit';
 import { bindBoxStyle, BoxProps, BoxStyle } from './Box';
 
-const FlexContainerStyles = StyleSheet.create({
-  default: {
-    ...BoxStyle.default,
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-const FlexboxStyles = {
-  container: FlexContainerStyles,
-};
-
 interface FlexboxProps extends BoxProps {
   flexDirection?: FlexDirection;
   justifyContent?: JustifyContent;
@@ -42,9 +26,9 @@ interface FlexItemProps extends BoxProps {
 }
 
 const Flexbox = ({
-  flexDirection,
-  justifyContent,
-  alignItems,
+  flexDirection = 'row',
+  justifyContent = 'flex-start',
+  alignItems = 'flex-start',
   rowGap,
   columnGap,
   gap,
@@ -56,7 +40,6 @@ const Flexbox = ({
   return (
     <View
       style={[
-        FlexboxStyles.container.default,
         {
           ...bindBoxStyle({ ...props, width }),
           flexDirection,
