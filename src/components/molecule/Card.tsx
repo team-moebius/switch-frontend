@@ -2,10 +2,9 @@ import React, { ReactElement } from 'react';
 import { Flexbox } from '../atom';
 import { FlexAlign, LengthElement, Margin } from 'src/@types/unit';
 
-type AlignSelf = FlexAlign | 'auto';
-
 interface WrapperStyle {
-  align?: AlignSelf;
+  align?: FlexAlign;
+  pt?: number;
 }
 
 interface CardProps {
@@ -14,8 +13,6 @@ interface CardProps {
   headerWrapperStyle?: WrapperStyle;
   contentWrapperStyle?: WrapperStyle;
   footerWrapperStyle?: WrapperStyle;
-  contentPt?: number;
-  footerPt?: number;
   gap?: number;
   header?: ReactElement;
   content?: ReactElement;
@@ -28,8 +25,6 @@ const Card = ({
   headerWrapperStyle,
   contentWrapperStyle,
   footerWrapperStyle,
-  contentPt,
-  footerPt,
   gap,
   header,
   content,
@@ -37,17 +32,24 @@ const Card = ({
 }: CardProps) => {
   return (
     <Flexbox width={width} margin={margin}>
-      <Flexbox.Item flex={1}>
-        <Flexbox flexDirection='column' gap={gap}>
-          <Flexbox.Item alignSelf={headerWrapperStyle?.align}>
-            {header}
-          </Flexbox.Item>
-          <Flexbox.Item alignSelf={contentWrapperStyle?.align} pt={contentPt}>
-            {content}
-          </Flexbox.Item>
-          <Flexbox.Item alignSelf={footerWrapperStyle?.align} pt={footerPt}>
-            {footer}
-          </Flexbox.Item>
+      <Flexbox.Item>
+        <Flexbox
+          alignItems={headerWrapperStyle?.align}
+          pt={headerWrapperStyle?.pt}
+        >
+          {header}
+        </Flexbox>
+        <Flexbox
+          alignItems={contentWrapperStyle?.align}
+          pt={contentWrapperStyle?.pt}
+        >
+          {content}
+        </Flexbox>
+        <Flexbox
+          alignItems={footerWrapperStyle?.align}
+          pt={footerWrapperStyle?.pt}
+        >
+          {footer}
         </Flexbox>
       </Flexbox.Item>
     </Flexbox>

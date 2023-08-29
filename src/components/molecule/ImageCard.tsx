@@ -6,17 +6,18 @@ import { Margin } from 'src/@types/unit';
 import { Pressable } from 'react-native';
 
 interface ImageCardProps extends ImageProps {
-  title?: string;
-  desc?: string;
+  name?: string;
+  preferredLocation?: string;
   margin?: Margin;
+  images?: string[];
   onClickHandler?: () => void;
 }
 
 const ImageCard = React.memo(
   ({
-    title = '',
-    desc = '',
-    src = '',
+    name = '',
+    preferredLocation = '',
+    images = [''],
     width,
     height,
     margin,
@@ -24,23 +25,23 @@ const ImageCard = React.memo(
     onClickHandler,
   }: ImageCardProps) => {
     const header = useMemo(
-      () => <Typography fontSize={15}>{desc}</Typography>,
-      [desc]
+      () => <Typography fontSize={15}>{preferredLocation}</Typography>,
+      [preferredLocation]
     );
     const content = useMemo(
       () => (
         <Image
           width={width}
           height={height}
-          src={src}
+          src={images[0]}
           resizeMode={resizeMode}
         />
       ),
-      [width, height, src, resizeMode]
+      [width, height, images, resizeMode]
     );
     const footer = useMemo(
-      () => <Typography fontSize={15}>{title}</Typography>,
-      [title]
+      () => <Typography fontSize={15}>{name}</Typography>,
+      [name]
     );
 
     return (
@@ -49,8 +50,8 @@ const ImageCard = React.memo(
           width={width}
           margin={margin}
           headerWrapperStyle={{ align: 'flex-start' }}
-          contentWrapperStyle={{ align: 'center' }}
-          footerWrapperStyle={{ align: 'center' }}
+          contentWrapperStyle={{ align: 'center', pt: 5 }}
+          footerWrapperStyle={{ align: 'center', pt: 5 }}
           header={header}
           content={content}
           footer={footer}
