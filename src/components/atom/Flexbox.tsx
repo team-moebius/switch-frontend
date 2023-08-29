@@ -34,7 +34,7 @@ const Flexbox = ({
   gap,
   children,
   flexWrap,
-  width = '100%',
+  width = 'auto',
   ...props
 }: FlexboxProps) => {
   return (
@@ -63,7 +63,7 @@ const FlexItem = ({
   flex,
   alignItems,
   justifyContent,
-  width = '100%',
+  width = 'auto',
   ...props
 }: FlexItemProps) => {
   return (
