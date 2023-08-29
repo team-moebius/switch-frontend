@@ -20,48 +20,50 @@ const renderChildren = (
   fontSize: keyof typeof fontSizeStyle
 ) => {
   return (
-    <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+    <Typography {...fontSizeStyle[fontSize]} numberOfLines={1}>
       {children}
     </Typography>
   );
 };
 
-const HistoryListItem = ({
-  data,
-  onPress,
-  fontSize = 'cardList',
-  mirrorDirection,
-}: HistoryListItemProps) => {
-  const { myItem, selectedItem, ago } = data;
+const HistoryListItem = React.memo(
+  ({
+    data,
+    onPress,
+    fontSize = 'cardList',
+    mirrorDirection,
+  }: HistoryListItemProps) => {
+    const { myItem, selectedItem, ago } = data;
 
-  const childrenA = useMemo(() => {
-    return renderChildren(myItem, fontSize);
-  }, [myItem, fontSize]);
+    const childrenA = useMemo(() => {
+      return renderChildren(myItem, fontSize);
+    }, [myItem, fontSize]);
 
-  const childrenB = useMemo(() => {
-    return renderChildren(selectedItem, fontSize);
-  }, [selectedItem, fontSize]);
+    const childrenB = useMemo(() => {
+      return renderChildren(selectedItem, fontSize);
+    }, [selectedItem, fontSize]);
 
-  return (
-    <Pressable onPress={onPress}>
-      <Flexbox flexDirection={'column'} gap={10}>
-        <Flexbox.Item flex={1}>
-          <Flexbox>
-            <Flexbox.Item>
-              <WithMirror
-                children={[childrenA, childrenB]}
-                mirrorDirection={mirrorDirection}
-                centerAxis={<Icon name={'code-outline'} size={20} />}
-              />
-            </Flexbox.Item>
-          </Flexbox>
-        </Flexbox.Item>
-        <Flexbox.Item>
-          <Typography fontSize={13}>{ago}</Typography>
-        </Flexbox.Item>
-      </Flexbox>
-    </Pressable>
-  );
-};
+    return (
+      <Pressable onPress={onPress}>
+        <Flexbox flexDirection={'column'} gap={10}>
+          <Flexbox.Item flex={1} width={'100%'}>
+            <Flexbox>
+              <Flexbox.Item width={'100%'}>
+                <WithMirror
+                  children={[childrenA, childrenB]}
+                  mirrorDirection={mirrorDirection}
+                  centerAxis={<Icon name={'code-outline'} size={20} />}
+                />
+              </Flexbox.Item>
+            </Flexbox>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <Typography fontSize={13}>{ago}</Typography>
+          </Flexbox.Item>
+        </Flexbox>
+      </Pressable>
+    );
+  }
+);
 
 export { HistoryListItem, HistoryListItemProps };

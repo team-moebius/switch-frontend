@@ -1,28 +1,12 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import {
   FlexAlign,
   FlexDirection,
   JustifyContent,
   FlexWrap,
 } from 'src/@types/unit';
-import { bindBoxStyle, BoxProps, BoxStyle } from './Box';
-
-const FlexContainerStyles = StyleSheet.create({
-  default: {
-    ...BoxStyle.default,
-    display: 'flex',
-    flexDirection: 'row',
-  },
-  center: {
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-});
-
-const FlexboxStyles = {
-  container: FlexContainerStyles,
-};
+import { bindBoxStyle, BoxProps } from './Box';
 
 interface FlexboxProps extends BoxProps {
   flexDirection?: FlexDirection;
@@ -36,27 +20,24 @@ interface FlexboxProps extends BoxProps {
 
 interface FlexItemProps extends BoxProps {
   alignSelf?: FlexAlign | 'auto';
-  alignItems?: FlexAlign;
-  justifyContent?: JustifyContent;
   flex?: number;
 }
 
 const Flexbox = ({
-  flexDirection,
-  justifyContent,
-  alignItems,
+  flexDirection = 'row',
+  justifyContent = 'flex-start',
+  alignItems = 'flex-start',
   rowGap,
   columnGap,
   gap,
   children,
   flexWrap,
-  width = '100%',
+  width = 'auto',
   ...props
 }: FlexboxProps) => {
   return (
     <View
       style={[
-        FlexboxStyles.container.default,
         {
           ...bindBoxStyle({ ...props, width }),
           flexDirection,
@@ -78,7 +59,7 @@ const FlexItem = ({
   children,
   alignSelf,
   flex,
-  width = '100%',
+  width = 'auto',
   ...props
 }: FlexItemProps) => {
   return (
