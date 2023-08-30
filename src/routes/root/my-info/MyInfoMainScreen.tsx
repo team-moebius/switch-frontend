@@ -1,14 +1,8 @@
-import { useEffect, useState } from 'react';
-
+import { useEffect, useMemo, useState } from 'react';
 import { FlatList } from 'react-native-gesture-handler';
-import {
-  Box,
-  Button,
-  Flexbox,
-  Image,
-  Tag,
-  Typography,
-} from 'src/components/atom';
+
+import { Box, Button, Flexbox, Tag } from 'src/components/atom';
+import { ImageCard, UserSummary } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
 const mockData = [
@@ -42,7 +36,7 @@ const mockData = [
     hashtags: ['마리오', '게임', '닌텐도'],
     preferredCategory: '마리오',
     preferredLocation: '서울 화양동',
-    waitingCount: 3,
+    waitingCount: 33,
   },
   {
     createdAt: '2023-08-22T08:42:49.821Z',
@@ -224,43 +218,60 @@ const MyInfoMainScreen = () => {
     });
   };
 
+  const ItemListCard = ({
+    item,
+  }: {
+    item: { waitingCount: number; name: string; images: string[] };
+  }) => {
+    const renderResult = useMemo(() => {
+      return (
+        <Flexbox.Item flex={1} position='relative' padding={10}>
+          <Flexbox
+            position='absolute'
+            width={30}
+            zIndex={1}
+            right={15}
+            top={13}
+            justifyContent='center'
+            alignItems='center'
+          >
+            <Tag
+              disabled={false}
+              color={'#FFFFFF'}
+              backgroundColor={'#21BD9E'}
+              children={`+${item.waitingCount}`}
+            />
+          </Flexbox>
+          <ImageCard
+            title={item.name}
+            src={item.images[0]}
+            width={'100%'}
+            height={150}
+            resizeMode={'cover'}
+          />
+        </Flexbox.Item>
+      );
+    }, [item]);
+    return renderResult;
+  };
+
   useEffect(() => {
     onFetchDataHandler();
   }, []);
 
   return (
     <ScreenWrapper>
-      <Box padding={10}>
-        <Flexbox flexDirection='row' mb={20}>
-          <Flexbox.Item flex={1} alignItems='center'>
-            <Typography fontSize={30}>집오리</Typography>
-            <Box width={65} mt={3}>
-              <Tag
-                color={'#FFFFFF'}
-                children={'인증완료'}
-                backgroundColor={'#3598DA'}
-                disabled={false}
-              />
-            </Box>
-          </Flexbox.Item>
-          <Flexbox.Item flex={1}>
-            <Flexbox
-              justifyContent='center'
-              alignItems='center'
-              flexDirection='column'
-              gap={10}
-            >
-              <Typography fontSize={13}>스위치 횟수 : 1회</Typography>
-              <Typography fontSize={13}>스위치 점수 : 4/5</Typography>
-            </Flexbox>
-          </Flexbox.Item>
-        </Flexbox>
-        <Box mb={20}>
-          <Typography fontSize={15}>
-            {`제 꿈은 클립으로 집까지 바꾸는거에요:)`}
-          </Typography>
-        </Box>
-        <Flexbox justifyContent='center' alignItems='center'>
+      <Box>
+        <UserSummary
+          data={{
+            user: '집오리',
+            verified: true,
+            countSwitch: '4',
+            userRate: '4/5',
+            bio: '제 꿈은 클립으로 집까지 바꾸는거에요:)',
+          }}
+        />
+        <Flexbox justifyContent='center' alignItems='center' mt={10} mb={10}>
           <Box width={200}>
             <Button
               type={'normal'}
@@ -274,45 +285,11 @@ const MyInfoMainScreen = () => {
           </Box>
         </Flexbox>
       </Box>
-      <Box
-        height={1}
-        width={'100%'}
-        mt={'2%'}
-        mb={'2%'}
-        backgroundColor='#000000'
-      />
+      <Box height={1} width={'100%'} backgroundColor='#000000' />
       <Flexbox height={'100%'}>
         <FlatList
           data={mock}
-          renderItem={({ item }) => (
-            <Flexbox.Item flex={1} position='relative' padding={10}>
-              <Flexbox
-                position='absolute'
-                width={30}
-                zIndex={1}
-                right={15}
-                top={3}
-                justifyContent='center'
-                alignItems='center'
-              >
-                <Tag
-                  disabled={false}
-                  color={'#FFFFFF'}
-                  backgroundColor={'#21BD9E'}
-                  children={`+${item.waitingCount}`}
-                />
-              </Flexbox>
-              <Image
-                src={item.images[0]}
-                height={150}
-                width={'100%'}
-                resizeMode='cover'
-              />
-              <Flexbox justifyContent='center' alignItems='center' mt={5}>
-                <Typography children={item.name} fontSize={15} />
-              </Flexbox>
-            </Flexbox.Item>
-          )}
+          renderItem={({ item }) => <ItemListCard item={item} />}
           keyExtractor={(item) => String(item.id)}
           numColumns={2}
           onEndReached={onFetchDataHandler}

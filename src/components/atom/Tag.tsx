@@ -21,9 +21,9 @@ const Tag = ({
 }: TagProps) => {
   return (
     <Flexbox
-      width={'auto'}
-      height={14}
-      padding={5}
+      height={20}
+      pl={6}
+      pr={6}
       borderRadius={15}
       backgroundColor={backgroundColor}
       justifyContent={'center'}

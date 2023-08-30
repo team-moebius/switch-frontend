@@ -20,34 +20,36 @@ const UserSummary = ({ data }: UserSummaryProps) => {
   const tagColor = verified ? VERIFIED_COLOR : UNVERIFIED_COLOR;
 
   return (
-    <Flexbox flexDirection={'column'} padding={20} gap={20}>
-      <Flexbox>
-        <Box width={'50%'}>
-          <Flexbox flexDirection={'column'} gap={10}>
+    <Box padding={10}>
+      <Flexbox mb={10}>
+        <Flexbox.Item flex={1}>
+          <Flexbox
+            flexDirection={'column'}
+            justifyContent='center'
+            alignItems='center'
+            gap={5}
+          >
             <Typography fontSize={20}>{user}</Typography>
-
             <Tag color={'#fff'} backgroundColor={tagColor}>
               {verified ? '인증완료' : '미인증 유저'}
             </Tag>
           </Flexbox>
-        </Box>
-        <Flexbox alignItems={'center'}>
-          <Box width={'50%'}>
-            <Flexbox flexDirection={'column'} gap={10}>
-              <Typography fontSize={13}>
-                {'스위치 횟수: ' + countSwitch}
-              </Typography>
-              <Typography fontSize={13}>
-                {'스위처 점수: ' + userRate}
-              </Typography>
-            </Flexbox>
-          </Box>
-        </Flexbox>
+        </Flexbox.Item>
+        <Flexbox.Item flex={1}>
+          <Flexbox alignItems='center' justifyContent='center'>
+            <Typography fontSize={13}>
+              {'스위치 횟수: ' + countSwitch + '점'}
+            </Typography>
+          </Flexbox>
+          <Flexbox alignItems='center' justifyContent='center'>
+            <Typography fontSize={13}>{'스위처 점수: ' + userRate}</Typography>
+          </Flexbox>
+        </Flexbox.Item>
       </Flexbox>
       <Box>
         <Typography fontSize={13}>{bio}</Typography>
       </Box>
-    </Flexbox>
+    </Box>
   );
 };
 
