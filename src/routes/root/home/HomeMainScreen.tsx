@@ -404,6 +404,10 @@ enum TabMenu {
   TimeLine = 'timeline-view',
 }
 
+const Separator = () => (
+  <Box height={1} backgroundColor={'gray'} mt={10} mb={10} />
+);
+
 const ListView = () => {
   const selectOptions = useMemo(
     () => ['무작위', '최신순', '내 위치와 가까운 순'],
@@ -486,7 +490,7 @@ const ListView = () => {
           <FlatList
             data={currentData}
             key={'listView'}
-            renderItem={({ item, index }) => (
+            renderItem={({ item }) => (
               <>
                 <TradingListItem
                   data={{
@@ -503,15 +507,13 @@ const ListView = () => {
                   fontSize={'cardList'}
                   imageResizeMode={'cover'}
                 />
-                {index < currentData.length - 1 && (
-                  <Box height={1} backgroundColor={'gray'} mt={10} mb={10} />
-                )}
               </>
             )}
             keyExtractor={(item) => 'listView' + item.userId}
             numColumns={1}
             onEndReached={loadMoreData}
             onEndReachedThreshold={0.1}
+            ItemSeparatorComponent={Separator}
           />
         )}
       </Flexbox.Item>
@@ -543,19 +545,14 @@ const TimeLineView = () => {
                 ago: item.ago,
               }}
               mirrorDirection={'row'}
-              onPress={() => {
-                alert('list clicked');
-              }}
             />
-            {index < timeLineData.length - 1 && (
-              <Box height={1} backgroundColor={'gray'} mt={10} mb={10} />
-            )}
           </Flexbox.Item>
         )}
         keyExtractor={(item) => 'timeLineView' + item.ago}
         numColumns={1}
         onEndReached={loadMoreData}
         onEndReachedThreshold={0.1}
+        ItemSeparatorComponent={Separator}
       />
     </Flexbox.Item>
   );
