@@ -228,7 +228,6 @@ const MyInfoMainScreen = () => {
         <Flexbox.Item flex={1} position='relative' padding={10}>
           <Flexbox
             position='absolute'
-            width={30}
             zIndex={1}
             right={15}
             top={13}
