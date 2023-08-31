@@ -30,7 +30,7 @@ function ListView<T extends {}>({
   ...props
 }: ListViewProps<T>) {
   return (
-    <Flexbox flexDirection={'column'} width={'100%'} height={'100%'}>
+    <Flexbox flexDirection={'column'} width={'100%'} height={'90%'}>
       <Flexbox.Item width={'100%'}>{optionBar}</Flexbox.Item>
       <Flexbox.Item width={'100%'} flex={1}>
         <FlatList<T> key={viewKey} {...props} data={data} />
@@ -90,7 +90,6 @@ function useFlatList<T extends {}>({
     }
   }, [type, onEndReached, keyExtractor, renderItem]);
 
-  console.debug('renderItem?', props.renderItem);
   return props;
 }
 
@@ -150,9 +149,9 @@ const ItemListContent = () => {
   const renderItem = useMemo(() => {
     switch (type) {
       case 'grid':
-        return GridItem;
+        return MemoizedGridItem;
       case 'list':
-        return ListItem;
+        return MemoizedListItem;
     }
   }, [type]);
 
@@ -168,7 +167,6 @@ const ItemListContent = () => {
       data={STUFF_LIST_MOCK}
       optionBar={
         <Flexbox
-          height={'10%'}
           width={'100%'}
           alignItems={'center'}
           justifyContent={'space-between'}
