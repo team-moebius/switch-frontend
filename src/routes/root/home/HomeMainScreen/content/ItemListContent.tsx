@@ -80,6 +80,7 @@ function useFlatList<T extends {}>({
         };
       case 'list':
         return {
+          keyExtractor,
           numColumns: 1,
           onEndReached,
           onEndReachedThreshold: 0.1,
