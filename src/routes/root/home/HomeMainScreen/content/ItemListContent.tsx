@@ -18,7 +18,6 @@ interface ListViewProps<T>
     | 'onEndReachedThreshold'
     | 'renderItem'
   > {
-  // type: ViewType;
   data: Array<T>;
   optionBar?: ReactNode;
   viewKey?: string;
