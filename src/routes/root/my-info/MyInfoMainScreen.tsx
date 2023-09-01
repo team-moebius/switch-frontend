@@ -206,7 +206,7 @@ const mockData = [
 ];
 const mockDataApi = () => Promise.resolve(mockData);
 
-const MyInfoMainScreen = () => {
+const MyInfoMainScreen = ({ navigation }) => {
   const [mock, setMock] = useState<typeof mockData>([]);
 
   const onFetchDataHandler = async () => {
@@ -277,6 +277,7 @@ const MyInfoMainScreen = () => {
               size={'middle'}
               onPress={function (): void {
                 alert('편집하기');
+                navigation.navigate('Feedback');
               }}
             >
               내 정보 편집하기
