@@ -1,97 +1,10 @@
-import React from 'react';
-import { ReactNode, useCallback, useMemo, useState } from 'react';
-import { FlatList, FlatListProps, Pressable } from 'react-native';
-import { Box, Flexbox, Icon, Select } from 'src/components/atom';
+import { useCallback, useMemo, useState } from 'react';
+import { Pressable } from 'react-native';
+import { Flexbox, Icon, Select } from 'src/components/atom';
 import { ImageCard, TradingListItem } from 'src/components/molecule';
+import { ListView } from 'src/components/template/ListView';
+import { useFlatList } from 'src/hooks/useFlatList';
 import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
-
-type ViewType = 'grid' | 'list';
-
-interface ListViewProps<T>
-  extends Pick<
-    FlatListProps<T>,
-    | 'onEndReached'
-    | 'keyExtractor'
-    | 'numColumns'
-    | 'columnWrapperStyle'
-    | 'ItemSeparatorComponent'
-    | 'onEndReachedThreshold'
-    | 'renderItem'
-  > {
-  data: Array<T>;
-  optionBar?: ReactNode;
-  viewKey?: string;
-}
-function ListView<T extends {}>({
-  viewKey = '',
-  data,
-  optionBar,
-  ...props
-}: ListViewProps<T>) {
-  return (
-    <Flexbox flexDirection={'column'} width={'100%'} height={'90%'}>
-      <Flexbox.Item width={'100%'}>{optionBar}</Flexbox.Item>
-      <Flexbox.Item width={'100%'} flex={1}>
-        <FlatList<T> key={viewKey} {...props} data={data} />
-      </Flexbox.Item>
-    </Flexbox>
-  );
-}
-
-const Separator = () => (
-  <Box height={1} backgroundColor={'gray'} mt={10} mb={10} />
-);
-
-interface UseFlatListArgs<T>
-  extends Pick<
-    FlatListProps<T>,
-    'onEndReached' | 'keyExtractor' | 'renderItem'
-  > {
-  type: ViewType;
-}
-
-function useFlatList<T extends {}>({
-  type,
-  onEndReached,
-  keyExtractor = (item, index) => `${index}`,
-  renderItem,
-}: UseFlatListArgs<T>): { viewKey: string } & Pick<
-  FlatListProps<T>,
-  | 'numColumns'
-  | 'columnWrapperStyle'
-  | 'ItemSeparatorComponent'
-  | 'onEndReachedThreshold'
-  | 'renderItem'
-> {
-  const props: ReturnType<typeof useFlatList<T>> = useMemo(() => {
-    switch (type) {
-      case 'grid':
-        return {
-          keyExtractor,
-          numColumns: 2,
-          onEndReachedThreshold: 0.1,
-          onEndReached,
-          renderItem,
-          columnWrapperStyle: {
-            gap: 10,
-          },
-          viewKey: `${type}`, //TODO: numColumns 를 변경할 경우, viewKey 가 동적으로 변해야함
-        };
-      case 'list':
-        return {
-          keyExtractor,
-          numColumns: 1,
-          onEndReached,
-          onEndReachedThreshold: 0.1,
-          renderItem,
-          ItemSeparatorComponent: Separator,
-          viewKey: `${type}`, //TODO:  numColumns 를 변경할 경우, viewKey 가 동적으로 변해야함
-        };
-    }
-  }, [type, onEndReached, keyExtractor, renderItem]);
-
-  return props;
-}
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
