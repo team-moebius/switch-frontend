@@ -121,15 +121,22 @@ const Template: ComponentStory<typeof ImageCard> = (args) => {
   };
 
   return (
-    <Flexbox alignItems='center' justifyContent='center'>
-      <Flexbox.Item height={600}>
+    <Flexbox>
+      <Flexbox.Item height={600} width={'100%'}>
         <FlatList
           data={currentData}
-          renderItem={({ item }) => <ImageCard {...item} {...args} />}
+          renderItem={({ item }) => (
+            <Flexbox.Item flex={1}>
+              <ImageCard {...item} {...args} />
+            </Flexbox.Item>
+          )}
           keyExtractor={(item) => item.src}
           numColumns={2}
           onEndReached={loadMoreData} // 끝에 도달하면 데이터 더 불러오기
           onEndReachedThreshold={0.1} // 끝에 도달하기 전에 호출할 위치 (0.1은 10% 지점)
+          columnWrapperStyle={{
+            gap: 10,
+          }}
         />
       </Flexbox.Item>
     </Flexbox>
@@ -140,10 +147,9 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  width: 250,
-  height: 200,
+  width: '100%',
+  height: 150,
   resizeMode: 'cover',
-  margin: 10,
   onClickHandler: () => {
     window.alert('clicked');
   },

@@ -14,8 +14,9 @@ interface WithImageProps extends modifiedImageProps {
   text?: string;
   children?: ReactNode;
   fontSize?: keyof typeof fontSizeStyle;
-  childDirection?: keyof typeof childDirectionStyle;
+  childDirection?: keyof typeof flexDirectionStyle;
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
+  cardDirection?: keyof typeof flexDirectionStyle;
 }
 
 export const fontSizeStyle = StyleSheet.create({
@@ -27,7 +28,7 @@ export const fontSizeStyle = StyleSheet.create({
   },
 });
 
-export const childDirectionStyle = StyleSheet.create({
+export const flexDirectionStyle = StyleSheet.create({
   column: {
     flexDirection: 'column',
   },
@@ -46,10 +47,11 @@ const WithImage = ({
   imageResizeMode = 'center',
   fontSize = 'cardList',
   childDirection = 'row',
+  cardDirection = 'row',
 }: WithImageProps) => {
   return (
-    <Flexbox gap={20} alignItems={'center'}>
-      <Flexbox.Item>
+    <Flexbox gap={10} {...flexDirectionStyle[cardDirection]}>
+      <Flexbox.Item width={'auto'}>
         <Image
           width={imageWidth}
           height={imageHeight}
@@ -58,7 +60,7 @@ const WithImage = ({
         />
       </Flexbox.Item>
       <Flexbox.Item flex={1}>
-        <Flexbox {...childDirectionStyle[childDirection]} gap={10}>
+        <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
           <Flexbox.Item flex={1}>
             <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
               {text}
