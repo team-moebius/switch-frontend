@@ -76,6 +76,7 @@ export const bindBoxStyle = ({
 
 interface BoxStyleProps {
   //Position
+  zIndex?: number;
   position?: 'absolute' | 'relative' | 'static';
   left?: LengthElement;
   right?: LengthElement;
