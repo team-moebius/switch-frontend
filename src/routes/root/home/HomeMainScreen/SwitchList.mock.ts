@@ -6,6 +6,7 @@ type StuffListItemData = {
   name: string;
   createdAt?: DateString;
   updatedAt?: DateString;
+  waitingCount?: number;
 };
 
 type SwitchHistoryListItemData = {
@@ -19,6 +20,21 @@ const STUFF_LIST_MOCK: Array<StuffListItemData> = [
     thumbnail:
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     name: '커스텀 키보드',
+    waitingCount: 5,
+  },
+  {
+    location: '서울',
+    thumbnail:
+      'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
+    name: '커스텀 키보드',
+    waitingCount: 5,
+  },
+  {
+    location: '서울',
+    thumbnail:
+      'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
+    name: '커스텀 키보드',
+    waitingCount: 5,
   },
   {
     location: '서울',
@@ -37,18 +53,7 @@ const STUFF_LIST_MOCK: Array<StuffListItemData> = [
     thumbnail:
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     name: '커스텀 키보드',
-  },
-  {
-    location: '서울',
-    thumbnail:
-      'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
-    name: '커스텀 키보드',
-  },
-  {
-    location: '서울',
-    thumbnail:
-      'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
-    name: '커스텀 키보드',
+    waitingCount: 5,
   },
   {
     location: '서울',
