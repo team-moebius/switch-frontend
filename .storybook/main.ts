@@ -19,7 +19,7 @@ const config: StorybookConfig = {
       const makeTitle = (title) => {
         const dirs = parseFilePath(fileName);
         const dir = dirs.reduce((prev, cur) => {
-          return `${cur}/${prev}`;
+          return `${prev}/${cur}`;
         });
 
         if (dir) {
