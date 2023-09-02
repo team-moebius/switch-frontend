@@ -114,8 +114,6 @@ const GridItem = ({ item }: { item: StuffListItemData }) => {
   );
 };
 
-const MemoizedGridItem = React.memo(GridItem);
-
 const ListItem = ({ item }: { item: StuffListItemData }) => {
   return (
     <TradingListItem
@@ -136,8 +134,6 @@ const ListItem = ({ item }: { item: StuffListItemData }) => {
   );
 };
 
-const MemoizedListItem = React.memo(ListItem);
-
 const ItemListContent = () => {
   const [type, setType] = useState<ViewType>('grid');
   const [sort, setSort] = useState<SectionOptionType>('무작위');
@@ -149,9 +145,9 @@ const ItemListContent = () => {
   const renderItem = useMemo(() => {
     switch (type) {
       case 'grid':
-        return MemoizedGridItem;
+        return GridItem;
       case 'list':
-        return MemoizedListItem;
+        return ListItem;
     }
   }, [type]);
 
