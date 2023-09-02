@@ -1,12 +1,12 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { View } from 'react-native';
 import {
   FlexAlign,
   FlexDirection,
   JustifyContent,
   FlexWrap,
 } from 'src/@types/unit';
-import { bindBoxStyle, BoxProps, BoxStyle } from './Box';
+import { bindBoxStyle, BoxProps } from './Box';
 
 interface FlexboxProps extends BoxProps {
   flexDirection?: FlexDirection;
@@ -20,8 +20,6 @@ interface FlexboxProps extends BoxProps {
 
 interface FlexItemProps extends BoxProps {
   alignSelf?: FlexAlign | 'auto';
-  alignItems?: FlexAlign;
-  justifyContent?: JustifyContent;
   flex?: number;
 }
 
@@ -61,17 +59,12 @@ const FlexItem = ({
   children,
   alignSelf,
   flex,
-  alignItems,
-  justifyContent,
   width = 'auto',
   ...props
 }: FlexItemProps) => {
   return (
     <View
-      style={[
-        { ...bindBoxStyle({ ...props, width }) },
-        { alignSelf, flex, alignItems, justifyContent },
-      ]}
+      style={[{ ...bindBoxStyle({ ...props, width }) }, { alignSelf, flex }]}
     >
       {children}
     </View>
