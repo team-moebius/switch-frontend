@@ -78,19 +78,17 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
           height={24}
           border={'1 solid black'}
           borderRadius={4}
-          width={120}
-          pt={4}
-          pb={4}
+          width={'auto'}
           pl={8}
           pr={8}
           alignItems={'center'}
         >
-          <Flexbox.Item flex={1}>
+          <Flexbox.Item>
             <Typography fontSize={14} color={disabled ? 'black' : 'gray'}>
               {value}
             </Typography>
           </Flexbox.Item>
-          <Box width={10}>
+          <Box width={10} ml={5}>
             <Icon
               name={
                 modalVisible ? 'chevron-up-outline' : 'chevron-down-outline'

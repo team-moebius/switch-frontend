@@ -12,7 +12,7 @@ export const mirrorDirectionStyle = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    justifyContent: 'space-between',
+    gap: 10,
   },
   column: {
     flexDirection: 'column',
