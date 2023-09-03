@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useState } from 'react';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 import useAssets from './hooks/useAssets';
 import FONT_MAP from './assets/fonts';
@@ -8,6 +9,8 @@ import { wait } from './utils/wait';
 
 import NavigationRouter from './routes';
 import { SplashScreen } from './routes/sign/SplashScreen';
+
+const queryClient = new QueryClient();
 
 export default function App() {
   const [loading, setLoading] = useState(true);
@@ -25,10 +28,12 @@ export default function App() {
   }, [loading, assetLoaded]);
 
   return (
-    <UserContextProvider>
-      <ThemeContextProvider>
-        {!initialized ? <SplashScreen /> : <NavigationRouter />}
-      </ThemeContextProvider>
-    </UserContextProvider>
+    <QueryClientProvider client={queryClient}>
+      <UserContextProvider>
+        <ThemeContextProvider>
+          {!initialized ? <SplashScreen /> : <NavigationRouter />}
+        </ThemeContextProvider>
+      </UserContextProvider>
+    </QueryClientProvider>
   );
 }

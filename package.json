@@ -18,6 +18,7 @@
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.17",
+    "@team-moebius/api-typescript": "=0.0.6",
     "expo": "~48.0.9",
     "expo-font": "~11.1.1",
     "expo-splash-screen": "~0.18.2",
@@ -27,7 +28,9 @@
     "react-native-bouncy-checkbox": "^3.0.7",
     "react-native-gesture-handler": "^2.12.1",
     "react-native-modal": "^13.0.1",
-    "react-native-screens": "~3.20.0"
+    "react-native-screens": "~3.20.0",
+    "react-native-url-polyfill": "^2.0.0",
+    "react-query": "^3.39.3"
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
@@ -60,6 +63,8 @@
     "react-native-svg-transformer": "^1.0.0",
     "react-native-web": "^0.19.2",
     "storybook": "~7.2",
+    "react-query-devtools": "^2.6.3",
+    "ts-loader": "^9.4.4",
     "tsconfig-paths-webpack-plugin": "^4.0.1",
     "typescript": "^4.9.4"
   },
