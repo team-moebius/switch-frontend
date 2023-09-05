@@ -3,6 +3,7 @@ import { Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 import { MyInfoMainScreen } from './MyInfoMainScreen';
 import { FeedbackScreen } from './FeedbackScreen';
+import { VersionScreen } from './VersionScreen';
 
 const Stack = createStackNavigator();
 
@@ -22,6 +23,7 @@ const MyInfoRoute = () => {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={'MyInfoHome'} component={MyInfoMainScreen} />
       <Stack.Screen name={'Feedback'} component={FeedbackScreen} />
+      <Stack.Screen name={'Version'} component={VersionScreen} />
     </Stack.Navigator>
   );
 };
