@@ -4,6 +4,7 @@ import { ScreenWrapper } from 'src/components/template';
 import { MyInfoMainScreen } from './MyInfoMainScreen';
 import { FeedbackScreen } from './FeedbackScreen';
 import { VersionScreen } from './VersionScreen';
+import { SettingScreen } from './SettingScreen';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +25,7 @@ const MyInfoRoute = () => {
       <Stack.Screen name={'MyInfoHome'} component={MyInfoMainScreen} />
       <Stack.Screen name={'Feedback'} component={FeedbackScreen} />
       <Stack.Screen name={'Version'} component={VersionScreen} />
+      <Stack.Screen name={'Setting'} component={SettingScreen} />
     </Stack.Navigator>
   );
 };

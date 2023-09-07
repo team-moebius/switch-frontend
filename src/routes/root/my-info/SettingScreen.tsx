@@ -1,21 +1,14 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Box, Flexbox, Icon, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 
 const SettingScreen = () => {
-  // const { changeTheme } = useContext(ThemeContext);
-  // ThemeContext에서 themeKey를 받아올 수 있으면 따로 state를 사용 안해도 될 거 같습니다.
   const [theme, setTheme] = useState(false);
-  // 이 부분도 나중에 기기 설정을 조회할 수 있다면 좋을 것 같습니다.
   const [isThird, setIsThird] = useState(false);
 
   const onClickHandler = (opt: 'third' | 'second') => {
     setIsThird(opt === 'third' ? true : false);
   };
-
-  useEffect(() => {
-    // 설정값 조회 후 초기 상태 설정
-  }, []);
 
   return (
     <Box padding={10} pt={50}>
@@ -27,6 +20,7 @@ const SettingScreen = () => {
           label={<Typography fontSize={20}>다크모드</Typography>}
           value={theme}
           onChange={() => setTheme((prev) => !prev)}
+          childrenAlign='center'
         />
       </Box>
       <Box mb={20}>
@@ -38,9 +32,12 @@ const SettingScreen = () => {
           <Field
             fieldType='radio'
             name='feed'
+            height={170}
             label={
               <Flexbox flexDirection='column' alignItems='center'>
-                <Icon name='grid-outline' size={32} color='black' />
+                <Box height={60}>
+                  <Icon name='grid-outline' size={50} color='black' />
+                </Box>
                 <Typography fontSize={15}>3단</Typography>
               </Flexbox>
             }
@@ -48,16 +45,19 @@ const SettingScreen = () => {
             onChange={() => onClickHandler('third')}
             labelAlign='center'
             labelPosition='top'
-            size={20}
+            size={25}
           />
         </Flexbox.Item>
         <Flexbox.Item flex={1}>
           <Field
             fieldType='radio'
             name='feed'
+            height={170}
             label={
               <Flexbox flexDirection='column' alignItems='center'>
-                <Icon name='grid-outline' size={32} color='black' />
+                <Box height={60}>
+                  <Icon name='grid-outline' size={50} color='black' />
+                </Box>
                 <Typography fontSize={15}>2단</Typography>
               </Flexbox>
             }
@@ -65,7 +65,7 @@ const SettingScreen = () => {
             onChange={() => onClickHandler('second')}
             labelAlign='center'
             labelPosition='top'
-            size={20}
+            size={25}
           />
         </Flexbox.Item>
       </Flexbox>
