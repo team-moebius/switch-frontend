@@ -36,7 +36,7 @@ const SettingScreen = () => {
             label={
               <Flexbox flexDirection='column' alignItems='center'>
                 <Box height={60}>
-                  <Icon name='grid-outline' size={50} color='black' />
+                  <Icon name='apps-sharp' size={50} color='black' />
                 </Box>
                 <Typography fontSize={15}>3단</Typography>
               </Flexbox>
@@ -56,7 +56,7 @@ const SettingScreen = () => {
             label={
               <Flexbox flexDirection='column' alignItems='center'>
                 <Box height={60}>
-                  <Icon name='grid-outline' size={50} color='black' />
+                  <Icon name='grid-sharp' size={50} color='black' />
                 </Box>
                 <Typography fontSize={15}>2단</Typography>
               </Flexbox>
