@@ -3,7 +3,7 @@ import { Flexbox } from '../atom';
 import { StyleSheet } from 'react-native';
 
 interface WithMirrorProps {
-  children: [ReactNode, ReactNode];
+  renderItem: [ReactNode, ReactNode];
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
   centerAxis?: ReactNode;
 }
@@ -28,15 +28,15 @@ export const WidthStyle = StyleSheet.create({
 });
 
 const WithMirror = ({
-  children,
+  renderItem,
   mirrorDirection = 'row',
   centerAxis,
 }: WithMirrorProps) => {
   return (
     <Flexbox {...mirrorDirectionStyle[mirrorDirection]}>
-      <Flexbox.Item {...WidthStyle.default}>{children[0]}</Flexbox.Item>
+      <Flexbox.Item {...WidthStyle.default}>{renderItem[0]}</Flexbox.Item>
       <Flexbox.Item>{centerAxis}</Flexbox.Item>
-      <Flexbox.Item {...WidthStyle.default}>{children[1]}</Flexbox.Item>
+      <Flexbox.Item {...WidthStyle.default}>{renderItem[1]}</Flexbox.Item>
     </Flexbox>
   );
 };
