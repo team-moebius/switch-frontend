@@ -46,7 +46,7 @@ const SubmitValidationCode = () => {
             <Flexbox.Item>
               <Button
                 type={'normal'}
-                size={'middle'}
+                size={'medium'}
                 onPress={() => {
                   alert('가입');
                 }}
@@ -57,7 +57,7 @@ const SubmitValidationCode = () => {
             <Flexbox.Item width={'auto'}>
               <Button
                 type={'transparent'}
-                size={'middle'}
+                size={'medium'}
                 onPress={() => {
                   alert('코드 재전송');
                 }}
