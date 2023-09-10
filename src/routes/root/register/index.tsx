@@ -1,6 +1,6 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { useState } from 'react';
-import { Pressable, StyleSheet } from 'react-native';
+import { Pressable } from 'react-native';
 import {
   Box,
   Flexbox,
@@ -19,7 +19,8 @@ import {
 import { ScreenWrapper } from 'src/components/template';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from './Tags.mock';
 import { ScrollView } from 'react-native-gesture-handler';
-// import { SafeAreaView } from 'react-native-safe-area-context';
+import { Separator } from 'src/components/atom/Separator';
+// import { SafeAreaView } from 'react-native-safe-area-context';// import { SafeAreaView } from 'react-native-safe-area-context';
 
 // const { default: defaultStyle } = StyleSheet.create({
 //   default: {
@@ -28,10 +29,6 @@ import { ScrollView } from 'react-native-gesture-handler';
 // });
 
 const Stack = createStackNavigator();
-
-const Separator = () => (
-  <Box height={1} backgroundColor={'gray'} mt={10} mb={10} />
-);
 
 const RegisterMain = () => {
   const [title, setTitle] = useState<string>('');

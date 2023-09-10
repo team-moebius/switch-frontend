@@ -6,7 +6,7 @@ import { ScreenWrapper } from 'src/components/template';
 import { HistoryListContent } from './content/HistoryListContent';
 import { ItemListContent } from './content/ItemListContent';
 
-const HomeMainScreen = () => {
+const HomeMainScreen = ({ navigation }) => {
   const [isItemView, setIsItemView] = useState<boolean>(true);
 
   return (
@@ -17,7 +17,11 @@ const HomeMainScreen = () => {
         flexDirection={'column'}
         pt={50}
       >
-        {isItemView ? <ItemListContent /> : <HistoryListContent />}
+        {isItemView ? (
+          <ItemListContent navigation={navigation} />
+        ) : (
+          <HistoryListContent />
+        )}
         <Flexbox
           height={'10%'}
           width={'100%'}
