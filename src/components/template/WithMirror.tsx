@@ -23,7 +23,7 @@ export const mirrorDirectionStyle = StyleSheet.create({
 
 export const WidthStyle = StyleSheet.create({
   default: {
-    maxWidth: '45%',
+    maxWidth: '50%',
   },
 });
 
@@ -33,10 +33,10 @@ const WithMirror = ({
   centerAxis,
 }: WithMirrorProps) => {
   return (
-    <Flexbox {...mirrorDirectionStyle[mirrorDirection]}>
-      <Flexbox.Item {...WidthStyle.default}>{children[0]}</Flexbox.Item>
+    <Flexbox {...mirrorDirectionStyle[mirrorDirection]} {...WidthStyle.default}>
+      <Flexbox.Item>{children[0]}</Flexbox.Item>
       <Flexbox.Item>{centerAxis}</Flexbox.Item>
-      <Flexbox.Item {...WidthStyle.default}>{children[1]}</Flexbox.Item>
+      <Flexbox.Item>{children[1]}</Flexbox.Item>
     </Flexbox>
   );
 };
