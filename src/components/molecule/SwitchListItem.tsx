@@ -9,7 +9,7 @@ export type ItemDetail = {
   src?: string;
 };
 
-type Data = {
+export type Data = {
   myItem: ItemDetail;
   selectedItem: ItemDetail;
 };
