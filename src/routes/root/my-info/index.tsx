@@ -5,6 +5,7 @@ import { MyInfoMainScreen } from './MyInfoMainScreen';
 import { FeedbackScreen } from './FeedbackScreen';
 import { VersionScreen } from './VersionScreen';
 import { SettingScreen } from './SettingScreen';
+import { SwitchRecordsScreen } from './SwitchRecordsScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const MyInfoRoute = () => {
       <Stack.Screen name={'Feedback'} component={FeedbackScreen} />
       <Stack.Screen name={'Version'} component={VersionScreen} />
       <Stack.Screen name={'Setting'} component={SettingScreen} />
+      <Stack.Screen name={'Record'} component={SwitchRecordsScreen} />
     </Stack.Navigator>
   );
 };
