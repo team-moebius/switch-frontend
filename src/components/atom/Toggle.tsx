@@ -1,13 +1,12 @@
-import React, { useMemo } from 'react';
+import React, { ReactNode, useMemo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Box } from './Box';
-import { Icon } from './Icon';
+import { Color } from 'src/@types/unit';
 
 const { defaultWrapper } = StyleSheet.create({
   defaultWrapper: {
     position: 'relative',
     flexDirection: 'row',
-    backgroundColor: 'gray',
     justifyContent: 'space-around',
     width: 75,
     height: 28,
@@ -18,24 +17,38 @@ const { defaultWrapper } = StyleSheet.create({
 interface ToggleProps {
   value: boolean;
   handleOnPress: () => void;
+  iconA?: ReactNode;
+  iconB?: ReactNode;
+  selectColor?: Color;
+  backgroundColor?: Color;
 }
 
-const Toggle = ({ value, handleOnPress }: ToggleProps) => {
+const Toggle = ({
+  value,
+  handleOnPress,
+  iconA,
+  iconB,
+  selectColor = '#FFFFFF',
+  backgroundColor = '#2ECC71',
+}: ToggleProps) => {
   const absolutePositions = useMemo(() => {
     return value ? { left: 0 } : { right: 0 };
   }, [value]);
   return (
-    <Pressable onPress={handleOnPress} style={defaultWrapper}>
+    <Pressable
+      onPress={handleOnPress}
+      style={[defaultWrapper, { backgroundColor }]}
+    >
       <Box
         {...absolutePositions}
         position={'absolute'}
-        backgroundColor={'blue'}
+        backgroundColor={selectColor}
         width={40}
         height={28}
         borderRadius={15}
       />
-      <Icon name='copy-outline' size={24} color={value ? 'white' : 'black'} />
-      <Icon name='timer-outline' size={24} color={value ? 'black' : 'white'} />
+      {iconA}
+      {iconB}
     </Pressable>
   );
 };
