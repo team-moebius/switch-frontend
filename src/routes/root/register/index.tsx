@@ -20,13 +20,6 @@ import { ScreenWrapper } from 'src/components/template';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from './Tags.mock';
 import { ScrollView } from 'react-native-gesture-handler';
 import { Separator } from 'src/components/atom/Separator';
-// import { SafeAreaView } from 'react-native-safe-area-context';// import { SafeAreaView } from 'react-native-safe-area-context';
-
-// const { default: defaultStyle } = StyleSheet.create({
-//   default: {
-//     flex: 1,
-//   },
-// });
 
 const Stack = createStackNavigator();
 
@@ -60,7 +53,6 @@ const RegisterMain = () => {
   };
 
   return (
-    // <SafeAreaView style={defaultStyle}>
     <ScreenWrapper>
       <Flexbox
         pt={50}
@@ -249,7 +241,6 @@ const RegisterMain = () => {
         </ScrollView>
       </Flexbox>
     </ScreenWrapper>
-    //</SafeAreaView>
   );
 };
 
