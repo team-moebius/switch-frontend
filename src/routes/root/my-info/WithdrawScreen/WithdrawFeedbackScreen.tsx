@@ -9,10 +9,10 @@ import {
 } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 
-const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만족'] as const;
+const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만족'];
 
 const WithdrawFeedbackScreen = ({ navigation }) => {
-  const [option, setOption] = useState<(typeof selectType)[number]>('기타');
+  const [option, setOption] = useState('기타');
 
   const onSelectHandler = (value) => {
     setOption(value);
