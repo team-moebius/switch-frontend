@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { FarewellScreen } from 'src/routes/root/my-info/FarewellScreen';
+import { FarewellScreen } from 'src/routes/root/my-info/WithdrawScreen/FarewellScreen';
 
 export default {
   title: 'FarewellScreen',

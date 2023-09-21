@@ -1,9 +1,9 @@
 import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 
-const WithdrawInfoScreen = () => {
+const WithdrawInfoScreen = ({ navigation }) => {
   const onClickHandler = () => {
-    alert('다음');
+    navigation.navigate('WithdrawFeedback');
   };
   return (
     <ScreenWrapper>

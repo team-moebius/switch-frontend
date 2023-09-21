@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { WithdrawInfoScreen } from 'src/routes/root/my-info/WithdrawInfoScreen';
+import { WithdrawInfoScreen } from 'src/routes/root/my-info/WithdrawScreen/WithdrawInfoScreen';
 
 export default {
   title: 'WithdrawInfoScreen',

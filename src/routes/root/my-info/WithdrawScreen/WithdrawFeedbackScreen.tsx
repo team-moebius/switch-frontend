@@ -11,7 +11,7 @@ import { ScreenWrapper } from 'src/components/template';
 
 const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만족'] as const;
 
-const WithdrawFeedbackScreen = () => {
+const WithdrawFeedbackScreen = ({ navigation }) => {
   const [option, setOption] = useState<(typeof selectType)[number]>('기타');
 
   const onSelectHandler = (value) => {
@@ -19,7 +19,7 @@ const WithdrawFeedbackScreen = () => {
   };
 
   const onSubmitHandler = () => {
-    alert('탈퇴하기');
+    navigation.navigate('Farewell');
   };
 
   return (

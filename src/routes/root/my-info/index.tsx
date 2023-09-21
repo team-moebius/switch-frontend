@@ -7,6 +7,7 @@ import { VersionScreen } from './VersionScreen';
 import { SettingScreen } from './SettingScreen';
 import { SwitchRecordsScreen } from './SwitchRecordsScreen';
 import { SettingMainScreen } from './SettingMainScreen';
+import { WithdrawRoute } from './WithdrawScreen';
 
 const Stack = createStackNavigator();
 
@@ -30,6 +31,7 @@ const MyInfoRoute = () => {
       <Stack.Screen name={'Setting'} component={SettingScreen} />
       <Stack.Screen name={'Version'} component={VersionScreen} />
       <Stack.Screen name={'Feedback'} component={FeedbackScreen} />
+      <Stack.Screen name={'Withdraw'} component={WithdrawRoute} />
     </Stack.Navigator>
   );
 };

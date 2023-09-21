@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import { WithdrawFeedbackScreen } from 'src/routes/root/my-info/WithdrawFeedbackScreen';
+import { WithdrawFeedbackScreen } from 'src/routes/root/my-info/WithdrawScreen/WithdrawFeedbackScreen';
 
 export default {
   title: 'WithdrawFeedbackScreen',
