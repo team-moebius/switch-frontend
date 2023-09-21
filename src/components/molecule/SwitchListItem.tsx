@@ -9,7 +9,7 @@ export type ItemDetail = {
   src?: string;
 };
 
-type Data = {
+export type Data = {
   myItem: ItemDetail;
   selectedItem: ItemDetail;
 };
@@ -70,13 +70,13 @@ const SwitchListItem = ({
           centerAxis={<Icon name={'code-outline'} size={20} />}
         />
       </Flexbox.Item>
-      <Flexbox.Item>
+      <Flexbox justifyContent='center'>
         <Button type={'transparent'} size={'medium'} onPress={onPress}>
           <Typography fontSize={15} color={'blue'}>
-            평가남기기
+            평가 남기기
           </Typography>
         </Button>
-      </Flexbox.Item>
+      </Flexbox>
     </Flexbox>
   );
 };

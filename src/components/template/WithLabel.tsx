@@ -11,6 +11,7 @@ interface WithLabelProps {
   labelPosition?: keyof typeof labelPositionStyle;
   labelAlign?: keyof typeof labelAlignStyle;
   children?: ReactNode;
+  childrenAlign?: keyof typeof labelAlignStyle;
 }
 
 const labelPositionStyle = StyleSheet.create({
@@ -55,6 +56,7 @@ const WithLabel = ({
   labelPosition = 'right',
   label,
   labelAlign = 'left',
+  childrenAlign = 'center',
 }: WithLabelProps) => {
   return (
     <Flexbox
@@ -63,7 +65,9 @@ const WithLabel = ({
       height={height}
       gap={8}
     >
-      <Flexbox.Item flex={1}>{children}</Flexbox.Item>
+      <Flexbox.Item width={'100%'} flex={1}>
+        <Flexbox {...labelAlignStyle[childrenAlign]}>{children}</Flexbox>
+      </Flexbox.Item>
       {label && (
         <Flexbox.Item width={'100%'} flex={1}>
           <Flexbox {...labelAlignStyle[labelAlign]}>

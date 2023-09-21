@@ -1,6 +1,6 @@
 import { useState } from 'react';
 
-import { Flexbox, Toggle } from 'src/components/atom';
+import { Flexbox, Icon, Toggle } from 'src/components/atom';
 
 import { ScreenWrapper } from 'src/components/template';
 import { HistoryListContent } from './content/HistoryListContent';
@@ -33,6 +33,22 @@ const HomeMainScreen = ({ navigation }) => {
             handleOnPress={() => {
               setIsItemView((prev) => !prev);
             }}
+            selectColor='blue'
+            backgroundColor='gray'
+            iconA={
+              <Icon
+                name='timer-outline'
+                size={24}
+                color={isItemView ? 'black' : 'white'}
+              />
+            }
+            iconB={
+              <Icon
+                name='copy-outline'
+                size={24}
+                color={isItemView ? 'white' : 'black'}
+              />
+            }
           />
         </Flexbox>
       </Flexbox>
