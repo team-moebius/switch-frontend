@@ -17,6 +17,7 @@ import { TextareaProps } from '../atom/Textarea';
 import { InputProps } from '../atom/TextInput';
 import { ToggleProps } from '../atom/Toggle';
 import { WithLabelProps } from '../template/WithLabel';
+import { CountingTextarea, CountingTextareaProps } from './CountingTextarea';
 
 type FieldPropsType =
   | InputProps
@@ -58,13 +59,18 @@ type ToggleField = {
   fieldType: 'toggle';
 } & FieldStruct<ToggleProps, 'value', ['handleOnPress']>;
 
+type CountingTextareaField = {
+  fieldType: 'countingTextarea';
+} & FieldStruct<CountingTextareaProps, 'value', ['onChange']>;
+
 type Field =
   | TextInputField
   | CheckField
   | SelectField
   | RadioField
   | TextareaField
-  | ToggleField;
+  | ToggleField
+  | CountingTextareaField;
 
 type FieldProps = Field & { name: string } & Omit<
     WithLabelProps,
@@ -147,6 +153,16 @@ const Field = ({
             value={value}
             handleOnPress={() => {
               onChange({ [name]: !value });
+            }}
+          />
+        );
+      case 'countingTextarea':
+        return (
+          <CountingTextarea
+            {...props}
+            value={value}
+            onChange={(value) => {
+              onChange({ [name]: value });
             }}
           />
         );
