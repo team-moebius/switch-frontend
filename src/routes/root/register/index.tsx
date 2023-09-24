@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { ScreenWrapper } from 'src/components/template';
-import { SwitchDetailForm } from './SwitchDetail';
+import { SwitchDetailForm } from './SwitchDetail/Form';
 
 const Stack = createStackNavigator();
 

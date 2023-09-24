@@ -3,30 +3,17 @@ import { ScrollView, Pressable } from 'react-native';
 import { Field, HashTagInput, TagInput } from 'src/components/molecule';
 import { Separator } from 'src/components/atom/Separator';
 import { useCallback, useState } from 'react';
-import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
-import { TagProps } from 'src/components/atom/Tag';
+import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
 import { ImageUploader } from './ImageUploader';
-import { SWITCH_DETAIL_MOCK } from '../../home/HomeMainScreen/SwitchList.mock';
-
-type ImageSrc = string;
-
-interface SwitchDetail {
-  title?: string;
-  thumbnails: Array<ImageSrc>;
-  date?: Date;
-  description?: string;
-  hashTags: Array<TagProps>;
-  location?: string;
-  categories: Array<TagProps>;
-  opositeCateogries: Array<TagProps>;
-}
+import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
+import { SwitchDetailData } from '../type';
 
 interface SwitchDetailFormProps {
-  initialData?: SwitchDetail;
-  onSubmit?: (data: SwitchDetail) => void;
+  initialData?: SwitchDetailData;
+  onSubmit?: (data: SwitchDetailData) => void;
 }
 
-const DEFAULT_DATA: SwitchDetail = {
+const DEFAULT_DATA: SwitchDetailData = {
   thumbnails: [],
   hashTags: [],
   categories: [],
@@ -37,7 +24,7 @@ const SwitchDetailForm = ({
   initialData = DEFAULT_DATA,
   onSubmit,
 }: SwitchDetailFormProps) => {
-  const [data, setData] = useState<SwitchDetail>({
+  const [data, setData] = useState<SwitchDetailData>({
     ...initialData,
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
     categories: INPUT_TAG_MOCK,
@@ -58,7 +45,7 @@ const SwitchDetailForm = ({
     opositeCateogries,
   } = data;
 
-  const changeHandler = useCallback((change: Partial<SwitchDetail>) => {
+  const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
     setData((prev) => ({ ...prev, ...change }));
   }, []);
 

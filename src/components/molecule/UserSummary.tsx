@@ -57,4 +57,4 @@ const UserSummary = ({ data }: UserSummaryProps) => {
   );
 };
 
-export { UserSummary, UserSummaryProps };
+export { UserSummary, UserSummaryProps, UserSummaryData };
