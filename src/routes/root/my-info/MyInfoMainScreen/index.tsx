@@ -52,7 +52,7 @@ const MyInfoMainScreen = ({ navigation }) => {
               size={'middle'}
               onPress={function (): void {
                 alert('편집하기');
-                navigation.navigate('Record');
+                navigation.navigate('Withdraw');
               }}
             >
               내 정보 편집하기
