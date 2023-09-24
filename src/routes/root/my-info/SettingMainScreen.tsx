@@ -1,4 +1,3 @@
-import { useCallback } from 'react';
 import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { ButtonProps } from 'src/components/atom/Button';
 import { ScreenWrapper } from 'src/components/template';
