@@ -207,6 +207,7 @@ const SWITCH_DETAIL_MOCK: SwitchDetailData = {
 };
 
 export {
+  SwitchDetailData,
   StuffListItemData,
   SwitchHistoryListItemData,
   STUFF_LIST_MOCK,
