@@ -9,7 +9,6 @@ import { wait } from './utils/wait';
 
 import NavigationRouter from './routes';
 import { SplashScreen } from './routes/sign/SplashScreen';
-// import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 const queryClient = new QueryClient();
 
@@ -32,9 +31,7 @@ export default function App() {
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
         <ThemeContextProvider>
-          {/* <SafeAreaProvider> */}
           {!initialized ? <SplashScreen /> : <NavigationRouter />}
-          {/* </SafeAreaProvider> */}
         </ThemeContextProvider>
       </UserContextProvider>
     </QueryClientProvider>

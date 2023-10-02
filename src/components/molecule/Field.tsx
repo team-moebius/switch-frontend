@@ -86,6 +86,7 @@ const Field = ({
   label = '',
   labelAlign = 'left',
   labelPosition = 'left',
+  childrenAlign = 'center',
   value,
   onChange,
   ...props
@@ -154,6 +155,7 @@ const Field = ({
             handleOnPress={() => {
               onChange({ [name]: !value });
             }}
+            backgroundColor={value ? '#E0E0E0' : '#2ECC71'}
           />
         );
       case 'countingTextarea':
@@ -173,6 +175,7 @@ const Field = ({
       label={label}
       labelAlign={labelAlign}
       labelPosition={labelPosition}
+      childrenAlign={childrenAlign}
       width={width}
       height={height}
     >

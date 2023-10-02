@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 
 type IconProps = {
   name: keyof typeof Ionicons.glyphMap;
-  size?: 20 | 24 | 32;
+  size?: 20 | 24 | 32 | 50;
   color?: string;
 };
 /** Icon Preview

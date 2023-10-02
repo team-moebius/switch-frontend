@@ -50,8 +50,8 @@ const WithImage = ({
   cardDirection = 'row',
 }: WithImageProps) => {
   return (
-    <Flexbox gap={10} {...flexDirectionStyle[cardDirection]}>
-      <Flexbox.Item width={'auto'}>
+    <Flexbox {...flexDirectionStyle[cardDirection]} gap={10} width={'100%'}>
+      <Flexbox.Item>
         <Image
           width={imageWidth}
           height={imageHeight}
@@ -59,9 +59,9 @@ const WithImage = ({
           resizeMode={imageResizeMode}
         />
       </Flexbox.Item>
-      <Flexbox.Item flex={1}>
+      <Flexbox.Item>
         <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
-          <Flexbox.Item flex={1}>
+          <Flexbox.Item>
             <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
               {text}
             </Typography>
