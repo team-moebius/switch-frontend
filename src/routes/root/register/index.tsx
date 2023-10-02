@@ -1,16 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { Flexbox, Typography } from 'src/components/atom';
+
 import { ScreenWrapper } from 'src/components/template';
+import { SwitchDetailForm } from './SwitchDetail/Form';
 
 const Stack = createStackNavigator();
 
 const RegisterMain = () => {
   return (
     <ScreenWrapper>
-      {/* write contents */}
-      <Flexbox height={'100%'} justifyContent={'center'} alignItems={'center'}>
-        <Typography fontSize={12}>Register Main</Typography>
-      </Flexbox>
+      <SwitchDetailForm />
     </ScreenWrapper>
   );
 };
@@ -23,4 +21,4 @@ const RegisterRoute = () => {
   );
 };
 
-export { RegisterRoute };
+export { RegisterRoute, RegisterMain };

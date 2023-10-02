@@ -12,7 +12,7 @@ type modifiedImageProps = {
 interface WithImageProps extends modifiedImageProps {
   src: string;
   text?: string;
-  children?: ReactNode;
+  renderItem?: ReactNode;
   fontSize?: keyof typeof fontSizeStyle;
   childDirection?: keyof typeof flexDirectionStyle;
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
@@ -41,7 +41,7 @@ export const flexDirectionStyle = StyleSheet.create({
 const WithImage = ({
   src = '',
   text = '',
-  children,
+  renderItem,
   imageWidth = 100,
   imageHeight = 70,
   imageResizeMode = 'center',
@@ -66,7 +66,7 @@ const WithImage = ({
               {text}
             </Typography>
           </Flexbox.Item>
-          {children}
+          {renderItem}
         </Flexbox>
       </Flexbox.Item>
     </Flexbox>
