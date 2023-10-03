@@ -41,7 +41,7 @@ const SwitchDetailView = ({ userData, itemData }: SwitchDetailViewProps) => {
             title: title,
             date: date?.toDateString(),
             desc: description,
-            // wantedItem: opositeCateogries.map(({ children }) => children),
+            // wantedItem: oppositeCategories.map(({ children }) => children),
             location: location,
             hashTags: hashTags,
             // liked: SWITCH_DETAIL_MOCK.liked,

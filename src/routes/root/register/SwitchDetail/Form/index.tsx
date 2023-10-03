@@ -17,7 +17,7 @@ const DEFAULT_DATA: SwitchDetailData = {
   thumbnails: [],
   hashTags: [],
   categories: [],
-  opositeCateogries: [],
+  oppositeCategories: [],
 };
 
 const SwitchDetailForm = ({
@@ -28,7 +28,7 @@ const SwitchDetailForm = ({
     ...initialData,
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
     categories: INPUT_TAG_MOCK,
-    opositeCateogries: INPUT_TAG_MOCK,
+    oppositeCategories: INPUT_TAG_MOCK,
     hashTags: HASHTAGS_MOCK,
   });
 
@@ -42,7 +42,7 @@ const SwitchDetailForm = ({
     thumbnails,
     hashTags,
     categories,
-    opositeCateogries,
+    oppositeCategories,
   } = data;
 
   const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
@@ -75,6 +75,7 @@ const SwitchDetailForm = ({
           fieldType={'textInput'}
           value={title}
           name={'title'}
+          style={{ borderWidth: 0 }}
           onChange={changeHandler}
         />
         <Separator />
@@ -100,7 +101,7 @@ const SwitchDetailForm = ({
         />
         <Separator />
         <TagInput
-          tags={opositeCateogries}
+          tags={oppositeCategories}
           width={'100%'}
           name={'tagInput'}
           onChangeText={setOCategoryTagInput}

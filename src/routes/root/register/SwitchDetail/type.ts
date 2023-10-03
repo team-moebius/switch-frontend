@@ -8,7 +8,7 @@ interface SwitchDetailData {
   hashTags: Array<TagProps>;
   location?: string;
   categories: Array<TagProps>;
-  opositeCateogries: Array<TagProps>;
+  oppositeCategories: Array<TagProps>;
 }
 
 export { SwitchDetailData };
