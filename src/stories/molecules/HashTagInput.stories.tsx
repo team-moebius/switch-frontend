@@ -40,7 +40,9 @@ const Template: ComponentStory<typeof HashTagInput> = (args) => {
           height={'100%'}
           gap={5}
         >
-          <Typography color={'black'} children={`${args.hashTags.length}/30`} />
+          <Typography color={'black'} fontSize={14}>
+            {args.hashTags.length + '/30'}
+          </Typography>
           <Button title='더보기' onPress={showMoreHandler} />
         </Flexbox>
       }

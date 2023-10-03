@@ -1,10 +1,11 @@
 import React from 'react';
 import { Box, Flexbox, Textarea, Typography } from '../atom';
 import { TextareaProps } from '../atom/Textarea';
-
+import { Border } from 'src/@types/unit';
 interface CountingTextareaProps extends TextareaProps {
   onChange: (text: string) => void;
   value: string;
+  border?: Border;
 }
 
 const CountingTextarea = ({
@@ -12,9 +13,10 @@ const CountingTextarea = ({
   maxLength,
   onChange,
   value,
+  border = '1 solid #979797',
 }: CountingTextareaProps) => {
   return (
-    <Box border={'1 solid #979797'} padding={10} borderRadius={8}>
+    <Box border={border} borderRadius={8}>
       <Textarea
         placeholder={placeholder}
         maxLength={maxLength}

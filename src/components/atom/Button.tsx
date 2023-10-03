@@ -11,7 +11,7 @@ const sizeStyle = StyleSheet.create({
     paddingHorizontal: 4,
     paddingVertical: 2,
   },
-  middle: {
+  medium: {
     height: 36,
     fontSize: 16,
     borderRadius: 4,
@@ -50,7 +50,7 @@ const Button = ({
   children,
   type = 'normal',
   wide = true,
-  size = 'middle',
+  size = 'medium',
   ...props
 }: ButtonProps) => {
   const title = useMemo(() => {

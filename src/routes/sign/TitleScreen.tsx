@@ -38,7 +38,7 @@ const TitleScreen = ({ navigation }) => {
         <Flexbox.Item width={'80%'}>
           <Button
             type={'normal'}
-            size={'middle'}
+            size={'medium'}
             onPress={() => navigation.navigate('SignUp')}
           >
             가입하기
@@ -47,7 +47,7 @@ const TitleScreen = ({ navigation }) => {
         <Flexbox.Item width={'80%'}>
           <Button
             type={'transparent'}
-            size={'middle'}
+            size={'medium'}
             onPress={async () => {
               await login();
               navigation.navigate('Root');

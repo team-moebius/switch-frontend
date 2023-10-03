@@ -88,7 +88,7 @@ const SubmitPhoneNumber = ({ navigation }) => {
               <Button
                 wide
                 type={'normal'}
-                size={'middle'}
+                size={'medium'}
                 onPress={() => {
                   mutate(state);
                   // navigation?.navigate('SubmitValidationCode');
