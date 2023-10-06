@@ -8,6 +8,7 @@ import { SettingScreen } from './SettingScreen';
 import { SwitchRecordsScreen } from './SwitchRecordsScreen';
 import { SettingMainScreen } from './SettingMainScreen';
 import { WithdrawRoute } from './WithdrawScreen';
+import { MyInfoEditScreen } from './MyInfoEditScreen';
 
 const Stack = createStackNavigator();
 
@@ -26,6 +27,7 @@ const MyInfoRoute = () => {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name={'MyInfoHome'} component={MyInfoMainScreen} />
+      <Stack.Screen name={'MyInfoEdit'} component={MyInfoEditScreen} />
       <Stack.Screen name={'SettingMain'} component={SettingMainScreen} />
       <Stack.Screen name={'Record'} component={SwitchRecordsScreen} />
       <Stack.Screen name={'Setting'} component={SettingScreen} />

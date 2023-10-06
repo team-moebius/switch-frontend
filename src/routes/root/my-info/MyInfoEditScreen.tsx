@@ -8,6 +8,7 @@ import {
   Textarea,
   Button,
 } from 'src/components/atom';
+import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
 const MyInfoEditScreen = () => {
@@ -15,14 +16,6 @@ const MyInfoEditScreen = () => {
   const [introduce, setIntroduce] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
-
-  const nameEditHandler = (value: string) => {
-    setName(value);
-  };
-
-  const introduceEditHandler = (value: string) => {
-    setIntroduce(value);
-  };
 
   const certifyHandler = () => {
     alert('2차 인증');
@@ -53,25 +46,42 @@ const MyInfoEditScreen = () => {
       <Box>
         <Separator />
         <Flexbox alignItems='center'>
-          <Box width={80}>
-            <Typography fontSize={20}>이름</Typography>
-          </Box>
-          <TextInput
-            width={300}
-            name={'name'}
-            onChangeText={nameEditHandler}
-            placeholder={'이름을 입력해주세요.'}
+          <Field
+            fieldType={'textInput'}
+            label={
+              <Box width={80}>
+                <Typography fontSize={20}>이름</Typography>
+              </Box>
+            }
+            onChange={(value) => {
+              setName(value.name as string);
+            }}
             value={name}
+            name='name'
+            childrenLayout={{ flex: 1, width: '100%' }}
+            labelLayout={{ flex: 0.3, width: '30%' }}
+            width={'100%'}
+            placeholder='이름을 입력해주세요.'
           />
         </Flexbox>
         <Separator />
         <Flexbox alignItems='center'>
-          <Box width={80}>
-            <Typography fontSize={20}>소개글</Typography>
-          </Box>
-          <Textarea
+          <Field
+            fieldType={'textarea'}
+            label={
+              <Box width={80}>
+                <Typography fontSize={20}>소개글</Typography>
+              </Box>
+            }
+            style={{ padding: 8 }}
+            onChange={(value) => {
+              setIntroduce(value.introduce as string);
+            }}
             value={introduce}
-            onChangeText={introduceEditHandler}
+            name='introduce'
+            childrenLayout={{ flex: 1, width: '100%' }}
+            labelLayout={{ flex: 0.3, width: '30%' }}
+            width={'100%'}
             placeholder='소개글을 입력해주세요.'
           />
         </Flexbox>
@@ -93,7 +103,7 @@ const MyInfoEditScreen = () => {
             <Flexbox.Item flex={1}>
               <Typography fontSize={20}>휴대폰 번호</Typography>
             </Flexbox.Item>
-            <Flexbox.Item>
+            <Flexbox.Item flex={0.3}>
               <Button
                 type={'transparent'}
                 size={'middle'}
@@ -110,7 +120,7 @@ const MyInfoEditScreen = () => {
             <Flexbox.Item flex={1}>
               <Typography fontSize={20}>이메일 주소</Typography>
             </Flexbox.Item>
-            <Flexbox.Item>
+            <Flexbox.Item flex={0.3}>
               <Button
                 type={'transparent'}
                 size={'middle'}
