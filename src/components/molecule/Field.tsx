@@ -83,6 +83,8 @@ const Field = ({
   childrenAlign = 'center',
   value,
   onChange,
+  childrenLayout,
+  labelLayout,
   ...props
 }: FieldProps) => {
   const fieldInputRenderer = () => {
@@ -162,6 +164,8 @@ const Field = ({
       childrenAlign={childrenAlign}
       width={width}
       height={height}
+      childrenLayout={childrenLayout}
+      labelLayout={labelLayout}
     >
       {fieldInputRenderer()}
     </WithLabel>
