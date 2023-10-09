@@ -14,7 +14,7 @@ interface InputProps {
   onSubmitEditing?: (
     e: NativeSyntheticEvent<TextInputEndEditingEventData>
   ) => void;
-  placeholder: string;
+  placeholder?: string;
   value: string | undefined;
   width: LengthElement;
   disabled?: boolean;

@@ -18,6 +18,7 @@ import { InputProps } from '../atom/TextInput';
 import { ToggleProps } from '../atom/Toggle';
 import { WithLabelProps } from '../template/WithLabel';
 import { CountingTextarea, CountingTextareaProps } from './CountingTextarea';
+import { ViewStyle } from 'react-native';
 
 type FieldPropsType =
   | InputProps
@@ -72,9 +73,9 @@ type Field =
   | ToggleField
   | CountingTextareaField;
 
-type FieldProps = Field & { name: string } & Omit<
+type FieldProps = Field & { name: string; style?: ViewStyle } & Omit<
     WithLabelProps,
-    'onPress' | 'chilren'
+    'onPress' | 'children'
   >;
 
 //TODO: Field 의 기본 설정값을 조금 더 구체화할 필요가 있을 것 같습니다.

@@ -45,7 +45,7 @@ SwitchDetailData): SwitchDetailViewProps['itemData'] => {
     location: location,
     hashTags: hashTags || [],
     categories: [],
-    opositeCateogries: [],
+    oppositeCategories: [],
   };
 };
 
