@@ -11,6 +11,7 @@ import { SwitchDetailData } from '../type';
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
   onSubmit?: (data: SwitchDetailData) => void;
+  navigation: any;
 }
 
 const DEFAULT_DATA: SwitchDetailData = {
@@ -23,6 +24,7 @@ const DEFAULT_DATA: SwitchDetailData = {
 const SwitchDetailForm = ({
   initialData = DEFAULT_DATA,
   onSubmit,
+  navigation,
 }: SwitchDetailFormProps) => {
   const [data, setData] = useState<SwitchDetailData>({
     ...initialData,
@@ -144,7 +146,11 @@ const SwitchDetailForm = ({
         <Separator />
         <Typography fontSize={14}>선호 주소</Typography>
         <Flexbox width={'100%'} alignItems={'center'} justifyContent={'center'}>
-          <Pressable onPress={() => window.alert('스위치 선호 주소로')}>
+          <Pressable
+            onPress={() => {
+              navigation.navigate('PreferredAddress');
+            }}
+          >
             <Icon size={32} name={'add-circle'} />
           </Pressable>
         </Flexbox>
