@@ -65,13 +65,13 @@ const SwitchListItem = ({
     >
       <Flexbox.Item>
         <WithMirror
-          children={[childrenA, childrenB]}
+          renderItem={[childrenA, childrenB]}
           mirrorDirection={mirrorDirection}
           centerAxis={<Icon name={'code-outline'} size={20} />}
         />
       </Flexbox.Item>
       <Flexbox justifyContent='center'>
-        <Button type={'transparent'} size={'middle'} onPress={onPress}>
+        <Button type={'transparent'} size={'medium'} onPress={onPress}>
           <Typography fontSize={15} color={'blue'}>
             평가 남기기
           </Typography>

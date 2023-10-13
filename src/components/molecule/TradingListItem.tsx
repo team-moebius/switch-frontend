@@ -31,38 +31,36 @@ export const itemJustifyStyle = StyleSheet.create({
   },
 });
 
-const TradingListItem = React.memo(
-  ({
-    data,
-    onPress,
-    childDirection,
-    cardDirection,
-    itemJustify = 'left',
-    fontSize,
-    imageResizeMode,
-  }: TradingListItemProps) => {
-    const { src, title, location } = data;
+const TradingListItem = ({
+  data,
+  onPress,
+  childDirection,
+  cardDirection,
+  itemJustify = 'left',
+  fontSize,
+  imageResizeMode,
+}: TradingListItemProps) => {
+  const { src, title, location } = data;
 
-    return (
-      <Pressable onPress={onPress}>
-        <Flexbox {...itemJustifyStyle[itemJustify]}>
-          <Flexbox.Item width={'100%'}>
-            <WithImage
-              text={title}
-              src={src}
-              fontSize={fontSize}
-              imageWidth={100}
-              imageHeight={70}
-              imageResizeMode={imageResizeMode}
-              children={<Typography fontSize={13}>{location}</Typography>}
-              childDirection={childDirection}
-              cardDirection={cardDirection}
-            />
-          </Flexbox.Item>
-        </Flexbox>
-      </Pressable>
-    );
-  }
-);
+  return (
+    <Pressable onPress={onPress}>
+      <Flexbox {...itemJustifyStyle[itemJustify]}>
+        <Flexbox.Item width={'100%'}>
+          <WithImage
+            text={title}
+            src={src}
+            fontSize={fontSize}
+            imageWidth={100}
+            imageHeight={70}
+            imageResizeMode={imageResizeMode}
+            renderItem={<Typography fontSize={13}>{location}</Typography>}
+            childDirection={childDirection}
+            cardDirection={cardDirection}
+          />
+        </Flexbox.Item>
+      </Flexbox>
+    </Pressable>
+  );
+};
 
 export { TradingListItem, TradingListItemProps };

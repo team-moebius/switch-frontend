@@ -1,15 +1,22 @@
 import { useCallback, useMemo, useState } from 'react';
 import { Pressable } from 'react-native';
+
 import { Flexbox, Icon, Select } from 'src/components/atom';
 import { ImageCard, TradingListItem } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
-import { useFlatList } from 'src/hooks/useFlatList';
+import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
 
-const GridItem = ({ item }: { item: StuffListItemData }) => {
+const GridItem = ({
+  item,
+  navigation,
+}: {
+  item: StuffListItemData;
+  navigation: any;
+}) => {
   return (
     <Flexbox.Item flex={1} width={'100%'}>
       <ImageCard
@@ -20,14 +27,20 @@ const GridItem = ({ item }: { item: StuffListItemData }) => {
         height={150}
         resizeMode={'cover'}
         onClickHandler={() => {
-          window.alert('clicked');
+          navigation.navigate('SwitchDetail');
         }}
       />
     </Flexbox.Item>
   );
 };
 
-const ListItem = ({ item }: { item: StuffListItemData }) => {
+const ListItem = ({
+  item,
+  navigation,
+}: {
+  item: StuffListItemData;
+  navigation: any;
+}) => {
   return (
     <TradingListItem
       data={{
@@ -36,7 +49,7 @@ const ListItem = ({ item }: { item: StuffListItemData }) => {
         location: item.location || '',
       }}
       onPress={() => {
-        alert('list click');
+        navigation.navigate('SwitchDetail');
       }}
       childDirection={'column'}
       cardDirection={'row'}
@@ -47,8 +60,8 @@ const ListItem = ({ item }: { item: StuffListItemData }) => {
   );
 };
 
-const ItemListContent = () => {
-  const [type, setType] = useState<ViewType>('grid');
+const ItemListContent = ({ navigation }) => {
+  const [type, setType] = useState<ListViewType>('grid');
   const [sort, setSort] = useState<SectionOptionType>('무작위');
 
   const loadMoreData = useCallback(() => {
@@ -58,11 +71,14 @@ const ItemListContent = () => {
   const renderItem = useMemo(() => {
     switch (type) {
       case 'grid':
-        return GridItem;
+        return ({ item }: { item: StuffListItemData }) =>
+          GridItem({ item, navigation });
+
       case 'list':
-        return ListItem;
+        return ({ item }: { item: StuffListItemData }) =>
+          ListItem({ item, navigation });
     }
-  }, [type]);
+  }, [navigation, type]);
 
   const flatListProps = useFlatList<StuffListItemData>({
     type,
@@ -82,7 +98,11 @@ const ItemListContent = () => {
         >
           <Flexbox.Item flex={1}>
             <Flexbox gap={5}>
-              <Pressable onPress={() => setType('grid')}>
+              <Pressable
+                onPress={() => {
+                  setType('grid');
+                }}
+              >
                 <Icon
                   name={type === 'grid' ? 'grid' : 'grid-outline'}
                   size={20}

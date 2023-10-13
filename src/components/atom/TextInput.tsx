@@ -4,6 +4,7 @@ import {
   NativeSyntheticEvent,
   StyleSheet,
   TextInputEndEditingEventData,
+  ViewStyle,
 } from 'react-native';
 import { LengthElement } from 'src/@types/unit';
 
@@ -13,13 +14,14 @@ interface InputProps {
   onSubmitEditing?: (
     e: NativeSyntheticEvent<TextInputEndEditingEventData>
   ) => void;
-  placeholder: string;
+  placeholder?: string;
   value: string | undefined;
   width: LengthElement;
   disabled?: boolean;
+  style?: ViewStyle;
 }
 
-const style = StyleSheet.create({
+const { defaultInput: defaultStyles } = StyleSheet.create({
   defaultInput: {
     height: 35,
     width: 250,
@@ -31,8 +33,8 @@ const style = StyleSheet.create({
   },
 });
 
-const TextInput = ({ width, ...props }: InputProps) => {
-  return <BasicInput {...props} style={[style.defaultInput, { width }]} />;
+const TextInput = ({ width, style, ...props }: InputProps) => {
+  return <BasicInput {...props} style={[defaultStyles, style, { width }]} />;
 };
 
 export { TextInput, InputProps };

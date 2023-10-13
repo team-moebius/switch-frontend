@@ -82,6 +82,7 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
           pl={8}
           pr={8}
           alignItems={'center'}
+          justifyContent={'space-between'}
         >
           <Flexbox.Item>
             <Typography fontSize={14} color={disabled ? 'black' : 'gray'}>
