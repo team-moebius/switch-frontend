@@ -3,6 +3,7 @@ import { Flexbox, Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { StyleSheet } from 'react-native';
 import { mirrorDirectionStyle } from './WithMirror';
+import { FlexDirection } from 'src/@types/enums';
 
 type modifiedImageProps = {
   imageWidth?: ImageProps['width'];
@@ -48,6 +49,7 @@ const WithImage = ({
   fontSize = 'cardList',
   childDirection = 'row',
   cardDirection = 'row',
+  mirrorDirection = 'column',
 }: WithImageProps) => {
   return (
     <Flexbox {...flexDirectionStyle[cardDirection]} gap={10} width={'100%'}>
@@ -59,16 +61,29 @@ const WithImage = ({
           resizeMode={imageResizeMode}
         />
       </Flexbox.Item>
-      <Flexbox.Item>
-        <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
-          <Flexbox.Item>
-            <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
-              {text}
-            </Typography>
-          </Flexbox.Item>
-          {renderItem}
-        </Flexbox>
-      </Flexbox.Item>
+      {FlexDirection.ROW === mirrorDirection ? (
+        <Flexbox.Item>
+          <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
+            <Flexbox.Item>
+              <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+                {text}
+              </Typography>
+            </Flexbox.Item>
+            {renderItem}
+          </Flexbox>
+        </Flexbox.Item>
+      ) : (
+        <Flexbox.Item flex={1}>
+          <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
+            <Flexbox.Item flex={1}>
+              <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+                {text}
+              </Typography>
+            </Flexbox.Item>
+            {renderItem}
+          </Flexbox>
+        </Flexbox.Item>
+      )}
     </Flexbox>
   );
 };
