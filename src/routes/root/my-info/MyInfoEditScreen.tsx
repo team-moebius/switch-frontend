@@ -3,9 +3,7 @@ import {
   Box,
   Flexbox,
   Typography,
-  TextInput,
   Separator,
-  Textarea,
   Button,
 } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
@@ -90,7 +88,7 @@ const MyInfoEditScreen = () => {
       <Flexbox.Item padding={10} flex={1}>
         <Box mb={20}>
           <Box width={100} mb={10}>
-            <Button type={'normal'} size={'middle'} onPress={certifyHandler}>
+            <Button type={'normal'} size={'medium'} onPress={certifyHandler}>
               2차 인증
             </Button>
           </Box>
@@ -106,7 +104,7 @@ const MyInfoEditScreen = () => {
             <Flexbox.Item flex={0.3}>
               <Button
                 type={'transparent'}
-                size={'middle'}
+                size={'medium'}
                 onPress={phoneEditHandler}
               >
                 {phone === '' ? '등록하기' : '변경하기'}
@@ -123,7 +121,7 @@ const MyInfoEditScreen = () => {
             <Flexbox.Item flex={0.3}>
               <Button
                 type={'transparent'}
-                size={'middle'}
+                size={'medium'}
                 onPress={emailEditHandler}
               >
                 {email === '' ? '등록하기' : '변경하기'}
@@ -134,7 +132,7 @@ const MyInfoEditScreen = () => {
         </Box>
       </Flexbox.Item>
 
-      <Button type={'transparent'} size={'middle'} onPress={withdrawHandler}>
+      <Button type={'transparent'} size={'medium'} onPress={withdrawHandler}>
         회원 탈퇴하기
       </Button>
     </ScreenWrapper>
