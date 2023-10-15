@@ -1,6 +1,6 @@
-type HexColor = `#${string}`;
+import { Color } from 'src/@types/unit';
 
-type ColorRecordOf<V extends string> = Record<V, HexColor>;
+type ColorRecordOf<V extends string> = Record<V, Color>;
 
 type ColorRegistry<Keys extends string, Variation extends string> = Record<
   Keys,

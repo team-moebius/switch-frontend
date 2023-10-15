@@ -156,7 +156,7 @@ const Field = ({
             handleOnPress={() => {
               onChange({ [name]: !value });
             }}
-            backgroundColor={value ? '#E0E0E0' : '#2ECC71'}
+            backgroundColor={value === false ? '#E0E0E0' : '#2ECC71'}
           />
         );
       case 'countingTextarea':
