@@ -60,6 +60,7 @@ const MyInfoEditScreen = () => {
             labelLayout={{ flex: 0.3, width: '30%' }}
             width={'100%'}
             placeholder='이름을 입력해주세요.'
+            style={{ borderWidth: 0, color: '#000000' }}
           />
         </Flexbox>
         <Separator />
@@ -71,7 +72,7 @@ const MyInfoEditScreen = () => {
                 <Typography fontSize={20}>소개글</Typography>
               </Box>
             }
-            style={{ padding: 8 }}
+            style={{ padding: 8, borderWidth: 0 }}
             onChange={(value) => {
               setIntroduce(value.introduce as string);
             }}
