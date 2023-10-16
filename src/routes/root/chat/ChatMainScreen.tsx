@@ -38,6 +38,7 @@ const ChatMainScreen = () => {
                   ago: data.ago,
                   isUnread: data.isUnread,
                 }}
+                onPress={() => window.alert('chat detail screen')}
               />
               {idx === CHAT_MOCK_DATA.length - 1 && (
                 <Separator key={'separator' + idx} />
