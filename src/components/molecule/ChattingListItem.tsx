@@ -68,7 +68,7 @@ const ChattingListItem = ({
                 centerAxis={<Icon name={'code-outline'} size={20} />}
               />
             </Flexbox.Item>
-            <Flexbox.Item flex={1} width={'100%'}>
+            <Flexbox.Item width={'100%'}>
               <Flexbox gap={10}>
                 {isUnread && (
                   <Flexbox.Item
@@ -78,7 +78,7 @@ const ChattingListItem = ({
                     borderRadius={50}
                   />
                 )}
-                <Flexbox.Item flex={1}>
+                <Flexbox.Item>
                   <Typography
                     fontSize={15}
                     numberOfLines={1}
