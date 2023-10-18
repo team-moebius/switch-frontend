@@ -76,6 +76,7 @@ const ChattingListItem = ({
                     height={6}
                     backgroundColor={'red'}
                     borderRadius={50}
+                    alignSelf='center'
                   />
                 )}
                 <Flexbox.Item>
