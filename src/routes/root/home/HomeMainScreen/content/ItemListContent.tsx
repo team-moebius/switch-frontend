@@ -1,11 +1,10 @@
 import { useCallback, useMemo, useState } from 'react';
-import { Pressable } from 'react-native';
-
-import { Flexbox, Icon, Select } from 'src/components/atom';
+import { Flexbox, Select } from 'src/components/atom';
 import { ImageCard, TradingListItem } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
+import PressableIcon from 'src/components/molecule/PressableIcon';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
@@ -98,22 +97,18 @@ const ItemListContent = ({ navigation }) => {
         >
           <Flexbox.Item flex={1}>
             <Flexbox gap={5}>
-              <Pressable
+              <PressableIcon
                 onPress={() => {
                   setType('grid');
                 }}
-              >
-                <Icon
-                  name={type === 'grid' ? 'grid' : 'grid-outline'}
-                  size={20}
-                />
-              </Pressable>
-              <Pressable onPress={() => setType('list')}>
-                <Icon
-                  name={type === 'grid' ? 'list-outline' : 'list'}
-                  size={20}
-                />
-              </Pressable>
+                name={type === 'grid' ? 'grid' : 'grid-outline'}
+                size={20}
+              />
+              <PressableIcon
+                onPress={() => setType('list')}
+                name={type === 'grid' ? 'list-outline' : 'list'}
+                size={20}
+              />
             </Flexbox>
           </Flexbox.Item>
           <Flexbox.Item width={'auto'} alignSelf={'center'}>

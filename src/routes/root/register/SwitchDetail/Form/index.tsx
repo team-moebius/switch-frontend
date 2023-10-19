@@ -7,6 +7,7 @@ import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
 import { ImageUploader } from './ImageUploader';
 import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
 import { SwitchDetailData } from '../type';
+import PressableIcon from 'src/components/molecule/PressableIcon';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
@@ -146,13 +147,13 @@ const SwitchDetailForm = ({
         <Separator />
         <Typography fontSize={14}>선호 주소</Typography>
         <Flexbox width={'100%'} alignItems={'center'} justifyContent={'center'}>
-          <Pressable
+          <PressableIcon
+            size={32}
+            name={'add-circle'}
             onPress={() => {
               navigation.navigate('PreferredAddress');
             }}
-          >
-            <Icon size={32} name={'add-circle'} />
-          </Pressable>
+          />
         </Flexbox>
         <Separator />
         <Flexbox alignItems={'center'} justifyContent='space-between'>
