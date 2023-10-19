@@ -24,7 +24,6 @@ const SecuritySettingMain = ({ navigation }) => {
     changeHandler({ usePassword: value });
   }, []);
 
-  console.debug('?', value);
   return (
     <ScreenWrapper>
       <Flexbox flexDirection={'column'} gap={48}>
