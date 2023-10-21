@@ -40,15 +40,17 @@ const ScreenHeader = ({
       }
     >
       <Flexbox.Item flex={1}>
-        {backVisible && navigation.canGoBack() && (
-          <Pressable
-            onPress={() => {
-              navigation.goBack();
-            }}
-          >
-            <Icon size={24} name={'arrow-back'} />
-          </Pressable>
-        )}
+        <Flexbox width={'100%'} pl={8}>
+          {backVisible && navigation.canGoBack() && (
+            <Pressable
+              onPress={() => {
+                navigation.goBack();
+              }}
+            >
+              <Icon size={24} name={'chevron-back'} />
+            </Pressable>
+          )}
+        </Flexbox>
       </Flexbox.Item>
       <Flexbox.Item flex={3}>
         <Flexbox width={'100%'} justifyContent={'center'}>
