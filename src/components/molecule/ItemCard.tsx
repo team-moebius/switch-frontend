@@ -66,8 +66,8 @@ const Footer = ({
     <Flexbox width={'100%'} alignItems='center' justifyContent='space-between'>
       <Flexbox.Item>
         <Flexbox>
-          {hashTags.map(({ children, ...props }: any) => (
-            <Tag {...props} key={props.children} disabled>
+          {hashTags.map(({ children, ...props }: any, i) => (
+            <Tag key={`${props.children}_${i}`} {...props} disabled>
               {children}
             </Tag>
           ))}
