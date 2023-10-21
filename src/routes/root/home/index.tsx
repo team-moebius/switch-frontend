@@ -84,7 +84,23 @@ const HomeRoute = () => {
             },
           }}
         />
-        <Stack.Screen name={'SwitchDetail'} component={SwitchDetailScreen} />
+        <Stack.Screen
+          name={'SwitchDetail'}
+          component={SwitchDetailScreen}
+          options={{
+            header: (props) => {
+              return (
+                <ScreenHeader
+                  {...props}
+                  containerStyle={{
+                    backgroundColor: 'transparent',
+                    position: 'absolute',
+                  }}
+                />
+              );
+            },
+          }}
+        />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
