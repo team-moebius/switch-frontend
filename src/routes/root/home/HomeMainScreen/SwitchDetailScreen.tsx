@@ -50,13 +50,14 @@ SwitchDetailData): SwitchDetailViewProps['itemData'] => {
   };
 };
 
-const SwitchDetailScreen = () => {
+const SwitchDetailScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
       <ScrollView>
         <Flexbox width={'100%'} flexDirection={'column'}>
           <Flexbox.Item width={'100%'} flex={1}>
             <SwitchDetailView
+              onClickReport={() => navigation.navigate('Report')}
               userData={userDataResolver(USERINFO_MOCK)}
               itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
             />
@@ -72,7 +73,7 @@ const SwitchDetailScreen = () => {
               <Button
                 type={'normal'}
                 size={'medium'}
-                onPress={() => window.alert('스위치 제안하기')}
+                onPress={() => navigation.navigate('RegisteredList')}
               >
                 스위치 제안하기
               </Button>
