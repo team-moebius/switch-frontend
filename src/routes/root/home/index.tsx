@@ -8,9 +8,12 @@ import {
   ScreenHeaderProps,
 } from 'src/components/molecule/ScreenHeader';
 import { ThemeContext } from 'src/context/theme';
+
 import { HomeMainScreen } from './HomeMainScreen';
 import { SwitchDetailScreen } from './HomeMainScreen/SwitchDetailScreen';
 import { NotificationsScreen } from './NotificationsScreen';
+import { RegisteredListScreen } from './RegisteredListScreen';
+import { ReportsScreen } from './ReportsScreen';
 
 const Stack = createStackNavigator();
 
@@ -101,6 +104,30 @@ const HomeRoute = () => {
             },
           }}
         />
+        <Stack.Screen
+          name={'RegisteredList'}
+          component={RegisteredListScreen}
+          options={{
+            header: (props) => {
+              return (
+                <ScreenHeader
+                  {...props}
+                  right={
+                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
+                      <IconButton
+                        size={24}
+                        name={'md-add-outline'}
+                        onPress={() => {
+                          props.navigation?.navigate('Register');
+                        }}
+                      />
+                    </Flexbox>
+                  }
+                />
+              );
+            },
+          }}
+        />
       </Stack.Group>
       <Stack.Group>
         <Stack.Screen
@@ -126,6 +153,17 @@ const HomeRoute = () => {
                 }
               />
             ),
+          }}
+        />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          name={'Report'}
+          component={ReportsScreen}
+          options={{
+            header: (props) => {
+              return <ScreenHeader {...props} title={'신고하기'} />;
+            },
           }}
         />
       </Stack.Group>
