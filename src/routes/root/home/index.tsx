@@ -1,12 +1,16 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { useCallback, useContext, useState } from 'react';
 
-import { Flexbox, IconButton, TextInput } from 'src/components/atom';
+import { Button, Flexbox, IconButton, TextInput } from 'src/components/atom';
 
-import { ScreenHeaderProps } from 'src/components/molecule/ScreenHeader';
+import {
+  ScreenHeader,
+  ScreenHeaderProps,
+} from 'src/components/molecule/ScreenHeader';
 import { ThemeContext } from 'src/context/theme';
 import { HomeMainScreen } from './HomeMainScreen';
 import { SwitchDetailScreen } from './HomeMainScreen/SwitchDetailScreen';
+import { NotificationsScreen } from './NotificationsScreen';
 
 const Stack = createStackNavigator();
 
@@ -51,35 +55,64 @@ const HomeRouteHeader = ({
 const HomeRoute = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen
-        name={'HomeMain'}
-        component={HomeMainScreen}
-        options={{
-          header: ({ navigation }) => {
-            return (
-              <HomeRouteHeader
-                onSearch={(value) => {
-                  navigation.setParams({
-                    search: value,
-                  });
-                }}
+      <Stack.Group>
+        <Stack.Screen
+          name={'HomeMain'}
+          component={HomeMainScreen}
+          options={{
+            header: ({ navigation }) => {
+              return (
+                <HomeRouteHeader
+                  onSearch={(value) => {
+                    navigation.setParams({
+                      search: value,
+                    });
+                  }}
+                  right={
+                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
+                      <IconButton
+                        size={24}
+                        name={'notifications-outline'}
+                        onPress={() => {
+                          navigation.navigate('Notifications');
+                        }}
+                      />
+                    </Flexbox>
+                  }
+                />
+              );
+            },
+          }}
+        />
+        <Stack.Screen name={'SwitchDetail'} component={SwitchDetailScreen} />
+      </Stack.Group>
+      <Stack.Group>
+        <Stack.Screen
+          name={'Notifications'}
+          component={NotificationsScreen}
+          options={{
+            header: (props) => (
+              <ScreenHeader
+                {...props}
+                title={'알림'}
                 right={
                   <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                    <IconButton
-                      size={24}
-                      name={'notifications-outline'}
+                    <Button
+                      size={'medium'}
+                      type={'transparent'}
                       onPress={() => {
-                        navigation.navigate('Notifications');
+                        props.navigation.setParams({ isEditMode: true });
                       }}
-                    />
+                    >
+                      편집
+                    </Button>
                   </Flexbox>
                 }
               />
-            );
-          },
-        }}
-      />
-      <Stack.Screen name={'SwitchDetail'} component={SwitchDetailScreen} />
+            ),
+          }}
+        />
+      </Stack.Group>
     </Stack.Navigator>
   );
 };
