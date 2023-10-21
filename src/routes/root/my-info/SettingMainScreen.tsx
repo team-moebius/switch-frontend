@@ -31,7 +31,7 @@ const SettingMainScreen = ({ navigation }) => {
       <SettingButton onPress={() => navigation.navigate('Setting')}>
         스위치 설정
       </SettingButton>
-      <SettingButton onPress={() => navigation.navigate('/security-setting')}>
+      <SettingButton onPress={() => navigation.navigate('Security')}>
         보안 설정
       </SettingButton>
       {/* 은지님이 만든 separator로 바꿔주기 */}
