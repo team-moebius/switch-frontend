@@ -9,8 +9,13 @@ import { UserSummaryData } from 'src/components/molecule/UserSummary';
 type SwitchDetailViewProps = {
   itemData: SwitchDetailData;
   userData: UserSummaryData;
+  onClickReport: () => void;
 };
-const SwitchDetailView = ({ userData, itemData }: SwitchDetailViewProps) => {
+const SwitchDetailView = ({
+  userData,
+  itemData,
+  onClickReport,
+}: SwitchDetailViewProps) => {
   const { title, date, description, hashTags, location } = itemData;
 
   return (
@@ -50,7 +55,7 @@ const SwitchDetailView = ({ userData, itemData }: SwitchDetailViewProps) => {
       <Separator />
       <Flexbox.Item width={'100%'}>
         <Flexbox alignItems='center' justifyContent='center'>
-          <Pressable onPress={() => window.alert('신고하기')}>
+          <Pressable onPress={onClickReport}>
             <Typography fontSize={20} color={'#F1952B'}>
               신고하기
             </Typography>
