@@ -32,7 +32,7 @@ const Toggle = ({
   backgroundColor = '#2ECC71',
 }: ToggleProps) => {
   const absolutePositions = useMemo(() => {
-    return value ? { left: 0 } : { right: 0 };
+    return value === false ? { left: 0 } : { right: 0 };
   }, [value]);
   return (
     <Pressable

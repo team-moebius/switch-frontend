@@ -40,6 +40,7 @@ const Flexbox = ({
       style={[
         {
           ...bindBoxStyle({ ...props, width }),
+          display: 'flex',
           flexDirection,
           flexWrap,
           justifyContent,

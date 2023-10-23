@@ -15,12 +15,14 @@ import { ScoreQuestion } from './ScoreQuestion';
 import { ImageCard } from './ImageCard';
 import { ItemCard } from './ItemCard';
 import { Card } from './Card';
+import { NumberPad } from './NumberPad';
 
 export {
   Radiobox,
   Checkbox,
   RadioGroup,
   Field,
+  NumberPad,
   TagInput,
   HashTagInput,
   UserSummary,

@@ -90,6 +90,8 @@ const Field = ({
   childrenAlign = 'center',
   value,
   onChange,
+  childrenLayout,
+  labelLayout,
   ...props
 }: FieldProps) => {
   const fieldInputRenderer = () => {
@@ -156,7 +158,7 @@ const Field = ({
             handleOnPress={() => {
               onChange({ [name]: !value });
             }}
-            backgroundColor={value ? '#E0E0E0' : '#2ECC71'}
+            backgroundColor={value === false ? '#E0E0E0' : '#2ECC71'}
           />
         );
       case 'countingTextarea':
@@ -179,6 +181,8 @@ const Field = ({
       childrenAlign={childrenAlign}
       width={width}
       height={height}
+      childrenLayout={childrenLayout}
+      labelLayout={labelLayout}
     >
       {fieldInputRenderer()}
     </WithLabel>
