@@ -35,6 +35,7 @@ const renderChildren = (
       imageHeight={100}
       imageResizeMode={'center'}
       mirrorDirection={mirrorDirection}
+      width={'60%'}
     />
   );
 };
