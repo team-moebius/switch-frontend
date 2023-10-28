@@ -21,7 +21,7 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
           backgroundColor='#0078fe'
           padding={10}
           ml={'45%'}
-          borderRadius={5}
+          borderRadius={10}
           mt={5}
           mr={'5%'}
           maxWidth={'50%'}
@@ -58,7 +58,7 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
         <Flexbox.Item
           backgroundColor='#dedede'
           padding={10}
-          borderRadius={5}
+          borderRadius={10}
           mt={5}
           ml={'5%'}
           maxWidth={'50%'}
