@@ -205,7 +205,7 @@ const ChatDetailScreen = () => {
         <Flexbox.Item width={'100%'}>
           <Separator />
         </Flexbox.Item>
-        <Flexbox.Item width={'100%'} height={'90%'} pb={10}>
+        <Flexbox.Item width={'100%'} height={'88%'}>
           <ScrollView
             ref={scrollViewRef}
             onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
