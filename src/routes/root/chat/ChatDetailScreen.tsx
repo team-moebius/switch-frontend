@@ -205,7 +205,7 @@ const ChatDetailScreen = () => {
         <Flexbox.Item width={'100%'}>
           <Separator />
         </Flexbox.Item>
-        <Flexbox.Item width={'100%'} height={'90%'}>
+        <Flexbox.Item width={'100%'} height={'90%'} pb={10}>
           <ScrollView
             ref={scrollViewRef}
             onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
@@ -222,7 +222,7 @@ const ChatDetailScreen = () => {
           </ScrollView>
         </Flexbox.Item>
       </Flexbox>
-      <Flexbox width={'100%'} height={'5%'}>
+      <Flexbox width={'100%'} height={'5%'} backgroundColor={'#fff'}>
         <ChatInput
           value={chatText}
           onChangeText={onChatTextHandler}
