@@ -172,40 +172,42 @@ const ChatDetailScreen = () => {
 
   return (
     <ScreenWrapper>
-      <Flexbox width={'100%'} height={'95%'} flexDirection={'column'}>
-        <Flexbox.Item width={'100%'}>
-          <Separator />
+      <Flexbox width={'100%'} height={'94%'} flexDirection={'column'}>
+        <Flexbox.Item width={'100%'} height={'auto'}>
+          <Flexbox.Item width={'100%'}>
+            <Separator />
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <Flexbox
+              width={'100%'}
+              alignItems='center'
+              justifyContent='space-between'
+            >
+              <Flexbox.Item flex={1}>
+                <HistoryListItem
+                  data={{
+                    myItem: '디올 원피스',
+                    selectedItem: '커스텀 키보드',
+                  }}
+                  disabled
+                />
+              </Flexbox.Item>
+              <Flexbox.Item width={50}>
+                <Button
+                  size='small'
+                  type='normal'
+                  onPress={() => window.alert('clicked')}
+                >
+                  스위치
+                </Button>
+              </Flexbox.Item>
+            </Flexbox>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <Separator />
+          </Flexbox.Item>
         </Flexbox.Item>
-        <Flexbox.Item width={'100%'}>
-          <Flexbox
-            width={'100%'}
-            alignItems='center'
-            justifyContent='space-between'
-          >
-            <Flexbox.Item flex={1}>
-              <HistoryListItem
-                data={{
-                  myItem: '디올 원피스',
-                  selectedItem: '커스텀 키보드',
-                }}
-                disabled
-              />
-            </Flexbox.Item>
-            <Flexbox.Item width={50}>
-              <Button
-                size='small'
-                type='normal'
-                onPress={() => window.alert('clicked')}
-              >
-                스위치
-              </Button>
-            </Flexbox.Item>
-          </Flexbox>
-        </Flexbox.Item>
-        <Flexbox.Item width={'100%'}>
-          <Separator />
-        </Flexbox.Item>
-        <Flexbox.Item width={'100%'} height={'88%'}>
+        <Flexbox.Item width={'100%'} flex={1}>
           <ScrollView
             ref={scrollViewRef}
             onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
@@ -222,7 +224,7 @@ const ChatDetailScreen = () => {
           </ScrollView>
         </Flexbox.Item>
       </Flexbox>
-      <Flexbox width={'100%'} height={'5%'} backgroundColor={'#fff'}>
+      <Flexbox width={'100%'} height={'6%'} mt={10} backgroundColor={'#fff'}>
         <ChatInput
           value={chatText}
           onChangeText={onChatTextHandler}
