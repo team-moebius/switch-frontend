@@ -19,7 +19,7 @@ const ChatInput = ({
   return (
     <Box width={'100%'} border={'1 solid #cccccc'} borderRadius={4}>
       <Flexbox width={'100%'} flexDirection={'row'} alignItems={'center'}>
-        <Box width={'auto'} ml={'1%'}>
+        <Box width={'auto'} ml={5}>
           <PressableIcon
             name={'image-outline'}
             size={24}
@@ -34,7 +34,7 @@ const ChatInput = ({
           placeholder={placeholder}
           style={{ borderWidth: 0 }}
         />
-        <Box width={'auto'} mr={'2%'}>
+        <Box width={'auto'} mr={5}>
           <PressableIcon
             name={'paper-plane-outline'}
             size={24}
