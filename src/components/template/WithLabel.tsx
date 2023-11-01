@@ -3,6 +3,10 @@ import { Pressable, StyleSheet } from 'react-native';
 import { LengthElement } from 'src/@types/unit';
 import { Flexbox } from 'src/components/atom';
 
+interface layoutStyle {
+  flex?: number;
+  width?: LengthElement;
+}
 interface WithLabelProps {
   width?: LengthElement;
   height?: LengthElement;
@@ -12,6 +16,8 @@ interface WithLabelProps {
   labelAlign?: keyof typeof labelAlignStyle;
   children?: ReactNode;
   childrenAlign?: keyof typeof labelAlignStyle;
+  childrenLayout?: layoutStyle;
+  labelLayout?: layoutStyle;
 }
 
 const labelPositionStyle = StyleSheet.create({
@@ -51,12 +57,14 @@ const labelAlignStyle = StyleSheet.create({
 const WithLabel = ({
   width,
   height,
-  children,
-  onPress,
   labelPosition = 'right',
-  label,
   labelAlign = 'left',
   childrenAlign = 'center',
+  childrenLayout = { width: '100%', flex: 1 },
+  labelLayout = { width: '100%', flex: 1 },
+  onPress,
+  children,
+  label,
 }: WithLabelProps) => {
   return (
     <Flexbox
@@ -65,11 +73,11 @@ const WithLabel = ({
       height={height}
       gap={8}
     >
-      <Flexbox.Item width={'100%'} flex={1}>
+      <Flexbox.Item flex={childrenLayout.flex} width={childrenLayout.width}>
         <Flexbox {...labelAlignStyle[childrenAlign]}>{children}</Flexbox>
       </Flexbox.Item>
       {label && (
-        <Flexbox.Item width={'100%'} flex={1}>
+        <Flexbox.Item flex={labelLayout.flex} width={labelLayout.width}>
           <Flexbox {...labelAlignStyle[labelAlign]}>
             <Pressable onPress={onPress}>{label}</Pressable>
           </Flexbox>

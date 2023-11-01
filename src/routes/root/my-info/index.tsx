@@ -10,7 +10,7 @@ import { WithdrawRoute } from './WithdrawScreen';
 import { SecuritySettingRoute } from './Security';
 import { ScreenHeader } from 'src/components/molecule';
 import { Button, Flexbox, IconButton } from 'src/components/atom';
-import { EditMyInfoScreen } from './EditMyInfoScreen';
+import { MyInfoEditScreen } from './MyInfoEditScreen';
 
 const Stack = createStackNavigator();
 
@@ -59,8 +59,8 @@ const MyInfoRoute = () => {
           }}
         />
         <Stack.Screen
-          name={'EditMyInfo'}
-          component={EditMyInfoScreen}
+          name={'MyInfoEdit'}
+          component={MyInfoEditScreen}
           options={{
             header: (props) => {
               return (
