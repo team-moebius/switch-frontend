@@ -13,6 +13,7 @@ import { TextInput } from './TextInput';
 import { Toggle } from './Toggle';
 import { Typography } from './Typograph';
 
+import Badge from './Badge';
 export {
   Box,
   Button,
@@ -28,4 +29,5 @@ export {
   TextInput,
   Toggle,
   Check,
+  Badge,
 };
