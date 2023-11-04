@@ -36,6 +36,10 @@ const typeStyle = StyleSheet.create({
     backgroundColor: 'transparent',
     color: 'gray',
   },
+  cancel: {
+    backgroundColor: '#d1d1d1',
+    color: '#ffffff',
+  },
 });
 
 interface ButtonProps {
