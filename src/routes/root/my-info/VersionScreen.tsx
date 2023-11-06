@@ -46,7 +46,7 @@ const VersionScreen = () => {
               >{`- ${content}`}</Typography>
             ))}
           </Flexbox.Item>
-          <Button onPress={onClickHandler} type={'normal'} size={'middle'}>
+          <Button onPress={onClickHandler} type={'normal'} size={'medium'}>
             업데이트 하기
           </Button>
         </>

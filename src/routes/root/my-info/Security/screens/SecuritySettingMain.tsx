@@ -19,18 +19,17 @@ const SecuritySettingMain = ({ navigation }) => {
 
   const passwordChangeHandler = useCallback((value: boolean) => {
     if (value === true) {
-      navigation.navigate('/security-setting/password-setting');
+      navigation.navigate('SecuritySettingPassword');
     }
     changeHandler({ usePassword: value });
   }, []);
 
-  console.debug('?', value);
   return (
     <ScreenWrapper>
       <Flexbox flexDirection={'column'} gap={48}>
         <Box>
           <Field
-            label={'앱 비밀번호 사용'}
+            label={<Typography fontSize={20}>앱 비밀번호 사용</Typography>}
             name={'usePassword'}
             fieldType={'toggle'}
             value={usePassword}
@@ -44,7 +43,7 @@ const SecuritySettingMain = ({ navigation }) => {
         </Box>
         <Box>
           <Field
-            label={'생체 정보 등록'}
+            label={<Typography fontSize={20}>생체 정보 등록</Typography>}
             name={'useBioPassword'}
             fieldType={'toggle'}
             value={useBioPassword}

@@ -66,21 +66,15 @@ const Button = ({
     );
   }, [children, type, size]);
   return (
-    <Pressable
-      {...props}
-      style={[
-        sizeStyle[size],
-        typeStyle[type],
-        { width: wide ? '100%' : 'auto' },
-      ]}
-    >
+    <Pressable {...props}>
       <Flexbox
+        {...sizeStyle[size]}
+        {...typeStyle[type]}
         width={wide ? '100%' : 'auto'}
-        height={'100%'}
         alignItems={'center'}
         justifyContent={'center'}
       >
-        {title}
+        <Flexbox.Item>{title}</Flexbox.Item>
       </Flexbox>
     </Pressable>
   );
