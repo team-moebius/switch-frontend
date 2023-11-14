@@ -18,10 +18,17 @@ const GridItem = ({
   item: StuffListItemData;
   navigation: any;
 }) => {
+  const isDummy = (() => {
+    return item.name.length === 0;
+  })();
   const onLikeHandler = () => {
     alert('it‘s so good');
     // setLiked((prev) => !prev);
   };
+
+  if (isDummy) {
+    return <Flexbox.Item flex={1}></Flexbox.Item>;
+  }
 
   return (
     <Flexbox.Item flex={1} position='relative'>
@@ -126,11 +133,21 @@ const FavoriteMainScreen = ({ navigation }) => {
     renderItem,
   });
 
+  const plusMockOne = (data: StuffListItemData[]) => {
+    const copy = data.slice();
+    copy.push({ name: '' });
+    return copy;
+  };
+
   return (
     <ScreenWrapper>
       <ListView<StuffListItemData>
         {...flatListProps}
-        data={STUFF_LIST_MOCK}
+        data={
+          STUFF_LIST_MOCK.length % 2 !== 0
+            ? plusMockOne(STUFF_LIST_MOCK)
+            : STUFF_LIST_MOCK
+        }
         optionBar={
           <Flexbox
             width={'100%'}
