@@ -10,6 +10,7 @@ import {
 import { SwitchDetailData, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
 import { SwitchDetailView } from '../../register/SwitchDetail';
 import { SwitchDetailViewProps } from '../../register/SwitchDetail/View';
+import { ScrollView } from 'react-native';
 
 const userDataResolver = ({
   userName,
@@ -49,39 +50,46 @@ SwitchDetailData): SwitchDetailViewProps['itemData'] => {
   };
 };
 
-const SwitchDetailScreen = () => {
+const SwitchDetailScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
-      <SwitchDetailView
-        userData={userDataResolver(USERINFO_MOCK)}
-        itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
-      />
-      <Separator />
-      <Flexbox
-        width={'100%'}
-        alignItems={'center'}
-        flexDirection={'column'}
-        gap={10}
-      >
-        <Box width={'90%'}>
-          <Button
-            type={'normal'}
-            size={'medium'}
-            onPress={() => window.alert('스위치 제안하기')}
+      <ScrollView>
+        <Flexbox width={'100%'} flexDirection={'column'}>
+          <Flexbox.Item width={'100%'} flex={1}>
+            <SwitchDetailView
+              onClickReport={() => navigation.navigate('Report')}
+              userData={userDataResolver(USERINFO_MOCK)}
+              itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
+            />
+          </Flexbox.Item>
+          <Separator />
+          <Flexbox
+            width={'100%'}
+            alignItems={'center'}
+            flexDirection={'column'}
+            gap={10}
           >
-            스위치 제안하기
-          </Button>
-        </Box>
-        <Box width={'90%'}>
-          <Button
-            type={'transparent'}
-            size={'medium'}
-            onPress={() => window.alert('몇명이 줄서고 있어요')}
-          >
-            3명이 줄서고 있어요
-          </Button>
-        </Box>
-      </Flexbox>
+            <Box width={'90%'}>
+              <Button
+                type={'normal'}
+                size={'medium'}
+                onPress={() => navigation.navigate('RegisteredList')}
+              >
+                스위치 제안하기
+              </Button>
+            </Box>
+            <Box width={'90%'}>
+              <Button
+                type={'transparent'}
+                size={'medium'}
+                onPress={() => window.alert('몇명이 줄서고 있어요')}
+              >
+                3명이 줄서고 있어요
+              </Button>
+            </Box>
+          </Flexbox>
+        </Flexbox>
+      </ScrollView>
     </ScreenWrapper>
   );
 };

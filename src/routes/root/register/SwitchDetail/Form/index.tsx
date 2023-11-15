@@ -145,14 +145,41 @@ const SwitchDetailForm = ({
         />
         <Separator />
         <Typography fontSize={14}>선호 주소</Typography>
-        <Flexbox width={'100%'} alignItems={'center'} justifyContent={'center'}>
-          <Pressable
-            onPress={() => {
-              navigation.navigate('PreferredAddress');
-            }}
+        <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
+          <Flexbox
+            width={'100%'}
+            alignItems={'center'}
+            justifyContent={'center'}
           >
-            <Icon size={32} name={'add-circle'} />
-          </Pressable>
+            <Pressable
+              onPress={() => {
+                navigation.navigate('PreferredAddress');
+              }}
+            >
+              <Icon size={32} name={'add-circle'} />
+            </Pressable>
+          </Flexbox>
+          <Flexbox width={'100%'} justifyContent='center'>
+            <Flexbox
+              height={48}
+              width={'90%'}
+              padding={10}
+              backgroundColor={'#0cd092'}
+              borderRadius={6}
+              alignItems={'center'}
+            >
+              <Flexbox
+                width={'100%'}
+                alignItems={'center'}
+                justifyContent={'space-between'}
+              >
+                <Typography fontSize={18} fontWeight={'200'} color={'#fff'}>
+                  경기도 부천시 상동
+                </Typography>
+                <Icon name='close' size={24} color={'#fff'} />
+              </Flexbox>
+            </Flexbox>
+          </Flexbox>
         </Flexbox>
         <Separator />
         <Flexbox alignItems={'center'} justifyContent='space-between'>

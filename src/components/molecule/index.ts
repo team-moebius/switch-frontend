@@ -16,6 +16,7 @@ import { ImageCard } from './ImageCard';
 import { ItemCard } from './ItemCard';
 import { Card } from './Card';
 import { NumberPad } from './NumberPad';
+import { ScreenHeader } from './ScreenHeader';
 
 export {
   Radiobox,
@@ -36,4 +37,5 @@ export {
   ImageCard,
   ItemCard,
   Card,
+  ScreenHeader,
 };
