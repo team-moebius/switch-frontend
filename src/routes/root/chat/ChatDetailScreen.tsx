@@ -1,11 +1,11 @@
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { ChatInput } from './content/ChatInput';
 import ChatBubble from './content/ChatBubble';
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 
 type SwitchChatData = {
   id: number;
@@ -164,11 +164,18 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 
 const ChatDetailScreen = () => {
   const [chatText, setChatText] = useState('');
-  const scrollViewRef = useRef<ScrollView | null>(null);
+  const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
+  const scrollViewRef = useRef<FlatList | null>(null);
+  const [firstRendered, setFirstRendered] = useState<boolean>(false);
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
   };
+
+  useEffect(() => {
+    if (!firstRendered) setFirstRendered(true);
+    setMessageData([...CHAT_MOCK_DATA].reverse());
+  }, [firstRendered]);
 
   return (
     <ScreenWrapper>
@@ -208,23 +215,32 @@ const ChatDetailScreen = () => {
           </Flexbox.Item>
         </Flexbox.Item>
         <Flexbox.Item width={'100%'} flex={1}>
-          <ScrollView
+          <FlatList
+            data={messageData}
+            renderItem={ChatBubble}
+            keyExtractor={(item, index) => index.toString()}
+            onEndReached={() => {
+              console.debug('Reached the end');
+              // 실험을 위해서 onEndReached 이벤트가 실행될 때 마다 CHAT_MOCK_DATA 채팅 데이터를 넣어주는 액션을 추가했습니다.
+              if (!messageData) return;
+              setMessageData((prev) => {
+                const copy = prev.slice();
+                const reversed = [...CHAT_MOCK_DATA].reverse();
+                copy.push(...reversed);
+                return copy;
+              });
+            }}
+            onEndReachedThreshold={0.1}
             ref={scrollViewRef}
-            onContentSizeChange={() => scrollViewRef.current?.scrollToEnd()}
-          >
-            <FlatList
-              data={CHAT_MOCK_DATA}
-              renderItem={ChatBubble}
-              keyExtractor={(item, index) => index.toString()}
-              onEndReached={() => {
-                console.debug('Reached the end');
-              }}
-              onEndReachedThreshold={0.1}
-            />
-          </ScrollView>
+            onContentSizeChange={() => {
+              if (!firstRendered)
+                scrollViewRef.current?.scrollToOffset({ offset: 0 });
+            }}
+            inverted
+          />
         </Flexbox.Item>
       </Flexbox>
-      <Flexbox width={'100%'} height={'6%'} mt={10} backgroundColor={'#fff'}>
+      <Flexbox width={'100%'} height={'auto'} mt={10} backgroundColor={'#fff'}>
         <ChatInput
           value={chatText}
           onChangeText={onChatTextHandler}

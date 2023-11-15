@@ -1,13 +1,17 @@
 import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
 import { ScrollView, Pressable } from 'react-native';
-import { Field, HashTagInput, TagInput } from 'src/components/molecule';
+import {
+  Field,
+  HashTagInput,
+  PressableIcon,
+  TagInput,
+} from 'src/components/molecule';
 import { Separator } from 'src/components/atom/Separator';
 import { useCallback, useState } from 'react';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
 import { ImageUploader } from './ImageUploader';
 import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
 import { SwitchDetailData } from '../type';
-import PressableIcon from 'src/components/molecule/PressableIcon';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;

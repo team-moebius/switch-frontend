@@ -15,4 +15,4 @@ const PressableIcon = ({ color, size, name, onPress }: PressableIconProps) => {
   );
 };
 
-export default PressableIcon;
+export { PressableIcon };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
-import PressableIcon from 'src/components/molecule/PressableIcon';
+import { PressableIcon } from 'src/components/molecule';
 
 export default {
   title: 'PressableIcon',
