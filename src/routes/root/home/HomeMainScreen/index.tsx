@@ -15,10 +15,13 @@ const HomeMainScreen = ({ navigation }) => {
         height={'100%'}
         justifyContent={'center'}
         flexDirection={'column'}
-        pt={50}
       >
         {isItemView ? (
-          <ItemListContent navigation={navigation} />
+          <ItemListContent
+            onClickList={(data) => {
+              navigation?.navigate('SwitchDetail', { ...data });
+            }}
+          />
         ) : (
           <HistoryListContent />
         )}

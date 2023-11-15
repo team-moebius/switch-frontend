@@ -65,7 +65,7 @@ const PreferredAddress = () => {
               onPressItem={(value) => setDong(value)}
             />
           </Flexbox.Item>
-          <Flexbox.Item alignSelf={'center'} pt={30}>
+          <Flexbox.Item width={'100%'} alignSelf={'center'} pt={30}>
             <Typography fontSize={18}>입력한 주소</Typography>
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>

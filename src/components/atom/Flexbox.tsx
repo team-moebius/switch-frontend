@@ -72,6 +72,7 @@ const FlexItem = ({
   );
 };
 
+export { FlexboxProps };
 export default Object.assign(Flexbox, {
   Item: FlexItem,
 });

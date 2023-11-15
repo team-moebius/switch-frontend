@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { SecuritySettingMain } from 'src/routes/root/my-info/security-setting/screens/SecuritySettingMain';
+import { SecuritySettingMain } from 'src/routes/root/my-info/Security/screens/SecuritySettingMain';
 
 export default {
   title: 'SecuritySettingMain',

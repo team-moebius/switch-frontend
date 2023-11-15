@@ -11,10 +11,11 @@ type SectionOptionType = (typeof SELECT_OPTIONS)[number];
 
 const GridItem = ({
   item,
-  navigation,
+  onClick,
 }: {
   item: StuffListItemData;
-  navigation: any;
+  // navigation: any;
+  onClick?: () => void;
 }) => {
   return (
     <Flexbox.Item flex={1} width={'100%'}>
@@ -25,9 +26,7 @@ const GridItem = ({
         width={'100%'}
         height={150}
         resizeMode={'cover'}
-        onClickHandler={() => {
-          navigation.navigate('SwitchDetail');
-        }}
+        onClickHandler={onClick}
       />
     </Flexbox.Item>
   );
@@ -35,10 +34,10 @@ const GridItem = ({
 
 const ListItem = ({
   item,
-  navigation,
+  onClick,
 }: {
   item: StuffListItemData;
-  navigation: any;
+  onClick: () => void;
 }) => {
   return (
     <TradingListItem
@@ -47,9 +46,7 @@ const ListItem = ({
         src: item.thumbnail || '',
         location: item.location || '',
       }}
-      onPress={() => {
-        navigation.navigate('SwitchDetail');
-      }}
+      onPress={onClick}
       childDirection={'column'}
       cardDirection={'row'}
       itemJustify={'left'}
@@ -59,7 +56,11 @@ const ListItem = ({
   );
 };
 
-const ItemListContent = ({ navigation }) => {
+const ItemListContent = ({
+  onClickList,
+}: {
+  onClickList: (data: StuffListItemData) => void;
+}) => {
   const [type, setType] = useState<ListViewType>('grid');
   const [sort, setSort] = useState<SectionOptionType>('무작위');
 
@@ -71,13 +72,23 @@ const ItemListContent = ({ navigation }) => {
     switch (type) {
       case 'grid':
         return ({ item }: { item: StuffListItemData }) =>
-          GridItem({ item, navigation });
+          GridItem({
+            item,
+            onClick: () => {
+              onClickList(item);
+            },
+          });
 
       case 'list':
         return ({ item }: { item: StuffListItemData }) =>
-          ListItem({ item, navigation });
+          ListItem({
+            item,
+            onClick: () => {
+              onClickList(item);
+            },
+          });
     }
-  }, [navigation, type]);
+  }, [onClickList, type]);
 
   const flatListProps = useFlatList<StuffListItemData>({
     type,
