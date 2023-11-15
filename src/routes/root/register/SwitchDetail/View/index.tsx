@@ -1,6 +1,6 @@
-import Swiper from 'react-native-swiper';
+// import Swiper from 'react-native-swiper';
 import { Pressable } from 'react-native';
-import { Box, Flexbox, Image, Typography } from 'src/components/atom';
+import { Flexbox, Typography } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ItemCard, UserSummary } from 'src/components/molecule';
 import { SwitchDetailData } from '../type';
@@ -9,32 +9,36 @@ import { UserSummaryData } from 'src/components/molecule/UserSummary';
 type SwitchDetailViewProps = {
   itemData: SwitchDetailData;
   userData: UserSummaryData;
+  onClickReport: () => void;
 };
-const SwitchDetailView = ({ userData, itemData }: SwitchDetailViewProps) => {
-  const { title, thumbnails, date, description, hashTags, location } = itemData;
+const SwitchDetailView = ({
+  userData,
+  itemData,
+  onClickReport,
+}: SwitchDetailViewProps) => {
+  const { title, date, description, hashTags, location } = itemData;
 
   return (
     <Flexbox
-      height={'100%'}
       width={'100%'}
       justifyContent={'center'}
       alignItems={'center'}
       flexDirection={'column'}
     >
-      <Flexbox.Item width={'100%'} height={'30%'}>
-        <Swiper>
+      {/* <Flexbox.Item width={'100%'} height={'20%'}>
+        <Swiper horizontal={true}>
           {thumbnails.map((src, index) => (
             <Box key={index} width={'100%'} height={'100%'}>
               <Image
                 src={src}
                 width={'100%'}
-                height={'100%'}
+                height={'20%'}
                 resizeMode='cover'
               />
             </Box>
           ))}
         </Swiper>
-      </Flexbox.Item>
+      </Flexbox.Item> */}
       <Flexbox.Item width={'90%'} pt={20}>
         <ItemCard
           data={{
@@ -51,7 +55,7 @@ const SwitchDetailView = ({ userData, itemData }: SwitchDetailViewProps) => {
       <Separator />
       <Flexbox.Item width={'100%'}>
         <Flexbox alignItems='center' justifyContent='center'>
-          <Pressable onPress={() => window.alert('신고하기')}>
+          <Pressable onPress={onClickReport}>
             <Typography fontSize={20} color={'#F1952B'}>
               신고하기
             </Typography>

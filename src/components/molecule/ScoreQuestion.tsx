@@ -4,6 +4,7 @@ import { View, PanResponder, StyleSheet } from 'react-native';
 import { Flexbox, Icon, Typography } from '../atom';
 import { IconProps } from '../atom/Icon';
 import { TypographyProps } from '../atom/Typograph';
+import { itemJustifyStyle } from './TradingListItem';
 
 interface ScoreQuestionProps
   extends Pick<TypographyProps, 'children' | 'fontSize'> {
@@ -11,6 +12,7 @@ interface ScoreQuestionProps
   rating: number;
   ratingHandler: (rating: number) => void;
   ratingSize: IconProps['size'];
+  itemJustify?: keyof typeof itemJustifyStyle;
 }
 
 const containerStyle = StyleSheet.create({
@@ -26,6 +28,7 @@ const ScoreQuestion = ({
   ratingHandler,
   fontSize,
   ratingSize,
+  itemJustify = 'left',
 }: ScoreQuestionProps) => {
   const prevRating = useRef(0);
   const startPoint = useRef(0);
@@ -56,7 +59,7 @@ const ScoreQuestion = ({
   });
 
   const renderStars = Array.from({ length: maxRating }, (_, idx) => (
-    <Flexbox.Item flex={1}>
+    <Flexbox.Item key={idx}>
       <Icon
         size={ratingSize}
         name={idx < rating ? 'star-sharp' : 'star-outline'}
@@ -71,7 +74,9 @@ const ScoreQuestion = ({
       style={containerStyle.default}
     >
       <Typography fontSize={fontSize}>{children}</Typography>
-      <Flexbox flexDirection='row'>{renderStars}</Flexbox>
+      <Flexbox flexDirection='row' {...itemJustifyStyle[itemJustify]}>
+        {renderStars}
+      </Flexbox>
     </View>
   );
 };

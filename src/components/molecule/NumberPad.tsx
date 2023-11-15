@@ -65,9 +65,7 @@ const Dot = ({ size = 16, filled }: DotProps) => {
       borderRadius={'50%'}
       width={size}
       height={size}
-    >
-      {' '}
-    </Box>
+    ></Box>
   );
 };
 
