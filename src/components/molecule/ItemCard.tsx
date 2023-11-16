@@ -2,8 +2,8 @@ import React from 'react';
 import { Flexbox, Icon, Tag, Typography } from '../atom';
 import { TagProps } from '../atom/Tag';
 import { Margin } from 'src/@types/unit';
-import { Pressable } from 'react-native';
 import { Card } from './Card';
+import PressableIcon from './PressableIcon';
 
 interface ItemCardProps {
   data: {
@@ -74,9 +74,11 @@ const Footer = ({
         </Flexbox>
       </Flexbox.Item>
       <Flexbox.Item>
-        <Pressable onPress={onLikeHandler}>
-          <Icon name={liked ? 'heart' : 'heart-outline'} size={32} />
-        </Pressable>
+        <PressableIcon
+          name={liked ? 'heart' : 'heart-outline'}
+          size={32}
+          onPress={onLikeHandler}
+        />
       </Flexbox.Item>
     </Flexbox>
   );

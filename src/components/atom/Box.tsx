@@ -101,6 +101,11 @@ interface BoxStyleProps {
   //Border
   border?: Border;
   borderRadius?: LengthElement;
+  borderTopLeftRadius?: LengthElement;
+  borderTopRightRadius?: LengthElement;
+  borderBottomRightRadius?: LengthElement;
+  borderBottomLeftRadius?: LengthElement;
+  maxWidth?: LengthElement;
 }
 interface BoxProps extends BoxStyleProps {
   children?: ReactNode;
