@@ -59,7 +59,7 @@ const WithImage = ({
           resizeMode={imageResizeMode}
         />
       </Flexbox.Item>
-      <Flexbox.Item>
+      <Flexbox.Item alignSelf='center'>
         <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
           <Flexbox.Item>
             <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
