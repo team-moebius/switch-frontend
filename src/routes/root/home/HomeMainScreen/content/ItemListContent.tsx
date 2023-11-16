@@ -4,7 +4,7 @@ import { ImageCard, TradingListItem } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
-import PressableIcon from 'src/components/molecule/PressableIcon';
+import { PressableIcon } from 'src/components/molecule';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];

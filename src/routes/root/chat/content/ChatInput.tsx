@@ -1,7 +1,7 @@
 import React from 'react';
 import { LengthElement } from 'src/@types/unit';
 import { Box, Flexbox, TextInput } from 'src/components/atom';
-import PressableIcon from 'src/components/molecule/PressableIcon';
+import { PressableIcon } from 'src/components/molecule/PressableIcon';
 
 interface ChatInputProps {
   onChangeText: (value: string) => void;
