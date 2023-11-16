@@ -6,7 +6,7 @@ import {
   StuffListItemData,
 } from '../home/HomeMainScreen/SwitchList.mock';
 import { Flexbox, Icon, Typography } from 'src/components/atom';
-import { ImageCard, TradingListItem } from 'src/components/molecule';
+import { ImageCard, PressableIcon } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { Pressable } from 'react-native';
 import { itemJustifyStyle } from 'src/components/molecule/TradingListItem';
@@ -33,9 +33,9 @@ const GridItem = ({
   return (
     <Flexbox.Item flex={1} position='relative'>
       <Flexbox position='absolute' bottom={35} right={10} zIndex={1}>
-        <Pressable onPress={onLikeHandler}>
-          <Icon name={'heart-outline'} size={32} />
-        </Pressable>
+        {/* TODO : like에 따라 분기처리 해야 함 */}
+        {/* <Icon name={'heart'} color='red' size={32} /> */}
+        <PressableIcon name='heart-outline' size={32} onPress={onLikeHandler} />
       </Flexbox>
       <ImageCard
         title={item.name}
