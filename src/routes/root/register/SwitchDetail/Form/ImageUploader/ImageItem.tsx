@@ -1,5 +1,5 @@
 import { Box, Image } from 'src/components/atom';
-import PressableIcon from 'src/components/molecule/PressableIcon';
+import { PressableIcon } from 'src/components/molecule/PressableIcon';
 
 interface ImageItemProps {
   src: string;

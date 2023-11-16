@@ -3,7 +3,7 @@ import { Flexbox, Icon, Tag, Typography } from '../atom';
 import { TagProps } from '../atom/Tag';
 import { Margin } from 'src/@types/unit';
 import { Card } from './Card';
-import PressableIcon from './PressableIcon';
+import { PressableIcon } from './PressableIcon';
 
 interface ItemCardProps {
   data: {

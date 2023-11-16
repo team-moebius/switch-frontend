@@ -8,8 +8,8 @@ import { SwitchRecordsScreen } from './SwitchRecordsScreen';
 import { SettingMainScreen } from './SettingMainScreen';
 import { WithdrawRoute } from './WithdrawScreen';
 import { SecuritySettingRoute } from './Security';
-import { ScreenHeader } from 'src/components/molecule';
-import { Button, Flexbox, IconButton } from 'src/components/atom';
+import { ScreenHeader, PressableIcon } from 'src/components/molecule';
+import { Button, Flexbox } from 'src/components/atom';
 import { MyInfoEditScreen } from './MyInfoEditScreen';
 
 const Stack = createStackNavigator();
@@ -34,7 +34,7 @@ const MyInfoRoute = () => {
                       justifyContent={'flex-end'}
                     >
                       <Flexbox.Item flex={1}>
-                        <IconButton
+                        <PressableIcon
                           size={24}
                           name={'settings'}
                           onPress={() => {
@@ -43,7 +43,7 @@ const MyInfoRoute = () => {
                         />
                       </Flexbox.Item>
                       <Flexbox.Item flex={1}>
-                        <IconButton
+                        <PressableIcon
                           size={24}
                           name={'notifications-outline'}
                           onPress={() => {

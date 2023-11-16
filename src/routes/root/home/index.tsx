@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { useCallback, useContext, useState } from 'react';
 
-import { Button, Flexbox, IconButton, TextInput } from 'src/components/atom';
+import { Button, Flexbox, TextInput } from 'src/components/atom';
 
 import {
   ScreenHeader,
@@ -14,6 +14,7 @@ import { SwitchDetailScreen } from './HomeMainScreen/SwitchDetailScreen';
 import { NotificationsScreen } from './NotificationsScreen';
 import { RegisteredListScreen } from './RegisteredListScreen';
 import { ReportsScreen } from './ReportsScreen';
+import { PressableIcon } from 'src/components/molecule';
 
 const Stack = createStackNavigator();
 
@@ -73,7 +74,7 @@ const HomeRoute = () => {
                   }}
                   right={
                     <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                      <IconButton
+                      <PressableIcon
                         size={24}
                         name={'notifications-outline'}
                         onPress={() => {
@@ -114,7 +115,7 @@ const HomeRoute = () => {
                   {...props}
                   right={
                     <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                      <IconButton
+                      <PressableIcon
                         size={24}
                         name={'md-add-outline'}
                         onPress={() => {
