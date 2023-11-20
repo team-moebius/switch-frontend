@@ -12,9 +12,9 @@ const HomeMainScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
       <Flexbox
-        height={'100%'}
-        justifyContent={'center'}
+        height={'90%'}
         flexDirection={'column'}
+        justifyContent={'space-between'}
       >
         {isItemView ? (
           <ItemListContent
