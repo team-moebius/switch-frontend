@@ -22,7 +22,7 @@ This is usually because the modules which have changed (and their parents) do no
   },
 ];
 
-const ChatMainScreen = () => {
+const ChatMainScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
       <Flexbox width={'100%'} height={'100%'} pt={50}>
@@ -38,7 +38,7 @@ const ChatMainScreen = () => {
                   ago: data.ago,
                   isUnread: data.isUnread,
                 }}
-                onPress={() => window.alert('chat detail screen')}
+                onPress={() => navigation.navigate('ChatDetail')}
               />
               {idx === CHAT_MOCK_DATA.length - 1 && (
                 <Separator key={'separator' + idx} />

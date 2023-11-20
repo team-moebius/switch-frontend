@@ -51,7 +51,7 @@ const MyInfoMainScreen = ({ navigation }) => {
               type={'normal'}
               size={'medium'}
               onPress={function (): void {
-                navigation.navigate('EditMyInfo');
+                navigation.navigate('MyInfoEdit');
               }}
             >
               내 정보 편집하기

@@ -1,6 +1,11 @@
 import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
 import { ScrollView, Pressable } from 'react-native';
-import { Field, HashTagInput, TagInput } from 'src/components/molecule';
+import {
+  Field,
+  HashTagInput,
+  PressableIcon,
+  TagInput,
+} from 'src/components/molecule';
 import { Separator } from 'src/components/atom/Separator';
 import { useCallback, useState } from 'react';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
@@ -151,13 +156,13 @@ const SwitchDetailForm = ({
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <Pressable
+            <PressableIcon
+              size={32}
+              name={'add-circle'}
               onPress={() => {
                 navigation.navigate('PreferredAddress');
               }}
-            >
-              <Icon size={32} name={'add-circle'} />
-            </Pressable>
+            />
           </Flexbox>
           <Flexbox width={'100%'} justifyContent='center'>
             <Flexbox

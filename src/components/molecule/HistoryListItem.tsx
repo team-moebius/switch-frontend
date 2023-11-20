@@ -8,11 +8,12 @@ interface HistoryListItemProps {
   data: {
     myItem: string;
     selectedItem: string;
-    ago: string;
+    ago?: string;
   };
   onPress?: () => void;
   fontSize?: keyof typeof fontSizeStyle;
   mirrorDirection?: keyof typeof mirrorDirectionStyle;
+  disabled?: boolean;
 }
 
 const renderChildren = (
@@ -31,6 +32,7 @@ const HistoryListItem = ({
   onPress,
   fontSize = 'cardList',
   mirrorDirection,
+  disabled,
 }: HistoryListItemProps) => {
   const { myItem, selectedItem, ago } = data;
 
@@ -43,9 +45,9 @@ const HistoryListItem = ({
   }, [selectedItem, fontSize]);
 
   return (
-    <Pressable onPress={onPress}>
-      <Flexbox flexDirection={'column'} gap={10}>
-        <Flexbox.Item flex={1} width={'100%'}>
+    <Pressable onPress={onPress} disabled={disabled}>
+      <Flexbox flexDirection={'column'} gap={ago ? 10 : 0}>
+        <Flexbox.Item width={'100%'}>
           <Flexbox>
             <Flexbox.Item width={'100%'}>
               <WithMirror
@@ -57,7 +59,7 @@ const HistoryListItem = ({
           </Flexbox>
         </Flexbox.Item>
         <Flexbox.Item width={'100%'}>
-          <Typography fontSize={13}>{ago}</Typography>
+          {ago && <Typography fontSize={13}>{ago}</Typography>}
         </Flexbox.Item>
       </Flexbox>
     </Pressable>
