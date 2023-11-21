@@ -14,19 +14,26 @@ interface NotiListItemProps {
 }
 
 const NotiListItem = ({ data, onPress }: NotiListItemProps) => {
-  const { ago = '', notification = '' } = data;
+  const {
+    ago = '',
+    notification = '',
+    iconName = 'megaphone-outline',
+    iconSize = 20,
+  } = data;
   return (
     <Pressable onPress={onPress}>
       <Flexbox flexDirection={'column'} gap={10}>
         <Flexbox gap={10}>
           <Flexbox.Item>
-            <Icon name={'megaphone-outline'} size={20} />
+            <Icon name={iconName} size={iconSize} />
           </Flexbox.Item>
-          <Flexbox.Item alignSelf={'center'}>
-            <Typography fontSize={13}>{notification}</Typography>
+          <Flexbox.Item alignSelf={'center'} flex={1}>
+            <Typography fontSize={13} numberOfLines={3}>
+              {notification}
+            </Typography>
           </Flexbox.Item>
         </Flexbox>
-        <Flexbox.Item>
+        <Flexbox.Item pl={iconSize + 14}>
           <Typography fontSize={13}>{ago}</Typography>
         </Flexbox.Item>
       </Flexbox>
