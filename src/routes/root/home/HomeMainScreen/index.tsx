@@ -12,7 +12,8 @@ const HomeMainScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
       <Flexbox
-        height={'90%'}
+        height={'100%'}
+        position={'relative'}
         flexDirection={'column'}
         justifyContent={'space-between'}
       >
@@ -26,8 +27,9 @@ const HomeMainScreen = ({ navigation }) => {
           <HistoryListContent />
         )}
         <Flexbox
-          height={'10%'}
+          position='absolute'
           width={'100%'}
+          bottom={20}
           justifyContent={'center'}
           alignItems={'center'}
         >
