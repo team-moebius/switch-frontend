@@ -1,11 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
-import { HistoryListItem } from 'src/components/molecule';
+import { HistoryListItem, PressableIcon } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { ChatInput } from './content/ChatInput';
 import ChatBubble from './content/ChatBubble';
 import { FlatList } from 'react-native-gesture-handler';
+import * as ImagePicker from 'expo-image-picker';
 
 type SwitchChatData = {
   id: number;
@@ -172,6 +173,26 @@ const ChatDetailScreen = () => {
     setChatText(text);
   };
 
+  const [images, setImages] = useState<string[]>([]);
+
+  const pickImage = async () => {
+    const result = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.All,
+      allowsMultipleSelection: true,
+      aspect: [4, 3],
+      quality: 1,
+    });
+
+    if (!result.canceled) {
+      const imageUris = result.assets.map((asset) => asset.uri);
+      setImages(imageUris);
+    }
+  };
+
+  const onSendChatMessage = async () => {
+    alert('send message');
+  };
+
   useEffect(() => {
     if (!firstRendered) setFirstRendered(true);
     setMessageData([...CHAT_MOCK_DATA].reverse());
@@ -246,6 +267,20 @@ const ChatDetailScreen = () => {
           onChangeText={onChatTextHandler}
           placeholder={'대화 보내기'}
           width={'85%'}
+          left={
+            <PressableIcon
+              name={'image-outline'}
+              size={24}
+              onPress={pickImage}
+            />
+          }
+          right={
+            <PressableIcon
+              name={'paper-plane-outline'}
+              size={24}
+              onPress={onSendChatMessage}
+            />
+          }
         />
       </Flexbox>
     </ScreenWrapper>

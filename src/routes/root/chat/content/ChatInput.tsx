@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { ReactNode } from 'react';
 import { LengthElement } from 'src/@types/unit';
 import { Box, Flexbox, TextInput } from 'src/components/atom';
-import { PressableIcon } from 'src/components/molecule/PressableIcon';
 
 interface ChatInputProps {
+  left?: ReactNode;
+  right?: ReactNode;
   onChangeText: (value: string) => void;
   value: string;
   placeholder?: string;
@@ -11,6 +12,8 @@ interface ChatInputProps {
 }
 
 const ChatInput = ({
+  left,
+  right,
   onChangeText,
   value = '',
   width = '100%',
@@ -20,11 +23,7 @@ const ChatInput = ({
     <Box width={'100%'} border={'1 solid #cccccc'} borderRadius={4}>
       <Flexbox width={'100%'} flexDirection={'row'} alignItems={'center'}>
         <Box width={'auto'} ml={5}>
-          <PressableIcon
-            name={'image-outline'}
-            size={24}
-            onPress={() => window.alert('upload picture')}
-          />
+          {left}
         </Box>
         <TextInput
           name={'chatInput'}
@@ -35,11 +34,7 @@ const ChatInput = ({
           style={{ borderWidth: 0 }}
         />
         <Box width={'auto'} mr={5}>
-          <PressableIcon
-            name={'paper-plane-outline'}
-            size={24}
-            onPress={() => window.alert('send message')}
-          />
+          {right}
         </Box>
       </Flexbox>
     </Box>
