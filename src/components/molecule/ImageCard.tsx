@@ -10,49 +10,42 @@ interface ImageCardProps extends ImageProps {
   onClickHandler?: () => void;
 }
 
-const ImageCard = React.memo(
-  ({
-    title = '',
-    desc = '',
-    src = '',
-    width,
-    height,
-    resizeMode,
-    onClickHandler,
-  }: ImageCardProps) => {
-    const header = useMemo(
-      () => <Typography fontSize={15}>{desc}</Typography>,
-      [desc]
-    );
-    const content = useMemo(
-      () => (
-        <Image
-          width={width}
-          height={height}
-          src={src}
-          resizeMode={resizeMode}
-        />
-      ),
-      [width, height, src, resizeMode]
-    );
-    const footer = useMemo(
-      () => <Typography fontSize={15}>{title}</Typography>,
-      [title]
-    );
+const ImageCard = ({
+  title = '',
+  desc = '',
+  src = '',
+  width,
+  height,
+  resizeMode,
+  onClickHandler,
+}: ImageCardProps) => {
+  const header = useMemo(
+    () => (desc ? <Typography fontSize={15}>{desc}</Typography> : <></>),
+    [desc]
+  );
+  const content = useMemo(
+    () => (
+      <Image width={width} height={height} src={src} resizeMode={resizeMode} />
+    ),
+    [width, height, src, resizeMode]
+  );
+  const footer = useMemo(
+    () => (title ? <Typography fontSize={15}>{title}</Typography> : <></>),
+    [title]
+  );
 
-    return (
-      <Pressable onPress={onClickHandler}>
-        <Card
-          headerWrapperStyle={{ justify: 'flex-start', pt: 5 }}
-          contentWrapperStyle={{ justify: 'center', pt: 5 }}
-          footerWrapperStyle={{ justify: 'center', pt: 5 }}
-          header={header}
-          content={content}
-          footer={footer}
-        />
-      </Pressable>
-    );
-  }
-);
+  return (
+    <Pressable onPress={onClickHandler}>
+      <Card
+        headerWrapperStyle={{ justify: 'flex-start', pt: 5 }}
+        contentWrapperStyle={{ justify: 'center', pt: 5 }}
+        footerWrapperStyle={{ justify: 'center', pt: 5 }}
+        header={header}
+        content={content}
+        footer={footer}
+      />
+    </Pressable>
+  );
+};
 
 export { ImageCard, ImageCardProps };
