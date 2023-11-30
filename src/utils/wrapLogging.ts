@@ -5,13 +5,15 @@ interface errorMessage {
   message: string;
 }
 
-export const wrapLogging = <T extends (...args: any[]) => any>(
+export const wrapLogging = <T extends (...args: any[]) => Promise<any>>(
   fn: T,
   errorMessage: errorMessage
 ) => {
-  return (...args: Parameters<T>) => {
+  return async (
+    ...args: Parameters<T>
+  ): Promise<Awaited<ReturnType<T>> | undefined> => {
     try {
-      fn(...args);
+      return await fn(...args);
     } catch (error) {
       console.error(error);
       Alert.alert(errorMessage.title, errorMessage.message);
