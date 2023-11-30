@@ -96,6 +96,7 @@ interface BoxStyleProps {
   mr?: MarginElement;
   //Width and Height
   width?: LengthElement | 'auto';
+  maxWidth?: LengthElement | string;
   height?: LengthElement | 'auto';
   backgroundColor?: Color;
   //Border
@@ -105,7 +106,6 @@ interface BoxStyleProps {
   borderTopRightRadius?: LengthElement;
   borderBottomRightRadius?: LengthElement;
   borderBottomLeftRadius?: LengthElement;
-  maxWidth?: LengthElement;
 }
 interface BoxProps extends BoxStyleProps {
   children?: ReactNode;
