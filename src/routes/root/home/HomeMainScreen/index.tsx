@@ -27,11 +27,11 @@ const HomeMainScreen = ({ navigation }) => {
           <HistoryListContent />
         )}
         <Flexbox
-          position='absolute'
-          width={'100%'}
+          position={'absolute'}
           bottom={20}
           justifyContent={'center'}
-          alignItems={'center'}
+          left={'50%'}
+          right={'50%'}
         >
           <Toggle
             value={!isItemView}
