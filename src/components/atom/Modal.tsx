@@ -59,9 +59,9 @@ const Modal = ({
       {...animationModeMap[mode]}
       isVisible={visible}
       onBackdropPress={onPressBack}
-      style={[defaultStyle, positionStyle[position], { width, height }]}
+      style={[defaultStyle, positionStyle[position]]}
     >
-      <Box backgroundColor={'white'} height={'80%'} width={'100%'}>
+      <Box backgroundColor={'white'} height={height} width={width}>
         {children}
       </Box>
     </ReactNativeModal>

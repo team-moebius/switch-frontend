@@ -16,10 +16,14 @@ const Template: ComponentStory<typeof Modal> = (args) => {
   return (
     <>
       <Flexbox justifyContent={'center'}>
-        <Button title='Show' onPress={handleModalOpen}></Button>
+        <Button type='normal' size='medium' onPress={handleModalOpen}>
+          Show
+        </Button>
       </Flexbox>
       <Modal {...args} visible={modalVisible}>
-        <Button title='Hide' onPress={handleModalOpen}></Button>
+        <Button type='normal' size='medium' onPress={handleModalOpen}>
+          Hide
+        </Button>
       </Modal>
     </>
   );

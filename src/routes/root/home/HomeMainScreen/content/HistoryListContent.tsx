@@ -26,7 +26,7 @@ const Separator = () => (
 
 const HistoryListContent = () => {
   return (
-    <Flexbox.Item width={'100%'} height={'90%'} flex={1}>
+    <Flexbox width={'100%'} height={'100%'}>
       <FlatList<SwitchHistoryListItemData>
         data={SWITCH_HISTORY_LIST_MOCK}
         renderItem={ListItem}
@@ -38,7 +38,7 @@ const HistoryListContent = () => {
         onEndReachedThreshold={0.1}
         ItemSeparatorComponent={Separator}
       />
-    </Flexbox.Item>
+    </Flexbox>
   );
 };
 
