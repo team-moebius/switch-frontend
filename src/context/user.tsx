@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react';
+import { createContext, ReactNode, useEffect, useState } from 'react';
 import { expoSecureStore } from 'src/common/secureStore';
 
 // TODO: DTO 설계 참고하여 추후 설계 필요
@@ -35,12 +35,9 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     const token = await expoSecureStore.getToken('token');
     const username = await expoSecureStore.getToken('username');
 
-    if (!token || !username) {
-      return setLoading(false);
-    } else {
-      setUser({ name: 'Test' });
-      return setLoading(false);
-    }
+    if (token && username) setUser({ name: username });
+
+    return setLoading(false);
   };
 
   const logout = async () => {
@@ -53,6 +50,10 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
     setLoading(false);
   };
+
+  useEffect(() => {
+    login();
+  }, []);
 
   return (
     <UserContext.Provider value={{ user, loading, login, logout }}>
