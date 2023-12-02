@@ -1,13 +1,10 @@
-import { Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
+import { ItemListContent } from '../HomeMainScreen/content/ItemListContent';
 
-const RegisteredListScreen = () => {
+const RegisteredListScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
-      {/* write contents */}
-      <Flexbox height={'100%'} justifyContent={'center'} alignItems={'center'}>
-        <Typography fontSize={12}>RegisteredList</Typography>
-      </Flexbox>
+      <ItemListContent onClickList={() => alert('clicked')} withTitleOnly />
     </ScreenWrapper>
   );
 };
