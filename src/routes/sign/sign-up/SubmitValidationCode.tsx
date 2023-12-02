@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
 import { useCommonMutation } from 'src/hooks/useCommomMutation';
 import { expoSecureStore } from 'src/common/secureStore';
+import { UserContext } from 'src/context/user';
 
 import {
   LoginRequest,
@@ -19,6 +20,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
     phone: route?.params?.phoneNumber,
     verifiedCode: '',
   });
+  const { login } = useContext(UserContext);
 
   const { mutate: validationCodeMutate } = useCommonMutation<
     LoginResponse,
@@ -28,10 +30,17 @@ const SubmitValidationCode = ({ navigation, route }) => {
     async onSuccess(data, variables) {
       console.debug('[UserApi.login]on success:', data, variables);
 
-      if (data.jwtToken)
-        await expoSecureStore.setToken(variables.phone, data.jwtToken);
+      if (data.jwtToken) {
+        await expoSecureStore.setToken('token', data.jwtToken);
+        await expoSecureStore.setToken('username', 'Test');
+      }
 
-      navigation?.navigate('Root');
+      login();
+
+      navigation?.reset({
+        index: 0,
+        routes: [{ name: 'Root' }],
+      });
     },
     onError(error, variables) {
       console.debug('error', error, variables);
