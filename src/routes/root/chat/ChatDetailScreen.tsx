@@ -162,7 +162,7 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
   },
 ];
 
-const ChatDetailScreen = () => {
+const ChatDetailScreen = ({ navigation }) => {
   const [chatText, setChatText] = useState('');
   const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
   const scrollViewRef = useRef<FlatList | null>(null);
@@ -203,7 +203,7 @@ const ChatDetailScreen = () => {
                 <Button
                   size='small'
                   type='normal'
-                  onPress={() => window.alert('clicked')}
+                  onPress={() => navigation.navigate('SwitchResult')}
                 >
                   스위치
                 </Button>

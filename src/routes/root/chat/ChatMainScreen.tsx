@@ -25,7 +25,7 @@ This is usually because the modules which have changed (and their parents) do no
 const ChatMainScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
-      <Flexbox width={'100%'} height={'100%'} pt={50}>
+      <Flexbox width={'100%'} height={'100%'}>
         <Flexbox.Item width={'100%'} height={100}>
           {CHAT_MOCK_DATA.map((data, idx) => (
             <React.Fragment key={idx}>

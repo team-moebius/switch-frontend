@@ -18,7 +18,15 @@ const SWITCH_RESULT_MOCK = {
   },
 };
 const renderChildren = (children: string, src: string) => {
-  return <WithImage text={children} src={src} cardDirection='column' />;
+  return (
+    <WithImage
+      text={children}
+      src={src}
+      imageHeight={90}
+      cardDirection={'column'}
+      imageResizeMode={'center'}
+    />
+  );
 };
 
 const SwitchResultScreen = () => {
@@ -44,7 +52,13 @@ const SwitchResultScreen = () => {
 
   return (
     <ScreenWrapper>
-      <Flexbox width={'100%'} height={'100%'} gap={40} flexDirection={'column'}>
+      <Flexbox
+        width={'100%'}
+        height={'100%'}
+        gap={40}
+        flexDirection={'column'}
+        justifyContent={'center'}
+      >
         <Flexbox.Item alignSelf={'center'}>
           <Typography fontSize={24}>스위치를 완료했습니다.</Typography>
         </Flexbox.Item>

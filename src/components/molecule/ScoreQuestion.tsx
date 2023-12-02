@@ -17,7 +17,7 @@ interface ScoreQuestionProps
 
 const containerStyle = StyleSheet.create({
   default: {
-    width: 'fit-content',
+    width: 'auto',
   },
 });
 

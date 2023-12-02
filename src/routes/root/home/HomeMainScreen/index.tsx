@@ -13,8 +13,9 @@ const HomeMainScreen = ({ navigation }) => {
     <ScreenWrapper>
       <Flexbox
         height={'100%'}
-        justifyContent={'center'}
+        position={'relative'}
         flexDirection={'column'}
+        justifyContent={'space-between'}
       >
         {isItemView ? (
           <ItemListContent
@@ -26,10 +27,11 @@ const HomeMainScreen = ({ navigation }) => {
           <HistoryListContent />
         )}
         <Flexbox
-          height={'10%'}
-          width={'100%'}
+          position={'absolute'}
+          bottom={20}
           justifyContent={'center'}
-          alignItems={'center'}
+          left={'50%'}
+          right={'50%'}
         >
           <Toggle
             value={!isItemView}
