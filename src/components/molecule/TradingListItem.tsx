@@ -9,7 +9,7 @@ interface TradingListItemProps {
   data: {
     src: string;
     title: string;
-    location: string;
+    location?: string;
   };
   onPress?: () => void;
   childDirection?: keyof typeof flexDirectionStyle;
@@ -53,7 +53,13 @@ const TradingListItem = ({
             imageWidth={100}
             imageHeight={70}
             imageResizeMode={imageResizeMode}
-            renderItem={<Typography fontSize={13}>{location}</Typography>}
+            renderItem={
+              location ? (
+                <Typography fontSize={13}>{location}</Typography>
+              ) : (
+                <></>
+              )
+            }
             childDirection={childDirection}
             cardDirection={cardDirection}
           />
