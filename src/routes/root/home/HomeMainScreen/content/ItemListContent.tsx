@@ -11,11 +11,11 @@ type SectionOptionType = (typeof SELECT_OPTIONS)[number];
 
 const GridItem = ({
   item,
-  myList,
+  withTitleOnly,
   onClick,
 }: {
   item: StuffListItemData;
-  myList?: boolean;
+  withTitleOnly?: boolean;
   onClick?: () => void;
 }) => {
   return (
@@ -23,7 +23,7 @@ const GridItem = ({
       <ImageCard
         title={item.name}
         src={item.thumbnail}
-        desc={myList ? '' : item.location}
+        desc={withTitleOnly ? '' : item.location}
         width={'100%'}
         height={150}
         resizeMode={'cover'}
@@ -35,11 +35,11 @@ const GridItem = ({
 
 const ListItem = ({
   item,
-  myList,
+  withTitleOnly,
   onClick,
 }: {
   item: StuffListItemData;
-  myList?: boolean;
+  withTitleOnly?: boolean;
   onClick: () => void;
 }) => {
   return (
@@ -47,7 +47,7 @@ const ListItem = ({
       data={{
         title: item.name,
         src: item.thumbnail || '',
-        location: myList ? '' : item.location || '',
+        location: withTitleOnly ? '' : item.location || '',
       }}
       onPress={onClick}
       childDirection={'column'}
@@ -61,10 +61,10 @@ const ListItem = ({
 
 const ItemListContent = ({
   onClickList,
-  myList,
+  withTitleOnly,
 }: {
   onClickList: (data: StuffListItemData) => void;
-  myList?: boolean;
+  withTitleOnly?: boolean;
 }) => {
   const [type, setType] = useState<ListViewType>('grid');
   const [sort, setSort] = useState<SectionOptionType>('무작위');
@@ -79,7 +79,7 @@ const ItemListContent = ({
         return ({ item }: { item: StuffListItemData }) =>
           GridItem({
             item,
-            myList,
+            withTitleOnly,
             onClick: () => {
               onClickList(item);
             },
@@ -89,13 +89,13 @@ const ItemListContent = ({
         return ({ item }: { item: StuffListItemData }) =>
           ListItem({
             item,
-            myList,
+            withTitleOnly,
             onClick: () => {
               onClickList(item);
             },
           });
     }
-  }, [myList, onClickList, type]);
+  }, [withTitleOnly, onClickList, type]);
 
   const flatListProps = useFlatList<StuffListItemData>({
     type,
@@ -130,7 +130,7 @@ const ItemListContent = ({
             </Flexbox>
           </Flexbox.Item>
           <Flexbox.Item width={'auto'} alignSelf={'center'}>
-            {!myList && (
+            {!withTitleOnly && (
               <Select
                 value={sort}
                 options={['무작위', '최신순', '내 위치와 가까운 순']}

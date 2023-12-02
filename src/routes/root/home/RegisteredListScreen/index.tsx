@@ -4,7 +4,7 @@ import { ItemListContent } from '../HomeMainScreen/content/ItemListContent';
 const RegisteredListScreen = ({ navigation }) => {
   return (
     <ScreenWrapper>
-      <ItemListContent onClickList={() => alert('clicked')} myList />
+      <ItemListContent onClickList={() => alert('clicked')} withTitleOnly />
     </ScreenWrapper>
   );
 };
