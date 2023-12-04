@@ -65,6 +65,7 @@ const SubmitPhoneNumber = ({ navigation }) => {
                 onChange={(value) => {
                   setState((prev) => ({ ...prev, ...value }));
                 }}
+                keyboardType={'number-pad'}
               />
             </Flexbox.Item>
             <Flexbox.Item width={'100%'} height={'auto'}>

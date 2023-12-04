@@ -1,22 +1,63 @@
-import { LoginRequest, LoginResponse } from '@team-moebius/api-typescript';
-import { useState } from 'react';
-import { UserApi } from 'src/api';
+import { useContext, useState } from 'react';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+
 import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { expoSecureStore } from 'src/common/secureStore';
+import { UserContext } from 'src/context/user';
+
+import {
+  LoginRequest,
+  LoginResponse,
+  UserVerificationRequest,
+  UserVerificationResponse,
+} from '@team-moebius/api-typescript';
+import { UserApi } from 'src/api';
 
 const SubmitValidationCode = ({ navigation, route }) => {
   const [state, setState] = useState<LoginRequest>({
     phone: route?.params?.phoneNumber,
     verifiedCode: '',
   });
+  const { login } = useContext(UserContext);
 
-  const { mutate } = useCommonMutation<LoginResponse, LoginRequest>({
+  const { mutate: validationCodeMutate } = useCommonMutation<
+    LoginResponse,
+    LoginRequest
+  >({
     api: UserApi.login,
-    onSuccess(data, variables) {
+    async onSuccess(data, variables) {
       console.debug('[UserApi.login]on success:', data, variables);
-      navigation?.navigate('Home');
+
+      if (data.jwtToken) {
+        await expoSecureStore.setToken('token', data.jwtToken);
+        await expoSecureStore.setToken('username', 'Test');
+      }
+
+      login();
+
+      navigation?.reset({
+        index: 0,
+        routes: [{ name: 'Root' }],
+      });
+    },
+    onError(error, variables) {
+      console.debug('error', error, variables);
+    },
+  });
+
+  const { mutate: submitPhoneMutate } = useCommonMutation<
+    UserVerificationResponse,
+    UserVerificationRequest
+  >({
+    api: UserApi.requestUserVerification,
+    onSuccess(data, variables) {
+      console.debug(
+        '[UserApi.requestUserVerification] on success:',
+        data,
+        variables
+      );
     },
     onError(error, variables) {
       console.debug('error', error, variables);
@@ -49,6 +90,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
               onChange={() => {
                 console.debug('Can not change');
               }}
+              keyboardType='number-pad'
             />
             <Field
               width={'100%'}
@@ -59,6 +101,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
               onChange={(value) => {
                 setState((prev) => ({ ...prev, ...value }));
               }}
+              keyboardType='number-pad'
             />
           </Flexbox>
         </Flexbox.Item>
@@ -75,7 +118,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
                 type={'normal'}
                 size={'medium'}
                 onPress={() => {
-                  mutate(state);
+                  validationCodeMutate(state);
                 }}
               >
                 가입
@@ -87,7 +130,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
                 type={'transparent'}
                 size={'medium'}
                 onPress={() => {
-                  alert('코드 재전송');
+                  submitPhoneMutate({ phone: state.phone });
                 }}
               >
                 코드재전송
