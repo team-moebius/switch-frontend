@@ -1,12 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Button, Flexbox } from 'src/components/atom';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
+import { Button, Flexbox, Modal } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem, PressableIcon } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { ChatInput } from './content/ChatInput';
 import ChatBubble from './content/ChatBubble';
 import { FlatList } from 'react-native-gesture-handler';
-import * as ImagePicker from 'expo-image-picker';
+import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
+import useExpoCamera from 'src/hooks/useExpoCamera';
 
 type SwitchChatData = {
   id: number;
@@ -165,29 +166,51 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 
 const ChatDetailScreen = ({ navigation }) => {
   const [chatText, setChatText] = useState('');
+  const [modalVisible, setModalVisible] = useState(false);
   const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
   const scrollViewRef = useRef<FlatList | null>(null);
   const [firstRendered, setFirstRendered] = useState<boolean>(false);
+  const { selectedImages, pickImage } = useExpoImagePicker();
+  const { photoUri, openCamera } = useExpoCamera();
+
+  console.log(selectedImages, photoUri);
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
   };
 
-  const [images, setImages] = useState<string[]>([]);
+  const checkForCameraRollPermission = async () => {
+    const result = await pickImage(['jpg']);
 
-  const pickImage = async () => {
-    const result = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.All,
-      allowsMultipleSelection: true,
-      aspect: [4, 3],
-      quality: 1,
-    });
+    if (result?.error) {
+      console.log(result?.error);
 
-    if (!result.canceled) {
-      const imageUris = result.assets.map((asset) => asset.uri);
-      setImages(imageUris);
+      if (result.error === 'denied') {
+        alert('카메라 롤 접근이 거부되었습니다.');
+      } else if (result.error === 'cancelled') {
+        alert('이미지 선택이 취소되었습니다.');
+      } else {
+        alert('지원되지 않는 이미지 포맷입니다');
+      }
+      return;
     }
   };
+
+  const openCameraHandler = async () => {
+    const result = await openCamera();
+
+    if (result?.error) {
+      if (result.error === 'denied') {
+        alert('카메라 롤 접근이 거부되었습니다.');
+      } else if (result.error === 'cancelled') {
+        alert('촬영이 취소되었습니다.');
+      } else return;
+    }
+  };
+
+  const handleModalOpen = useCallback(() => {
+    setModalVisible((prev) => !prev);
+  }, []);
 
   const onSendChatMessage = async () => {
     alert('send message');
@@ -271,7 +294,7 @@ const ChatDetailScreen = ({ navigation }) => {
             <PressableIcon
               name={'image-outline'}
               size={24}
-              onPress={pickImage}
+              onPress={handleModalOpen}
             />
           }
           right={
@@ -283,6 +306,40 @@ const ChatDetailScreen = ({ navigation }) => {
           }
         />
       </Flexbox>
+      <Modal
+        visible={modalVisible}
+        width={'70%'}
+        height={'25%'}
+        position={'center'}
+      >
+        <Flexbox
+          flexDirection='column'
+          alignItems='center'
+          justifyContent='center'
+          pt={'15%'}
+          gap={20}
+        >
+          <Flexbox.Item width='70%'>
+            <Button size='medium' type='normal' onPress={openCameraHandler}>
+              사진 촬영
+            </Button>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button
+              size='medium'
+              type='normal'
+              onPress={checkForCameraRollPermission}
+            >
+              앨범에서 선택
+            </Button>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button size='medium' type='cancel' onPress={handleModalOpen}>
+              취소
+            </Button>
+          </Flexbox.Item>
+        </Flexbox>
+      </Modal>
     </ScreenWrapper>
   );
 };
