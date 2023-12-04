@@ -98,7 +98,7 @@ interface BoxStyleProps {
   width?: LengthElement | 'auto';
   maxWidth?: LengthElement | string;
   height?: LengthElement | 'auto';
-  backgroundColor?: Color;
+  backgroundColor?: Color | string;
   //Border
   border?: Border;
   borderRadius?: LengthElement;
