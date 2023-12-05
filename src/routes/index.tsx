@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect, useMemo } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 
 import { createStackNavigator } from '@react-navigation/stack';
@@ -12,13 +12,23 @@ const Stack = createStackNavigator();
 
 const NavigationRouter = () => {
   const { user } = useContext(UserContext);
+
   return (
     <NavigationContainer>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
         {/* if user signed in, route home */}
         <Stack.Group navigationKey={user === null ? 'Sign' : 'Main'}>
-          <Stack.Screen name={'Sign'} component={SignRoute} />
-          <Stack.Screen name={'Root'} component={RootTabs} />
+          {user ? (
+            <>
+              <Stack.Screen name={'Root'} component={RootTabs} />
+              <Stack.Screen name={'Sign'} component={SignRoute} />
+            </>
+          ) : (
+            <>
+              <Stack.Screen name={'Sign'} component={SignRoute} />
+              <Stack.Screen name={'Root'} component={RootTabs} />
+            </>
+          )}
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
