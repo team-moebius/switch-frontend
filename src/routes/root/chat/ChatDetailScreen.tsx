@@ -167,20 +167,22 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 const ChatDetailScreen = ({ navigation }) => {
   const [chatText, setChatText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
+
   const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
   const scrollViewRef = useRef<FlatList | null>(null);
   const [firstRendered, setFirstRendered] = useState<boolean>(false);
+
   const { selectedImages, pickImage } = useExpoImagePicker();
   const { photoUri, openCamera } = useExpoCamera();
 
-  console.log(selectedImages, photoUri);
+  console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
   };
 
   const checkForCameraRollPermission = async () => {
-    const result = await pickImage(['jpg']);
+    const result = await pickImage();
 
     if (result?.error) {
       console.log(result?.error);
@@ -189,11 +191,15 @@ const ChatDetailScreen = ({ navigation }) => {
         alert('카메라 롤 접근이 거부되었습니다.');
       } else if (result.error === 'cancelled') {
         alert('이미지 선택이 취소되었습니다.');
-      } else {
-        alert('지원되지 않는 이미지 포맷입니다');
       }
+      //  else {
+      // 특정 포맷만 요구 될 경우
+      //   alert('지원되지 않는 이미지 포맷입니다');
+      // }
       return;
     }
+    // 앨범 사진 서버로 post 요청
+    setModalVisible(false);
   };
 
   const openCameraHandler = async () => {
@@ -206,6 +212,8 @@ const ChatDetailScreen = ({ navigation }) => {
         alert('촬영이 취소되었습니다.');
       } else return;
     }
+    // 찍은 사진 서버로 post 요청
+    setModalVisible(false);
   };
 
   const handleModalOpen = useCallback(() => {
