@@ -9,7 +9,7 @@ interface UseCommonQueryParam<
   TQueryKey extends QueryKey = QueryKey
 > extends Pick<
     UseQueryOptions<Response, TError, Response, TQueryKey>,
-    'queryKey' | 'queryFn' | 'onSuccess' | 'onError'
+    'queryKey' | 'queryFn' | 'onSuccess' | 'onError' | 'enabled'
   > {
   api: (...args: Request) => Promise<AxiosResponse<Response>>;
 }
