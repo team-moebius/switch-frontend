@@ -44,7 +44,7 @@ const TitleScreen = ({ navigation }) => {
             가입하기
           </Button>
         </Flexbox.Item>
-        <Flexbox.Item width={'80%'}>
+        {/* <Flexbox.Item width={'80%'}>
           <Button
             type={'transparent'}
             size={'medium'}
@@ -55,7 +55,7 @@ const TitleScreen = ({ navigation }) => {
           >
             로그인
           </Button>
-        </Flexbox.Item>
+        </Flexbox.Item> */}
       </Flexbox>
     </ScreenWrapper>
   );

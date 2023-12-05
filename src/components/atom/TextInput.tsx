@@ -1,6 +1,7 @@
 import React from 'react';
 import {
   TextInput as BasicInput,
+  KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleSheet,
   TextInputEndEditingEventData,
@@ -19,6 +20,7 @@ interface InputProps {
   width: LengthElement;
   disabled?: boolean;
   style?: ViewStyle;
+  keyboardType?: KeyboardTypeOptions;
 }
 
 const { defaultInput: defaultStyles } = StyleSheet.create({
