@@ -27,6 +27,7 @@ const renderChildren = (
       justifyContent='center'
       gap={10}
     >
+      {/** myItem prop 대신 data상에서 나의 아이템인지 확인 할 수 있는 속성이 있다면 대신 사용해도 좋을 것 같아요*/}
       <Typography fontSize={17}>{myItem ? '나의' : '상대의'}</Typography>
       <WithImage
         text={item?.name}
