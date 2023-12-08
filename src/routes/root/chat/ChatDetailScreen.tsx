@@ -175,9 +175,7 @@ const ChatDetailScreen = ({ navigation }) => {
 
   const { selectedImages, pickImage } = useExpoImagePicker();
   const { photoUri, openCamera } = useExpoCamera();
-  const { sendMessage } = useWebSocket(
-    'ws://example-backend-server-address:3000'
-  );
+  const { sendMessage } = useWebSocket();
 
   console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
 

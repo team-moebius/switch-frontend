@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react';
 
-const useWebSocket = (url: string) => {
+const useWebSocket = () => {
   const [socket, setSocket] = useState<WebSocket>();
 
   const sendMessage = useCallback(
@@ -13,7 +13,7 @@ const useWebSocket = (url: string) => {
   );
 
   useEffect(() => {
-    const webSocket = new WebSocket(url);
+    const webSocket = new WebSocket('ws://example-backend-server-address:3000');
 
     webSocket.onopen = () => {
       console.log('WebSocket opened');
@@ -39,7 +39,7 @@ const useWebSocket = (url: string) => {
     return () => {
       webSocket.close();
     };
-  }, [sendMessage, url]);
+  }, [sendMessage]);
 
   return { sendMessage };
 };
