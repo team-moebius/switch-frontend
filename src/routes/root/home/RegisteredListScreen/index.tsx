@@ -71,10 +71,11 @@ const RegisteredListScreen = ({ navigation }) => {
       >
         <Flexbox
           width={'100%'}
+          height={'100%'}
           margin={'auto'}
           flexDirection={'column'}
           justifyContent={'center'}
-          gap={30}
+          gap={50}
         >
           <Flexbox.Item alignSelf='center'>
             <WithMirror
@@ -87,12 +88,13 @@ const RegisteredListScreen = ({ navigation }) => {
             <Typography fontSize={17}>스위치를 제안합니다.</Typography>
           </Flexbox.Item>
           <Flexbox
-            width={'90%'}
+            width={'80%'}
+            ml={'auto'}
+            mr={'auto'}
+            justifyContent={'center'}
             gap={5}
-            margin={'auto'}
-            justifyContent='center'
           >
-            <Flexbox.Item flex={1}>
+            <Flexbox.Item margin={'auto'}>
               <Button
                 type='cancel'
                 size='medium'
@@ -101,7 +103,7 @@ const RegisteredListScreen = ({ navigation }) => {
                 취소
               </Button>
             </Flexbox.Item>
-            <Flexbox.Item flex={1}>
+            <Flexbox.Item margin={'auto'}>
               <Button
                 type='normal'
                 size='medium'
