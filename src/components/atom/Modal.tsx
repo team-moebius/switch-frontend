@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import ReactNativeModal, {
   ModalProps as ReactNativeModalProps,
 } from 'react-native-modal';
-import { LengthElement } from 'src/@types/unit';
+import { Color, LengthElement } from 'src/@types/unit';
 import { Box } from './Box';
 
 const { default: defaultStyle } = StyleSheet.create({
@@ -38,6 +38,7 @@ type Position = keyof typeof positionStyle;
 interface ModalProps {
   mode?: Mode;
   visible: boolean;
+  backgroundColor?: Color | string;
   width?: LengthElement;
   height?: LengthElement;
   position?: Position;
@@ -47,6 +48,7 @@ interface ModalProps {
 
 const Modal = ({
   visible,
+  backgroundColor = 'white',
   width = '100%',
   height = '80%',
   position = 'bottom',
@@ -61,7 +63,7 @@ const Modal = ({
       onBackdropPress={onPressBack}
       style={[defaultStyle, positionStyle[position]]}
     >
-      <Box backgroundColor={'white'} height={height} width={width}>
+      <Box backgroundColor={backgroundColor} height={height} width={width}>
         {children}
       </Box>
     </ReactNativeModal>
