@@ -319,20 +319,23 @@ const ChatDetailScreen = ({ navigation }) => {
         width={'70%'}
         height={'25%'}
         position={'center'}
+        backgroundColor={'#fefefe'}
       >
         <Flexbox
-          flexDirection='column'
-          alignItems='center'
-          justifyContent='center'
-          pt={'15%'}
+          width={'100%'}
+          height={'100%'}
+          margin={'auto'}
+          flexDirection={'column'}
+          alignItems={'center'}
+          justifyContent={'center'}
           gap={20}
         >
-          <Flexbox.Item width='70%'>
+          <Flexbox.Item alignSelf={'center'} width='70%'>
             <Button size='medium' type='normal' onPress={openCameraHandler}>
               사진 촬영
             </Button>
           </Flexbox.Item>
-          <Flexbox.Item width='70%'>
+          <Flexbox.Item alignSelf={'center'} width='70%'>
             <Button
               size='medium'
               type='normal'
@@ -341,7 +344,7 @@ const ChatDetailScreen = ({ navigation }) => {
               앨범에서 선택
             </Button>
           </Flexbox.Item>
-          <Flexbox.Item width='70%'>
+          <Flexbox.Item alignSelf={'center'} width='70%'>
             <Button size='medium' type='cancel' onPress={handleModalOpen}>
               취소
             </Button>

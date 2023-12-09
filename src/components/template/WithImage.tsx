@@ -2,7 +2,6 @@ import React, { ReactNode } from 'react';
 import { Flexbox, Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { StyleSheet } from 'react-native';
-import { mirrorDirectionStyle } from './WithMirror';
 
 type modifiedImageProps = {
   imageWidth?: ImageProps['width'];
@@ -15,7 +14,6 @@ interface WithImageProps extends modifiedImageProps {
   renderItem?: ReactNode;
   fontSize?: keyof typeof fontSizeStyle;
   childDirection?: keyof typeof flexDirectionStyle;
-  mirrorDirection?: keyof typeof mirrorDirectionStyle;
   cardDirection?: keyof typeof flexDirectionStyle;
 }
 
