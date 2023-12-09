@@ -1,4 +1,11 @@
-import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
+import {
+  Box,
+  Flexbox,
+  Icon,
+  Typography,
+  Button,
+  Modal,
+} from 'src/components/atom';
 import { ScrollView, Pressable } from 'react-native';
 import {
   Field,
@@ -42,6 +49,7 @@ const SwitchDetailForm = ({
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
   const [hashTagInput, setHashTagInput] = useState<string>();
+  const [modalVisible, setModalVisible] = useState(false);
 
   const {
     title,
@@ -51,6 +59,11 @@ const SwitchDetailForm = ({
     categories,
     oppositeCategories,
   } = data;
+
+  const handleModalOpen = useCallback(() => {
+    setModalVisible((prev) => !prev);
+    //    navigation.navigate('PreferredAddress');
+  }, []);
 
   const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
     setData((prev) => ({ ...prev, ...change }));
@@ -159,9 +172,7 @@ const SwitchDetailForm = ({
             <PressableIcon
               size={32}
               name={'add-circle'}
-              onPress={() => {
-                navigation.navigate('PreferredAddress');
-              }}
+              onPress={handleModalOpen}
             />
           </Flexbox>
           <Flexbox width={'100%'} justifyContent='center'>
@@ -217,6 +228,7 @@ const SwitchDetailForm = ({
           </Box>
         </Flexbox>
       </ScrollView>
+      <Modal></Modal>
     </Flexbox>
   );
 };
