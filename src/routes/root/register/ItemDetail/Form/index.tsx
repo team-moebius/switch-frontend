@@ -19,6 +19,7 @@ import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
 import { ImageUploader } from './ImageUploader';
 import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
 import { SwitchDetailData } from '../type';
+import useExpoLocation from 'src/hooks/useExpoLocation';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
@@ -51,6 +52,8 @@ const SwitchDetailForm = ({
   const [hashTagInput, setHashTagInput] = useState<string>();
   const [modalVisible, setModalVisible] = useState(false);
 
+  const { address, errorMsg, getLocation } = useExpoLocation();
+
   const {
     title,
     description = '',
@@ -62,16 +65,20 @@ const SwitchDetailForm = ({
 
   const handleModalOpen = useCallback(() => {
     setModalVisible((prev) => !prev);
-    //    navigation.navigate('PreferredAddress');
   }, []);
 
   const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
     setData((prev) => ({ ...prev, ...change }));
   }, []);
 
+  const handleGetLocation = useCallback(() => {
+    getLocation();
+  }, [getLocation]);
+
+  console.log(errorMsg, address?.postalCode);
+
   return (
     <Flexbox
-      pt={50}
       height={'100%'}
       width={'100%'}
       flexDirection={'column'}
@@ -228,7 +235,52 @@ const SwitchDetailForm = ({
           </Box>
         </Flexbox>
       </ScrollView>
-      <Modal></Modal>
+      <Modal
+        visible={modalVisible}
+        onPressBack={() => setModalVisible(false)}
+        backgroundColor={'#fefefe'}
+        width={'70%'}
+        height={'40%'}
+        position={'center'}
+      >
+        <Flexbox
+          width={'100%'}
+          height={'100%'}
+          alignItems={'center'}
+          flexDirection={'column'}
+          justifyContent={'center'}
+          gap={20}
+        >
+          <Flexbox.Item pb={30}>
+            <Typography fontSize={15}>
+              선호주소를 어떻게 설정하시겠어요?
+            </Typography>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button size='medium' type='normal' onPress={handleGetLocation}>
+              현재 위치로 설정
+            </Button>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button
+              size='medium'
+              type='normal'
+              onPress={() => navigation.navigate('PreferredAddress')}
+            >
+              직접 선택
+            </Button>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button
+              size='medium'
+              type='cancel'
+              onPress={() => setModalVisible(false)}
+            >
+              취소
+            </Button>
+          </Flexbox.Item>
+        </Flexbox>
+      </Modal>
     </Flexbox>
   );
 };
