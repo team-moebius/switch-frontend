@@ -1,20 +1,32 @@
+import globalAxios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
+
 import * as API from '@team-moebius/api-typescript';
 import { setBearerAuthToObject } from '@team-moebius/api-typescript/common';
-import globalAxios, { InternalAxiosRequestConfig } from 'axios';
+
 import { expoSecureStore } from 'src/common/secureStore';
 
-// 전역 axios 인스턴스에 interceptor 설정
+/* 전역 axios 인스턴스에 interceptor 설정 */
 globalAxios.interceptors.request.use(
-  async (config: InternalAxiosRequestConfig) => {
+  async (
+    config: InternalAxiosRequestConfig
+  ): Promise<InternalAxiosRequestConfig> => {
     const configuration = new API.Configuration();
-
-    // token이 있으면 할당 헤더에 넣어준다.
-    // 오히려 phoneSubmit이나 validation에서는 이 부분이 필요없이 때문에 알
     const token = await expoSecureStore.getToken('token');
-    if (token) configuration.accessToken = token;
 
-    setBearerAuthToObject(config.headers, configuration);
-    console.debug('⛔️ interceptor running :: ', config);
+    if (token) {
+      configuration.accessToken = token;
+      await setBearerAuthToObject(config.headers, configuration);
+    }
+
+    return config;
+  }
+);
+
+globalAxios.interceptors.response.use(
+  async (config: AxiosResponse): Promise<AxiosResponse> => {
+    if ('jwtToken' in config.data)
+      await expoSecureStore.setToken('token', config.data.jwtToken);
+
     return config;
   }
 );
