@@ -31,7 +31,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
       console.debug('[UserApi.login]on success:', data, variables);
 
       if (data.jwtToken) {
-        await expoSecureStore.setToken('token', data.jwtToken);
+        await expoSecureStore.setToken('token', data.jwtToken.split(' ')[1]);
         await expoSecureStore.setToken('username', 'Test');
       }
 
