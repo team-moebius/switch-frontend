@@ -48,9 +48,10 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
 
     setUser(null);
 
-    setLoading(false);
+    return setLoading(false);
   };
 
+  // context 컴포넌트가 최초 렌더링 될 때 로그인 여부를 초기화
   useEffect(() => {
     login();
   }, []);
