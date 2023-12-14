@@ -52,7 +52,7 @@ const SwitchDetailForm = ({
   const [hashTagInput, setHashTagInput] = useState<string>();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { address, errorMsg, getLocation } = useExpoLocation();
+  const { address, location, errorMsg, getLocation } = useExpoLocation();
 
   const {
     title,
@@ -75,7 +75,13 @@ const SwitchDetailForm = ({
     getLocation();
   }, [getLocation]);
 
-  console.log(errorMsg, address?.postalCode);
+  console.log(
+    errorMsg,
+    address?.region,
+    address?.district,
+    address?.postalCode,
+    location
+  );
 
   return (
     <Flexbox
