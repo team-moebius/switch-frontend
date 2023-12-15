@@ -10,12 +10,19 @@ globalAxios.interceptors.request.use(
   async (
     config: InternalAxiosRequestConfig
   ): Promise<InternalAxiosRequestConfig> => {
-    const configuration = new API.Configuration();
-    const token = await expoSecureStore.getToken('token');
+    const urlCondition = new URL(config.url as string).pathname;
 
-    if (token) {
-      configuration.accessToken = token;
-      await setBearerAuthToObject(config.headers, configuration);
+    if (
+      urlCondition !== '/api/users/verification' &&
+      urlCondition !== '/api/users'
+    ) {
+      const configuration = new API.Configuration();
+      const token = await expoSecureStore.getToken('token');
+
+      if (token) {
+        configuration.accessToken = token;
+        await setBearerAuthToObject(config.headers, configuration);
+      }
     }
 
     return config;
