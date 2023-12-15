@@ -8,6 +8,7 @@ import ChatBubble from './content/ChatBubble';
 import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
+import useWebSocket from 'src/hooks/useWebSocket';
 
 type SwitchChatData = {
   id: number;
@@ -174,45 +175,43 @@ const ChatDetailScreen = ({ navigation }) => {
 
   const { selectedImages, pickImage } = useExpoImagePicker();
   const { photoUri, openCamera } = useExpoCamera();
+  const { sendMessage } = useWebSocket();
 
   console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
-
-  const onChatTextHandler = (text: string) => {
-    setChatText(text);
-  };
 
   const checkForCameraRollPermission = async () => {
     const result = await pickImage();
 
-    if (result?.error) {
-      console.log(result?.error);
-
-      if (result.error === 'denied') {
+    switch (result?.error) {
+      case 'denied':
         alert('카메라 롤 접근이 거부되었습니다.');
-      } else if (result.error === 'cancelled') {
+        break;
+      case 'cancelled':
         alert('이미지 선택이 취소되었습니다.');
-      }
-      //  else {
+        break;
       // 특정 포맷만 요구 될 경우
-      //   alert('지원되지 않는 이미지 포맷입니다');
-      // }
-      return;
+      case 'format':
+        alert('지원되지 않는 이미지 포맷입니다');
+        break;
     }
-    // 앨범 사진 서버로 post 요청
+
+    // 앨범 사진 서버로 보내기
     setModalVisible(false);
   };
 
   const openCameraHandler = async () => {
     const result = await openCamera();
 
-    if (result?.error) {
-      if (result.error === 'denied') {
-        alert('카메라 롤 접근이 거부되었습니다.');
-      } else if (result.error === 'cancelled') {
+    switch (result?.error) {
+      case 'denied':
+        alert('사진 촬영 접근이 거부되었습니다.');
+        break;
+      case 'cancelled':
         alert('촬영이 취소되었습니다.');
-      } else return;
+        break;
     }
-    // 찍은 사진 서버로 post 요청
+
+    // 찍은 사진 서버로 보내기
     setModalVisible(false);
   };
 
@@ -220,8 +219,13 @@ const ChatDetailScreen = ({ navigation }) => {
     setModalVisible((prev) => !prev);
   }, []);
 
+  const onChatTextHandler = (text: string) => {
+    setChatText(text);
+  };
+
   const onSendChatMessage = async () => {
-    alert('send message');
+    sendMessage(chatText);
+    setChatText('');
   };
 
   useEffect(() => {
