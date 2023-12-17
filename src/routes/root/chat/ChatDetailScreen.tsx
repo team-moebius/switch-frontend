@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Flexbox, Modal } from 'src/components/atom';
+import { Button, TextInput, View } from 'react-native';
+// import { Flexbox, Modal, TextInput } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem, PressableIcon } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
@@ -9,6 +10,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
 import useWebSocket from 'src/hooks/useWebSocket';
+
+import { Client } from '@stomp/stompjs';
 
 type SwitchChatData = {
   id: number;
@@ -165,195 +168,272 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
   },
 ];
 
+// const SOCKET_URL =
+
 const ChatDetailScreen = ({ navigation }) => {
-  const [chatText, setChatText] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [chatValue, setChatValue] = useState<string>();
+  const stompRef = useRef<Client>();
 
-  const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
-  const scrollViewRef = useRef<FlatList | null>(null);
-  const [firstRendered, setFirstRendered] = useState<boolean>(false);
-
-  const { selectedImages, pickImage } = useExpoImagePicker();
-  const { photoUri, openCamera } = useExpoCamera();
-  const { sendMessage } = useWebSocket();
-
-  console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
-
-  const checkForCameraRollPermission = async () => {
-    const result = await pickImage();
-
-    switch (result?.error) {
-      case 'denied':
-        alert('카메라 롤 접근이 거부되었습니다.');
-        break;
-      case 'cancelled':
-        alert('이미지 선택이 취소되었습니다.');
-        break;
-      // 특정 포맷만 요구 될 경우
-      case 'format':
-        alert('지원되지 않는 이미지 포맷입니다');
-        break;
-    }
-
-    // 앨범 사진 서버로 보내기
-    setModalVisible(false);
+  const handleChatChange = (str: string) => {
+    setChatValue(str);
   };
 
-  const openCameraHandler = async () => {
-    const result = await openCamera();
+  const handleSubmit = () => {
+    console.debug('💬 메시지를 보냅니다. \n', chatValue);
 
-    switch (result?.error) {
-      case 'denied':
-        alert('사진 촬영 접근이 거부되었습니다.');
-        break;
-      case 'cancelled':
-        alert('촬영이 취소되었습니다.');
-        break;
-    }
+    stompRef.current?.publish({
+      destination: '/chats/1',
+      body: JSON.stringify({
+        type: 'CHAT',
+        chatId: 1,
+        senderId: 1,
+        content: chatValue,
+      }),
+    });
 
-    // 찍은 사진 서버로 보내기
-    setModalVisible(false);
-  };
-
-  const handleModalOpen = useCallback(() => {
-    setModalVisible((prev) => !prev);
-  }, []);
-
-  const onChatTextHandler = (text: string) => {
-    setChatText(text);
-  };
-
-  const onSendChatMessage = async () => {
-    sendMessage(chatText);
-    setChatText('');
+    setChatValue('');
   };
 
   useEffect(() => {
-    if (!firstRendered) setFirstRendered(true);
-    setMessageData([...CHAT_MOCK_DATA].reverse());
-  }, [firstRendered]);
+    stompRef.current = new Client({
+      brokerURL: SOCKET_URL,
+      reconnectDelay: 5000,
+      // connectHeaders:{}
+      debug(str) {
+        console.debug('👉 debug 입니다. \n', str);
+      },
+    });
+
+    stompRef.current.onConnect = (frame) => {
+      console.debug('🙆‍♂️ stomp가 연결됐습니다 \n', frame);
+
+      stompRef.current?.subscribe('/topics/chats/1', (message) => {
+        console.debug('‼️ subs 성공 \n', message);
+        console.debug(
+          '📩 수신된 메시지는 다음과 같습니다. \n',
+          JSON.parse(message.body)
+        );
+      });
+    };
+
+    stompRef.current.onWebSocketError = (error: any) => {
+      console.error('⛔️ websocket에 에러 발생 \n', error);
+    };
+    stompRef.current.onStompError = (frame) => {
+      console.error('⛔️ stomp에 에러 발생 \n', frame);
+    };
+
+    stompRef.current?.activate();
+
+    return () => {
+      stompRef.current?.deactivate();
+      console.debug('🙆‍♂️ stomp가 disconnect 됐습니다. \n');
+    };
+  }, []);
 
   return (
-    <ScreenWrapper>
-      <Flexbox width={'100%'} height={'94%'} flexDirection={'column'}>
-        <Flexbox.Item width={'100%'} height={'auto'}>
-          <Flexbox.Item width={'100%'}>
-            <Separator />
-          </Flexbox.Item>
-          <Flexbox.Item width={'100%'}>
-            <Flexbox
-              width={'100%'}
-              alignItems='center'
-              justifyContent='space-between'
-            >
-              <Flexbox.Item flex={1}>
-                <HistoryListItem
-                  data={{
-                    myItem: '디올 원피스',
-                    selectedItem: '커스텀 키보드',
-                  }}
-                  disabled
-                />
-              </Flexbox.Item>
-              <Flexbox.Item width={50}>
-                <Button
-                  size='small'
-                  type='normal'
-                  onPress={() => navigation.navigate('SwitchResult')}
-                >
-                  스위치
-                </Button>
-              </Flexbox.Item>
-            </Flexbox>
-          </Flexbox.Item>
-          <Flexbox.Item width={'100%'}>
-            <Separator />
-          </Flexbox.Item>
-        </Flexbox.Item>
-        <Flexbox.Item width={'100%'} flex={1}>
-          <FlatList
-            data={messageData}
-            renderItem={ChatBubble}
-            keyExtractor={(item, index) => index.toString()}
-            onEndReached={() => {
-              console.debug('Reached the end');
-              // 실험을 위해서 onEndReached 이벤트가 실행될 때 마다 CHAT_MOCK_DATA 채팅 데이터를 넣어주는 액션을 추가했습니다.
-              if (!messageData) return;
-              setMessageData((prev) => {
-                const copy = prev.slice();
-                const reversed = [...CHAT_MOCK_DATA].reverse();
-                copy.push(...reversed);
-                return copy;
-              });
-            }}
-            onEndReachedThreshold={0.1}
-            ref={scrollViewRef}
-            onContentSizeChange={() => {
-              if (!firstRendered)
-                scrollViewRef.current?.scrollToOffset({ offset: 0 });
-            }}
-            inverted
-          />
-        </Flexbox.Item>
-      </Flexbox>
-      <Flexbox width={'100%'} height={'auto'} mt={10} backgroundColor={'#fff'}>
-        <ChatInput
-          value={chatText}
-          onChangeText={onChatTextHandler}
-          placeholder={'대화 보내기'}
-          width={'85%'}
-          left={
-            <PressableIcon
-              name={'image-outline'}
-              size={24}
-              onPress={handleModalOpen}
-            />
-          }
-          right={
-            <PressableIcon
-              name={'paper-plane-outline'}
-              size={24}
-              onPress={onSendChatMessage}
-            />
-          }
+    <>
+      <View style={{ padding: 30, backgroundColor: 'orange' }}>
+        <TextInput
+          onChangeText={handleChatChange}
+          value={chatValue}
+          style={{ backgroundColor: 'white' }}
         />
-      </Flexbox>
-      <Modal
-        visible={modalVisible}
-        width={'70%'}
-        height={'25%'}
-        position={'center'}
-      >
-        <Flexbox
-          flexDirection='column'
-          alignItems='center'
-          justifyContent='center'
-          pt={'15%'}
-          gap={20}
-        >
-          <Flexbox.Item width='70%'>
-            <Button size='medium' type='normal' onPress={openCameraHandler}>
-              사진 촬영
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item width='70%'>
-            <Button
-              size='medium'
-              type='normal'
-              onPress={checkForCameraRollPermission}
-            >
-              앨범에서 선택
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item width='70%'>
-            <Button size='medium' type='cancel' onPress={handleModalOpen}>
-              취소
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-      </Modal>
-    </ScreenWrapper>
+        <Button onPress={handleSubmit} title='전송' />
+      </View>
+    </>
   );
 };
+
+// const ChatDetailScreen = ({ navigation }) => {
+//   const [chatText, setChatText] = useState('');
+//   const [modalVisible, setModalVisible] = useState(false);
+
+//   const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
+//   const scrollViewRef = useRef<FlatList | null>(null);
+//   const [firstRendered, setFirstRendered] = useState<boolean>(false);
+
+//   const { selectedImages, pickImage } = useExpoImagePicker();
+//   const { photoUri, openCamera } = useExpoCamera();
+//   const { sendMessage } = useWebSocket();
+
+//   console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
+
+//   const checkForCameraRollPermission = async () => {
+//     const result = await pickImage();
+
+//     switch (result?.error) {
+//       case 'denied':
+//         alert('카메라 롤 접근이 거부되었습니다.');
+//         break;
+//       case 'cancelled':
+//         alert('이미지 선택이 취소되었습니다.');
+//         break;
+//       // 특정 포맷만 요구 될 경우
+//       case 'format':
+//         alert('지원되지 않는 이미지 포맷입니다');
+//         break;
+//     }
+
+//     // 앨범 사진 서버로 보내기
+//     setModalVisible(false);
+//   };
+
+//   const openCameraHandler = async () => {
+//     const result = await openCamera();
+
+//     switch (result?.error) {
+//       case 'denied':
+//         alert('사진 촬영 접근이 거부되었습니다.');
+//         break;
+//       case 'cancelled':
+//         alert('촬영이 취소되었습니다.');
+//         break;
+//     }
+
+//     // 찍은 사진 서버로 보내기
+//     setModalVisible(false);
+//   };
+
+//   const handleModalOpen = useCallback(() => {
+//     setModalVisible((prev) => !prev);
+//   }, []);
+
+//   const onChatTextHandler = (text: string) => {
+//     setChatText(text);
+//   };
+
+//   const onSendChatMessage = async () => {
+//     sendMessage(chatText);
+//     setChatText('');
+//   };
+
+//   useEffect(() => {
+//     if (!firstRendered) setFirstRendered(true);
+//     setMessageData([...CHAT_MOCK_DATA].reverse());
+//   }, [firstRendered]);
+
+//   return (
+//     <ScreenWrapper>
+//       <Flexbox width={'100%'} height={'94%'} flexDirection={'column'}>
+//         <Flexbox.Item width={'100%'} height={'auto'}>
+//           <Flexbox.Item width={'100%'}>
+//             <Separator />
+//           </Flexbox.Item>
+//           <Flexbox.Item width={'100%'}>
+//             <Flexbox
+//               width={'100%'}
+//               alignItems='center'
+//               justifyContent='space-between'
+//             >
+//               <Flexbox.Item flex={1}>
+//                 <HistoryListItem
+//                   data={{
+//                     myItem: '디올 원피스',
+//                     selectedItem: '커스텀 키보드',
+//                   }}
+//                   disabled
+//                 />
+//               </Flexbox.Item>
+//               <Flexbox.Item width={50}>
+//                 <Button
+//                   size='small'
+//                   type='normal'
+//                   onPress={() => navigation.navigate('SwitchResult')}
+//                 >
+//                   스위치
+//                 </Button>
+//               </Flexbox.Item>
+//             </Flexbox>
+//           </Flexbox.Item>
+//           <Flexbox.Item width={'100%'}>
+//             <Separator />
+//           </Flexbox.Item>
+//         </Flexbox.Item>
+//         <Flexbox.Item width={'100%'} flex={1}>
+//           <FlatList
+//             data={messageData}
+//             renderItem={ChatBubble}
+//             keyExtractor={(item, index) => index.toString()}
+//             onEndReached={() => {
+//               console.debug('Reached the end');
+//               // 실험을 위해서 onEndReached 이벤트가 실행될 때 마다 CHAT_MOCK_DATA 채팅 데이터를 넣어주는 액션을 추가했습니다.
+//               if (!messageData) return;
+//               setMessageData((prev) => {
+//                 const copy = prev.slice();
+//                 const reversed = [...CHAT_MOCK_DATA].reverse();
+//                 copy.push(...reversed);
+//                 return copy;
+//               });
+//             }}
+//             onEndReachedThreshold={0.1}
+//             ref={scrollViewRef}
+//             onContentSizeChange={() => {
+//               if (!firstRendered)
+//                 scrollViewRef.current?.scrollToOffset({ offset: 0 });
+//             }}
+//             inverted
+//           />
+//         </Flexbox.Item>
+//       </Flexbox>
+//       <Flexbox width={'100%'} height={'auto'} mt={10} backgroundColor={'#fff'}>
+//         <ChatInput
+//           value={chatText}
+//           onChangeText={onChatTextHandler}
+//           placeholder={'대화 보내기'}
+//           width={'85%'}
+//           left={
+//             <PressableIcon
+//               name={'image-outline'}
+//               size={24}
+//               onPress={handleModalOpen}
+//             />
+//           }
+//           right={
+//             <PressableIcon
+//               name={'paper-plane-outline'}
+//               size={24}
+//               onPress={onSendChatMessage}
+//             />
+//           }
+//         />
+//       </Flexbox>
+//       <Modal
+//         visible={modalVisible}
+//         width={'70%'}
+//         height={'25%'}
+//         position={'center'}
+//       >
+//         <Flexbox
+//           flexDirection='column'
+//           alignItems='center'
+//           justifyContent='center'
+//           pt={'15%'}
+//           gap={20}
+//         >
+//           <Flexbox.Item width='70%'>
+//             <Button size='medium' type='normal' onPress={openCameraHandler}>
+//               사진 촬영
+//             </Button>
+//           </Flexbox.Item>
+//           <Flexbox.Item width='70%'>
+//             <Button
+//               size='medium'
+//               type='normal'
+//               onPress={checkForCameraRollPermission}
+//             >
+//               앨범에서 선택
+//             </Button>
+//           </Flexbox.Item>
+//           <Flexbox.Item width='70%'>
+//             <Button size='medium' type='cancel' onPress={handleModalOpen}>
+//               취소
+//             </Button>
+//           </Flexbox.Item>
+//         </Flexbox>
+//       </Modal>
+//     </ScreenWrapper>
+//   );
+// };
 
 export { ChatDetailScreen };

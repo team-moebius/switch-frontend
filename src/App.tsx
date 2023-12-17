@@ -11,6 +11,11 @@ import NavigationRouter from './routes';
 import { SplashScreen } from './routes/sign/SplashScreen';
 import { SafeAreaView } from 'react-native';
 
+import { TextEncoder, TextDecoder } from 'text-encoding';
+
+global.TextEncoder = TextEncoder;
+global.TextDecoder = TextDecoder;
+
 const queryClient = new QueryClient();
 
 export default function App() {
