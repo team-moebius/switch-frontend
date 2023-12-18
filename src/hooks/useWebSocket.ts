@@ -1,47 +1,57 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import SockJS from 'sockjs-client';
+import { Client, Message } from '@stomp/stompjs';
 
-const useWebSocket = () => {
-  const [socket, setSocket] = useState<WebSocket>();
-
-  const sendMessage = useCallback(
-    (message: string) => {
-      if (socket && message.trim() !== '') {
-        socket.send(message);
-      }
-    },
-    [socket]
-  );
+const useWebSocket = (url: string) => {
+  const sockJS = useRef<WebSocket | null>(null);
+  const stompClient = useRef<Client | null>(null);
+  const [connected, setConnected] = useState<boolean>(false);
 
   useEffect(() => {
-    const webSocket = new WebSocket('ws://example-backend-server-address:3000');
+    // Connect to SockJS server
+    sockJS.current = new SockJS(url);
 
-    webSocket.onopen = () => {
-      console.log('WebSocket opened');
+    // Create STOMP client
+    stompClient.current = new Client({
+      webSocketFactory: () => new WebSocket(url.replace(/^http/, 'ws')),
+      debug: (msg) => console.log(msg),
+    });
+
+    // Activate STOMP client
+    stompClient.current.activate();
+
+    // Handle connection status
+    stompClient.current.onConnect = () => {
+      console.log('STOMP connected');
+      setConnected(true);
     };
-
-    webSocket.onmessage = (event) => {
-      console.log(`Received: ${event.data}`);
-      sendMessage(event.data);
-    };
-
-    webSocket.onerror = (event) => {
-      // an error occurred
-      const errorEvent = event as WebSocketErrorEvent;
-      console.log(errorEvent.message);
-    };
-
-    webSocket.onclose = (event) => {
-      console.log(event.code, event.reason, 'WebSocket closed');
-    };
-
-    setSocket(webSocket);
 
     return () => {
-      webSocket.close();
+      // Deactivate STOMP client on cleanup
+      stompClient.current?.deactivate();
     };
-  }, [sendMessage]);
+  }, [url]);
 
-  return { sendMessage };
+  const sendMessage = (destination: string, body: object) => {
+    if (connected) {
+      stompClient.current?.publish({ destination, body: JSON.stringify(body) });
+    }
+  };
+
+  const subscribe = (
+    destination: string,
+    callback: (message: Message) => any
+  ) => {
+    if (connected) {
+      stompClient.current?.subscribe(destination, callback);
+    }
+  };
+
+  return {
+    connected,
+    sendMessage,
+    subscribe,
+  };
 };
 
 export default useWebSocket;

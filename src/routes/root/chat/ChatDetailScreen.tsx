@@ -8,7 +8,8 @@ import ChatBubble from './content/ChatBubble';
 import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
-import useWebSocket from 'src/hooks/useWebSocket';
+import { expoSecureStore } from 'src/common/secureStore';
+import { Client } from '@stomp/stompjs';
 
 type SwitchChatData = {
   id: number;
@@ -165,6 +166,8 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
   },
 ];
 
+const SOCKET_URL = 'ws://3.39.157.133:8080/stomp';
+
 const ChatDetailScreen = ({ navigation }) => {
   const [chatText, setChatText] = useState('');
   const [modalVisible, setModalVisible] = useState(false);
@@ -175,7 +178,9 @@ const ChatDetailScreen = ({ navigation }) => {
 
   const { selectedImages, pickImage } = useExpoImagePicker();
   const { photoUri, openCamera } = useExpoCamera();
-  const { sendMessage } = useWebSocket();
+
+  const stompRef = useRef<Client>();
+  const token = expoSecureStore.getToken('token');
 
   console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
 
@@ -191,7 +196,7 @@ const ChatDetailScreen = ({ navigation }) => {
         break;
       // 특정 포맷만 요구 될 경우
       case 'format':
-        alert('지원되지 않는 이미지 포맷입니다');
+        alert('지원되지 않는 포맷입니다');
         break;
     }
 
@@ -223,8 +228,19 @@ const ChatDetailScreen = ({ navigation }) => {
     setChatText(text);
   };
 
-  const onSendChatMessage = async () => {
-    sendMessage(chatText);
+  const onSendChatMessage = () => {
+    console.debug('💬 메시지를 보냅니다. \n', chatText);
+
+    stompRef.current?.publish({
+      destination: '/chats/1',
+      body: JSON.stringify({
+        type: 'CHAT',
+        chatId: 1,
+        senderId: 1,
+        content: chatText,
+      }),
+    });
+
     setChatText('');
   };
 
@@ -232,6 +248,42 @@ const ChatDetailScreen = ({ navigation }) => {
     if (!firstRendered) setFirstRendered(true);
     setMessageData([...CHAT_MOCK_DATA].reverse());
   }, [firstRendered]);
+
+  useEffect(() => {
+    stompRef.current = new Client({
+      brokerURL: SOCKET_URL,
+      reconnectDelay: 5000,
+      // connectHeaders:{}
+      debug(str) {
+        console.debug('👉 debug 입니다. \n', str);
+      },
+    });
+    stompRef.current.onConnect = (frame) => {
+      console.debug('🙆‍♂️ stomp가 연결됐습니다 \n', frame);
+
+      stompRef.current?.subscribe('/topics/chats/1', (message) => {
+        console.debug('‼️ subs 성공 \n', message);
+        console.debug(
+          '📩 수신된 메시지는 다음과 같습니다. \n',
+          JSON.parse(message.body)
+        );
+      });
+    };
+
+    stompRef.current.onWebSocketError = (error: any) => {
+      console.error('⛔️ websocket에 에러 발생 \n', error);
+    };
+    stompRef.current.onStompError = (frame) => {
+      console.error('⛔️ stomp에 에러 발생 \n', frame);
+    };
+
+    stompRef.current?.activate();
+
+    return () => {
+      stompRef.current?.deactivate();
+      console.debug('🙆‍♂️ stomp가 disconnect 됐습니다. \n');
+    };
+  }, []);
 
   return (
     <ScreenWrapper>
