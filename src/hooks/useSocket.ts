@@ -8,14 +8,13 @@ interface ObjectType {
 const SOCKET_URL = process.env.EXPO_PUBLIC_SOCKET_URL;
 
 let stompObj: Client;
-let isConnected = false;
 const subList: { [key: string]: StompSubscription } = {};
 
 const useSocket = () => {
   const connect = useCallback(() => {
-    if (!isConnected) {
+    if (!stompObj) {
       stompObj = new Client({
-        brokerURL: SOCKET_URL, // TODO : .env로 빼기
+        brokerURL: SOCKET_URL,
         debug(message) {
           console.debug(
             '☎️ ☎️ ☎️ useStomp의 connect의 객체 debug \n\n',
@@ -36,7 +35,6 @@ const useSocket = () => {
       });
 
       stompObj.activate();
-      isConnected = true;
     }
 
     console.debug('🟢 🔗🔗🔗 usestomp의 connect가 호출됐습니다.');
@@ -103,8 +101,8 @@ const useSocket = () => {
   }, []);
 
   return {
-    stompClient: stompObj,
-    subscriptions: subList,
+    stompObj,
+    subList,
     send,
     subscribe,
     unsubscribe,

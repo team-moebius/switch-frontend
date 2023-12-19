@@ -22,7 +22,7 @@ const queryClient = new QueryClient();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [assetLoaded] = useAssets({ fonts: FONT_MAP });
-  useSocket();
+  const { disconnect } = useSocket();
 
   useEffect(() => {
     const init = async () => {
@@ -30,7 +30,12 @@ export default function App() {
       setLoading(false);
     };
     init();
+
+    return () => {
+      disconnect();
+    };
   }, []);
+
   const initialized = useMemo(() => {
     return !loading && assetLoaded;
   }, [loading, assetLoaded]);

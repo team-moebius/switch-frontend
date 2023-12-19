@@ -168,14 +168,8 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 
 const ChatDetailScreen = ({ navigation }) => {
   const [chatValue, setChatValue] = useState<string>();
-  const {
-    stompClient,
-    subscriptions,
-    send,
-    subscribe,
-    unsubscribe,
-    disconnect,
-  } = useSocket();
+  const { stompObj, subList, send, subscribe, unsubscribe, disconnect } =
+    useSocket();
 
   const handleChatChange = (str: string) => {
     setChatValue(str);
@@ -193,12 +187,12 @@ const ChatDetailScreen = ({ navigation }) => {
   };
 
   useEffect(() => {
-    if (stompClient.connected) subscribe('/topics/chats/1');
+    if (stompObj.connected) subscribe('/topics/chats/1');
 
     return () => {
       unsubscribe('/topics/chats/1');
     };
-  }, [stompClient.connected]);
+  }, [stompObj.connected]);
 
   return (
     <>
