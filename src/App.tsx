@@ -12,6 +12,7 @@ import { SplashScreen } from './routes/sign/SplashScreen';
 import { SafeAreaView } from 'react-native';
 
 import { TextEncoder, TextDecoder } from 'text-encoding';
+import useSocket from './hooks/useSocket';
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
@@ -21,6 +22,7 @@ const queryClient = new QueryClient();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [assetLoaded] = useAssets({ fonts: FONT_MAP });
+  useSocket();
 
   useEffect(() => {
     const init = async () => {

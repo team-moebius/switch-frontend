@@ -9,9 +9,7 @@ import ChatBubble from './content/ChatBubble';
 import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
-import useWebSocket from 'src/hooks/useWebSocket';
-
-import { Client } from '@stomp/stompjs';
+import useSocket from 'src/hooks/useSocket';
 
 type SwitchChatData = {
   id: number;
@@ -168,68 +166,39 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
   },
 ];
 
-// const SOCKET_URL =
-
 const ChatDetailScreen = ({ navigation }) => {
   const [chatValue, setChatValue] = useState<string>();
-  const stompRef = useRef<Client>();
+  const {
+    stompClient,
+    subscriptions,
+    send,
+    subscribe,
+    unsubscribe,
+    disconnect,
+  } = useSocket();
 
   const handleChatChange = (str: string) => {
     setChatValue(str);
   };
 
   const handleSubmit = () => {
-    console.debug('💬 메시지를 보냅니다. \n', chatValue);
-
-    stompRef.current?.publish({
-      destination: '/chats/1',
-      body: JSON.stringify({
-        type: 'CHAT',
-        chatId: 1,
-        senderId: 1,
-        content: chatValue,
-      }),
+    send('/topics/chats/1', {
+      type: 'CHAT',
+      chatId: 1,
+      senderId: 1,
+      content: chatValue,
     });
 
     setChatValue('');
   };
 
   useEffect(() => {
-    stompRef.current = new Client({
-      brokerURL: SOCKET_URL,
-      reconnectDelay: 5000,
-      // connectHeaders:{}
-      debug(str) {
-        console.debug('👉 debug 입니다. \n', str);
-      },
-    });
-
-    stompRef.current.onConnect = (frame) => {
-      console.debug('🙆‍♂️ stomp가 연결됐습니다 \n', frame);
-
-      stompRef.current?.subscribe('/topics/chats/1', (message) => {
-        console.debug('‼️ subs 성공 \n', message);
-        console.debug(
-          '📩 수신된 메시지는 다음과 같습니다. \n',
-          JSON.parse(message.body)
-        );
-      });
-    };
-
-    stompRef.current.onWebSocketError = (error: any) => {
-      console.error('⛔️ websocket에 에러 발생 \n', error);
-    };
-    stompRef.current.onStompError = (frame) => {
-      console.error('⛔️ stomp에 에러 발생 \n', frame);
-    };
-
-    stompRef.current?.activate();
+    if (stompClient.connected) subscribe('/topics/chats/1');
 
     return () => {
-      stompRef.current?.deactivate();
-      console.debug('🙆‍♂️ stomp가 disconnect 됐습니다. \n');
+      unsubscribe('/topics/chats/1');
     };
-  }, []);
+  }, [stompClient.connected]);
 
   return (
     <>
