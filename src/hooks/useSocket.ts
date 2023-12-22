@@ -32,6 +32,13 @@ const useSocket = () => {
             state
           );
         },
+        onStompError(error) {
+          console.error('🚨\n stomp에서 에러 발생!\n', error);
+        },
+        onWebSocketError(error) {
+          console.error('🚨\n webSocket에서 에러 발생!\n', error);
+        },
+        forceBinaryWSFrames: true,
       });
 
       stompObj.activate();
