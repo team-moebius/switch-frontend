@@ -1,5 +1,5 @@
 import { FlatList } from 'react-native-gesture-handler';
-import { Box, Flexbox } from 'src/components/atom';
+import { Flexbox, Separator } from 'src/components/atom';
 import { HistoryListItem } from 'src/components/molecule';
 import {
   SwitchHistoryListItemData,
@@ -18,10 +18,6 @@ const ListItem = ({ item }: { item: SwitchHistoryListItemData }) => (
       mirrorDirection={'row'}
     />
   </Flexbox.Item>
-);
-
-const Separator = () => (
-  <Box height={1} backgroundColor={'gray'} mt={10} mb={10} />
 );
 
 const HistoryListContent = () => {
