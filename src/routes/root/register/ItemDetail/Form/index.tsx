@@ -14,12 +14,13 @@ import {
   TagInput,
 } from 'src/components/molecule';
 import { Separator } from 'src/components/atom/Separator';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
 import { ImageUploader } from './ImageUploader';
 import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
 import { SwitchDetailData } from '../type';
 import useExpoLocation from 'src/hooks/useExpoLocation';
+import useFetchAddress from 'src/hooks/useFetchAddress';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
@@ -52,8 +53,8 @@ const SwitchDetailForm = ({
   const [hashTagInput, setHashTagInput] = useState<string>();
   const [modalVisible, setModalVisible] = useState(false);
 
-  const { address, location, errorMsg, getLocation } = useExpoLocation();
-
+  const { expoPostalCode, getExpoLocation } = useExpoLocation();
+  const { fetchAddress, province, city, dong } = useFetchAddress();
   const {
     title,
     description = '',
@@ -71,17 +72,17 @@ const SwitchDetailForm = ({
     setData((prev) => ({ ...prev, ...change }));
   }, []);
 
-  const handleGetLocation = useCallback(() => {
-    getLocation();
-  }, [getLocation]);
+  const handleGetLocation = useCallback(async () => {
+    await getExpoLocation();
+  }, [getExpoLocation]);
 
-  console.log(
-    errorMsg,
-    address?.region,
-    address?.district,
-    address?.postalCode,
-    location
-  );
+  useEffect(() => {
+    if (expoPostalCode) {
+      fetchAddress(expoPostalCode);
+    }
+  }, [expoPostalCode, fetchAddress]);
+
+  console.log(province, city, dong);
 
   return (
     <Flexbox
