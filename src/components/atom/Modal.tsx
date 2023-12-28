@@ -62,6 +62,7 @@ const Modal = ({
       isVisible={visible}
       onBackdropPress={onPressBack}
       style={[defaultStyle, positionStyle[position]]}
+      backdropTransitionOutTiming={0}
     >
       <Box backgroundColor={backgroundColor} height={height} width={width}>
         {children}
