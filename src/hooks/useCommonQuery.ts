@@ -1,5 +1,5 @@
 import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
-import { AxiosPromise, AxiosResponse, AxiosInstance } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 interface UseCommonQueryParam<

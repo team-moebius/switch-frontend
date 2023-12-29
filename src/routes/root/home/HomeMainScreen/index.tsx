@@ -6,26 +6,8 @@ import { ScreenWrapper } from 'src/components/template';
 import { HistoryListContent } from './content/HistoryListContent';
 import { ItemListContent } from './content/ItemListContent';
 
-import { useCommonQuery } from 'src/hooks/useCommonQuery';
-import { ItemApi } from 'src/api';
-import { Item } from '@team-moebius/api-typescript';
-
 const HomeMainScreen = ({ navigation }) => {
   const [isItemView, setIsItemView] = useState<boolean>(true);
-
-  const { data, isLoading, isSuccess } = useCommonQuery<
-    Array<Item>,
-    Parameters<typeof ItemApi.getAllItems>
-  >({
-    api: ItemApi.getAllItems,
-    queryKey: ['homeMain_itemApi_getAllItems'],
-    onSuccess(data) {
-      console.debug('✅ homemain success! ::: ', data);
-    },
-    onError(err) {
-      console.error('⛔️ ⚠️ homemain failed! ::: ', err);
-    },
-  });
 
   return (
     <ScreenWrapper>

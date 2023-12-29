@@ -1,10 +1,13 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Flexbox, Select } from 'src/components/atom';
 import { ImageCard, TradingListItem } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
 import { PressableIcon } from 'src/components/molecule';
+import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
+import { Pageable, SliceItemResponse } from '@team-moebius/api-typescript';
+import { ItemApi } from 'src/api';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
@@ -69,9 +72,35 @@ const ItemListContent = ({
   const [type, setType] = useState<ListViewType>('grid');
   const [sort, setSort] = useState<SectionOptionType>('무작위');
 
-  const loadMoreData = useCallback(() => {
-    console.debug('reacted end');
-  }, []);
+  const { fetchNextPage, data, isFetchingNextPage } = useCommonInfiniteQuery<
+    SliceItemResponse,
+    Pageable
+  >({
+    api: ItemApi.getAllItems,
+    queryString: { size: 20, sort: ['updatedAt', 'asc'] },
+    queryKey: ['homeMain_itemApi_getAllItems'],
+    getNextPageParam(page) {
+      let nextPageNumber: number | undefined;
+      if (page.pageable && !page.last) {
+        nextPageNumber = (page.pageable.pageNumber as number) + 1;
+      } else {
+        nextPageNumber = undefined;
+      }
+
+      return nextPageNumber;
+    },
+    onSuccess(data) {
+      console.debug('✅ home main success!! \n', data);
+    },
+    onError(err) {
+      console.debug('🚧🚧 home main fail!! 🚧🚧 \n', err);
+    },
+  });
+
+  const loadMoreData = () => {
+    if (!isFetchingNextPage) return;
+    fetchNextPage();
+  };
 
   const renderItem = useMemo(() => {
     switch (type) {
