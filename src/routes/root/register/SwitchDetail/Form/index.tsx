@@ -1,5 +1,5 @@
 import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
-import { ScrollView, Pressable } from 'react-native';
+import { ScrollView, Pressable, Dimensions } from 'react-native';
 import {
   Field,
   HashTagInput,
@@ -32,6 +32,7 @@ const SwitchDetailForm = ({
   onSubmit,
   navigation,
 }: SwitchDetailFormProps) => {
+  const { width: screenWidth } = Dimensions.get('window');
   const [data, setData] = useState<SwitchDetailData>({
     ...initialData,
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
@@ -65,7 +66,7 @@ const SwitchDetailForm = ({
         flexDirection={'column'}
         alignItems={'center'}
       >
-        <Flexbox.Item width={'95%'}>
+        <Flexbox.Item width={screenWidth - 20}>
           <ScrollView>
             <ImageUploader
               images={thumbnails}
@@ -75,6 +76,7 @@ const SwitchDetailForm = ({
               onDeleteItem={(src, i) => {
                 console.debug('delete click:', src, i);
               }}
+              screenWidth={screenWidth}
             />
             <Separator />
             <Field
