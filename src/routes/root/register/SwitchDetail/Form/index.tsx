@@ -12,6 +12,7 @@ import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
 import { ImageUploader } from './ImageUploader';
 import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
 import { SwitchDetailData } from '../type';
+import RegisterNoticeModal from '../../ItemDetail/Modal/RegisterNoticeModal';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
@@ -42,6 +43,7 @@ const SwitchDetailForm = ({
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
   const [hashTagInput, setHashTagInput] = useState<string>();
+  const [noticeModalVisible, setNoticeModalVisible] = useState<boolean>(false);
 
   const {
     title,
@@ -54,6 +56,20 @@ const SwitchDetailForm = ({
 
   const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
     setData((prev) => ({ ...prev, ...change }));
+  }, []);
+
+  const handleNoticeModal = useCallback((visible: boolean) => {
+    setNoticeModalVisible(visible);
+    // [_] 이렇게 넘겨주면 전체 리렌더링이 발생하는지?
+  }, []);
+
+  const confirmNotice = useCallback(() => {
+    setNoticeModalVisible(false);
+    // [_] data 및 onsubmit 로직 있는지 확인
+    if (onSubmit) {
+      // console.log('onSubmit');
+      onSubmit(data);
+    }
   }, []);
 
   return (
@@ -204,12 +220,12 @@ const SwitchDetailForm = ({
           alignItems={'center'}
           justifyContent={'center'}
         >
-          <Box width={'90%'} pt={20}>
+          <Box width={'90%'} pt={20} pb={100}>
             <Button
               type='normal'
               size='medium'
               onPress={() => {
-                onSubmit && onSubmit(data);
+                handleNoticeModal(true);
               }}
             >
               확인
@@ -217,6 +233,13 @@ const SwitchDetailForm = ({
           </Box>
         </Flexbox>
       </ScrollView>
+      {/* [_] 모달 따로 컴포넌트로 빼지 않는 이유? */}
+      {/* [_] RN에는 포탈이 없는지..? */}
+      <RegisterNoticeModal
+        modalVisible={noticeModalVisible}
+        setModalVisible={setNoticeModalVisible}
+        confirmNotice={confirmNotice}
+      />
     </Flexbox>
   );
 };
