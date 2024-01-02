@@ -1,9 +1,8 @@
-import { useCallback, useState } from 'react';
-
 import { Pageable } from '@team-moebius/api-typescript';
 
 import { AxiosResponse } from 'axios';
 import {
+  QueryFunctionContext,
   QueryKey,
   UseInfiniteQueryOptions,
   useInfiniteQuery,
@@ -38,18 +37,20 @@ export const useCommonInfiniteQuery = <
   queryString,
   ...props
 }: UseCommonInfiniteQueryParam<Response, Request, TError, TQueryKey>) => {
-  const queryFn = useCallback(
-    ({ pageParam = 0 }) => {
-      return api({
-        ...queryString,
-        page: pageParam,
-      } as unknown as Request).then((res) => res.data);
-    },
-    [api, queryKey]
-  );
+  console.log(queryKey);
+
+  const queryFn = ({ pageParam = 0 }: QueryFunctionContext) => {
+    console.debug('\n\n 🚨 queryString \n', queryKey, pageParam);
+
+    return api({
+      ...queryString,
+      page: pageParam,
+    } as unknown as Request).then((res) => res.data);
+  };
 
   const query = useInfiniteQuery<Response, TError, Response, TQueryKey>({
-    queryFn,
+    queryFn: queryFn,
+    queryKey: queryKey as TQueryKey,
     ...props,
   });
 

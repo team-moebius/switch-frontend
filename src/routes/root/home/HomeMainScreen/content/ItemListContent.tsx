@@ -1,16 +1,27 @@
 import { useMemo, useState } from 'react';
+
 import { Flexbox, Select } from 'src/components/atom';
-import { ImageCard, TradingListItem } from 'src/components/molecule';
+import {
+  ImageCard,
+  TradingListItem,
+  PressableIcon,
+} from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
-import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
-import { PressableIcon } from 'src/components/molecule';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
-import { Pageable, SliceItemResponse } from '@team-moebius/api-typescript';
+
 import { ItemApi } from 'src/api';
+import { Pageable, SliceItemResponse } from '@team-moebius/api-typescript';
+
+import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
+const SELECT_OPTIONS_QUERY = {
+  무작위: ['random', 'asc'],
+  최신순: ['updatedAt', 'asc'],
+  '내 위치와 가까운 순': ['distance', 'asc'],
+};
 
 const GridItem = ({
   item,
@@ -72,13 +83,15 @@ const ItemListContent = ({
   const [type, setType] = useState<ListViewType>('grid');
   const [sort, setSort] = useState<SectionOptionType>('무작위');
 
+  const queryKey = ['homeMain_itemApi_getAllItems', SELECT_OPTIONS_QUERY[sort]];
+
   const { fetchNextPage, data, isFetchingNextPage } = useCommonInfiniteQuery<
     SliceItemResponse,
     Pageable
   >({
     api: ItemApi.getAllItems,
-    queryString: { size: 20, sort: ['updatedAt', 'asc'] },
-    queryKey: ['homeMain_itemApi_getAllItems'],
+    queryString: { size: 20, sort: SELECT_OPTIONS_QUERY[sort] },
+    queryKey,
     getNextPageParam(page) {
       let nextPageNumber: number | undefined;
       if (page.pageable && !page.last) {
@@ -97,7 +110,7 @@ const ItemListContent = ({
     },
   });
 
-  const loadMoreData = () => {
+  const handleLoadMoreData = () => {
     if (!isFetchingNextPage) return;
     fetchNextPage();
   };
@@ -128,7 +141,7 @@ const ItemListContent = ({
 
   const flatListProps = useFlatList<StuffListItemData>({
     type,
-    onEndReached: loadMoreData,
+    onEndReached: handleLoadMoreData,
     renderItem,
   });
 
