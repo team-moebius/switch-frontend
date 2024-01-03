@@ -11,7 +11,11 @@ import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 
 import { ItemApi } from 'src/api';
-import { Pageable, SliceItemResponse } from '@team-moebius/api-typescript';
+import {
+  Pageable,
+  SliceItemResponse,
+  ItemResponse,
+} from '@team-moebius/api-typescript';
 
 import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
 
@@ -28,7 +32,7 @@ const GridItem = ({
   withTitleOnly,
   onClick,
 }: {
-  item: StuffListItemData;
+  item: ItemResponse;
   withTitleOnly?: boolean;
   onClick?: () => void;
 }) => {
@@ -36,8 +40,8 @@ const GridItem = ({
     <Flexbox.Item flex={1} width={'100%'}>
       <ImageCard
         title={item.name}
-        src={item.thumbnail}
-        desc={withTitleOnly ? '' : item.location}
+        src={item.images ? item.images[0] : ''}
+        desc={withTitleOnly ? '' : item.description}
         width={'100%'}
         height={150}
         resizeMode={'cover'}
@@ -52,16 +56,16 @@ const ListItem = ({
   withTitleOnly,
   onClick,
 }: {
-  item: StuffListItemData;
+  item: ItemResponse;
   withTitleOnly?: boolean;
   onClick: () => void;
 }) => {
   return (
     <TradingListItem
       data={{
-        title: item.name,
-        src: item.thumbnail || '',
-        location: withTitleOnly ? '' : item.location || '',
+        title: item.name ? item.name : '',
+        src: item.images ? item.images[0] : '',
+        location: withTitleOnly ? '' : item.preferredCategory || '',
       }}
       onPress={onClick}
       childDirection={'column'}
@@ -77,7 +81,7 @@ const ItemListContent = ({
   onClickList,
   withTitleOnly,
 }: {
-  onClickList: (data: StuffListItemData) => void;
+  onClickList: (data: ItemResponse) => void;
   withTitleOnly?: boolean;
 }) => {
   const [type, setType] = useState<ListViewType>('grid');
@@ -118,7 +122,7 @@ const ItemListContent = ({
   const renderItem = useMemo(() => {
     switch (type) {
       case 'grid':
-        return ({ item }: { item: StuffListItemData }) =>
+        return ({ item }: { item: ItemResponse }) =>
           GridItem({
             item,
             withTitleOnly,
@@ -128,7 +132,7 @@ const ItemListContent = ({
           });
 
       case 'list':
-        return ({ item }: { item: StuffListItemData }) =>
+        return ({ item }: { item: ItemResponse }) =>
           ListItem({
             item,
             withTitleOnly,
@@ -139,16 +143,19 @@ const ItemListContent = ({
     }
   }, [withTitleOnly, onClickList, type]);
 
-  const flatListProps = useFlatList<StuffListItemData>({
+  const flatListProps = useFlatList<ItemResponse>({
     type,
     onEndReached: handleLoadMoreData,
     renderItem,
   });
 
   return (
-    <ListView<StuffListItemData>
+    <ListView<ItemResponse>
       {...flatListProps}
-      data={STUFF_LIST_MOCK}
+      data={
+        data?.pages.map((page) => (page.content ? page.content : [])).flat() ??
+        []
+      }
       optionBar={
         <Flexbox
           width={'100%'}
