@@ -37,11 +37,7 @@ export const useCommonInfiniteQuery = <
   queryString,
   ...props
 }: UseCommonInfiniteQueryParam<Response, Request, TError, TQueryKey>) => {
-  console.log(queryKey);
-
   const queryFn = ({ pageParam = 0 }: QueryFunctionContext) => {
-    console.debug('\n\n 🚨 queryString \n', queryKey, pageParam);
-
     return api({
       ...queryString,
       page: pageParam,

@@ -33,6 +33,7 @@ export const useCommonQuery = <
   }, [api, queryKey]);
   const query = useQuery<Response, TError, Response, TQueryKey>({
     queryFn,
+    queryKey,
     ...props,
   });
   return query;
