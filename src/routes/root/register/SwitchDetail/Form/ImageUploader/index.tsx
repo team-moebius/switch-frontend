@@ -46,7 +46,7 @@ const ImageUploader = ({
         </Pressable>
       </Flexbox>
       <Flexbox
-        width={screenWidth - 100}
+        width={(screenWidth - 100) as number}
         justifyContent={'center'}
         alignItems='center'
         gap={10}

@@ -1,5 +1,7 @@
 import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
-import { ScrollView, Pressable, Dimensions } from 'react-native';
+import { ScrollView, Pressable } from 'react-native';
+import { useWindowDimensions } from 'react-native';
+
 import {
   Field,
   HashTagInput,
@@ -32,7 +34,7 @@ const SwitchDetailForm = ({
   onSubmit,
   navigation,
 }: SwitchDetailFormProps) => {
-  const { width: screenWidth } = Dimensions.get('window');
+  const { width: screenWidth } = useWindowDimensions();
   const [data, setData] = useState<SwitchDetailData>({
     ...initialData,
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
@@ -40,7 +42,6 @@ const SwitchDetailForm = ({
     oppositeCategories: INPUT_TAG_MOCK,
     hashTags: HASHTAGS_MOCK,
   });
-
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
   const [hashTagInput, setHashTagInput] = useState<string>();
