@@ -22,7 +22,7 @@ const CountingTextarea = ({
         maxLength={maxLength}
         value={value}
         onChangeText={onChange}
-        style={{ borderWidth: 0 }}
+        style={{ borderWidth: 0, color: '#7a7a7a' }}
       />
       <Flexbox justifyContent='flex-end' pt={10}>
         <Flexbox.Item>

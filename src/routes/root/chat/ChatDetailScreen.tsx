@@ -324,6 +324,7 @@ const ChatDetailScreen = ({ navigation }) => {
         height={'25%'}
         position={'center'}
         backgroundColor={'#fefefe'}
+        onPressBack={() => setModalVisible(false)}
       >
         <Flexbox
           width={'100%'}
