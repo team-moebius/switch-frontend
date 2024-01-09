@@ -24,7 +24,7 @@ const useFetchAddress = () => {
         const errCode = jsonStr.results.common.errorCode;
         const errDesc = jsonStr.results.common.errorMessage;
         if (errCode !== '0') {
-          alert(errCode + '=' + errDesc);
+          console.error(errCode + '=' + errDesc);
         } else {
           setProvince(jsonStr.results.juso[0].siNm);
           setCity(jsonStr.results.juso[0].sggNm);
