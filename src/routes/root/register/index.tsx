@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
 import { ScreenWrapper } from 'src/components/template';
-import { SwitchDetailForm } from './SwitchDetail/Form';
+import { SwitchDetailForm } from './ItemDetail/Form';
 import { PreferredAddress } from './PreferredAddress';
 import { ScreenHeader } from 'src/components/molecule';
 
