@@ -6,7 +6,7 @@ import {
   Button,
   Modal,
 } from 'src/components/atom';
-import { ScrollView, Pressable } from 'react-native';
+import { ScrollView, Pressable, useWindowDimensions } from 'react-native';
 import {
   Field,
   HashTagInput,
@@ -40,6 +40,7 @@ const SwitchDetailForm = ({
   onSubmit,
   navigation,
 }: SwitchDetailFormProps) => {
+  const { width: screenWidth } = useWindowDimensions();
   const [data, setData] = useState<SwitchDetailData>({
     ...initialData,
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
@@ -101,6 +102,7 @@ const SwitchDetailForm = ({
           onDeleteItem={(src, i) => {
             console.debug('delete click:', src, i);
           }}
+          screenWidth={screenWidth}
         />
         <Separator width={'100%'} />
         <Field
