@@ -5,15 +5,22 @@ import {
   SwitchHistoryListItemData,
   SWITCH_HISTORY_LIST_MOCK,
 } from '../SwitchList.mock';
+import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
+import {
+  Pageable,
+  SliceSwitchResponse,
+  SwitchResponse,
+} from '@team-moebius/api-typescript';
+import { SwitchAPI } from 'src/api';
 
-const ListItem = ({ item }: { item: SwitchHistoryListItemData }) => (
+const ListItem = ({ item }: { item: SwitchResponse }) => (
   <Flexbox.Item flex={1} width={'100%'}>
     <HistoryListItem
       data={{
         //TODO: 프로퍼티 refactoring
-        myItem: item.items[0].name,
-        selectedItem: item.items[1].name,
-        ago: item.switchAt, // TODO: 시간 계산하는 로직 필요
+        myItem: item.itemId ? `${item.itemId}` : '',
+        selectedItem: item.pairedItemId ? `${item.pairedItemId}` : '',
+        ago: item.id ? `${item.id}` : '', // TODO: 시간 계산하는 로직 필요
       }}
       mirrorDirection={'row'}
     />
@@ -21,16 +28,48 @@ const ListItem = ({ item }: { item: SwitchHistoryListItemData }) => (
 );
 
 const HistoryListContent = () => {
+  const { fetchNextPage, data, isFetchingNextPage } = useCommonInfiniteQuery<
+    SliceSwitchResponse,
+    Pageable
+  >({
+    api: SwitchAPI.getSwitches,
+    queryString: { size: 20 },
+    queryKey: ['homeMain_switchApi_getSwitches'],
+    getNextPageParam(page) {
+      let nextPageNumber: number | undefined;
+      if (page.pageable && !page.last) {
+        nextPageNumber = (page.pageable.pageNumber as number) + 1;
+      } else {
+        nextPageNumber = undefined;
+      }
+
+      return nextPageNumber;
+    },
+    onSuccess(data) {
+      console.debug('✅ home main success!! \n', data);
+    },
+    onError(err) {
+      console.debug('🚧🚧 home main fail!! 🚧🚧 \n', err);
+    },
+  });
+
+  const handleLoadMoreData = () => {
+    if (!isFetchingNextPage) return;
+    fetchNextPage();
+  };
+
   return (
     <Flexbox width={'100%'} height={'100%'}>
-      <FlatList<SwitchHistoryListItemData>
-        data={SWITCH_HISTORY_LIST_MOCK}
+      <FlatList<SwitchResponse>
+        data={
+          data?.pages
+            .map((page) => (page.content ? page.content : []))
+            .flat() ?? []
+        }
         renderItem={ListItem}
-        keyExtractor={(item, index) => `${index}`}
+        keyExtractor={(item, index) => `${item.id}` ?? `${index}`}
         numColumns={1}
-        onEndReached={() => {
-          console.debug('reacted end');
-        }}
+        onEndReached={handleLoadMoreData}
         onEndReachedThreshold={0.1}
         ItemSeparatorComponent={Separator}
       />
