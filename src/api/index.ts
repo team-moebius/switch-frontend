@@ -1,7 +1,7 @@
 import globalAxios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 
 import * as API from '@team-moebius/api-typescript';
-import { setBearerAuthToObject } from '@team-moebius/api-typescript/common';
+import { setBearerAuthToObject } from '@team-moebius/api-typescript/dist/common';
 
 import { expoSecureStore } from 'src/common/secureStore';
 
