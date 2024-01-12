@@ -3,7 +3,7 @@ import type { Preview } from '@storybook/react';
 import { ThemeContextProvider } from '../src/context/theme';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
 import { QueryClientProvider, QueryCache, QueryClient } from 'react-query';
-import { ReactQueryDevtools } from 'react-query-devtools';
+import { ReactQueryDevtools } from 'react-query/devtools';
 
 const queryClient = new QueryClient();
 
@@ -31,7 +31,7 @@ const preview: Preview = {
               height: 100%;`}
             </style>
             <Story {...context} />
-            {/* <ReactQueryDevtools /> */}
+            <ReactQueryDevtools />
           </ThemeContextProvider>
         </QueryClientProvider>
       );
