@@ -1,5 +1,12 @@
-import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
-import { ScrollView, Pressable } from 'react-native';
+import {
+  Box,
+  Flexbox,
+  Icon,
+  Typography,
+  Button,
+  Modal,
+} from 'src/components/atom';
+import { ScrollView, Pressable, useWindowDimensions } from 'react-native';
 import {
   Field,
   HashTagInput,
@@ -7,11 +14,13 @@ import {
   TagInput,
 } from 'src/components/molecule';
 import { Separator } from 'src/components/atom/Separator';
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
 import { ImageUploader } from './ImageUploader';
 import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
 import { SwitchDetailData } from '../type';
+import useExpoLocation from 'src/hooks/useExpoLocation';
+import useFetchAddress from 'src/hooks/useFetchAddress';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
@@ -31,6 +40,7 @@ const SwitchDetailForm = ({
   onSubmit,
   navigation,
 }: SwitchDetailFormProps) => {
+  const { width: screenWidth } = useWindowDimensions();
   const [data, setData] = useState<SwitchDetailData>({
     ...initialData,
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
@@ -42,7 +52,10 @@ const SwitchDetailForm = ({
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
   const [hashTagInput, setHashTagInput] = useState<string>();
+  const [modalVisible, setModalVisible] = useState(false);
 
+  const { expoPostalCode, getExpoLocation } = useExpoLocation();
+  const { fetchAddress, province, city, dong } = useFetchAddress();
   const {
     title,
     description = '',
@@ -52,13 +65,28 @@ const SwitchDetailForm = ({
     oppositeCategories,
   } = data;
 
+  const handleModalOpen = useCallback(() => {
+    setModalVisible((prev) => !prev);
+  }, []);
+
   const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
     setData((prev) => ({ ...prev, ...change }));
   }, []);
 
+  const handleGetLocation = useCallback(async () => {
+    await getExpoLocation();
+  }, [getExpoLocation]);
+
+  useEffect(() => {
+    if (expoPostalCode) {
+      fetchAddress(expoPostalCode);
+    }
+  }, [expoPostalCode, fetchAddress]);
+
+  console.log(province, city, dong);
+
   return (
     <Flexbox
-      pt={50}
       height={'100%'}
       width={'100%'}
       flexDirection={'column'}
@@ -74,6 +102,7 @@ const SwitchDetailForm = ({
           onDeleteItem={(src, i) => {
             console.debug('delete click:', src, i);
           }}
+          screenWidth={screenWidth}
         />
         <Separator width={'100%'} />
         <Field
@@ -159,9 +188,7 @@ const SwitchDetailForm = ({
             <PressableIcon
               size={32}
               name={'add-circle'}
-              onPress={() => {
-                navigation.navigate('PreferredAddress');
-              }}
+              onPress={handleModalOpen}
             />
           </Flexbox>
           <Flexbox width={'100%'} justifyContent='center'>
@@ -217,6 +244,52 @@ const SwitchDetailForm = ({
           </Box>
         </Flexbox>
       </ScrollView>
+      <Modal
+        visible={modalVisible}
+        onPressBack={() => setModalVisible(false)}
+        backgroundColor={'#fefefe'}
+        width={'70%'}
+        height={'40%'}
+        position={'center'}
+      >
+        <Flexbox
+          width={'100%'}
+          height={'100%'}
+          alignItems={'center'}
+          flexDirection={'column'}
+          justifyContent={'center'}
+          gap={20}
+        >
+          <Flexbox.Item pb={30}>
+            <Typography fontSize={15}>
+              선호주소를 어떻게 설정하시겠어요?
+            </Typography>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button size='medium' type='normal' onPress={handleGetLocation}>
+              현재 위치로 설정
+            </Button>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button
+              size='medium'
+              type='normal'
+              onPress={() => navigation.navigate('PreferredAddress')}
+            >
+              직접 선택
+            </Button>
+          </Flexbox.Item>
+          <Flexbox.Item width='70%'>
+            <Button
+              size='medium'
+              type='cancel'
+              onPress={() => setModalVisible(false)}
+            >
+              취소
+            </Button>
+          </Flexbox.Item>
+        </Flexbox>
+      </Modal>
     </Flexbox>
   );
 };

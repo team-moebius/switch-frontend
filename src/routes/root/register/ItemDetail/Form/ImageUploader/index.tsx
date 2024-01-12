@@ -7,11 +7,17 @@ interface ImageUploaderProps {
   images: Array<string>;
   onAdd: () => void;
   onDeleteItem?: (value: string, index?: number) => void;
+  screenWidth: number;
 }
 
-const ImageUploader = ({ images, onAdd, onDeleteItem }: ImageUploaderProps) => {
+const ImageUploader = ({
+  images,
+  onAdd,
+  onDeleteItem,
+  screenWidth,
+}: ImageUploaderProps) => {
   return (
-    <Flexbox width={'100%'} height={'15%'} alignItems='center' gap={10}>
+    <Flexbox width={'100%'} alignItems='center' gap={10}>
       <Flexbox width={'auto'}>
         <Pressable onPress={onAdd}>
           <Box
@@ -40,13 +46,12 @@ const ImageUploader = ({ images, onAdd, onDeleteItem }: ImageUploaderProps) => {
         </Pressable>
       </Flexbox>
       <Flexbox
-        height={'100%'}
-        width={'auto'}
+        width={(screenWidth - 100) as number}
         justifyContent={'center'}
         alignItems='center'
         gap={10}
       >
-        <ScrollView horizontal>
+        <ScrollView horizontal nestedScrollEnabled>
           {images.map((src, i) => (
             <ImageItem
               key={`${src}_${i}`}

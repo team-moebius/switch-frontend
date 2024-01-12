@@ -3677,10 +3677,10 @@
   resolved "https://registry.yarnpkg.com/@swc/types/-/types-0.1.4.tgz#8d647e111dc97a8e2881bf71c2ee2d011698ff10"
   integrity sha512-z/G02d+59gyyUb7KYhKi9jOhicek6QD2oMaotUyG+lUkybpXoV49dY9bj7Ah5Q+y7knK2jU67UTX9FyfGzaxQg==
 
-"@team-moebius/api-typescript@=0.0.9":
-  version "0.0.9"
-  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.9/cec317da4654d43020334c0e5c2ebbcc0b020279#cec317da4654d43020334c0e5c2ebbcc0b020279"
-  integrity sha512-feKQmacG1ycVnUjmrTX2p+/OVlPSk1orAPaAliRxFJbNKH2s8Bc2ZGXiY5/l1MZUpSfuFDtSkKN+Dw3A+7nMaA==
+"@team-moebius/api-typescript@=0.0.10":
+  version "0.0.10"
+  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.10/31be908fdfaae302d5771a94735621b167004830#31be908fdfaae302d5771a94735621b167004830"
+  integrity sha512-5hozLqoms13frzFiPhacJNY6JyzX/KjuvMpESNRWfUxpxilsRWZVQLYMfbRqEMOJFGVaGAmR++kyiZcsX9Yp0w==
   dependencies:
     axios "^1.4.0"
     typescript "^5.2.2"
@@ -6630,6 +6630,11 @@ expo-keep-awake@~12.3.0:
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-12.3.0.tgz#c42449ae19c993274ddc43aafa618792b6aec408"
   integrity sha512-ujiJg1p9EdCOYS05jh5PtUrfiZnK0yyLy+UewzqrjUqIT8eAGMQbkfOn3C3fHE7AKd5AefSMzJnS3lYZcZYHDw==
+
+expo-location@~16.1.0:
+  version "16.1.0"
+  resolved "https://registry.yarnpkg.com/expo-location/-/expo-location-16.1.0.tgz#251a465790d6622f828fd18f0edb2a73b9664b72"
+  integrity sha512-/jfRyYrXb9vjr8HoYmVHnzEqnw+0jaoRbHsxj6ePPAbevXmvXZqYHFRtfZtQ+q32SB4X6kUAXu28eBcLS+tqaA==
 
 expo-modules-autolinking@1.5.1:
   version "1.5.1"

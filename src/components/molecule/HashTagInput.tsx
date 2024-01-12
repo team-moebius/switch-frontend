@@ -35,8 +35,10 @@ const HashTagInput = ({
       inputPosition={inputPosition}
       itemsPosition={tagsPosition}
       functionalElement={children}
-      items={hashTags.map(({ children, ...props }) => (
-        <Tag {...props}>{children}</Tag>
+      items={hashTags.map(({ children, ...props }, index) => (
+        <Tag key={index + children} {...props}>
+          {children}
+        </Tag>
       ))}
     />
   );
