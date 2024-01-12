@@ -4,7 +4,9 @@ import {
   Icon,
   Typography,
   Button,
-  Modal,
+  Modal as AddressModal,
+  Modal as AttentionModal,
+  Check,
 } from 'src/components/atom';
 import { ScrollView, Pressable, useWindowDimensions } from 'react-native';
 import {
@@ -21,6 +23,9 @@ import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock
 import { SwitchDetailData } from '../type';
 import useExpoLocation from 'src/hooks/useExpoLocation';
 import useFetchAddress from 'src/hooks/useFetchAddress';
+
+const DETAILS = 'details';
+const SAFETY = 'safety';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
@@ -41,6 +46,12 @@ const SwitchDetailForm = ({
   navigation,
 }: SwitchDetailFormProps) => {
   const { width: screenWidth } = useWindowDimensions();
+
+  const [checkboxState, setCheckboxState] = useState({
+    details: false,
+    safety: false,
+  });
+
   const [data, setData] = useState<SwitchDetailData>({
     ...initialData,
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
@@ -52,8 +63,8 @@ const SwitchDetailForm = ({
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
   const [hashTagInput, setHashTagInput] = useState<string>();
-  const [modalVisible, setModalVisible] = useState(false);
-
+  const [addressModalVisible, setAddressModalVisible] = useState(false);
+  const [attentionModalVisible, setAttentionModalVisible] = useState(false);
   const { expoPostalCode, getExpoLocation } = useExpoLocation();
   const { fetchAddress, province, city, dong } = useFetchAddress();
   const {
@@ -65,13 +76,37 @@ const SwitchDetailForm = ({
     oppositeCategories,
   } = data;
 
-  const handleModalOpen = useCallback(() => {
-    setModalVisible((prev) => !prev);
+  const handleAddressModalOpen = useCallback(() => {
+    setAddressModalVisible((prev) => !prev);
+  }, []);
+
+  const handleAttentionModalOpen = useCallback(() => {
+    setAttentionModalVisible((prev) => !prev);
   }, []);
 
   const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
     setData((prev) => ({ ...prev, ...change }));
   }, []);
+
+  const changeCheckboxDetails = useCallback((checkboxName: string) => {
+    if (checkboxName === DETAILS) {
+      setCheckboxState((prev) => ({
+        ...prev,
+        details: !prev.details,
+      }));
+    } else {
+      setCheckboxState((prev) => ({
+        ...prev,
+        safety: !prev.safety,
+      }));
+    }
+  }, []);
+
+  const handleCloseAttentionModal = () => {
+    // api call
+    setCheckboxState({ details: false, safety: false });
+    setAttentionModalVisible(false);
+  };
 
   const handleGetLocation = useCallback(async () => {
     await getExpoLocation();
@@ -188,7 +223,7 @@ const SwitchDetailForm = ({
             <PressableIcon
               size={32}
               name={'add-circle'}
-              onPress={handleModalOpen}
+              onPress={handleAddressModalOpen}
             />
           </Flexbox>
           <Flexbox width={'100%'} justifyContent='center'>
@@ -218,7 +253,7 @@ const SwitchDetailForm = ({
           <Flexbox>
             <Typography fontSize={14}>게시글 작성 유의사항</Typography>
           </Flexbox>
-          <Pressable onPress={() => window.alert('clicked')}>
+          <Pressable onPress={handleAttentionModalOpen}>
             <Flexbox alignItems='center' justifyContent='flex-end'>
               <Typography fontSize={14}>확인하기</Typography>
               <Icon name='chevron-up' size={24} />
@@ -244,9 +279,9 @@ const SwitchDetailForm = ({
           </Box>
         </Flexbox>
       </ScrollView>
-      <Modal
-        visible={modalVisible}
-        onPressBack={() => setModalVisible(false)}
+      <AddressModal
+        visible={addressModalVisible}
+        onPressBack={() => setAddressModalVisible(false)}
         backgroundColor={'#fefefe'}
         width={'70%'}
         height={'40%'}
@@ -283,13 +318,87 @@ const SwitchDetailForm = ({
             <Button
               size='medium'
               type='cancel'
-              onPress={() => setModalVisible(false)}
+              onPress={() => setAddressModalVisible(false)}
             >
               취소
             </Button>
           </Flexbox.Item>
         </Flexbox>
-      </Modal>
+      </AddressModal>
+      <AttentionModal
+        visible={attentionModalVisible}
+        onPressBack={() => setAttentionModalVisible(false)}
+        backgroundColor={'#fefefe'}
+        width={'70%'}
+        height={'40%'}
+        position={'center'}
+      >
+        <Flexbox
+          width={'100%'}
+          height={'100%'}
+          margin={'auto'}
+          gap={40}
+          flexDirection={'column'}
+          alignItems={'center'}
+          justifyContent={'center'}
+        >
+          <Flexbox.Item>
+            <Typography fontSize={14}>물품 등록시 꼭 지켜주세요!</Typography>
+          </Flexbox.Item>
+          <Flexbox flexDirection={'column'} gap={20}>
+            <Flexbox.Item width='90%'>
+              <Flexbox>
+                <Flexbox.Item width={'90%'}>
+                  <Typography fontSize={14}>1. 물품 설명은 정확하게</Typography>
+                  <Typography fontSize={14}>
+                    사진, 물품에 대한 설명을 꼭 사실대로 올려주세요.
+                  </Typography>
+                </Flexbox.Item>
+                <Flexbox.Item width={'10%'}>
+                  <Check
+                    size={15}
+                    type={'info'}
+                    checked={checkboxState.details}
+                    onPress={() => changeCheckboxDetails(DETAILS)}
+                  />
+                </Flexbox.Item>
+              </Flexbox>
+            </Flexbox.Item>
+
+            <Flexbox.Item width='90%'>
+              <Flexbox>
+                <Flexbox.Item width={'90%'}>
+                  <Typography fontSize={14}>
+                    2. 스위치 하기 안전한 물품만
+                  </Typography>
+                  <Typography fontSize={14}>
+                    사용 기한 초과, 제품의 안정성 등으로 인하여 발생하는 문제에
+                    대해, 스위치는 법적 책임을 지지 않습니다.
+                  </Typography>
+                </Flexbox.Item>
+                <Flexbox.Item width={'10%'}>
+                  <Check
+                    type={'info'}
+                    boxType={'square'}
+                    checked={checkboxState.safety}
+                    size={15}
+                    onPress={() => changeCheckboxDetails(SAFETY)}
+                  />
+                </Flexbox.Item>
+              </Flexbox>
+            </Flexbox.Item>
+          </Flexbox>
+          <Flexbox.Item width='90%'>
+            <Button
+              size='medium'
+              type='normal'
+              onPress={handleCloseAttentionModal}
+            >
+              확인
+            </Button>
+          </Flexbox.Item>
+        </Flexbox>
+      </AttentionModal>
     </Flexbox>
   );
 };
