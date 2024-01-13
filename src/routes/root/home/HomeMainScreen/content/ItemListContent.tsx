@@ -9,6 +9,7 @@ import {
 import { ListView } from 'src/components/template/ListView';
 import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
+import { getPageableContent } from 'src/utils/getPageableContent';
 
 import { ItemApi } from 'src/api';
 import {
@@ -152,10 +153,7 @@ const ItemListContent = ({
   return (
     <ListView<ItemResponse>
       {...flatListProps}
-      data={
-        data?.pages.map((page) => (page.content ? page.content : [])).flat() ??
-        []
-      }
+      data={getPageableContent(data)}
       optionBar={
         <Flexbox
           width={'100%'}
