@@ -11,12 +11,12 @@ import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 import { getPageableContent } from 'src/utils/getPageableContent';
 
-import { ItemApi } from 'src/api';
 import {
   Pageable,
   SliceItemResponse,
   ItemResponse,
 } from '@team-moebius/api-typescript';
+import { AxiosResponse } from 'axios';
 
 import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
 
@@ -78,40 +78,44 @@ const ListItem = ({
   );
 };
 
+interface ItemListContentProps {
+  onClickList: (data: ItemResponse) => void;
+  withTitleOnly?: boolean;
+  api: (args: Pageable) => Promise<AxiosResponse<SliceItemResponse, any>>;
+}
+
 const ItemListContent = ({
   onClickList,
   withTitleOnly,
-}: {
-  onClickList: (data: ItemResponse) => void;
-  withTitleOnly?: boolean;
-}) => {
+  api,
+}: ItemListContentProps) => {
   const [type, setType] = useState<ListViewType>('grid');
-  const [sort, setSort] = useState<SectionOptionType>('무작위');
+  const [sort, setSort] = useState<SectionOptionType>('최신순');
 
   const queryKey = ['homeMain_itemApi_getAllItems', SELECT_OPTIONS_QUERY[sort]];
 
-    api: ItemApi.getAllItems,
-    queryString: { size: 20, sort: SELECT_OPTIONS_QUERY[sort] },
-    queryKey,
-    getNextPageParam(page) {
-      let nextPageNumber: number | undefined;
-      if (page.pageable && !page.last) {
-        nextPageNumber = (page.pageable.pageNumber as number) + 1;
-      } else {
-        nextPageNumber = undefined;
-      }
-
-      return nextPageNumber;
-    },
-    onSuccess(data) {
-      console.debug('✅ home main success!! \n', data);
-    },
-    onError(err) {
-      console.debug('🚧🚧 home main fail!! 🚧🚧 \n', err);
-    },
-  });
   const { fetchNextPage, data, isFetchingNextPage } =
     useCommonInfiniteQuery<SliceItemResponse>({
+      api,
+      queryString: { size: 20, sort: SELECT_OPTIONS_QUERY[sort] },
+      queryKey,
+      getNextPageParam(page) {
+        let nextPageNumber: number | undefined;
+        if (page.pageable && !page.last) {
+          nextPageNumber = (page.pageable.pageNumber as number) + 1;
+        } else {
+          nextPageNumber = undefined;
+        }
+
+        return nextPageNumber;
+      },
+      onSuccess(data) {
+        console.debug('✅ home main success!! \n', data.pages);
+      },
+      onError(err) {
+        console.debug('🚧🚧 home main fail!! 🚧🚧 \n', err);
+      },
+    });
 
   const handleLoadMoreData = () => {
     if (!isFetchingNextPage) return;

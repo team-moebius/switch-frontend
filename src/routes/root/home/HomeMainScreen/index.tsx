@@ -5,6 +5,7 @@ import { ScreenWrapper } from 'src/components/template';
 
 import { HistoryListContent } from './content/HistoryListContent';
 import { ItemListContent } from './content/ItemListContent';
+import { ItemApi } from 'src/api';
 
 const HomeMainScreen = ({ navigation }) => {
   const [isItemView, setIsItemView] = useState<boolean>(true);
@@ -22,6 +23,7 @@ const HomeMainScreen = ({ navigation }) => {
             onClickList={(data) => {
               navigation?.navigate('SwitchDetail', { ...data });
             }}
+            api={ItemApi.getAllItems}
           />
         ) : (
           <HistoryListContent />
