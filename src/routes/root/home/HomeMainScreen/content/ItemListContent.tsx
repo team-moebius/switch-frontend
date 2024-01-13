@@ -90,10 +90,6 @@ const ItemListContent = ({
 
   const queryKey = ['homeMain_itemApi_getAllItems', SELECT_OPTIONS_QUERY[sort]];
 
-  const { fetchNextPage, data, isFetchingNextPage } = useCommonInfiniteQuery<
-    SliceItemResponse,
-    Pageable
-  >({
     api: ItemApi.getAllItems,
     queryString: { size: 20, sort: SELECT_OPTIONS_QUERY[sort] },
     queryKey,
@@ -114,6 +110,8 @@ const ItemListContent = ({
       console.debug('🚧🚧 home main fail!! 🚧🚧 \n', err);
     },
   });
+  const { fetchNextPage, data, isFetchingNextPage } =
+    useCommonInfiniteQuery<SliceItemResponse>({
 
   const handleLoadMoreData = () => {
     if (!isFetchingNextPage) return;
