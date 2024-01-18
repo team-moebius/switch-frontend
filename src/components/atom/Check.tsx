@@ -35,7 +35,7 @@ const Check = ({
   return (
     <BouncyCheckbox
       {...props}
-      style={{ width: size }}
+      size={size}
       isChecked={checked}
       disableBuiltInState={true}
       fillColor={typeStyle[type].color}
