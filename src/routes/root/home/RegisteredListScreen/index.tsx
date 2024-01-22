@@ -4,6 +4,7 @@ import { useCallback, useMemo, useState } from 'react';
 import { Button, Flexbox, Icon, Modal, Typography } from 'src/components/atom';
 import { ItemDetail } from 'src/components/molecule/SwitchListItem';
 import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
+import { ItemApi } from 'src/api';
 
 const MY_ITEM = {
   name: '이브이',
@@ -60,7 +61,11 @@ const RegisteredListScreen = ({ navigation }) => {
 
   return (
     <ScreenWrapper>
-      <ItemListContent onClickList={handleModalOpen} withTitleOnly />
+      <ItemListContent
+        onClickList={handleModalOpen}
+        withTitleOnly
+        api={ItemApi.getItems}
+      />
       <Modal
         visible={modalVisible}
         width={'80%'}

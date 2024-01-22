@@ -11,7 +11,6 @@ import {
 
 interface UseCommonInfiniteQueryParam<
   Response,
-  Request extends Pageable,
   TError = unknown,
   TQueryKey extends QueryKey = QueryKey
 > extends Pick<
@@ -23,13 +22,12 @@ interface UseCommonInfiniteQueryParam<
     | 'getNextPageParam'
     | 'getPreviousPageParam'
   > {
-  api: (args: Request) => Promise<AxiosResponse<Response>>;
+  api: (args: Pageable) => Promise<AxiosResponse<Response>>;
   queryString: Pageable;
 }
 
 export const useCommonInfiniteQuery = <
   Response,
-  Request extends Pageable,
   TError = unknown,
   TQueryKey extends QueryKey = QueryKey
 >({
@@ -37,13 +35,13 @@ export const useCommonInfiniteQuery = <
   queryKey,
   queryString,
   ...props
-}: UseCommonInfiniteQueryParam<Response, Request, TError, TQueryKey>) => {
+}: UseCommonInfiniteQueryParam<Response, TError, TQueryKey>) => {
   const queryFn = useCallback(
     ({ pageParam = 0 }: QueryFunctionContext) => {
       return api({
         ...queryString,
         page: pageParam,
-      } as unknown as Request).then((res) => res.data);
+      } as unknown as Pageable).then((res) => res.data);
     },
     [api, queryKey]
   );
