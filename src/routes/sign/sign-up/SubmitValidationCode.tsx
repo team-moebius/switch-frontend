@@ -1,11 +1,73 @@
+import { useContext, useState } from 'react';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
-const SubmitValidationCode = () => {
+import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { expoSecureStore } from 'src/common/secureStore';
+import { UserContext } from 'src/context/user';
+
+import {
+  LoginRequest,
+  LoginResponse,
+  UserVerificationRequest,
+  UserVerificationResponse,
+} from '@team-moebius/api-typescript';
+import { UserApi } from 'src/api';
+
+const SubmitValidationCode = ({ navigation, route }) => {
+  const [state, setState] = useState<LoginRequest>({
+    phone: route?.params?.phoneNumber,
+    verifiedCode: '',
+  });
+  const { login } = useContext(UserContext);
+
+  const { mutate: validationCodeMutate } = useCommonMutation<
+    LoginResponse,
+    LoginRequest
+  >({
+    api: UserApi.login,
+    async onSuccess(data, variables) {
+      console.debug('[UserApi.login]on success:', data, variables);
+
+      if (data.jwtToken) {
+        await expoSecureStore.setToken('token', data.jwtToken.split(' ')[1]);
+        await expoSecureStore.setToken('username', 'Test');
+      }
+
+      login();
+
+      navigation?.reset({
+        index: 0,
+        routes: [{ name: 'Root' }],
+      });
+    },
+    onError(error, variables) {
+      console.debug('error', error, variables);
+    },
+  });
+
+  const { mutate: submitPhoneMutate } = useCommonMutation<
+    UserVerificationResponse,
+    UserVerificationRequest
+  >({
+    api: UserApi.requestUserVerification,
+    onSuccess(data, variables) {
+      console.debug(
+        '[UserApi.requestUserVerification] on success:',
+        data,
+        variables
+      );
+    },
+    onError(error, variables) {
+      console.debug('error', error, variables);
+    },
+  });
+
   return (
     <ScreenWrapper>
       <Flexbox
+        width={'100%'}
         padding={'10%'}
         alignItems={'center'}
         flexDirection={'column'}
@@ -17,49 +79,58 @@ const SubmitValidationCode = () => {
           </Typography>
         </Flexbox.Item>
         <Flexbox.Item mb={50}>
-          <Flexbox flexDirection={'column'} gap={16}>
+          <Flexbox width={'80%'} flexDirection={'column'} gap={16}>
             <Field
               width={'100%'}
               name={'phoneNumber'}
               disabled={true}
               fieldType={'textInput'}
               placeholder={'휴대폰 번호 입력'}
-              value={'01012345678'}
+              value={state.phone}
               onChange={() => {
-                console.debug('change phone number');
+                console.debug('Can not change');
               }}
+              keyboardType='number-pad'
             />
             <Field
               width={'100%'}
-              name={'phoneNumber'}
+              name={'verifiedCode'}
               fieldType={'textInput'}
               placeholder={'인증 코드 입력'}
-              value={''}
-              onChange={() => {
-                console.debug('change phone number');
+              value={state.verifiedCode}
+              onChange={(value) => {
+                setState((prev) => ({ ...prev, ...value }));
               }}
+              keyboardType='number-pad'
             />
           </Flexbox>
         </Flexbox.Item>
-        <Flexbox.Item>
-          <Flexbox height={'100%'} flexDirection={'column'} gap={8}>
-            <Flexbox.Item>
+        <Flexbox.Item width={'80%'}>
+          <Flexbox
+            width={'100%'}
+            height={'100%'}
+            flexDirection={'column'}
+            gap={8}
+          >
+            <Flexbox.Item width={'100%'}>
               <Button
+                wide
                 type={'normal'}
                 size={'medium'}
                 onPress={() => {
-                  alert('가입');
+                  validationCodeMutate(state);
                 }}
               >
                 가입
               </Button>
             </Flexbox.Item>
-            <Flexbox.Item width={'auto'}>
+            <Flexbox.Item width={'100%'}>
               <Button
+                wide
                 type={'transparent'}
                 size={'medium'}
                 onPress={() => {
-                  alert('코드 재전송');
+                  submitPhoneMutate({ phone: state.phone });
                 }}
               >
                 코드재전송

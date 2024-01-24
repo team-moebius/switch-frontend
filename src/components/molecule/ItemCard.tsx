@@ -2,8 +2,8 @@ import React from 'react';
 import { Flexbox, Icon, Tag, Typography } from '../atom';
 import { TagProps } from '../atom/Tag';
 import { Margin } from 'src/@types/unit';
-import { Pressable } from 'react-native';
 import { Card } from './Card';
+import { PressableIcon } from './PressableIcon';
 
 interface ItemCardProps {
   data: {
@@ -66,17 +66,19 @@ const Footer = ({
     <Flexbox width={'100%'} alignItems='center' justifyContent='space-between'>
       <Flexbox.Item>
         <Flexbox>
-          {hashTags.map(({ children, ...props }: any) => (
-            <Tag {...props} key={props.children} disabled>
+          {hashTags.map(({ children, ...props }: any, i) => (
+            <Tag key={`${props.children}_${i}`} {...props} disabled>
               {children}
             </Tag>
           ))}
         </Flexbox>
       </Flexbox.Item>
       <Flexbox.Item>
-        <Pressable onPress={onLikeHandler}>
-          <Icon name={liked ? 'heart' : 'heart-outline'} size={32} />
-        </Pressable>
+        <PressableIcon
+          name={liked ? 'heart' : 'heart-outline'}
+          size={32}
+          onPress={onLikeHandler}
+        />
       </Flexbox.Item>
     </Flexbox>
   );

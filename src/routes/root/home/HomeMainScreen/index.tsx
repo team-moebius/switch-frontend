@@ -1,10 +1,11 @@
 import { useState } from 'react';
 
 import { Flexbox, Icon, Toggle } from 'src/components/atom';
-
 import { ScreenWrapper } from 'src/components/template';
+
 import { HistoryListContent } from './content/HistoryListContent';
 import { ItemListContent } from './content/ItemListContent';
+import { ItemApi } from 'src/api';
 
 const HomeMainScreen = ({ navigation }) => {
   const [isItemView, setIsItemView] = useState<boolean>(true);
@@ -13,20 +14,26 @@ const HomeMainScreen = ({ navigation }) => {
     <ScreenWrapper>
       <Flexbox
         height={'100%'}
-        justifyContent={'center'}
+        position={'relative'}
         flexDirection={'column'}
-        pt={50}
+        justifyContent={'space-between'}
       >
         {isItemView ? (
-          <ItemListContent navigation={navigation} />
+          <ItemListContent
+            onClickList={(data) => {
+              navigation?.navigate('SwitchDetail', { ...data });
+            }}
+            api={ItemApi.getAllItems}
+          />
         ) : (
           <HistoryListContent />
         )}
         <Flexbox
-          height={'10%'}
-          width={'100%'}
+          position={'absolute'}
+          bottom={20}
           justifyContent={'center'}
-          alignItems={'center'}
+          left={'50%'}
+          right={'50%'}
         >
           <Toggle
             value={!isItemView}

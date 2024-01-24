@@ -23,8 +23,7 @@ interface SwitchListItemProps {
 
 const renderChildren = (
   item: ItemDetail,
-  fontSize?: keyof typeof fontSizeStyle,
-  mirrorDirection?: keyof typeof mirrorDirectionStyle
+  fontSize?: keyof typeof fontSizeStyle
 ) => {
   return (
     <Flexbox>
@@ -49,12 +48,12 @@ const SwitchListItem = ({
   const { myItem, selectedItem } = data;
 
   const childrenA = useMemo(
-    () => renderChildren(myItem, fontSize, mirrorDirection),
-    [myItem, fontSize, mirrorDirection]
+    () => renderChildren(myItem, fontSize),
+    [myItem, fontSize]
   );
   const childrenB = useMemo(
-    () => renderChildren(selectedItem, fontSize, mirrorDirection),
-    [selectedItem, fontSize, mirrorDirection]
+    () => renderChildren(selectedItem, fontSize),
+    [selectedItem, fontSize]
   );
 
   return (

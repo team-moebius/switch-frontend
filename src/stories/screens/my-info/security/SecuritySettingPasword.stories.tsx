@@ -1,7 +1,7 @@
 import React from 'react';
 import { ComponentStory, ComponentMeta } from '@storybook/react';
 
-import { SecuritySettingPassword } from 'src/routes/root/my-info/security-setting/screens/SecuritySettingPassword';
+import { SecuritySettingPassword } from 'src/routes/root/my-info/Security/screens/SecuritySettingPassword';
 
 export default {
   title: 'SecuritySettingPassword',

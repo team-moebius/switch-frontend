@@ -16,7 +16,6 @@ interface WithImageProps extends modifiedImageProps {
   renderItem?: ReactNode;
   fontSize?: keyof typeof fontSizeStyle;
   childDirection?: keyof typeof flexDirectionStyle;
-  mirrorDirection?: keyof typeof mirrorDirectionStyle;
   cardDirection?: keyof typeof flexDirectionStyle;
   width?: LengthElement;
 }

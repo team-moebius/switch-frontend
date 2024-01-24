@@ -3,9 +3,10 @@ import {
   Box,
   Flexbox,
   Typography,
-  Separator,
   Button,
+  Separator,
 } from 'src/components/atom';
+
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 

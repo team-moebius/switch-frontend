@@ -1,5 +1,5 @@
 import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
-import { AxiosPromise, AxiosResponse, AxiosInstance } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 interface UseCommonQueryParam<
@@ -9,7 +9,7 @@ interface UseCommonQueryParam<
   TQueryKey extends QueryKey = QueryKey
 > extends Pick<
     UseQueryOptions<Response, TError, Response, TQueryKey>,
-    'queryKey' | 'queryFn' | 'onSuccess' | 'onError'
+    'queryKey' | 'queryFn' | 'onSuccess' | 'onError' | 'enabled'
   > {
   api: (...args: Request) => Promise<AxiosResponse<Response>>;
 }
@@ -33,6 +33,7 @@ export const useCommonQuery = <
   }, [api, queryKey]);
   const query = useQuery<Response, TError, Response, TQueryKey>({
     queryFn,
+    queryKey,
     ...props,
   });
   return query;

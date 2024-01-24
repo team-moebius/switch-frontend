@@ -25,7 +25,7 @@ export function ListView<T extends {}>({
   ...props
 }: ListViewProps<T>) {
   return (
-    <Flexbox flexDirection={'column'} width={'100%'} height={'90%'}>
+    <Flexbox flexDirection={'column'} width={'100%'} height={'100%'}>
       <Flexbox.Item width={'100%'}>{optionBar}</Flexbox.Item>
       <Flexbox.Item width={'100%'} flex={1}>
         <FlatList<T> key={viewKey} {...props} data={data} />

@@ -13,7 +13,7 @@ import { Textarea } from './Textarea';
 import { TextInput } from './TextInput';
 import { Toggle } from './Toggle';
 import { Typography } from './Typograph';
-
+import { Separator } from './Separator';
 export {
   Box,
   Button,

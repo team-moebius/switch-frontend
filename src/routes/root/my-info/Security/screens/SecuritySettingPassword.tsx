@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Box, Flexbox, Typography } from 'src/components/atom';
+import { Flexbox, Typography } from 'src/components/atom';
 import { NumberPad } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
