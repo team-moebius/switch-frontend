@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Button, Flexbox, Icon, Typography } from '../atom';
 import { WithImage } from '../template';
 import { fontSizeStyle } from '../template/WithImage';
@@ -27,16 +27,16 @@ const renderChildren = (
   mirrorDirection?: keyof typeof mirrorDirectionStyle
 ) => {
   return (
-    <WithImage
-      text={item?.name}
-      src={item?.src || ''}
-      fontSize={fontSize}
-      imageWidth={100}
-      imageHeight={100}
-      imageResizeMode={'center'}
-      mirrorDirection={mirrorDirection}
-      width={'60%'}
-    />
+    <Flexbox>
+      <WithImage
+        text={item?.name}
+        src={item?.src || ''}
+        fontSize={fontSize}
+        imageWidth={100}
+        imageHeight={100}
+        imageResizeMode={'center'}
+      />
+    </Flexbox>
   );
 };
 
@@ -64,13 +64,13 @@ const SwitchListItem = ({
       alignItems={'center'}
       justifyContent={'center'}
     >
-      <Flexbox.Item>
+      <Flexbox justifyContent='center'>
         <WithMirror
           renderItem={[childrenA, childrenB]}
           mirrorDirection={mirrorDirection}
           centerAxis={<Icon name={'code-outline'} size={20} />}
         />
-      </Flexbox.Item>
+      </Flexbox>
       <Flexbox justifyContent='center'>
         <Button type={'transparent'} size={'medium'} onPress={onPress}>
           <Typography fontSize={15} color={'blue'}>
