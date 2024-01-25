@@ -64,12 +64,7 @@ const SwitchListItem = ({
   );
 
   return (
-    <Flexbox
-      gap={20}
-      flexDirection={'column'}
-      alignItems={'center'}
-      justifyContent={'center'}
-    >
+    <Flexbox gap={20} flexDirection={'column'} alignItems={'center'}>
       <Flexbox justifyContent='center'>
         <WithMirror
           renderItem={[childrenA, childrenB]}
