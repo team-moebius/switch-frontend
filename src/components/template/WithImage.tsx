@@ -76,7 +76,6 @@ const WithImage = ({
       {...flexDirectionStyle[cardDirection]}
       gap={10}
       {...layoutStyle.mostOutlineLayout}
-      backgroundColor='orange'
     >
       <Flexbox>
         <Image
