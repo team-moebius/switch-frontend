@@ -34,6 +34,13 @@ const renderChildren = (
         imageWidth={100}
         imageHeight={100}
         imageResizeMode={'center'}
+        layoutStyle={{
+          mostOutlineLayout: {},
+          titleContainerLayout: {
+            maxWidth: '70%',
+          },
+          textBoxLayout: {},
+        }}
       />
     </Flexbox>
   );

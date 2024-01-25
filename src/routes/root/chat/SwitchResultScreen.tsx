@@ -25,6 +25,11 @@ const renderChildren = (children: string, src: string) => {
       imageHeight={90}
       cardDirection={'column'}
       imageResizeMode={'center'}
+      layoutStyle={{
+        titleContainerLayout: {
+          alignSelf: 'center',
+        },
+      }}
     />
   );
 };
