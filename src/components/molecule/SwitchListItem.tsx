@@ -26,23 +26,21 @@ const renderChildren = (
   fontSize?: keyof typeof fontSizeStyle
 ) => {
   return (
-    <Flexbox>
-      <WithImage
-        text={item?.name}
-        src={item?.src || ''}
-        fontSize={fontSize}
-        imageWidth={100}
-        imageHeight={100}
-        imageResizeMode={'center'}
-        layoutStyle={{
-          mostOutlineLayout: {},
-          titleContainerLayout: {
-            maxWidth: '70%',
-          },
-          textBoxLayout: {},
-        }}
-      />
-    </Flexbox>
+    <WithImage
+      text={item?.name}
+      src={item?.src || ''}
+      fontSize={fontSize}
+      imageWidth={100}
+      imageHeight={100}
+      imageResizeMode={'center'}
+      layoutStyle={{
+        mostOutlineLayout: {},
+        titleContainerLayout: {
+          maxWidth: '70%',
+        },
+        textBoxLayout: {},
+      }}
+    />
   );
 };
 
