@@ -60,7 +60,7 @@ const SwitchDetailView = ({
           }}
         />
       </Flexbox.Item>
-      <Separator />
+      <Separator width={'100%'} />
       <Flexbox.Item width={'100%'}>
         <Flexbox alignItems='center' justifyContent='center'>
           <Pressable onPress={onClickReport}>
@@ -70,7 +70,7 @@ const SwitchDetailView = ({
           </Pressable>
         </Flexbox>
       </Flexbox.Item>
-      <Separator />
+      <Separator width={'100%'} />
       <Flexbox width={'90%'}>
         <UserSummary data={userData} />
       </Flexbox>
