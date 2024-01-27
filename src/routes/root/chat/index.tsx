@@ -19,7 +19,7 @@ const ChatRoute = () => {
               return (
                 <ScreenHeader
                   {...props}
-                  title={'채팅'}
+                  center={'채팅'}
                   right={
                     <Flexbox width={'100%'} justifyContent={'flex-end'} pr={16}>
                       <PressableIcon
@@ -50,7 +50,7 @@ const ChatRoute = () => {
           component={ChatDetailScreen}
           options={{
             header: (props) => {
-              return <ScreenHeader {...props} title={'채팅 상대 닉네임'} />;
+              return <ScreenHeader {...props} center={'채팅 상대 닉네임'} />;
             },
           }}
         />
