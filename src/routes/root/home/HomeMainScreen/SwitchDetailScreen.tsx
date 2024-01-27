@@ -1,7 +1,5 @@
-import React from 'react';
 import { Box, Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
-
 import { ScreenWrapper } from 'src/components/template';
 import {
   UserInfoData,
@@ -51,10 +49,15 @@ SwitchDetailData): SwitchDetailViewProps['itemData'] => {
 };
 
 const SwitchDetailScreen = ({ navigation }) => {
+  // 스위치 제안이 안 온 경우 최상위 Flexbox의 pt={0}
+
   return (
     <ScreenWrapper>
       <ScrollView>
-        <Flexbox width={'100%'} flexDirection={'column'}>
+        <Flexbox pt={120} width={'100%'} flexDirection={'column'}>
+          <Flexbox.Item>
+            <Separator width={'100%'} />
+          </Flexbox.Item>
           <Flexbox.Item width={'100%'} flex={1}>
             <SwitchDetailView
               onClickReport={() => navigation.navigate('Report')}
@@ -62,7 +65,7 @@ const SwitchDetailScreen = ({ navigation }) => {
               itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
             />
           </Flexbox.Item>
-          <Separator />
+          <Separator width={'100%'} />
           <Flexbox
             width={'100%'}
             alignItems={'center'}
@@ -88,6 +91,60 @@ const SwitchDetailScreen = ({ navigation }) => {
               </Button>
             </Box>
           </Flexbox>
+          {/*내가 스위치 제안 중인 경우 아래 버튼이 보이게 됩니다 */}
+          {/* <Flexbox
+            width={'100%'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            flexDirection={'row'}
+            gap={10}
+          >
+            <Box width={'44%'}>
+              <Button
+                type={'normal'}
+                size={'medium'}
+                onPress={() => window.alert('스위치 제안 중')}
+              >
+                스위치 제안 중
+              </Button>
+            </Box>
+            <Box width={'44%'}>
+              <Button
+                type={'cancel'}
+                size={'medium'}
+                onPress={() => navigation.navigate('HomeMain')}
+              >
+                제안 취소
+              </Button>
+            </Box>
+          </Flexbox> */}
+          {/*내가 스위치 제안 받은 경우 아래 버튼이 보이게 됩니다 */}
+          {/* <Flexbox
+            width={'100%'}
+            alignItems={'center'}
+            justifyContent={'center'}
+            flexDirection={'row'}
+            gap={10}
+          >
+            <Box width={'44%'}>
+              <Button
+                type={'normal'}
+                size={'medium'}
+                onPress={() => navigation.navigate('ChatDetail')}
+              >
+                협의
+              </Button>
+            </Box>
+            <Box width={'44%'}>
+              <Button
+                type={'cancel'}
+                size={'medium'}
+                onPress={() => console.debug('스위치 거절')}
+              >
+                거절
+              </Button>
+            </Box>
+          </Flexbox> */}
         </Flexbox>
       </ScrollView>
     </ScreenWrapper>
