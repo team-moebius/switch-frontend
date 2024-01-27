@@ -66,7 +66,7 @@ const SwitchResultScreen = () => {
           <WithMirror
             renderItem={[childrenA, childrenB]}
             mirrorDirection='row'
-            centerAxis={<Icon name={'code-outline'} size={20} />}
+            centerAxis={<Icon name={'swap-horizontal'} size={20} />}
           />
         </Flexbox.Item>
         <Flexbox.Item alignSelf={'center'}>
@@ -74,7 +74,7 @@ const SwitchResultScreen = () => {
             rating={mannerRating}
             ratingHandler={(e) => ratingHandler(e, 'manner')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={16}
             ratingSize={24}
             itemJustify={'center'}
           >
@@ -86,7 +86,7 @@ const SwitchResultScreen = () => {
             rating={conditionRating}
             ratingHandler={(e) => ratingHandler(e, 'condition')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={16}
             ratingSize={24}
             itemJustify={'center'}
           >

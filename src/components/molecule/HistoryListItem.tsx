@@ -53,7 +53,7 @@ const HistoryListItem = ({
               <WithMirror
                 renderItem={[childrenA, childrenB]}
                 mirrorDirection={mirrorDirection}
-                centerAxis={<Icon name={'code-outline'} size={20} />}
+                centerAxis={<Icon name={'swap-horizontal'} size={20} />}
               />
             </Flexbox.Item>
           </Flexbox>
