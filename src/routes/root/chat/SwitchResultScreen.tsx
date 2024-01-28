@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable } from 'react-native';
 import { Box, Button, Flexbox, Icon, Typography } from 'src/components/atom';
 import { ScoreQuestion } from 'src/components/molecule';
@@ -25,6 +25,11 @@ const renderChildren = (children: string, src: string) => {
       imageHeight={90}
       cardDirection={'column'}
       imageResizeMode={'center'}
+      layoutStyle={{
+        titleContainerLayout: {
+          alignSelf: 'center',
+        },
+      }}
     />
   );
 };
@@ -74,7 +79,7 @@ const SwitchResultScreen = () => {
             rating={mannerRating}
             ratingHandler={(e) => ratingHandler(e, 'manner')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={16}
             ratingSize={24}
             itemJustify={'center'}
           >
@@ -86,7 +91,7 @@ const SwitchResultScreen = () => {
             rating={conditionRating}
             ratingHandler={(e) => ratingHandler(e, 'condition')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={16}
             ratingSize={24}
             itemJustify={'center'}
           >
