@@ -34,13 +34,20 @@ const ReportsScreen = ({ navigation }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   return (
     <ScreenWrapper>
-      <Flexbox flexDirection={'column'} height={'100%'} padding={20} gap={80}>
+      <Flexbox
+        flexDirection={'column'}
+        height={'100%'}
+        padding={20}
+        gap={80}
+        justifyContent={'flex-start'}
+      >
         {/*게시글에서 신고하기 누른 경우*/}
         <Flexbox
           flexDirection={'column'}
           gap={20}
-          justifyContent={'flex-start'}
           alignItems={'flex-start'}
+          justifyContent={'space-between'}
+          width={'100%'}
         >
           <Flexbox.Item pb={20}>
             <Typography
@@ -67,8 +74,9 @@ const ReportsScreen = ({ navigation }) => {
         <Flexbox
           flexDirection={'column'}
           gap={20}
-          justifyContent={'flex-start'}
           alignItems={'flex-start'}
+          justifyContent={'space-between'}
+          width={'100%'}
         >
           <Flexbox.Item pb={20}>
             <Typography
