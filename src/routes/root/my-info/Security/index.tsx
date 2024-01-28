@@ -2,7 +2,12 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { SecuritySettingMain } from './screens/SecuritySettingMain';
 import { SecuritySettingPassword } from './screens/SecuritySettingPassword';
 
-const Stack = createStackNavigator();
+type SecuritySettingParamList = {
+  SecuritySettingMain: undefined;
+  SecuritySettingPassword: undefined;
+};
+
+const Stack = createStackNavigator<SecuritySettingParamList>();
 
 const SecuritySettingRoute = () => {
   return (
@@ -19,4 +24,4 @@ const SecuritySettingRoute = () => {
   );
 };
 
-export { SecuritySettingRoute };
+export { SecuritySettingRoute, SecuritySettingParamList };

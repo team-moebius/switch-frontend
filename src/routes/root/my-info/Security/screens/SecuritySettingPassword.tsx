@@ -2,8 +2,18 @@ import { useState } from 'react';
 import { Flexbox, Typography } from 'src/components/atom';
 import { NumberPad } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+import { SecuritySettingParamList } from '..';
+import { commonNavigationProps } from 'src/routes';
 
-const SecuritySettingPassword = () => {
+interface SecuritySettingPasswordProps
+  extends commonNavigationProps<
+    SecuritySettingParamList,
+    'SecuritySettingPassword'
+  > {}
+
+const SecuritySettingPassword = ({
+  navigation,
+}: SecuritySettingPasswordProps) => {
   const [password, setPassword] = useState<string>('');
   return (
     <ScreenWrapper>

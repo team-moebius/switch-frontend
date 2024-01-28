@@ -2,8 +2,16 @@ import { useCallback, useState } from 'react';
 import { Box, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+import { SecuritySettingParamList } from '..';
+import { commonNavigationProps } from 'src/routes';
 
-const SecuritySettingMain = ({ navigation }) => {
+interface SecuritySettingMainProps
+  extends commonNavigationProps<
+    SecuritySettingParamList,
+    'SecuritySettingMain'
+  > {}
+
+const SecuritySettingMain = ({ navigation }: SecuritySettingMainProps) => {
   const [value, setValue] = useState<{
     usePassword: boolean;
     useBioPassword: boolean;
