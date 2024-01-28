@@ -7,7 +7,6 @@ import { Image } from './Image';
 import { Modal } from './Modal';
 import { Radio } from './Radio';
 import { Select } from './Select';
-import { Separator } from './Separator';
 import { Tag } from './Tag';
 import { Textarea } from './Textarea';
 import { TextInput } from './TextInput';
