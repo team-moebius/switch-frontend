@@ -1,5 +1,11 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Flexbox, Modal } from 'src/components/atom';
+import { useEffect, useRef, useState } from 'react';
+import {
+  Button,
+  Flexbox,
+  Modal as AccessDeviceModal,
+  Modal as SwitchCompleteModal,
+  Typography,
+} from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem, PressableIcon } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
@@ -167,7 +173,8 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 
 const ChatDetailScreen = ({ navigation }) => {
   const [chatText, setChatText] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [accessModalVisible, setAccessModalVisible] = useState(false);
+  const [completeModalVisible, setCompleteModalVisible] = useState(false);
 
   const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
   const scrollViewRef = useRef<FlatList | null>(null);
@@ -196,7 +203,7 @@ const ChatDetailScreen = ({ navigation }) => {
     }
 
     // 앨범 사진 서버로 보내기
-    setModalVisible(false);
+    setAccessModalVisible(false);
   };
 
   const openCameraHandler = async () => {
@@ -212,12 +219,8 @@ const ChatDetailScreen = ({ navigation }) => {
     }
 
     // 찍은 사진 서버로 보내기
-    setModalVisible(false);
+    setAccessModalVisible(false);
   };
-
-  const handleModalOpen = useCallback(() => {
-    setModalVisible((prev) => !prev);
-  }, []);
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
@@ -259,7 +262,7 @@ const ChatDetailScreen = ({ navigation }) => {
                 <Button
                   size='small'
                   type='normal'
-                  onPress={() => navigation.navigate('SwitchResult')}
+                  onPress={() => setCompleteModalVisible(true)}
                 >
                   스위치
                 </Button>
@@ -306,7 +309,7 @@ const ChatDetailScreen = ({ navigation }) => {
             <PressableIcon
               name={'image-outline'}
               size={24}
-              onPress={handleModalOpen}
+              onPress={() => setAccessModalVisible((prev) => !prev)}
             />
           }
           right={
@@ -318,13 +321,13 @@ const ChatDetailScreen = ({ navigation }) => {
           }
         />
       </Flexbox>
-      <Modal
-        visible={modalVisible}
+      <AccessDeviceModal
+        visible={accessModalVisible}
         width={'70%'}
         height={'25%'}
         position={'center'}
         backgroundColor={'#fefefe'}
-        onPressBack={() => setModalVisible(false)}
+        onPressBack={() => setAccessModalVisible(false)}
       >
         <Flexbox
           width={'100%'}
@@ -350,12 +353,69 @@ const ChatDetailScreen = ({ navigation }) => {
             </Button>
           </Flexbox.Item>
           <Flexbox.Item alignSelf={'center'} width='70%'>
-            <Button size='medium' type='cancel' onPress={handleModalOpen}>
+            <Button
+              size='medium'
+              type='cancel'
+              onPress={() => setAccessModalVisible(false)}
+            >
               취소
             </Button>
           </Flexbox.Item>
         </Flexbox>
-      </Modal>
+      </AccessDeviceModal>
+      <SwitchCompleteModal
+        visible={completeModalVisible}
+        width={'70%'}
+        height={'18%'}
+        position={'center'}
+        backgroundColor={'#fefefe'}
+        onPressBack={() => setCompleteModalVisible(false)}
+      >
+        <Flexbox
+          width={'100%'}
+          height={'100%'}
+          margin={'auto'}
+          padding={10}
+          gap={50}
+          flexDirection={'column'}
+          alignItems={'center'}
+          justifyContent={'center'}
+        >
+          <Flexbox.Item>
+            <Typography
+              fontSize={14}
+            >{`${'청둥오리'}님과 스위치를 완료하셨나요?`}</Typography>
+          </Flexbox.Item>
+          <Flexbox
+            alignItems={'center'}
+            justifyContent={'center'}
+            width={'100%'}
+            gap={10}
+          >
+            <Flexbox.Item flex={1}>
+              <Button
+                size='medium'
+                type='cancel'
+                onPress={() => setCompleteModalVisible(false)}
+              >
+                취소
+              </Button>
+            </Flexbox.Item>
+            <Flexbox.Item flex={1}>
+              <Button
+                size='medium'
+                type='normal'
+                onPress={() => {
+                  setCompleteModalVisible(false);
+                  navigation.navigate('SwitchResult');
+                }}
+              >
+                확인
+              </Button>
+            </Flexbox.Item>
+          </Flexbox>
+        </Flexbox>
+      </SwitchCompleteModal>
     </ScreenWrapper>
   );
 };
