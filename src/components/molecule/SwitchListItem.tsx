@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Button, Flexbox, Icon, Typography } from '../atom';
 import { WithImage } from '../template';
 import { fontSizeStyle } from '../template/WithImage';
@@ -33,6 +33,13 @@ const renderChildren = (
       imageWidth={100}
       imageHeight={100}
       imageResizeMode={'center'}
+      layoutStyle={{
+        mostOutlineLayout: {},
+        titleContainerLayout: {
+          maxWidth: '70%',
+        },
+        textBoxLayout: {},
+      }}
     />
   );
 };
@@ -55,19 +62,14 @@ const SwitchListItem = ({
   );
 
   return (
-    <Flexbox
-      gap={20}
-      flexDirection={'column'}
-      alignItems={'center'}
-      justifyContent={'center'}
-    >
-      <Flexbox.Item>
+    <Flexbox gap={20} flexDirection={'column'} alignItems={'center'}>
+      <Flexbox justifyContent='center'>
         <WithMirror
           renderItem={[childrenA, childrenB]}
           mirrorDirection={mirrorDirection}
           centerAxis={<Icon name={'code-outline'} size={20} />}
         />
-      </Flexbox.Item>
+      </Flexbox>
       <Flexbox justifyContent='center'>
         <Button type={'transparent'} size={'medium'} onPress={onPress}>
           <Typography fontSize={15} color={'blue'}>

@@ -1,5 +1,5 @@
-import { Box, Flexbox, Typography, Button, Icon } from 'src/components/atom';
-import { SwitchListItem } from 'src/components/molecule';
+import { Box, Flexbox, Typography } from 'src/components/atom';
+import { PressableIcon, SwitchListItem } from 'src/components/molecule';
 import { SwitchListItemProps } from 'src/components/molecule/SwitchListItem';
 
 interface RecordCardProps extends Pick<SwitchListItemProps, 'data'> {
@@ -21,11 +21,9 @@ const RecordCard = ({ data, date }: RecordCardProps) => {
         <Flexbox.Item flex={1}>
           <Typography fontSize={14}>{date}</Typography>
         </Flexbox.Item>
-        <Box width={30}>
-          <Button onPress={onCloseHandler} type={'transparent'} size={'small'}>
-            <Icon name='close' size={24} />
-          </Button>
-        </Box>
+        <Flexbox width={30} alignItems='center' justifyContent='center'>
+          <PressableIcon onPress={onCloseHandler} name={'close'} size={24} />
+        </Flexbox>
       </Flexbox>
       <SwitchListItem
         data={data}
