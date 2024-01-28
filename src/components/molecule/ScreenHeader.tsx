@@ -11,7 +11,7 @@ interface ScreenHeaderProps extends StackHeaderProps {
   backVisible?: boolean;
   containerStyle?: FlexboxProps;
   setModalVisible?: (value: React.SetStateAction<boolean>) => void;
-  isEditMode?: boolean;
+  isConfirmGoBack?: boolean;
 }
 
 const DEFAULT_STYLE = {
@@ -30,7 +30,7 @@ const ScreenHeader = ({
   navigation,
   containerStyle,
   setModalVisible,
-  isEditMode,
+  isConfirmGoBack,
 }: ScreenHeaderProps) => {
   const { color } = useContext(ThemeContext);
   // const routeName = getFocusedRouteNameFromRoute(route);
@@ -48,7 +48,7 @@ const ScreenHeader = ({
           {backVisible && navigation.canGoBack() && (
             <Pressable
               onPress={() => {
-                if (isEditMode && setModalVisible) {
+                if (isConfirmGoBack && setModalVisible) {
                   setModalVisible(true);
                 } else navigation.goBack();
               }}

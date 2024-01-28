@@ -260,7 +260,7 @@ const HomeRoute = ({ navigation }) => {
                   {...props}
                   center={'물품 수정하기'}
                   setModalVisible={setCancelModalVisible}
-                  isEditMode
+                  isConfirmGoBack
                 />
               );
             },
