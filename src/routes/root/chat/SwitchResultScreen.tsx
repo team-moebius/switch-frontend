@@ -79,7 +79,7 @@ const SwitchResultScreen = () => {
             rating={mannerRating}
             ratingHandler={(e) => ratingHandler(e, 'manner')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={16}
             ratingSize={24}
             itemJustify={'center'}
           >
@@ -91,7 +91,7 @@ const SwitchResultScreen = () => {
             rating={conditionRating}
             ratingHandler={(e) => ratingHandler(e, 'condition')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={16}
             ratingSize={24}
             itemJustify={'center'}
           >
