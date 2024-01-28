@@ -34,39 +34,68 @@ const ReportsScreen = ({ navigation }) => {
   const [confirmModalVisible, setConfirmModalVisible] = useState(false);
   return (
     <ScreenWrapper>
-      <Flexbox
-        flexDirection={'column'}
-        height={'100%'}
-        padding={20}
-        gap={20}
-        justifyContent={'flex-start'}
-        alignItems={'flex-start'}
-      >
-        <Flexbox.Item pb={20}>
-          <Typography
-            fontSize={18}
-          >{`'${'청둥오리'}' 님을 신고합니다.`}</Typography>
-        </Flexbox.Item>
-        <Flexbox.Item width={'100%'}>
-          <ReportButton onPress={() => setReportModalVisible(true)}>
-            비속어 사용
-          </ReportButton>
-        </Flexbox.Item>
-        <Flexbox.Item width={'100%'}>
-          <ReportButton onPress={() => setReportModalVisible(true)}>
-            업자 의심
-          </ReportButton>
-        </Flexbox.Item>
-        <Flexbox.Item width={'100%'}>
-          <ReportButton onPress={() => setReportModalVisible(true)}>
-            스위치 강요
-          </ReportButton>
-        </Flexbox.Item>
-        <Flexbox.Item width={'100%'}>
-          <ReportButton onPress={() => setReportModalVisible(true)}>
-            기타 사유
-          </ReportButton>
-        </Flexbox.Item>
+      <Flexbox flexDirection={'column'} height={'100%'} padding={20} gap={80}>
+        {/*게시글에서 신고하기 누른 경우*/}
+        <Flexbox
+          flexDirection={'column'}
+          gap={20}
+          justifyContent={'flex-start'}
+          alignItems={'flex-start'}
+        >
+          <Flexbox.Item pb={20}>
+            <Typography
+              fontSize={18}
+            >{`'${'커스텀 키보드'}' 게시물을 신고합니다.`}</Typography>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <ReportButton onPress={() => setReportModalVisible(true)}>
+              판매 금지 물품
+            </ReportButton>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <ReportButton onPress={() => setReportModalVisible(true)}>
+              광고성 게시글
+            </ReportButton>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <ReportButton onPress={() => setReportModalVisible(true)}>
+              기타 사유
+            </ReportButton>
+          </Flexbox.Item>
+        </Flexbox>
+
+        <Flexbox
+          flexDirection={'column'}
+          gap={20}
+          justifyContent={'flex-start'}
+          alignItems={'flex-start'}
+        >
+          <Flexbox.Item pb={20}>
+            <Typography
+              fontSize={18}
+            >{`'${'청둥오리'}' 님을 신고합니다.`}</Typography>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <ReportButton onPress={() => setReportModalVisible(true)}>
+              비속어 사용
+            </ReportButton>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <ReportButton onPress={() => setReportModalVisible(true)}>
+              업자 의심
+            </ReportButton>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <ReportButton onPress={() => setReportModalVisible(true)}>
+              스위치 강요
+            </ReportButton>
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'}>
+            <ReportButton onPress={() => setReportModalVisible(true)}>
+              기타 사유
+            </ReportButton>
+          </Flexbox.Item>
+        </Flexbox>
       </Flexbox>
       <ReportModal
         visible={reportModalVisible}
