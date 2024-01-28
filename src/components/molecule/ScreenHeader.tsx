@@ -10,6 +10,8 @@ interface ScreenHeaderProps extends StackHeaderProps {
   right?: ReactNode;
   backVisible?: boolean;
   containerStyle?: FlexboxProps;
+  setModalVisible?: (value: React.SetStateAction<boolean>) => void;
+  isEditMode?: boolean;
 }
 
 const DEFAULT_STYLE = {
@@ -27,6 +29,8 @@ const ScreenHeader = ({
   // back,
   navigation,
   containerStyle,
+  setModalVisible,
+  isEditMode,
 }: ScreenHeaderProps) => {
   const { color } = useContext(ThemeContext);
   // const routeName = getFocusedRouteNameFromRoute(route);
@@ -44,7 +48,9 @@ const ScreenHeader = ({
           {backVisible && navigation.canGoBack() && (
             <Pressable
               onPress={() => {
-                navigation.goBack();
+                if (isEditMode && setModalVisible) {
+                  setModalVisible(true);
+                } else navigation.goBack();
               }}
             >
               <Icon size={24} name={'chevron-back'} />
