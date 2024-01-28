@@ -7,8 +7,10 @@ import {
   Icon,
   Modal as MyItemOptionModal,
   Modal as UserControlModal,
+  Modal as DeclineSwitchModal,
   Tag,
   TextInput,
+  Typography,
 } from 'src/components/atom';
 
 import {
@@ -69,7 +71,7 @@ const HomeRouteHeader = ({
 const HomeRoute = ({ navigation }) => {
   const [myItemModalVisible, setMyItemModalVisible] = useState(false);
   const [userModalVisible, setUserModalVisible] = useState(false);
-
+  const [declineModalVisible, setDeclineModalVisible] = useState(false);
   return (
     <>
       <Stack.Navigator>
@@ -306,7 +308,7 @@ const HomeRoute = ({ navigation }) => {
             <Button
               type='normal'
               size='medium'
-              onPress={() => console.debug('스위치 거절')}
+              onPress={() => setDeclineModalVisible(true)}
             >
               스위치 거절
             </Button>
@@ -324,6 +326,60 @@ const HomeRoute = ({ navigation }) => {
             </Button>
           </Flexbox.Item>
         </Flexbox>
+        <DeclineSwitchModal
+          visible={declineModalVisible}
+          width={'70%'}
+          height={'18%'}
+          position={'center'}
+          backgroundColor={'#fefefe'}
+          onPressBack={() => setDeclineModalVisible(false)}
+        >
+          <Flexbox
+            width={'100%'}
+            height={'100%'}
+            margin={'auto'}
+            padding={10}
+            gap={50}
+            flexDirection={'column'}
+            alignItems={'center'}
+            justifyContent={'center'}
+          >
+            <Flexbox.Item>
+              <Typography
+                fontSize={14}
+              >{`${'청둥오리'}님의 스위치 제안을 거절 하시겠어요?`}</Typography>
+            </Flexbox.Item>
+            <Flexbox
+              alignItems={'center'}
+              justifyContent={'center'}
+              width={'100%'}
+              gap={10}
+            >
+              <Flexbox.Item flex={1}>
+                <Button
+                  size='medium'
+                  type='cancel'
+                  onPress={() => setDeclineModalVisible(false)}
+                >
+                  취소
+                </Button>
+              </Flexbox.Item>
+              <Flexbox.Item flex={1}>
+                <Button
+                  size='medium'
+                  type='normal'
+                  onPress={() => {
+                    setDeclineModalVisible(false);
+                    setUserModalVisible(false);
+                    navigation.navigate('HomeMain');
+                  }}
+                >
+                  확인
+                </Button>
+              </Flexbox.Item>
+            </Flexbox>
+          </Flexbox>
+        </DeclineSwitchModal>
       </UserControlModal>
     </>
   );
