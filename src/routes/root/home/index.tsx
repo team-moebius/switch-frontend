@@ -5,7 +5,8 @@ import {
   Button,
   Flexbox,
   Icon,
-  Modal,
+  Modal as MyItemOptionModal,
+  Modal as UserControlModal,
   Tag,
   TextInput,
 } from 'src/components/atom';
@@ -65,12 +66,9 @@ const HomeRouteHeader = ({
   );
 };
 
-const HomeRoute = () => {
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const handleModalOpen = useCallback(() => {
-    setModalVisible((prev) => !prev);
-  }, []);
+const HomeRoute = ({ navigation }) => {
+  const [myItemModalVisible, setMyItemModalVisible] = useState(false);
+  const [userModalVisible, setUserModalVisible] = useState(false);
 
   return (
     <>
@@ -152,7 +150,7 @@ const HomeRoute = () => {
                       <PressableIcon
                         size={24}
                         name={'menu'}
-                        onPress={handleModalOpen}
+                        onPress={() => setMyItemModalVisible((prev) => !prev)}
                       />
                     </Flexbox>
                   }
@@ -165,7 +163,21 @@ const HomeRoute = () => {
             component={ChatDetailScreen}
             options={{
               header: (props) => {
-                return <ScreenHeader {...props} center={'채팅 상대 닉네임'} />;
+                return (
+                  <ScreenHeader
+                    {...props}
+                    center={'채팅 상대 닉네임'}
+                    right={
+                      <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                        <PressableIcon
+                          size={24}
+                          name={'menu'}
+                          onPress={() => setUserModalVisible((prev) => !prev)}
+                        />
+                      </Flexbox>
+                    }
+                  />
+                );
               },
             }}
           />
@@ -233,12 +245,12 @@ const HomeRoute = () => {
           />
         </Stack.Group>
       </Stack.Navigator>
-      <Modal
-        visible={modalVisible}
+      <MyItemOptionModal
+        visible={myItemModalVisible}
         width={'50%'}
         height={'15%'}
         backgroundColor={'#fefefe'}
-        onPressBack={() => setModalVisible(false)}
+        onPressBack={() => setMyItemModalVisible(false)}
         position={'center'}
       >
         <Flexbox
@@ -265,14 +277,54 @@ const HomeRoute = () => {
               size='medium'
               onPress={() => {
                 console.debug('삭제');
-                setModalVisible(false);
+                setMyItemModalVisible(false);
               }}
             >
               삭제
             </Button>
           </Flexbox.Item>
         </Flexbox>
-      </Modal>
+      </MyItemOptionModal>
+      <UserControlModal
+        visible={userModalVisible}
+        width={'50%'}
+        height={'15%'}
+        backgroundColor={'#fefefe'}
+        onPressBack={() => setUserModalVisible(false)}
+        position={'center'}
+      >
+        <Flexbox
+          width={'100%'}
+          height={'100%'}
+          margin={'auto'}
+          flexDirection={'column'}
+          justifyContent={'center'}
+          alignItems={'center'}
+          gap={10}
+        >
+          <Flexbox.Item margin={'auto'}>
+            <Button
+              type='normal'
+              size='medium'
+              onPress={() => console.debug('스위치 거절')}
+            >
+              스위치 거절
+            </Button>
+          </Flexbox.Item>
+          <Flexbox.Item margin={'auto'}>
+            <Button
+              type='cancel'
+              size='medium'
+              onPress={() => {
+                setUserModalVisible(false);
+                navigation.navigate('Report');
+              }}
+            >
+              신고 및 차단
+            </Button>
+          </Flexbox.Item>
+        </Flexbox>
+      </UserControlModal>
     </>
   );
 };
