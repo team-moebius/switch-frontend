@@ -4,7 +4,9 @@ import {
   Button,
   Flexbox,
   Modal as FeedbackModal,
+  Modal as LogoutModal,
   Typography,
+  Separator,
 } from 'src/components/atom';
 import { ButtonProps } from 'src/components/atom/Button';
 import { ScreenWrapper } from 'src/components/template';
@@ -30,14 +32,11 @@ const SettingButton = ({
 };
 
 const SettingMainScreen = ({ navigation }) => {
-  const [modalVisible, setModalVisible] = useState(false);
-
-  const handleModalOpen = useCallback(() => {
-    setModalVisible((prev) => !prev);
-  }, []);
+  const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
   const pressFeedbackDirect = useCallback(() => {
-    setModalVisible(false);
+    setFeedbackModalVisible(false);
     navigation.navigate('Feedback');
   }, [navigation]);
 
@@ -52,22 +51,21 @@ const SettingMainScreen = ({ navigation }) => {
       <SettingButton onPress={() => navigation.navigate('Security')}>
         보안 설정
       </SettingButton>
-      {/* 은지님이 만든 separator로 바꿔주기 */}
-      <Box
-        mb={10}
-        mt={10}
-        height={1}
-        width={'100%'}
-        backgroundColor='#000000'
-      />
+
+      <Separator width={'100%'} />
+
       <SettingButton onPress={() => navigation.navigate('Version')}>
         버전
       </SettingButton>
-      <SettingButton onPress={handleModalOpen}>피드백</SettingButton>
-      <SettingButton onPress={() => alert('로그아웃!')}>로그아웃</SettingButton>
+      <SettingButton onPress={() => setFeedbackModalVisible(true)}>
+        피드백
+      </SettingButton>
+      <SettingButton onPress={() => setLogoutModalVisible(true)}>
+        로그아웃
+      </SettingButton>
       <FeedbackModal
-        visible={modalVisible}
-        onPressBack={() => setModalVisible(false)}
+        visible={feedbackModalVisible}
+        onPressBack={() => setFeedbackModalVisible(false)}
         backgroundColor={'#fefefe'}
         width={'70%'}
         height={'35%'}
@@ -107,13 +105,68 @@ const SettingMainScreen = ({ navigation }) => {
               </Button>
             </Flexbox.Item>
             <Flexbox.Item width='90%'>
-              <Button size='medium' type='cancel' onPress={handleModalOpen}>
+              <Button
+                size='medium'
+                type='cancel'
+                onPress={() => setFeedbackModalVisible(false)}
+              >
                 취소
               </Button>
             </Flexbox.Item>
           </Flexbox>
         </Flexbox>
       </FeedbackModal>
+      <LogoutModal
+        visible={logoutModalVisible}
+        width={'70%'}
+        height={'18%'}
+        position={'center'}
+        backgroundColor={'#fefefe'}
+        onPressBack={() => setLogoutModalVisible(false)}
+      >
+        <Flexbox
+          width={'100%'}
+          height={'100%'}
+          margin={'auto'}
+          padding={10}
+          gap={50}
+          flexDirection={'column'}
+          alignItems={'center'}
+          justifyContent={'center'}
+        >
+          <Flexbox.Item>
+            <Typography fontSize={14}>로그아웃을 하시겠어요?</Typography>
+          </Flexbox.Item>
+          <Flexbox
+            alignItems={'center'}
+            justifyContent={'center'}
+            width={'100%'}
+            gap={10}
+          >
+            <Flexbox.Item flex={1}>
+              <Button
+                size='medium'
+                type='cancel'
+                onPress={() => setLogoutModalVisible(false)}
+              >
+                취소
+              </Button>
+            </Flexbox.Item>
+            <Flexbox.Item flex={1}>
+              <Button
+                size='medium'
+                type='normal'
+                onPress={() => {
+                  setLogoutModalVisible(false);
+                  navigation.navigate('Sign');
+                }}
+              >
+                확인
+              </Button>
+            </Flexbox.Item>
+          </Flexbox>
+        </Flexbox>
+      </LogoutModal>
     </ScreenWrapper>
   );
 };
