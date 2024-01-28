@@ -76,14 +76,6 @@ const SwitchDetailForm = ({
     oppositeCategories,
   } = data;
 
-  const handleAddressModalOpen = useCallback(() => {
-    setAddressModalVisible((prev) => !prev);
-  }, []);
-
-  const handleAttentionModalOpen = useCallback(() => {
-    setAttentionModalVisible((prev) => !prev);
-  }, []);
-
   const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
     setData((prev) => ({ ...prev, ...change }));
   }, []);
@@ -223,7 +215,7 @@ const SwitchDetailForm = ({
             <PressableIcon
               size={32}
               name={'add-circle'}
-              onPress={handleAddressModalOpen}
+              onPress={() => setAddressModalVisible((prev) => !prev)}
             />
           </Flexbox>
           <Flexbox width={'100%'} justifyContent='center'>
@@ -253,7 +245,7 @@ const SwitchDetailForm = ({
           <Flexbox>
             <Typography fontSize={14}>게시글 작성 유의사항</Typography>
           </Flexbox>
-          <Pressable onPress={handleAttentionModalOpen}>
+          <Pressable onPress={() => setAttentionModalVisible((prev) => !prev)}>
             <Flexbox alignItems='center' justifyContent='flex-end'>
               <Typography fontSize={14}>확인하기</Typography>
               <Icon name='chevron-up' size={24} />
