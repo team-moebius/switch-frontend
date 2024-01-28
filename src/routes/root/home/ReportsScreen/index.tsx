@@ -126,7 +126,7 @@ const ReportsScreen = ({ navigation }) => {
           onPressBack={() => setConfirmModalVisible(false)}
           backgroundColor={'#fefefe'}
           width={'70%'}
-          height={'15%'}
+          height={130}
           position={'center'}
         >
           <Flexbox
@@ -134,10 +134,10 @@ const ReportsScreen = ({ navigation }) => {
             height={'100%'}
             margin={'auto'}
             padding={20}
-            gap={50}
             flexDirection={'column'}
+            justifyContent={'space-between'}
             alignItems={'center'}
-            justifyContent={'center'}
+            gap={40}
           >
             <Flexbox.Item>
               <Typography
