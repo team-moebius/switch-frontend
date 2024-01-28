@@ -185,7 +185,6 @@ const SwitchDetailForm = ({
             <Flexbox
               flexDirection={'column'}
               justifyContent={'space-between'}
-              height={'auto'}
               gap={5}
             >
               <Typography color={'black'} fontSize={14}>
@@ -220,7 +219,6 @@ const SwitchDetailForm = ({
           </Flexbox>
           <Flexbox width={'100%'} justifyContent='center'>
             <Flexbox
-              height={48}
               width={'90%'}
               padding={10}
               backgroundColor={'#0cd092'}
@@ -252,12 +250,7 @@ const SwitchDetailForm = ({
             </Flexbox>
           </Pressable>
         </Flexbox>
-        <Flexbox
-          width={'100%'}
-          height={'10%'}
-          alignItems={'center'}
-          justifyContent={'center'}
-        >
+        <Flexbox width={'100%'} alignItems={'center'} justifyContent={'center'}>
           <Box width={'90%'} pt={20}>
             <Button
               type='normal'
