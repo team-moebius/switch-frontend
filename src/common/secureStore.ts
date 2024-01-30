@@ -1,6 +1,10 @@
 import { deleteItemAsync, getItemAsync, setItemAsync } from 'expo-secure-store';
 import { wrapLogging } from 'src/utils/wrapLogging';
 
+const TOKEN = 'token';
+const USERNAME = 'username';
+const APP_PASSWORD = 'app_password';
+
 const setToken = (key: string, jwtToken: string) => setItemAsync(key, jwtToken);
 
 const getToken = (key: string) => getItemAsync(key);
@@ -22,4 +26,4 @@ const expoSecureStore = {
   }),
 };
 
-export { expoSecureStore };
+export { expoSecureStore, TOKEN, USERNAME, APP_PASSWORD };
