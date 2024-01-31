@@ -6,29 +6,36 @@ import { UserContext } from 'src/context/user';
 
 import { SignRoute } from './sign';
 import { RootTabs } from './root';
+import { AppPasswordContext } from 'src/context/password';
+import { AppUnlock } from './AppUnlock';
 
+export type StackParamList = {
+  Root: undefined;
+  Sign: undefined;
+  AppUnlock: undefined;
+};
 
-const Stack = createStackNavigator();
+const Stack = createStackNavigator<StackParamList>();
 
 const NavigationRouter = () => {
   const { user } = useContext(UserContext);
+  const {
+    appPasswordList: { isSetPassword },
+  } = useContext(AppPasswordContext);
 
   return (
     <NavigationContainer>
-      <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Navigator
+        screenOptions={{ headerShown: false }}
+        initialRouteName={
+          user ? (isSetPassword ? 'AppUnlock' : 'Root') : 'Sign'
+        }
+      >
         {/* if user signed in, route home */}
         <Stack.Group navigationKey={user === null ? 'Sign' : 'Main'}>
-          {user ? (
-            <>
-              <Stack.Screen name={'Root'} component={RootTabs} />
-              <Stack.Screen name={'Sign'} component={SignRoute} />
-            </>
-          ) : (
-            <>
-              <Stack.Screen name={'Sign'} component={SignRoute} />
-              <Stack.Screen name={'Root'} component={RootTabs} />
-            </>
-          )}
+          <Stack.Screen name={'AppUnlock'} component={AppUnlock} />
+          <Stack.Screen name={'Root'} component={RootTabs} />
+          <Stack.Screen name={'Sign'} component={SignRoute} />
         </Stack.Group>
       </Stack.Navigator>
     </NavigationContainer>
