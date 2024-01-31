@@ -10,7 +10,7 @@ import { SecuritySettingParamList } from '..';
 import PALETTE from 'src/assets/theme/palettes';
 
 interface SecuritySettingPasswordProps
-  extends commonNavigationProps<
+  extends StackScreenProps<
     SecuritySettingParamList,
     'SecuritySettingPassword'
   > {}
