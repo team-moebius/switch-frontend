@@ -21,6 +21,7 @@ interface ToggleProps {
   iconB?: ReactNode;
   selectColor?: Color;
   backgroundColor?: Color;
+  disabled?: boolean;
 }
 
 const Toggle = ({
@@ -30,12 +31,14 @@ const Toggle = ({
   iconB,
   selectColor = '#FFFFFF',
   backgroundColor = '#2ECC71',
+  disabled = false,
 }: ToggleProps) => {
   const absolutePositions = useMemo(() => {
     return value === false ? { left: 0 } : { right: 0 };
   }, [value]);
   return (
     <Pressable
+      disabled={disabled}
       onPress={handleOnPress}
       style={[defaultWrapper, { backgroundColor }]}
     >
