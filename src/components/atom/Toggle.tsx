@@ -49,6 +49,7 @@ const Toggle = ({
         width={40}
         height={28}
         borderRadius={15}
+        border={'1 solid #ccc'}
       />
       {iconA}
       {iconB}
