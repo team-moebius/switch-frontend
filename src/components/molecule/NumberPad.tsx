@@ -128,4 +128,4 @@ const NumberPad = ({ value, maxLength, onChange }: NumberPadProps) => {
   );
 };
 
-export { NumberPad };
+export { NumberPad, NumberPadProps };
