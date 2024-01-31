@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useMemo, useState } from 'react';
+
 import { Flexbox, Typography } from 'src/components/atom';
 import { NumberPad } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
@@ -21,10 +22,12 @@ const SecuritySettingPassword = ({
 
   const handlePassword = (value: string) => {
     if (value === 'reset') {
+      // 리셋버튼을 누르면 처음부터 다시 입력할 수 있도록
       setIsFailtoConfirm(false);
       setConfirmPassword('');
       setPassword('');
     } else if (password.length >= 4) {
+      // 패스워드 4자리를 입력 후 비밀번호 확인을 입력할 수 있도록 안내 문구가 다시 노출될 수 있게 하기
       isFailtoConfirm ?? setIsFailtoConfirm(false);
       setConfirmPassword(`${value}`);
     } else {
@@ -32,16 +35,20 @@ const SecuritySettingPassword = ({
     }
   };
 
-  const infomatioinMessage = isFailtoConfirm ? (
-    // 비밀번호가 일치하지 않았을 때
-    <Typography fontSize={16} color={PALETTE.color.error}>
-      비밀번호가 일치하지 않습니다. 다시 입력해주세요.
-    </Typography>
-  ) : password.length >= 4 ? (
-    // 패스워드 4자리를 입력 후 비밀번호를 확인할 수 있도록 안내
-    <Typography fontSize={16}>한 번 더 비밀번호를 입력하세요.</Typography>
-  ) : (
-    <Typography fontSize={16}>새로운 비밀번호를 입력하세요.</Typography>
+  const infomatioinMessage = useMemo(
+    () =>
+      isFailtoConfirm ? (
+        // 비밀번호가 일치하지 않았을 때
+        <Typography fontSize={16} color={PALETTE.color.error}>
+          비밀번호가 일치하지 않습니다. 다시 입력해주세요.
+        </Typography>
+      ) : password.length >= 4 ? (
+        // 패스워드 4자리를 입력 후 비밀번호를 확인할 수 있도록 안내
+        <Typography fontSize={16}>한 번 더 비밀번호를 입력하세요.</Typography>
+      ) : (
+        <Typography fontSize={16}>새로운 비밀번호를 입력하세요.</Typography>
+      ),
+    [isFailtoConfirm, password]
   );
 
   useEffect(() => {
