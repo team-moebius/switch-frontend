@@ -1,10 +1,12 @@
 import { useContext, useEffect, useMemo, useState } from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
 
-import { Flexbox, Typography } from 'src/components/atom';
-import { NumberPad } from 'src/components/molecule';
-import { ScreenWrapper } from 'src/components/template';
+import { Typography } from 'src/components/atom';
+import { ScreenWrapper, UnlockPassword } from 'src/components/template';
+
+import { AppPasswordContext } from 'src/context/password';
+
 import { SecuritySettingParamList } from '..';
-import { commonNavigationProps } from 'src/routes';
 import PALETTE from 'src/assets/theme/palettes';
 
 interface SecuritySettingPasswordProps
@@ -16,6 +18,8 @@ interface SecuritySettingPasswordProps
 const SecuritySettingPassword = ({
   navigation,
 }: SecuritySettingPasswordProps) => {
+  const { setPassword: setExpoSecurity } = useContext(AppPasswordContext);
+
   const [password, setPassword] = useState<string>('');
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [isFailtoConfirm, setIsFailtoConfirm] = useState(false);
@@ -55,6 +59,7 @@ const SecuritySettingPassword = ({
     if (password.length >= 4) setIsFailtoConfirm(false);
     if (confirmPassword.length >= 4) {
       if (password === confirmPassword) {
+        setExpoSecurity(password);
         navigation.navigate('SecuritySettingMain');
       } else {
         setIsFailtoConfirm(true);
@@ -66,26 +71,12 @@ const SecuritySettingPassword = ({
 
   return (
     <ScreenWrapper>
-      <Flexbox height={'100%'} flexDirection={'column'} alignItems={'center'}>
-        <Flexbox.Item flex={1} mt={20} mb={24}>
-          <Flexbox flexDirection={'row'} height={'100%'} alignItems={'center'}>
-            {infomatioinMessage}
-          </Flexbox>
-        </Flexbox.Item>
-        <Flexbox.Item flex={4}>
-          <Flexbox
-            height={'100%'}
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
-            <NumberPad
-              value={password.length >= 4 ? confirmPassword : password}
-              maxLength={4}
-              onChange={handlePassword}
-            />
-          </Flexbox>
-        </Flexbox.Item>
-      </Flexbox>
+      <UnlockPassword
+        value={password.length >= 4 ? confirmPassword : password}
+        maxLength={4}
+        onChange={handlePassword}
+        notice={infomatioinMessage}
+      />
     </ScreenWrapper>
   );
 };

@@ -1,20 +1,12 @@
-import { useContext, useEffect, useMemo } from 'react';
-import { NavigationContainer, RouteProp } from '@react-navigation/native';
-
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { useContext } from 'react';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
 
 import { UserContext } from 'src/context/user';
 
 import { SignRoute } from './sign';
 import { RootTabs } from './root';
 
-export interface commonNavigationProps<T extends {}, U extends keyof T> {
-  navigation: StackNavigationProp<T, U>;
-  route: RouteProp<T, U>;
-}
 
 const Stack = createStackNavigator();
 
