@@ -1,35 +1,36 @@
-import { useCallback, useState } from 'react';
-import { Box, Flexbox, Typography } from 'src/components/atom';
+import { useCallback, useContext } from 'react';
+import { Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { SecuritySettingParamList } from '..';
-import { commonNavigationProps } from 'src/routes';
+
+import { AppPasswordContext } from 'src/context/password';
+import { StackScreenProps } from '@react-navigation/stack';
 
 interface SecuritySettingMainProps
-  extends commonNavigationProps<
-    SecuritySettingParamList,
-    'SecuritySettingMain'
-  > {}
+  extends StackScreenProps<SecuritySettingParamList, 'SecuritySettingMain'> {}
 
 const SecuritySettingMain = ({ navigation }: SecuritySettingMainProps) => {
-  const [value, setValue] = useState<{
-    usePassword: boolean;
-    useBioPassword: boolean;
-  }>({ usePassword: false, useBioPassword: false });
-  const { usePassword, useBioPassword } = value;
+  const {
+    appPasswordList: { isSetPassword, isSetBioPassword },
+    setBioPassword,
+    isBiometricAuth,
+  } = useContext(AppPasswordContext);
 
-  const changeHandler = useCallback(
-    (value: Partial<{ usePassword: boolean; useBioPassword: boolean }>) => {
-      setValue((prev) => ({ ...prev, ...value }));
-    },
-    []
-  );
-
-  const passwordChangeHandler = useCallback((value: boolean) => {
+  const passwordHandler = useCallback((value: boolean) => {
     if (value === true) {
       navigation.navigate('SecuritySettingPassword');
+    } else {
+      navigation.navigate('SecurityUnlock', { value: 'PASSWORD' });
     }
-    changeHandler({ usePassword: value });
+  }, []);
+
+  const bioPasswordHandler = useCallback((value: boolean) => {
+    if (value === true) {
+      setBioPassword();
+    } else {
+      navigation.navigate('SecurityUnlock', { value: 'BIO_PASSWORD' });
+    }
   }, []);
 
   return (
@@ -49,26 +50,31 @@ const SecuritySettingMain = ({ navigation }: SecuritySettingMainProps) => {
           }
           name={'usePassword'}
           fieldType={'toggle'}
-          value={usePassword}
-          onChange={({ usePassword }) => passwordChangeHandler(usePassword)}
+          value={isSetPassword}
+          onChange={({ usePassword }) => passwordHandler(usePassword)}
         />
-        <Field
-          labelLayout={{ flex: 1 }}
-          childrenLayout={{ flex: 0.5 }}
-          labelAlign='center'
-          label={
-            <Flexbox flexDirection='column' gap={5}>
-              <Typography fontSize={20}>생체 정보 등록</Typography>
-              <Typography fontSize={12}>
-                앱을 시작할 때 생체 인식을 사용합니다.
-              </Typography>
-            </Flexbox>
-          }
-          name={'useBioPassword'}
-          fieldType={'toggle'}
-          value={useBioPassword}
-          onChange={changeHandler}
-        />
+        {isBiometricAuth && isSetPassword && (
+          <Field
+            labelLayout={{ flex: 1 }}
+            childrenLayout={{ flex: 0.5 }}
+            disabled={!isSetPassword}
+            labelAlign='center'
+            label={
+              <Flexbox flexDirection='column' gap={5}>
+                <Typography fontSize={20}>생체 정보 등록</Typography>
+                <Typography fontSize={12}>
+                  앱을 시작할 때 생체 인식을 사용합니다.
+                </Typography>
+              </Flexbox>
+            }
+            name={'useBioPassword'}
+            fieldType={'toggle'}
+            value={isSetBioPassword}
+            onChange={({ useBioPassword }) => {
+              bioPasswordHandler(useBioPassword);
+            }}
+          />
+        )}
       </Flexbox>
     </ScreenWrapper>
   );
