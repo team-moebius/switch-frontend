@@ -4,6 +4,7 @@ import { wrapLogging } from 'src/utils/wrapLogging';
 const TOKEN = 'token';
 const USERNAME = 'username';
 const APP_PASSWORD = 'app_password';
+const APP_BIO_PASSWORD = 'app_bio_password';
 
 const setToken = (key: string, jwtToken: string) => setItemAsync(key, jwtToken);
 
@@ -26,4 +27,4 @@ const expoSecureStore = {
   }),
 };
 
-export { expoSecureStore, TOKEN, USERNAME, APP_PASSWORD };
+export { expoSecureStore, TOKEN, USERNAME, APP_PASSWORD, APP_BIO_PASSWORD };
