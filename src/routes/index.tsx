@@ -9,13 +9,13 @@ import { RootTabs } from './root';
 import { AppPasswordContext } from 'src/context/password';
 import { AppUnlock } from './AppUnlock';
 
-export type StackParamList = {
+export type NavigationRouterParamList = {
   Root: undefined;
   Sign: undefined;
   AppUnlock: undefined;
 };
 
-const Stack = createStackNavigator<StackParamList>();
+const Stack = createStackNavigator<NavigationRouterParamList>();
 
 const NavigationRouter = () => {
   const { user } = useContext(UserContext);

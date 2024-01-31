@@ -7,10 +7,10 @@ import { ScreenWrapper, UnlockPassword } from 'src/components/template';
 
 import { AppPasswordContext } from 'src/context/password';
 
-import { StackParamList } from 'src/routes';
+import { NavigationRouterParamList } from 'src/routes';
 
 interface AppUnlockProps
-  extends StackScreenProps<StackParamList, 'AppUnlock'> {}
+  extends StackScreenProps<NavigationRouterParamList, 'AppUnlock'> {}
 
 const AppUnlock = ({ navigation }: AppUnlockProps) => {
   const { unlockPassword, unlockBioPassword, appPasswordList } =

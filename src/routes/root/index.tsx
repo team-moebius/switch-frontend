@@ -5,7 +5,15 @@ import { HomeRoute } from './home';
 import { MyInfoRoute } from './my-info';
 import { RegisterRoute } from './register';
 
-const Tab = createBottomTabNavigator();
+type RootTabsParamList = {
+  Home: undefined;
+  Favorite: undefined;
+  Register: undefined;
+  Chat: undefined;
+  MyInfo: undefined;
+};
+
+const Tab = createBottomTabNavigator<RootTabsParamList>();
 
 const RootTabs = () => {
   return (
@@ -19,4 +27,4 @@ const RootTabs = () => {
   );
 };
 
-export { RootTabs };
+export { RootTabs, RootTabsParamList };

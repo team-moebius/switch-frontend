@@ -15,12 +15,27 @@ import {
 } from '@team-moebius/api-typescript';
 import { UserApi } from 'src/api';
 
-const SubmitValidationCode = ({ navigation, route }) => {
+import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { SignUpRouteParamList } from '.';
+import { NavigationRouterParamList } from 'src/routes';
+
+interface SubmitValidationCodeProps
+  extends StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'> {}
+
+const SubmitValidationCode = ({ route }: SubmitValidationCodeProps) => {
   const [state, setState] = useState<LoginRequest>({
-    phone: route?.params?.phoneNumber,
+    phone: route.params.phoneNumber,
     verifiedCode: '',
   });
   const { login } = useContext(UserContext);
+  const { navigation } =
+    useNavigation<
+      CompositeScreenProps<
+        StackScreenProps<NavigationRouterParamList, 'Root'>,
+        StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'>
+      >
+    >();
 
   const { mutate: validationCodeMutate } = useCommonMutation<
     LoginResponse,
@@ -37,7 +52,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
 
       login();
 
-      navigation?.reset({
+      navigation.reset({
         index: 0,
         routes: [{ name: 'Root' }],
       });

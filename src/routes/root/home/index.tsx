@@ -16,7 +16,17 @@ import { RegisteredListScreen } from './RegisteredListScreen';
 import { ReportsScreen } from './ReportsScreen';
 import { PressableIcon } from 'src/components/molecule';
 
-const Stack = createStackNavigator();
+import { ItemResponse } from '@team-moebius/api-typescript';
+
+type HomeRouteParamList = {
+  HomeMain: undefined;
+  SwitchDetail: ItemResponse;
+  RegisteredList: undefined;
+  Notifications: undefined;
+  Report: undefined;
+};
+
+const Stack = createStackNavigator<HomeRouteParamList>();
 
 const HomeRouteHeader = ({
   onSearch,
@@ -172,4 +182,4 @@ const HomeRoute = () => {
   );
 };
 
-export { HomeRoute };
+export { HomeRoute, HomeRouteParamList };
