@@ -1,5 +1,9 @@
 import { InfiniteData } from 'react-query';
-import { SliceItem } from 'src/hooks/useCommonInfiniteQuery';
+import { SliceItem as CommonSlice } from '@team-moebius/api-typescript/dist/src/model/slice-item';
+
+interface SliceItem<T> extends Omit<CommonSlice, 'content'> {
+  content: Array<T>;
+}
 
 export const getPageableContent = (
   data: InfiniteData<SliceItem<any>> | undefined
