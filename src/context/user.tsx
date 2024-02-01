@@ -1,19 +1,15 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { expoSecureStore } from 'src/common/secureStore';
+import { expoSecureStore, USER_ID } from 'src/common/secureStore';
 
 // TODO: DTO 설계 참고하여 추후 설계 필요
-interface User {
-  name: string;
-}
-
 interface UserContextProps {
-  user: User | null;
+  userId: string | null;
   loading: boolean;
   login: () => void;
   logout: () => void;
 }
 const USER_CONTEXT_DEFAULT: UserContextProps = {
-  user: null,
+  userId: null,
   loading: false,
   login: () => undefined,
   logout: () => undefined,
@@ -26,16 +22,16 @@ interface UserContextProviderProps {
 }
 
 const UserContextProvider = ({ children }: UserContextProviderProps) => {
-  const [user, setUser] = useState<User | null>(null);
+  const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   const login = async () => {
     setLoading(true);
 
     const token = await expoSecureStore.getToken('token');
-    const username = await expoSecureStore.getToken('username');
+    const userId = await expoSecureStore.getToken(USER_ID);
 
-    if (token && username) setUser({ name: username });
+    if (token && userId) setUserId(userId);
 
     return setLoading(false);
   };
@@ -46,7 +42,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     await expoSecureStore.deleteToken('token');
     await expoSecureStore.deleteToken('username');
 
-    setUser(null);
+    setUserId(null);
 
     return setLoading(false);
   };
@@ -57,7 +53,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, loading, login, logout }}>
+    <UserContext.Provider value={{ userId, loading, login, logout }}>
       {children}
     </UserContext.Provider>
   );
