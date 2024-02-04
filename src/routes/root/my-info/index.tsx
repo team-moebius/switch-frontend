@@ -66,7 +66,7 @@ const MyInfoRoute = () => {
               return (
                 <ScreenHeader
                   {...props}
-                  title={'내 정보 편집하기'}
+                  center={'내 정보 편집하기'}
                   right={
                     <Flexbox width={'100%'} justifyContent={'flex-end'}>
                       <Button
@@ -107,7 +107,7 @@ const MyInfoRoute = () => {
           component={SettingScreen}
           options={{
             header: (props) => (
-              <ScreenHeader {...props} title={'스위치 설정'} />
+              <ScreenHeader {...props} center={'스위치 설정'} />
             ),
           }}
         />

@@ -43,7 +43,7 @@ const Content = ({
         <Typography fontSize={15}>{desc}</Typography>
       </Flexbox.Item>
       <Flexbox alignItems='center' gap={5}>
-        <Icon name={'code-outline'} size={20} />
+        <Icon name={'swap-horizontal'} size={20} />
         <Typography fontSize={15}>{wantedItem}</Typography>
       </Flexbox>
       <Flexbox alignItems='center' gap={5}>
