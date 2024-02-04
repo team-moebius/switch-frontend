@@ -1,11 +1,4 @@
-import {
-  Box,
-  Flexbox,
-  Icon,
-  Typography,
-  Button,
-  Check,
-} from 'src/components/atom';
+import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
 import { ScrollView, Pressable, useWindowDimensions } from 'react-native';
 import {
   Field,
