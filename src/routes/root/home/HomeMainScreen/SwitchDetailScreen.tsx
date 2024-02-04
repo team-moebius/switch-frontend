@@ -60,7 +60,11 @@ const SwitchDetailScreen = ({ navigation }) => {
           </Flexbox.Item>
           <Flexbox.Item width={'100%'} flex={1}>
             <SwitchDetailView
-              onClickReport={() => navigation.navigate('Report')}
+              onClickReport={() =>
+                navigation.navigate('Report', {
+                  previousScreen: 'SwitchDetail',
+                })
+              }
               userData={userDataResolver(USERINFO_MOCK)}
               itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
             />

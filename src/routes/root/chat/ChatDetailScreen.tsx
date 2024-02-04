@@ -1,11 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import {
-  Button,
-  Flexbox,
-  Modal as AccessDeviceModal,
-  Modal as SwitchCompleteModal,
-  Typography,
-} from 'src/components/atom';
+import { Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem, PressableIcon } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
@@ -15,6 +9,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
 import useWebSocket from 'src/hooks/useWebSocket';
+import { AccessDeviceModal } from './content/\bmodals/AccessDeviceModal';
+import { SwitchCompleteModal } from './content/\bmodals/SwitchCompleteModal';
 
 type SwitchChatData = {
   id: number;
@@ -323,99 +319,18 @@ const ChatDetailScreen = ({ navigation }) => {
       </Flexbox>
       <AccessDeviceModal
         visible={accessModalVisible}
-        width={'70%'}
-        height={'25%'}
-        position={'center'}
-        backgroundColor={'#fefefe'}
         onPressBack={() => setAccessModalVisible(false)}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          margin={'auto'}
-          flexDirection={'column'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          gap={20}
-        >
-          <Flexbox.Item alignSelf={'center'} width='70%'>
-            <Button size='medium' type='normal' onPress={openCameraHandler}>
-              사진 촬영
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item alignSelf={'center'} width='70%'>
-            <Button
-              size='medium'
-              type='normal'
-              onPress={checkForCameraRollPermission}
-            >
-              앨범에서 선택
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item alignSelf={'center'} width='70%'>
-            <Button
-              size='medium'
-              type='cancel'
-              onPress={() => setAccessModalVisible(false)}
-            >
-              취소
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-      </AccessDeviceModal>
+        onOpenCamera={openCameraHandler}
+        onCheckCameraRollPermission={checkForCameraRollPermission}
+      />
       <SwitchCompleteModal
         visible={completeModalVisible}
-        width={'70%'}
-        height={'18%'}
-        position={'center'}
-        backgroundColor={'#fefefe'}
         onPressBack={() => setCompleteModalVisible(false)}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          margin={'auto'}
-          padding={10}
-          gap={50}
-          flexDirection={'column'}
-          alignItems={'center'}
-          justifyContent={'center'}
-        >
-          <Flexbox.Item>
-            <Typography
-              fontSize={14}
-            >{`${'청둥오리'}님과 스위치를 완료하셨나요?`}</Typography>
-          </Flexbox.Item>
-          <Flexbox
-            alignItems={'center'}
-            justifyContent={'center'}
-            width={'100%'}
-            gap={10}
-          >
-            <Flexbox.Item flex={1}>
-              <Button
-                size='medium'
-                type='cancel'
-                onPress={() => setCompleteModalVisible(false)}
-              >
-                취소
-              </Button>
-            </Flexbox.Item>
-            <Flexbox.Item flex={1}>
-              <Button
-                size='medium'
-                type='normal'
-                onPress={() => {
-                  setCompleteModalVisible(false);
-                  navigation.navigate('SwitchResult');
-                }}
-              >
-                확인
-              </Button>
-            </Flexbox.Item>
-          </Flexbox>
-        </Flexbox>
-      </SwitchCompleteModal>
+        onConfirm={() => {
+          setCompleteModalVisible(false);
+          navigation.navigate('SwitchResult');
+        }}
+      />
     </ScreenWrapper>
   );
 };

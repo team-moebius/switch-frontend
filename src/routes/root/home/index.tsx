@@ -1,19 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { useCallback, useContext, useState } from 'react';
 
-import {
-  Button,
-  Flexbox,
-  Icon,
-  Modal as MyItemOptionModal,
-  Modal as UserControlModal,
-  Modal as DeclineSwitchModal,
-  Modal as DeleteItemModal,
-  Modal as CancelEditModal,
-  Tag,
-  TextInput,
-  Typography,
-} from 'src/components/atom';
+import { Button, Flexbox, Icon, Tag, TextInput } from 'src/components/atom';
 
 import {
   ScreenHeader,
@@ -30,6 +18,9 @@ import { PressableIcon } from 'src/components/molecule';
 import { WithImage } from 'src/components/template';
 import { ChatDetailScreen } from '../chat/ChatDetailScreen';
 import { RegisterMain } from '../register';
+import { MyItemOptionModal } from './modals/MyItemOptionModal';
+import { UserControlModal } from '../chat/content/\bmodals/UserControlModal';
+import { CancelEditModal } from './modals/CancelEditModal';
 
 const Stack = createStackNavigator();
 
@@ -74,8 +65,6 @@ const HomeRouteHeader = ({
 const HomeRoute = ({ navigation }) => {
   const [myItemModalVisible, setMyItemModalVisible] = useState(false);
   const [userModalVisible, setUserModalVisible] = useState(false);
-  const [declineModalVisible, setDeclineModalVisible] = useState(false);
-  const [deleteModalVisible, setDeleteModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
 
   return (
@@ -269,258 +258,36 @@ const HomeRoute = ({ navigation }) => {
       </Stack.Navigator>
 
       <MyItemOptionModal
+        navigation={navigation}
         visible={myItemModalVisible}
-        width={'70%'}
-        height={'18%'}
-        backgroundColor={'#fefefe'}
         onPressBack={() => setMyItemModalVisible(false)}
-        position={'center'}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          margin={'auto'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          padding={20}
-          gap={10}
-        >
-          <Flexbox.Item width={'100%'}>
-            <Button
-              type='normal'
-              size='medium'
-              onPress={() => {
-                setMyItemModalVisible(false);
-                navigation.navigate('EditItem');
-              }}
-            >
-              수정
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item width={'100%'}>
-            <Button
-              type='cancel'
-              size='medium'
-              onPress={() => {
-                setDeleteModalVisible(true);
-              }}
-            >
-              삭제
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-        <DeleteItemModal
-          visible={deleteModalVisible}
-          onPressBack={() => setDeleteModalVisible(false)}
-          backgroundColor={'#fefefe'}
-          width={'70%'}
-          height={'27%'}
-          position={'center'}
-        >
-          <Flexbox
-            width={'100%'}
-            height={'100%'}
-            margin={'auto'}
-            padding={20}
-            flexDirection={'column'}
-            alignItems={'center'}
-            justifyContent={'space-between'}
-          >
-            <Flexbox flexDirection={'column'} alignItems={'center'} gap={30}>
-              <Flexbox flexDirection={'column'} alignItems={'center'}>
-                <Typography fontSize={14}>
-                  {`- ${'5'}명이 이 물품을 대기중이예요`}
-                </Typography>
-                <Typography fontSize={14}>
-                  {`- ${'페이커'}님과 스위치 협의 중이예요`}
-                </Typography>
-              </Flexbox>
-              <Typography fontSize={14}>물품을 정말 삭제하시겠어요?</Typography>
-            </Flexbox>
-            <Flexbox
-              width={'100%'}
-              alignItems={'center'}
-              flexDirection={'column'}
-              pt={20}
-              gap={10}
-            >
-              <Flexbox.Item width='100%'>
-                <Button
-                  size='medium'
-                  wide
-                  type='normal'
-                  onPress={() => {
-                    console.debug('삭제하기');
-                    setDeleteModalVisible(false);
-                    setMyItemModalVisible(false);
-                    navigation.navigate('HomeMain');
-                  }}
-                >
-                  삭제하기
-                </Button>
-              </Flexbox.Item>
-              <Flexbox.Item width='100%'>
-                <Button
-                  size='medium'
-                  type='cancel'
-                  onPress={() => setDeleteModalVisible(false)}
-                >
-                  취소
-                </Button>
-              </Flexbox.Item>
-            </Flexbox>
-          </Flexbox>
-        </DeleteItemModal>
-      </MyItemOptionModal>
+        onEdit={() => {
+          setMyItemModalVisible(false);
+          navigation.navigate('EditItem');
+        }}
+        onDeleteModalControl={() => setMyItemModalVisible(false)}
+      />
 
       <UserControlModal
+        navigation={navigation}
         visible={userModalVisible}
-        width={'50%'}
-        height={'15%'}
-        backgroundColor={'#fefefe'}
         onPressBack={() => setUserModalVisible(false)}
-        position={'center'}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          margin={'auto'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          gap={10}
-        >
-          <Flexbox.Item margin={'auto'}>
-            <Button
-              type='normal'
-              size='medium'
-              onPress={() => setDeclineModalVisible(true)}
-            >
-              스위치 거절
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item margin={'auto'}>
-            <Button
-              type='cancel'
-              size='medium'
-              onPress={() => {
-                setUserModalVisible(false);
-                navigation.navigate('Report');
-              }}
-            >
-              신고 및 차단
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-        <DeclineSwitchModal
-          visible={declineModalVisible}
-          width={'70%'}
-          height={'18%'}
-          position={'center'}
-          backgroundColor={'#fefefe'}
-          onPressBack={() => setDeclineModalVisible(false)}
-        >
-          <Flexbox
-            width={'100%'}
-            height={'100%'}
-            margin={'auto'}
-            padding={10}
-            gap={50}
-            flexDirection={'column'}
-            alignItems={'center'}
-            justifyContent={'center'}
-          >
-            <Flexbox.Item>
-              <Typography
-                fontSize={14}
-              >{`${'청둥오리'}님의 스위치 제안을 거절 하시겠어요?`}</Typography>
-            </Flexbox.Item>
-            <Flexbox
-              alignItems={'center'}
-              justifyContent={'center'}
-              width={'100%'}
-              gap={10}
-            >
-              <Flexbox.Item flex={1}>
-                <Button
-                  size='medium'
-                  type='cancel'
-                  onPress={() => setDeclineModalVisible(false)}
-                >
-                  취소
-                </Button>
-              </Flexbox.Item>
-              <Flexbox.Item flex={1}>
-                <Button
-                  size='medium'
-                  type='normal'
-                  onPress={() => {
-                    setDeclineModalVisible(false);
-                    setUserModalVisible(false);
-                    navigation.navigate('HomeMain');
-                  }}
-                >
-                  확인
-                </Button>
-              </Flexbox.Item>
-            </Flexbox>
-          </Flexbox>
-        </DeclineSwitchModal>
-      </UserControlModal>
+        onDeclineSwitch={() => setUserModalVisible(false)}
+        onReportBlock={() => {
+          setUserModalVisible(false);
+          navigation.navigate('Report', { previousScreen: 'ChatDetail' });
+        }}
+      />
 
       <CancelEditModal
         visible={cancelModalVisible}
         onPressBack={() => setCancelModalVisible(false)}
-        backgroundColor={'#fefefe'}
-        width={'70%'}
-        height={'18%'}
-        position={'center'}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          margin={'auto'}
-          padding={20}
-          flexDirection={'column'}
-          alignItems={'center'}
-          justifyContent={'space-between'}
-        >
-          <Typography fontSize={14}>
-            물품을 수정하지 않고 나가시겠어요?
-          </Typography>
-          <Flexbox
-            width={'100%'}
-            alignItems={'center'}
-            flexDirection={'column'}
-            pt={20}
-            gap={10}
-          >
-            <Flexbox.Item width='100%'>
-              <Button
-                size='medium'
-                wide
-                type='normal'
-                onPress={() => {
-                  setCancelModalVisible(false);
-                  navigation.goBack();
-                }}
-              >
-                확인
-              </Button>
-            </Flexbox.Item>
-            <Flexbox.Item width='100%'>
-              <Button
-                size='medium'
-                type='cancel'
-                onPress={() => setCancelModalVisible(false)}
-              >
-                취소
-              </Button>
-            </Flexbox.Item>
-          </Flexbox>
-        </Flexbox>
-      </CancelEditModal>
+        onConfirm={() => {
+          setCancelModalVisible(false);
+          navigation.goBack();
+        }}
+        onCancel={() => setCancelModalVisible(false)}
+      />
     </>
   );
 };

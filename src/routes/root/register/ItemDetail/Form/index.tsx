@@ -4,8 +4,6 @@ import {
   Icon,
   Typography,
   Button,
-  Modal as AddressModal,
-  Modal as AttentionModal,
   Check,
 } from 'src/components/atom';
 import { ScrollView, Pressable, useWindowDimensions } from 'react-native';
@@ -23,9 +21,12 @@ import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock
 import { SwitchDetailData } from '../type';
 import useExpoLocation from 'src/hooks/useExpoLocation';
 import useFetchAddress from 'src/hooks/useFetchAddress';
+import { AddressModal } from './modals/AddressModal';
+import { AttentionModal } from './modals/AttentionModal';
+import { ScreenWrapper } from 'src/components/template';
 
-const DETAILS = 'details';
-const SAFETY = 'safety';
+export const DETAILS = 'details';
+export const SAFETY = 'safety';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
@@ -104,6 +105,11 @@ const SwitchDetailForm = ({
     await getExpoLocation();
   }, [getExpoLocation]);
 
+  const onPressSelectAddress = () => {
+    setAddressModalVisible(false);
+    navigation.navigate('PreferredAddress');
+  };
+
   useEffect(() => {
     if (expoPostalCode) {
       fetchAddress(expoPostalCode);
@@ -113,278 +119,179 @@ const SwitchDetailForm = ({
   console.log(province, city, dong);
 
   return (
-    <Flexbox
-      height={'100%'}
-      width={'100%'}
-      flexDirection={'column'}
-      justifyContent={'center'}
-      alignItems={'center'}
-    >
-      <ScrollView>
-        <ImageUploader
-          images={thumbnails}
-          onAdd={() => {
-            alert('add image');
-          }}
-          onDeleteItem={(src, i) => {
-            console.debug('delete click:', src, i);
-          }}
-          screenWidth={screenWidth}
-        />
-        <Separator width={'100%'} />
-        <Field
-          width={'100%'}
-          placeholder={'물품명'}
-          fieldType={'textInput'}
-          value={title}
-          name={'title'}
-          style={{ borderWidth: 0 }}
-          onChange={changeHandler}
-        />
-        <Separator />
+    <ScreenWrapper>
+      <Flexbox
+        height={'100%'}
+        width={'100%'}
+        flexDirection={'column'}
+        justifyContent={'center'}
+        alignItems={'center'}
+      >
+        <ScrollView>
+          <ImageUploader
+            images={thumbnails}
+            onAdd={() => {
+              alert('add image');
+            }}
+            onDeleteItem={(src, i) => {
+              console.debug('delete click:', src, i);
+            }}
+            screenWidth={screenWidth}
+          />
+          <Separator width={'100%'} />
+          <Field
+            width={'100%'}
+            placeholder={'물품명'}
+            fieldType={'textInput'}
+            value={title}
+            name={'title'}
+            style={{ borderWidth: 0 }}
+            onChange={changeHandler}
+          />
+          <Separator />
 
-        <Field
-          fieldType={'countingTextarea'}
-          name={'description'}
-          placeholder={'물품에 대한 설명이나 스토리를 작성해주세요.'}
-          value={description}
-          onChange={changeHandler}
-          maxLength={200}
-          border={'0 solid #979797'}
-        />
+          <Field
+            fieldType={'countingTextarea'}
+            name={'description'}
+            placeholder={'물품에 대한 설명이나 스토리를 작성해주세요.'}
+            value={description}
+            onChange={changeHandler}
+            maxLength={200}
+            border={'0 solid #979797'}
+          />
 
-        <Separator />
-        <TagInput
-          tags={categories}
-          width={'100%'}
-          name={'tagInput'}
-          onChangeText={setCategoryTagInput}
-          placeholder={'등록하는 물건의 종류를 작성해주세요.'}
-          value={categoryTagInput}
-        />
-        <Separator />
-        <TagInput
-          tags={oppositeCategories}
-          width={'100%'}
-          name={'tagInput'}
-          onChangeText={setOCategoryTagInput}
-          placeholder={'스위치를 희망하는 물품이나 종류를 작성해주세요.'}
-          value={oCategoryTagInput}
-        />
-        <Separator />
-        <HashTagInput
-          value={hashTagInput}
-          width={'100%'}
-          itemsWrap={'wrap'}
-          name={'tagInput'}
-          placeholder={'물품에 대한 해시태그를 작성해주세요.(선택사항)'}
-          disabled={false}
-          onChangeText={setHashTagInput}
-          hashTags={hashTags}
-          functionalElement={
-            <Flexbox
-              flexDirection={'column'}
-              justifyContent={'space-between'}
-              gap={5}
-            >
-              <Typography color={'black'} fontSize={14}>
-                {HASHTAGS_MOCK.length + '/30'}
-              </Typography>
-              <Button
-                type={'normal'}
-                size={'small'}
-                onPress={() => {
-                  alert('해시태그 더보기');
-                }}
-                wide={false}
+          <Separator />
+          <TagInput
+            tags={categories}
+            width={'100%'}
+            name={'tagInput'}
+            onChangeText={setCategoryTagInput}
+            placeholder={'등록하는 물건의 종류를 작성해주세요.'}
+            value={categoryTagInput}
+          />
+          <Separator />
+          <TagInput
+            tags={oppositeCategories}
+            width={'100%'}
+            name={'tagInput'}
+            onChangeText={setOCategoryTagInput}
+            placeholder={'스위치를 희망하는 물품이나 종류를 작성해주세요.'}
+            value={oCategoryTagInput}
+          />
+          <Separator />
+          <HashTagInput
+            value={hashTagInput}
+            width={'100%'}
+            itemsWrap={'wrap'}
+            name={'tagInput'}
+            placeholder={'물품에 대한 해시태그를 작성해주세요.(선택사항)'}
+            disabled={false}
+            onChangeText={setHashTagInput}
+            hashTags={hashTags}
+            functionalElement={
+              <Flexbox
+                flexDirection={'column'}
+                justifyContent={'space-between'}
+                gap={5}
               >
-                <Typography fontSize={14}>더보기</Typography>
-              </Button>
+                <Typography color={'black'} fontSize={14}>
+                  {HASHTAGS_MOCK.length + '/30'}
+                </Typography>
+                <Button
+                  type={'normal'}
+                  size={'small'}
+                  onPress={() => {
+                    alert('해시태그 더보기');
+                  }}
+                  wide={false}
+                >
+                  <Typography fontSize={14}>더보기</Typography>
+                </Button>
+              </Flexbox>
+            }
+          />
+          <Separator />
+          <Typography fontSize={14}>선호 주소</Typography>
+          <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
+            <Flexbox
+              width={'100%'}
+              alignItems={'center'}
+              justifyContent={'center'}
+            >
+              <PressableIcon
+                size={32}
+                name={'add-circle'}
+                onPress={() => setAddressModalVisible((prev) => !prev)}
+              />
             </Flexbox>
-          }
-        />
-        <Separator />
-        <Typography fontSize={14}>선호 주소</Typography>
-        <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
+            <Flexbox width={'100%'} justifyContent='center'>
+              <Flexbox
+                width={'90%'}
+                padding={10}
+                backgroundColor={'#0cd092'}
+                borderRadius={6}
+                alignItems={'center'}
+              >
+                <Flexbox
+                  width={'100%'}
+                  alignItems={'center'}
+                  justifyContent={'space-between'}
+                >
+                  <Typography fontSize={18} fontWeight={'200'} color={'#fff'}>
+                    경기도 부천시 상동
+                  </Typography>
+                  <Icon name='close' size={24} color={'#fff'} />
+                </Flexbox>
+              </Flexbox>
+            </Flexbox>
+          </Flexbox>
+          <Separator />
+          <Flexbox alignItems={'center'} justifyContent='space-between'>
+            <Flexbox>
+              <Typography fontSize={14}>게시글 작성 유의사항</Typography>
+            </Flexbox>
+            <Pressable
+              onPress={() => setAttentionModalVisible((prev) => !prev)}
+            >
+              <Flexbox alignItems='center' justifyContent='flex-end'>
+                <Typography fontSize={14}>확인하기</Typography>
+                <Icon name='chevron-up' size={24} />
+              </Flexbox>
+            </Pressable>
+          </Flexbox>
           <Flexbox
             width={'100%'}
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <PressableIcon
-              size={32}
-              name={'add-circle'}
-              onPress={() => setAddressModalVisible((prev) => !prev)}
-            />
-          </Flexbox>
-          <Flexbox width={'100%'} justifyContent='center'>
-            <Flexbox
-              width={'90%'}
-              padding={10}
-              backgroundColor={'#0cd092'}
-              borderRadius={6}
-              alignItems={'center'}
-            >
-              <Flexbox
-                width={'100%'}
-                alignItems={'center'}
-                justifyContent={'space-between'}
+            <Box width={'90%'} pt={20}>
+              <Button
+                type='normal'
+                size='medium'
+                onPress={() => {
+                  onSubmit && onSubmit(data);
+                }}
               >
-                <Typography fontSize={18} fontWeight={'200'} color={'#fff'}>
-                  경기도 부천시 상동
-                </Typography>
-                <Icon name='close' size={24} color={'#fff'} />
-              </Flexbox>
-            </Flexbox>
+                확인
+              </Button>
+            </Box>
           </Flexbox>
-        </Flexbox>
-        <Separator />
-        <Flexbox alignItems={'center'} justifyContent='space-between'>
-          <Flexbox>
-            <Typography fontSize={14}>게시글 작성 유의사항</Typography>
-          </Flexbox>
-          <Pressable onPress={() => setAttentionModalVisible((prev) => !prev)}>
-            <Flexbox alignItems='center' justifyContent='flex-end'>
-              <Typography fontSize={14}>확인하기</Typography>
-              <Icon name='chevron-up' size={24} />
-            </Flexbox>
-          </Pressable>
-        </Flexbox>
-        <Flexbox width={'100%'} alignItems={'center'} justifyContent={'center'}>
-          <Box width={'90%'} pt={20}>
-            <Button
-              type='normal'
-              size='medium'
-              onPress={() => {
-                onSubmit && onSubmit(data);
-              }}
-            >
-              확인
-            </Button>
-          </Box>
-        </Flexbox>
-      </ScrollView>
-      <AddressModal
-        visible={addressModalVisible}
-        onPressBack={() => setAddressModalVisible(false)}
-        backgroundColor={'#fefefe'}
-        width={'70%'}
-        height={'40%'}
-        position={'center'}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          alignItems={'center'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          gap={20}
-        >
-          <Flexbox.Item pb={30}>
-            <Typography fontSize={15}>
-              선호주소를 어떻게 설정하시겠어요?
-            </Typography>
-          </Flexbox.Item>
-          <Flexbox.Item width='70%'>
-            <Button size='medium' type='normal' onPress={handleGetLocation}>
-              현재 위치로 설정
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item width='70%'>
-            <Button
-              size='medium'
-              type='normal'
-              onPress={() => navigation.navigate('PreferredAddress')}
-            >
-              직접 선택
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item width='70%'>
-            <Button
-              size='medium'
-              type='cancel'
-              onPress={() => setAddressModalVisible(false)}
-            >
-              취소
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-      </AddressModal>
-      <AttentionModal
-        visible={attentionModalVisible}
-        onPressBack={() => setAttentionModalVisible(false)}
-        backgroundColor={'#fefefe'}
-        width={'70%'}
-        height={'40%'}
-        position={'center'}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          margin={'auto'}
-          gap={40}
-          flexDirection={'column'}
-          alignItems={'center'}
-          justifyContent={'center'}
-        >
-          <Flexbox.Item>
-            <Typography fontSize={14}>물품 등록시 꼭 지켜주세요!</Typography>
-          </Flexbox.Item>
-          <Flexbox flexDirection={'column'} gap={20}>
-            <Flexbox.Item width='90%'>
-              <Flexbox>
-                <Flexbox.Item width={'90%'}>
-                  <Typography fontSize={14}>1. 물품 설명은 정확하게</Typography>
-                  <Typography fontSize={14}>
-                    사진, 물품에 대한 설명을 꼭 사실대로 올려주세요.
-                  </Typography>
-                </Flexbox.Item>
-                <Flexbox.Item width={'10%'}>
-                  <Check
-                    size={15}
-                    type={'info'}
-                    checked={checkboxState.details}
-                    onPress={() => changeCheckboxDetails(DETAILS)}
-                  />
-                </Flexbox.Item>
-              </Flexbox>
-            </Flexbox.Item>
-
-            <Flexbox.Item width='90%'>
-              <Flexbox>
-                <Flexbox.Item width={'90%'}>
-                  <Typography fontSize={14}>
-                    2. 스위치 하기 안전한 물품만
-                  </Typography>
-                  <Typography fontSize={14}>
-                    사용 기한 초과, 제품의 안정성 등으로 인하여 발생하는 문제에
-                    대해, 스위치는 법적 책임을 지지 않습니다.
-                  </Typography>
-                </Flexbox.Item>
-                <Flexbox.Item width={'10%'}>
-                  <Check
-                    type={'info'}
-                    boxType={'square'}
-                    checked={checkboxState.safety}
-                    size={15}
-                    onPress={() => changeCheckboxDetails(SAFETY)}
-                  />
-                </Flexbox.Item>
-              </Flexbox>
-            </Flexbox.Item>
-          </Flexbox>
-          <Flexbox.Item width='90%'>
-            <Button
-              size='medium'
-              type='normal'
-              onPress={handleCloseAttentionModal}
-            >
-              확인
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-      </AttentionModal>
-    </Flexbox>
+        </ScrollView>
+        <AddressModal
+          visible={addressModalVisible}
+          onPressBack={() => setAddressModalVisible(false)}
+          onPressSelectAddress={onPressSelectAddress}
+          handleGetLocation={handleGetLocation}
+        />
+        <AttentionModal
+          visible={attentionModalVisible}
+          onPressBack={() => setAttentionModalVisible(false)}
+          checkboxState={checkboxState}
+          changeCheckboxDetails={changeCheckboxDetails}
+          handleCloseAttentionModal={handleCloseAttentionModal}
+        />
+      </Flexbox>
+    </ScreenWrapper>
   );
 };
 
