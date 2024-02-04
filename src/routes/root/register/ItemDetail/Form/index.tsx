@@ -21,6 +21,9 @@ import { ScreenWrapper } from 'src/components/template';
 export const DETAILS = 'details';
 export const SAFETY = 'safety';
 
+const DETAILS = 'details';
+const SAFETY = 'safety';
+
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
   onSubmit?: (data: SwitchDetailData) => void;

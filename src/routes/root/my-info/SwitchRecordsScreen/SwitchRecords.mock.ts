@@ -18,7 +18,7 @@ const RecordMock: Array<RecordData> = [
   },
   {
     myItem: {
-      name: '이브이2',
+      name: '이브이2이브이2이브',
       src: 'https://cdn-gq.github.io/pokemon/133.webp',
     },
     selectedItem: {

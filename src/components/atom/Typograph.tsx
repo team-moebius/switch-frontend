@@ -25,14 +25,12 @@ const Typography = ({
   return (
     <Text
       {...props}
-      style={
-        {
-          color,
-          fontFamily,
-          fontSize,
-          fontWeight,
-        } as TextStyle
-      }
+      style={{
+        color,
+        fontFamily,
+        fontSize,
+        fontWeight,
+      }}
     >
       {children}
     </Text>

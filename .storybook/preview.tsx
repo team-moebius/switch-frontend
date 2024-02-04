@@ -31,7 +31,7 @@ const preview: Preview = {
               height: 100%;`}
             </style>
             <Story {...context} />
-            <ReactQueryDevtools />
+            {/* <ReactQueryDevtools /> */}
           </ThemeContextProvider>
         </QueryClientProvider>
       );

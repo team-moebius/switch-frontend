@@ -87,20 +87,24 @@ const ListItem = ({
                   imageHeight={70}
                   imageResizeMode={'cover'}
                   renderItem={
-                    <Typography fontSize={13}>{location as string}</Typography>
+                    <Flexbox justifyContent='space-between' width={'100%'}>
+                      <Typography fontSize={13}>
+                        {location as string}
+                      </Typography>
+                      <Flexbox.Item>
+                        <Pressable onPress={onLikeHandler}>
+                          {/* TODO : like에 따라 분기처리 해야 함 */}
+                          {/* <Icon name={'heart'} color='red' size={32} /> */}
+                          <Icon name={'heart-outline'} size={32} />
+                        </Pressable>
+                      </Flexbox.Item>
+                    </Flexbox>
                   }
                   childDirection={'column'}
                   cardDirection={'row'}
                 />
               </Flexbox.Item>
             </Flexbox>
-          </Pressable>
-        </Flexbox.Item>
-        <Flexbox.Item alignSelf='center'>
-          <Pressable onPress={onLikeHandler}>
-            {/* TODO : like에 따라 분기처리 해야 함 */}
-            {/* <Icon name={'heart'} color='red' size={32} /> */}
-            <Icon name={'heart-outline'} size={32} />
           </Pressable>
         </Flexbox.Item>
       </Flexbox>

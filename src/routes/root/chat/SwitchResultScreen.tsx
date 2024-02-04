@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable } from 'react-native';
 import { Box, Button, Flexbox, Icon, Typography } from 'src/components/atom';
 import { ScoreQuestion } from 'src/components/molecule';
@@ -25,6 +25,11 @@ const renderChildren = (children: string, src: string) => {
       imageHeight={90}
       cardDirection={'column'}
       imageResizeMode={'center'}
+      layoutStyle={{
+        titleContainerLayout: {
+          alignSelf: 'center',
+        },
+      }}
     />
   );
 };
