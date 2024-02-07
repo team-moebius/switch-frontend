@@ -1,4 +1,5 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
+import { UserApi } from 'src/api';
 import {
   Box,
   Flexbox,
@@ -9,27 +10,51 @@ import {
 
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+import { UserContext } from 'src/context/user';
+import { useCommonMutation } from 'src/hooks/useCommomMutation';
+
+// (userId as unknown as number),
 
 const MyInfoEditScreen = () => {
+  const { user: userId } = useContext(UserContext);
+
+  const { mutate: withdrawMutate } = useCommonMutation<string, number>({
+    api: (userId: number) => UserApi.withdrawUser(userId),
+    onSuccess(data, varaiables) {
+      console.debug(
+        '\n\n\n ✅ MyInfoEdit_UserApi_withdrawUser data ✅ \n\n',
+        data,
+        varaiables
+      );
+    },
+    onError(error, varaiables) {
+      console.debug(
+        '\n\n\n 🚨 MyInfoEdit_UserApi_withdrawUser error 🚨 \n\n',
+        error,
+        varaiables
+      );
+    },
+  });
+
   const [name, setName] = useState('');
   const [introduce, setIntroduce] = useState('');
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
 
   const certifyHandler = () => {
-    alert('2차 인증');
+    console.debug('2차 인증');
   };
 
   const phoneEditHandler = () => {
-    alert('휴대폰 번호 변경');
+    console.debug('휴대폰 번호 변경');
   };
 
   const emailEditHandler = () => {
-    alert('이메일 변경');
+    console.debug('이메일 변경');
   };
 
   const withdrawHandler = () => {
-    alert('회원 탈퇴하기');
+    withdrawMutate(userId as unknown as number);
   };
 
   useEffect(() => {

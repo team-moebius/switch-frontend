@@ -2,14 +2,14 @@ import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from 'react-query';
 import { AxiosPromise, AxiosResponse, AxiosInstance } from 'axios';
 
-interface UseCommonMutationParam<Response, Reqeust>
+interface UseCommonMutationParam<Response, Request>
   extends Pick<
-    UseMutationOptions<Response, unknown, Reqeust>,
+    UseMutationOptions<Response, unknown, Request>,
     'mutationKey' | 'onSuccess' | 'onError'
   > {
   api: (
-    request1: Reqeust,
-    requst2: Reqeust
+    request1: Request,
+    request2: Request
   ) => Promise<AxiosResponse<Response>>;
 }
 
