@@ -1,15 +1,17 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { Flexbox } from 'src/components/atom';
+import { ScreenHeader, PressableIcon } from 'src/components/molecule';
+
+import { SecuritySettingRoute } from './Security';
+import { WithdrawRoute } from './WithdrawScreen';
+
 import { MyInfoMainScreen } from './MyInfoMainScreen';
 import { FeedbackScreen } from './FeedbackScreen';
 import { VersionScreen } from './VersionScreen';
 import { SettingScreen } from './SettingScreen';
 import { SwitchRecordsScreen } from './SwitchRecordsScreen';
 import { SettingMainScreen } from './SettingMainScreen';
-import { WithdrawRoute } from './WithdrawScreen';
-import { SecuritySettingRoute } from './Security';
-import { ScreenHeader, PressableIcon } from 'src/components/molecule';
-import { Button, Flexbox } from 'src/components/atom';
 import { MyInfoEditScreen } from './MyInfoEditScreen';
 
 const Stack = createStackNavigator();
@@ -58,33 +60,7 @@ const MyInfoRoute = () => {
             },
           }}
         />
-        <Stack.Screen
-          name={'MyInfoEdit'}
-          component={MyInfoEditScreen}
-          options={{
-            header: (props) => {
-              return (
-                <ScreenHeader
-                  {...props}
-                  center={'내 정보 편집하기'}
-                  right={
-                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                      <Button
-                        size={'medium'}
-                        type={'transparent'}
-                        onPress={() => {
-                          props.navigation.setParams({ isEditMode: true });
-                        }}
-                      >
-                        편집
-                      </Button>
-                    </Flexbox>
-                  }
-                />
-              );
-            },
-          }}
-        />
+        <Stack.Screen name={'MyInfoEdit'} component={MyInfoEditScreen} />
         <Stack.Screen
           name={'Withdraw'}
           component={WithdrawRoute}
