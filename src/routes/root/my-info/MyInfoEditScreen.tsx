@@ -1,5 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
-import { UserApi } from 'src/api';
+import { useEffect, useState } from 'react';
 import {
   Box,
   Flexbox,
@@ -10,32 +9,8 @@ import {
 
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
-import { UserContext } from 'src/context/user';
-import { useCommonMutation } from 'src/hooks/useCommomMutation';
 
-// (userId as unknown as number),
-
-const MyInfoEditScreen = () => {
-  const { user: userId } = useContext(UserContext);
-
-  const { mutate: withdrawMutate } = useCommonMutation<string, number>({
-    api: (userId: number) => UserApi.withdrawUser(userId),
-    onSuccess(data, varaiables) {
-      console.debug(
-        '\n\n\n ✅ MyInfoEdit_UserApi_withdrawUser data ✅ \n\n',
-        data,
-        varaiables
-      );
-    },
-    onError(error, varaiables) {
-      console.debug(
-        '\n\n\n 🚨 MyInfoEdit_UserApi_withdrawUser error 🚨 \n\n',
-        error,
-        varaiables
-      );
-    },
-  });
-
+const MyInfoEditScreen = ({ navigation }) => {
   const [name, setName] = useState('');
   const [introduce, setIntroduce] = useState('');
   const [phone, setPhone] = useState('');
@@ -54,7 +29,7 @@ const MyInfoEditScreen = () => {
   };
 
   const withdrawHandler = () => {
-    withdrawMutate(userId as unknown as number);
+    navigation.navigate('withdraw');
   };
 
   useEffect(() => {

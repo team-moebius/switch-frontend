@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { UserApi } from 'src/api';
 import {
   Box,
   Button,
@@ -8,10 +9,32 @@ import {
   Typography,
 } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
+import { UserContext } from 'src/context/user';
+import { useCommonMutation } from 'src/hooks/useCommomMutation';
 
 const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만족'];
 
 const WithdrawFeedbackScreen = ({ navigation }) => {
+  const { user: userId } = useContext(UserContext);
+
+  const { mutate: withdrawMutate } = useCommonMutation<string, number>({
+    api: (userId: number) => UserApi.withdrawUser(userId),
+    onSuccess(data, varaiables) {
+      console.debug(
+        '\n\n\n ✅ MyInfoEdit_UserApi_withdrawUser data ✅ \n\n',
+        data,
+        varaiables
+      );
+    },
+    onError(error, varaiables) {
+      console.debug(
+        '\n\n\n 🚨 MyInfoEdit_UserApi_withdrawUser error 🚨 \n\n',
+        error,
+        varaiables
+      );
+    },
+  });
+
   const [option, setOption] = useState('기타');
 
   const onSelectHandler = (value) => {
@@ -19,6 +42,7 @@ const WithdrawFeedbackScreen = ({ navigation }) => {
   };
 
   const onSubmitHandler = () => {
+    withdrawMutate(userId as unknown as number);
     navigation.navigate('Farewell');
   };
 
