@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useMemo } from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
@@ -23,13 +23,19 @@ const NavigationRouter = () => {
     appPasswordList: { isSetPassword },
   } = useContext(AppPasswordContext);
 
+  const initRouteName = useMemo(() => {
+    if (user) {
+      if (isSetPassword) return 'AppUnlock';
+      else return 'Root';
+    }
+    return 'Sign';
+  }, [user, isSetPassword]);
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{ headerShown: false }}
-        initialRouteName={
-          user ? (isSetPassword ? 'AppUnlock' : 'Root') : 'Sign'
-        }
+        initialRouteName={initRouteName}
       >
         {/* if user signed in, route home */}
         <Stack.Group navigationKey={user === null ? 'Sign' : 'Main'}>
