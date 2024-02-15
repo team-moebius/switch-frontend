@@ -29,7 +29,7 @@ const SubmitValidationCode = ({ route }: SubmitValidationCodeProps) => {
     verifiedCode: '',
   });
   const { login } = useContext(UserContext);
-  const { navigation } =
+  const navigation =
     useNavigation<
       CompositeScreenProps<
         StackScreenProps<NavigationRouterParamList, 'Root'>,
