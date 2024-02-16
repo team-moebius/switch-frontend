@@ -1,6 +1,15 @@
-import { Box, Button, Flexbox, Typography } from 'src/components/atom';
+import { useCallback, useState } from 'react';
+import {
+  Box,
+  Button,
+  Flexbox,
+  Typography,
+  Separator,
+} from 'src/components/atom';
 import { ButtonProps } from 'src/components/atom/Button';
 import { ScreenWrapper } from 'src/components/template';
+import { FeedbackModal } from './MyInfoMainScreen/content/modals/FeedbackModal';
+import { LogoutModal } from './MyInfoMainScreen/content/modals/LogoutModal';
 
 const SettingButton = ({
   children,
@@ -23,6 +32,14 @@ const SettingButton = ({
 };
 
 const SettingMainScreen = ({ navigation }) => {
+  const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
+  const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+
+  const pressFeedbackDirect = useCallback(() => {
+    setFeedbackModalVisible(false);
+    navigation.navigate('Feedback');
+  }, [navigation]);
+
   return (
     <ScreenWrapper>
       <SettingButton onPress={() => navigation.navigate('Record')}>
@@ -34,21 +51,33 @@ const SettingMainScreen = ({ navigation }) => {
       <SettingButton onPress={() => navigation.navigate('Security')}>
         보안 설정
       </SettingButton>
-      {/* 은지님이 만든 separator로 바꿔주기 */}
-      <Box
-        mb={10}
-        mt={10}
-        height={1}
-        width={'100%'}
-        backgroundColor='#000000'
-      />
+
+      <Separator width={'100%'} />
+
       <SettingButton onPress={() => navigation.navigate('Version')}>
         버전
       </SettingButton>
-      <SettingButton onPress={() => navigation.navigate('Feedback')}>
+      <SettingButton onPress={() => setFeedbackModalVisible(true)}>
         피드백
       </SettingButton>
-      <SettingButton onPress={() => alert('로그아웃!')}>로그아웃</SettingButton>
+      <SettingButton onPress={() => setLogoutModalVisible(true)}>
+        로그아웃
+      </SettingButton>
+      <FeedbackModal
+        visible={feedbackModalVisible}
+        onPressBack={() => setFeedbackModalVisible(false)}
+        onPressAppStore={() => console.log('앱스토어')}
+        onPressDirect={pressFeedbackDirect}
+        onPressCancel={() => setFeedbackModalVisible(false)}
+      />
+      <LogoutModal
+        visible={logoutModalVisible}
+        onPressBack={() => setLogoutModalVisible(false)}
+        onConfirm={() => {
+          setLogoutModalVisible(false);
+          navigation.navigate('Sign');
+        }}
+      />
     </ScreenWrapper>
   );
 };

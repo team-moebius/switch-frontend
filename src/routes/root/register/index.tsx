@@ -23,7 +23,7 @@ const RegisterRoute = () => {
         component={RegisterMain}
         options={{
           header: (props) => {
-            return <ScreenHeader {...props} title={'물품등록하기'} />;
+            return <ScreenHeader {...props} center={'물품등록하기'} />;
           },
         }}
       />
@@ -32,7 +32,7 @@ const RegisterRoute = () => {
         component={PreferredAddress}
         options={{
           header: (props) => {
-            return <ScreenHeader {...props} title={'스위치 선호 주소'} />;
+            return <ScreenHeader {...props} center={'스위치 선호 주소'} />;
           },
         }}
       />

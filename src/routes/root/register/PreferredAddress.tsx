@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Flexbox, Select, Typography } from 'src/components/atom';
+import { Box, Button, Flexbox, Select, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 
 // TODO: onPressItem type 지정해주기
@@ -41,7 +41,14 @@ const PreferredAddress = () => {
         height={'100%'}
         justifyContent={'space-between'}
       >
-        <Flexbox flexDirection={'column'} width={'100%'} gap={20} pt={50}>
+        <Flexbox
+          flexDirection={'column'}
+          width={'90%'}
+          gap={20}
+          pt={50}
+          ml={'auto'}
+          mr={'auto'}
+        >
           <Flexbox.Item width={'100%'}>
             <Select
               value={province}
@@ -75,14 +82,16 @@ const PreferredAddress = () => {
           </Flexbox.Item>
         </Flexbox>
 
-        <Flexbox width={'100%'}>
-          <Button
-            type={'normal'}
-            size={'medium'}
-            onPress={() => window.alert('확인')}
-          >
-            확인
-          </Button>
+        <Flexbox width={'100%'} alignItems='center' justifyContent='center'>
+          <Box width={'90%'}>
+            <Button
+              type={'normal'}
+              size={'medium'}
+              onPress={() => window.alert('확인')}
+            >
+              확인
+            </Button>
+          </Box>
         </Flexbox>
       </Flexbox>
     </ScreenWrapper>
