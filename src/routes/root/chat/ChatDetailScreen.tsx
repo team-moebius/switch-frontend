@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useRef, useState } from 'react';
-import { Button, Flexbox, Modal } from 'src/components/atom';
+import { useEffect, useRef, useState } from 'react';
+import { Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem, PressableIcon } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
@@ -9,6 +9,8 @@ import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
 import useWebSocket from 'src/hooks/useWebSocket';
+import { AccessDeviceModal } from './content/\bmodals/AccessDeviceModal';
+import { SwitchCompleteModal } from './content/\bmodals/SwitchCompleteModal';
 
 type SwitchChatData = {
   id: number;
@@ -167,7 +169,8 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 
 const ChatDetailScreen = ({ navigation }) => {
   const [chatText, setChatText] = useState('');
-  const [modalVisible, setModalVisible] = useState(false);
+  const [accessModalVisible, setAccessModalVisible] = useState(false);
+  const [completeModalVisible, setCompleteModalVisible] = useState(false);
 
   const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
   const scrollViewRef = useRef<FlatList | null>(null);
@@ -175,7 +178,7 @@ const ChatDetailScreen = ({ navigation }) => {
 
   const { selectedImages, pickImage } = useExpoImagePicker();
   const { photoUri, openCamera } = useExpoCamera();
-  const { sendMessage } = useWebSocket();
+  // const { sendMessage } = useWebSocket();
 
   console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
 
@@ -196,7 +199,7 @@ const ChatDetailScreen = ({ navigation }) => {
     }
 
     // 앨범 사진 서버로 보내기
-    setModalVisible(false);
+    setAccessModalVisible(false);
   };
 
   const openCameraHandler = async () => {
@@ -212,19 +215,15 @@ const ChatDetailScreen = ({ navigation }) => {
     }
 
     // 찍은 사진 서버로 보내기
-    setModalVisible(false);
+    setAccessModalVisible(false);
   };
-
-  const handleModalOpen = useCallback(() => {
-    setModalVisible((prev) => !prev);
-  }, []);
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
   };
 
   const onSendChatMessage = async () => {
-    sendMessage(chatText);
+    // sendMessage(chatText);
     setChatText('');
   };
 
@@ -259,7 +258,7 @@ const ChatDetailScreen = ({ navigation }) => {
                 <Button
                   size='small'
                   type='normal'
-                  onPress={() => navigation.navigate('SwitchResult')}
+                  onPress={() => setCompleteModalVisible(true)}
                 >
                   스위치
                 </Button>
@@ -306,7 +305,7 @@ const ChatDetailScreen = ({ navigation }) => {
             <PressableIcon
               name={'image-outline'}
               size={24}
-              onPress={handleModalOpen}
+              onPress={() => setAccessModalVisible((prev) => !prev)}
             />
           }
           right={
@@ -318,44 +317,20 @@ const ChatDetailScreen = ({ navigation }) => {
           }
         />
       </Flexbox>
-      <Modal
-        visible={modalVisible}
-        width={'70%'}
-        height={'25%'}
-        position={'center'}
-        backgroundColor={'#fefefe'}
-        onPressBack={() => setModalVisible(false)}
-      >
-        <Flexbox
-          width={'100%'}
-          height={'100%'}
-          margin={'auto'}
-          flexDirection={'column'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          gap={20}
-        >
-          <Flexbox.Item alignSelf={'center'} width='70%'>
-            <Button size='medium' type='normal' onPress={openCameraHandler}>
-              사진 촬영
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item alignSelf={'center'} width='70%'>
-            <Button
-              size='medium'
-              type='normal'
-              onPress={checkForCameraRollPermission}
-            >
-              앨범에서 선택
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item alignSelf={'center'} width='70%'>
-            <Button size='medium' type='cancel' onPress={handleModalOpen}>
-              취소
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-      </Modal>
+      <AccessDeviceModal
+        visible={accessModalVisible}
+        onPressBack={() => setAccessModalVisible(false)}
+        onOpenCamera={openCameraHandler}
+        onCheckCameraRollPermission={checkForCameraRollPermission}
+      />
+      <SwitchCompleteModal
+        visible={completeModalVisible}
+        onPressBack={() => setCompleteModalVisible(false)}
+        onConfirm={() => {
+          setCompleteModalVisible(false);
+          navigation.navigate('SwitchResult');
+        }}
+      />
     </ScreenWrapper>
   );
 };

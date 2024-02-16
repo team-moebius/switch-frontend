@@ -1,7 +1,7 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { useCallback, useContext, useState } from 'react';
 
-import { Button, Flexbox, TextInput } from 'src/components/atom';
+import { Button, Flexbox, Icon, Tag, TextInput } from 'src/components/atom';
 
 import {
   ScreenHeader,
@@ -15,6 +15,12 @@ import { NotificationsScreen } from './NotificationsScreen';
 import { RegisteredListScreen } from './RegisteredListScreen';
 import { ReportsScreen } from './ReportsScreen';
 import { PressableIcon } from 'src/components/molecule';
+import { WithImage } from 'src/components/template';
+import { ChatDetailScreen } from '../chat/ChatDetailScreen';
+import { RegisterMain } from '../register';
+import { MyItemOptionModal } from './modals/MyItemOptionModal';
+import { UserControlModal } from '../chat/content/\bmodals/UserControlModal';
+import { CancelEditModal } from './modals/CancelEditModal';
 
 import { ItemResponse } from '@team-moebius/api-typescript';
 
@@ -66,71 +72,175 @@ const HomeRouteHeader = ({
   );
 };
 
-const HomeRoute = () => {
+const HomeRoute = ({ navigation }) => {
+  const [myItemModalVisible, setMyItemModalVisible] = useState(false);
+  const [userModalVisible, setUserModalVisible] = useState(false);
+  const [cancelModalVisible, setCancelModalVisible] = useState(false);
+
   return (
-    <Stack.Navigator>
-      <Stack.Group>
-        <Stack.Screen
-          name={'HomeMain'}
-          component={HomeMainScreen}
-          options={{
-            header: ({ navigation }) => {
-              return (
-                <HomeRouteHeader
-                  onSearch={(value) => {
-                    navigation.setParams({
-                      search: value,
-                    });
-                  }}
-                  right={
-                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                      <PressableIcon
-                        size={24}
-                        name={'notifications-outline'}
-                        onPress={() => {
-                          navigation.navigate('Notifications');
-                        }}
-                      />
-                    </Flexbox>
-                  }
-                />
-              );
-            },
-          }}
-        />
-        <Stack.Screen
-          name={'SwitchDetail'}
-          component={SwitchDetailScreen}
-          options={{
-            header: (props) => {
-              return (
+    <>
+      <Stack.Navigator>
+        <Stack.Group>
+          <Stack.Screen
+            name={'HomeMain'}
+            component={HomeMainScreen}
+            options={{
+              header: ({ navigation }) => {
+                return (
+                  <HomeRouteHeader
+                    onSearch={(value) => {
+                      navigation.setParams({
+                        search: value,
+                      });
+                    }}
+                    right={
+                      <Flexbox width={'100%'} justifyContent={'flex-end'}>
+                        <PressableIcon
+                          size={24}
+                          name={'notifications-outline'}
+                          onPress={() => {
+                            navigation.navigate('Notifications');
+                          }}
+                        />
+                      </Flexbox>
+                    }
+                  />
+                );
+              },
+            }}
+          />
+          <Stack.Screen
+            name={'SwitchDetail'}
+            component={SwitchDetailScreen}
+            // 스위치 제안이 온 경우
+            // height 120, 아니면 80?
+            // 스위치 제안이 안 온 경우 center, right는 비어있습니다.
+            options={{
+              header: (props) => (
                 <ScreenHeader
                   {...props}
                   containerStyle={{
-                    backgroundColor: 'transparent',
+                    backgroundColor: '#fff',
                     position: 'absolute',
+                    height: 120,
                   }}
+                  center={
+                    <Flexbox
+                      width={'100%'}
+                      flexDirection='column'
+                      alignItems='center'
+                    >
+                      <Flexbox gap={10}>
+                        <Flexbox.Item>
+                          <WithImage
+                            src='https://cdn-gq.github.io/pokemon/133.webp'
+                            text='이브이 스티커'
+                            imageWidth={80}
+                            imageHeight={80}
+                          />
+                        </Flexbox.Item>
+                        <Flexbox.Item alignSelf='center'>
+                          <Tag
+                            disabled={false}
+                            color={'#FFFFFF'}
+                            backgroundColor={'#21BD9E'}
+                          >{`+${4}`}</Tag>
+                        </Flexbox.Item>
+                      </Flexbox>
+                      <Flexbox.Item>
+                        <Icon name='swap-horizontal' size={24} />
+                      </Flexbox.Item>
+                    </Flexbox>
+                  }
+                  right={
+                    <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                      <PressableIcon
+                        size={24}
+                        name={'menu'}
+                        onPress={() => setMyItemModalVisible((prev) => !prev)}
+                      />
+                    </Flexbox>
+                  }
                 />
-              );
-            },
-          }}
-        />
+              ),
+            }}
+          />
+          <Stack.Screen
+            name={'Report'}
+            component={ReportsScreen}
+            options={{
+              header: (props) => {
+                return <ScreenHeader {...props} center={'신고하기'} />;
+              },
+            }}
+          />
+          <Stack.Screen
+            name={'RegisteredList'}
+            component={RegisteredListScreen}
+            options={{
+              header: (props) => {
+                return (
+                  <ScreenHeader
+                    {...props}
+                    right={
+                      <Flexbox width={'100%'} justifyContent={'flex-end'}>
+                        <PressableIcon
+                          size={24}
+                          name={'md-add-outline'}
+                          onPress={() => {
+                            props.navigation?.navigate('Register');
+                          }}
+                        />
+                      </Flexbox>
+                    }
+                  />
+                );
+              },
+            }}
+          />
+        </Stack.Group>
+        <Stack.Group>
+          <Stack.Screen
+            name={'Notifications'}
+            component={NotificationsScreen}
+            options={{
+              header: (props) => (
+                <ScreenHeader
+                  {...props}
+                  center={'알림'}
+                  right={
+                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
+                      <Button
+                        size={'medium'}
+                        type={'transparent'}
+                        onPress={() => {
+                          props.navigation.setParams({ isEditMode: true });
+                        }}
+                      >
+                        편집
+                      </Button>
+                    </Flexbox>
+                  }
+                />
+              ),
+            }}
+          />
+        </Stack.Group>
         <Stack.Screen
-          name={'RegisteredList'}
-          component={RegisteredListScreen}
+          name={'ChatDetail'}
+          component={ChatDetailScreen}
           options={{
             header: (props) => {
               return (
                 <ScreenHeader
                   {...props}
+                  center={'채팅 상대 닉네임'}
                   right={
-                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
+                    <Flexbox width={'85%'} justifyContent={'flex-end'}>
                       <PressableIcon
                         size={24}
-                        name={'md-add-outline'}
-                        onPress={() => {
-                          props.navigation?.navigate('Register');
-                        }}
+                        name={'menu'}
+                        onPress={() => setUserModalVisible((prev) => !prev)}
                       />
                     </Flexbox>
                   }
@@ -139,46 +249,56 @@ const HomeRoute = () => {
             },
           }}
         />
-      </Stack.Group>
-      <Stack.Group>
         <Stack.Screen
-          name={'Notifications'}
-          component={NotificationsScreen}
-          options={{
-            header: (props) => (
-              <ScreenHeader
-                {...props}
-                title={'알림'}
-                right={
-                  <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                    <Button
-                      size={'medium'}
-                      type={'transparent'}
-                      onPress={() => {
-                        props.navigation.setParams({ isEditMode: true });
-                      }}
-                    >
-                      편집
-                    </Button>
-                  </Flexbox>
-                }
-              />
-            ),
-          }}
-        />
-      </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          name={'Report'}
-          component={ReportsScreen}
+          name='EditItem'
+          component={RegisterMain}
           options={{
             header: (props) => {
-              return <ScreenHeader {...props} title={'신고하기'} />;
+              return (
+                <ScreenHeader
+                  {...props}
+                  center={'물품 수정하기'}
+                  setModalVisible={setCancelModalVisible}
+                  isConfirmGoBack
+                />
+              );
             },
           }}
         />
-      </Stack.Group>
-    </Stack.Navigator>
+      </Stack.Navigator>
+
+      <MyItemOptionModal
+        navigation={navigation}
+        visible={myItemModalVisible}
+        onPressBack={() => setMyItemModalVisible(false)}
+        onEdit={() => {
+          setMyItemModalVisible(false);
+          navigation.navigate('EditItem');
+        }}
+        onDeleteModalControl={() => setMyItemModalVisible(false)}
+      />
+
+      <UserControlModal
+        navigation={navigation}
+        visible={userModalVisible}
+        onPressBack={() => setUserModalVisible(false)}
+        onDeclineSwitch={() => setUserModalVisible(false)}
+        onReportBlock={() => {
+          setUserModalVisible(false);
+          navigation.navigate('Report', { previousScreen: 'ChatDetail' });
+        }}
+      />
+
+      <CancelEditModal
+        visible={cancelModalVisible}
+        onPressBack={() => setCancelModalVisible(false)}
+        onConfirm={() => {
+          setCancelModalVisible(false);
+          navigation.goBack();
+        }}
+        onCancel={() => setCancelModalVisible(false)}
+      />
+    </>
   );
 };
 

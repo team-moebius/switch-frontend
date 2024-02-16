@@ -6,10 +6,12 @@ import { Flexbox, Icon, Typography } from '../atom';
 import { FlexboxProps } from '../atom/Flexbox';
 
 interface ScreenHeaderProps extends StackHeaderProps {
-  title?: string;
+  center?: ReactNode;
   right?: ReactNode;
   backVisible?: boolean;
   containerStyle?: FlexboxProps;
+  setModalVisible?: (value: React.SetStateAction<boolean>) => void;
+  isConfirmGoBack?: boolean;
 }
 
 const DEFAULT_STYLE = {
@@ -21,12 +23,14 @@ const DEFAULT_STYLE = {
 } as FlexboxProps;
 
 const ScreenHeader = ({
-  title = '',
+  center = '',
   backVisible = true,
   right,
   // back,
   navigation,
   containerStyle,
+  setModalVisible,
+  isConfirmGoBack,
 }: ScreenHeaderProps) => {
   const { color } = useContext(ThemeContext);
   // const routeName = getFocusedRouteNameFromRoute(route);
@@ -44,7 +48,9 @@ const ScreenHeader = ({
           {backVisible && navigation.canGoBack() && (
             <Pressable
               onPress={() => {
-                navigation.goBack();
+                if (isConfirmGoBack && setModalVisible) {
+                  setModalVisible(true);
+                } else navigation.goBack();
               }}
             >
               <Icon size={24} name={'chevron-back'} />
@@ -54,9 +60,13 @@ const ScreenHeader = ({
       </Flexbox.Item>
       <Flexbox.Item flex={3}>
         <Flexbox width={'100%'} justifyContent={'center'}>
-          <Typography fontSize={20} color={color.neutral['300']}>
-            {title}
-          </Typography>
+          {typeof center === 'string' ? (
+            <Typography fontSize={20} color={color.neutral['300']}>
+              {center}
+            </Typography>
+          ) : (
+            center
+          )}
         </Flexbox>
       </Flexbox.Item>
       <Flexbox.Item flex={1}>{right}</Flexbox.Item>

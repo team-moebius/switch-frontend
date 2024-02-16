@@ -92,9 +92,9 @@ const Notifications = ({ item }: { item: NotificationData }) => {
   const getIconName = (type: string) => {
     switch (type) {
       case 'switch':
-        return 'megaphone-outline';
+        return 'swap-horizontal';
       case 'announcement':
-        return 'code-outline';
+        return 'megaphone-outline';
     }
   };
 

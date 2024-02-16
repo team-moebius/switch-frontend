@@ -1,10 +1,11 @@
 // import Swiper from 'react-native-swiper';
-import { Pressable } from 'react-native';
-import { Flexbox, Typography } from 'src/components/atom';
+import { Pressable, useWindowDimensions } from 'react-native';
+import { Box, Flexbox, Typography, Image } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ItemCard, UserSummary } from 'src/components/molecule';
 import { SwitchDetailData } from '../type';
 import { UserSummaryData } from 'src/components/molecule/UserSummary';
+import Swiper from 'react-native-swiper';
 
 type SwitchDetailViewProps = {
   itemData: SwitchDetailData;
@@ -16,7 +17,8 @@ const SwitchDetailView = ({
   itemData,
   onClickReport,
 }: SwitchDetailViewProps) => {
-  const { title, date, description, hashTags, location } = itemData;
+  const { title, date, description, hashTags, location, thumbnails } = itemData;
+  const { width: screenWidth } = useWindowDimensions();
 
   return (
     <Flexbox
@@ -25,20 +27,26 @@ const SwitchDetailView = ({
       alignItems={'center'}
       flexDirection={'column'}
     >
-      {/* <Flexbox.Item width={'100%'} height={'20%'}>
-        <Swiper horizontal={true}>
+      <Flexbox.Item flex={1}>
+        <Swiper
+          horizontal
+          containerStyle={{
+            width: screenWidth,
+            height: 285,
+          }}
+        >
           {thumbnails.map((src, index) => (
             <Box key={index} width={'100%'} height={'100%'}>
               <Image
                 src={src}
                 width={'100%'}
-                height={'20%'}
-                resizeMode='cover'
+                height={'100%'}
+                resizeMode={'contain'}
               />
             </Box>
           ))}
         </Swiper>
-      </Flexbox.Item> */}
+      </Flexbox.Item>
       <Flexbox.Item width={'90%'} pt={20}>
         <ItemCard
           data={{
@@ -52,7 +60,7 @@ const SwitchDetailView = ({
           }}
         />
       </Flexbox.Item>
-      <Separator />
+      <Separator width={'100%'} />
       <Flexbox.Item width={'100%'}>
         <Flexbox alignItems='center' justifyContent='center'>
           <Pressable onPress={onClickReport}>
@@ -62,7 +70,7 @@ const SwitchDetailView = ({
           </Pressable>
         </Flexbox>
       </Flexbox.Item>
-      <Separator />
+      <Separator width={'100%'} />
       <Flexbox width={'90%'}>
         <UserSummary data={userData} />
       </Flexbox>

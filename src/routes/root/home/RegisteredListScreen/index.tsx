@@ -86,7 +86,7 @@ const RegisteredListScreen = ({ navigation }) => {
             <WithMirror
               renderItem={[childrenA, childrenB]}
               mirrorDirection={'row'}
-              centerAxis={<Icon name={'code-outline'} size={20} />}
+              centerAxis={<Icon name={'swap-horizontal'} size={20} />}
             />
           </Flexbox.Item>
           <Flexbox.Item alignSelf='center'>

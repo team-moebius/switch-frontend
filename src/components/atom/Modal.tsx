@@ -35,7 +35,7 @@ const animationModeMap: Record<string, Partial<ReactNativeModalProps>> = {
 type Mode = keyof typeof animationModeMap;
 type Position = keyof typeof positionStyle;
 
-interface ModalProps {
+export interface ModalProps {
   mode?: Mode;
   visible: boolean;
   backgroundColor?: Color | string;

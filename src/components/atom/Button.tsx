@@ -38,7 +38,7 @@ const typeStyle = StyleSheet.create({
   },
   cancel: {
     backgroundColor: '#d1d1d1',
-    color: '#ffffff',
+    color: '#3489eb',
   },
 });
 
