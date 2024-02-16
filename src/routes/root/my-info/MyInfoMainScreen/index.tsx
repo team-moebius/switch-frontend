@@ -8,30 +8,33 @@ import { ItemListCard } from './content/ItemListCard';
 
 import { useFlatList } from 'src/hooks/useFlatList';
 import { useCommonQuery } from 'src/hooks/useCommonQuery';
-import { USER_ID, expoSecureStore } from 'src/common/secureStore';
+import { UserContext } from 'src/context/user';
+import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 
-import { UserApi } from 'src/api';
+import { ItemApi, UserApi } from 'src/api';
 import {
   ItemResponse,
-  UserInfoItem,
+  SliceItemResponse,
   UserInfoResponse,
 } from '@team-moebius/api-typescript';
+
+import { SELECT_OPTIONS_QUERY } from '../../home/HomeMainScreen/content/ItemListContent';
+import { getPageableContent } from 'src/utils/getPageableContent';
 
 import {
   StuffListItemData,
   STUFF_LIST_MOCK,
-  MOCK_MYINFO_ITEM,
 } from '../../home/HomeMainScreen/SwitchList.mock';
 import { USERINFO_MOCK } from './UserInfo.mock';
-import { UserContext } from 'src/context/user';
 
 const MyInfoMainScreen = ({ navigation }) => {
   const { userId } = useContext(UserContext);
 
-  const { data, isLoading, isSuccess } = useCommonQuery<
-    UserInfoResponse,
-    Parameters<typeof UserApi.getUserInfo>
-  >({
+  const {
+    data: myInfoData,
+    isLoading,
+    isSuccess,
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
     api: UserApi.getUserInfo,
     queryKey: ['myInfoMain_userApi_getUserInfo', userId],
     onSuccess(data) {
@@ -42,16 +45,51 @@ const MyInfoMainScreen = ({ navigation }) => {
     },
   });
 
-  const loadMoreData = useCallback(() => {
-    console.debug('reacted end');
-  }, []);
+  const {
+    fetchNextPage,
+    data: myItemData,
+    isFetchingNextPage,
+  } = useCommonInfiniteQuery<SliceItemResponse>({
+    api: ItemApi.getItemsByLoginUser,
+    queryString: { size: 20, sort: SELECT_OPTIONS_QUERY['최신순'] },
+    queryKey: [
+      'myInfoMain_ItemApi_getItemsByLoginUser',
+      SELECT_OPTIONS_QUERY['최신순'],
+    ],
+    getNextPageParam(page) {
+      let nextPageNumber: number | undefined;
+      if (page.pageable && !page.last) {
+        nextPageNumber = (page.pageable.pageNumber as number) + 1;
+      } else {
+        nextPageNumber = undefined;
+      }
+
+      return nextPageNumber;
+    },
+    onSuccess(data) {
+      console.debug(
+        '\n\n ✅ myInfoMain_ItemApi_getItemsByLoginUser ✅\n\n',
+        data
+      );
+    },
+    onError(error) {
+      console.debug(
+        '\n\n 🚨 myInfoMain_ItemApi_getItemsByLoginUser 🚨\n\n',
+        error
+      );
+    },
+  });
+
+  const handleLoadMoreData = () => {
+    if (!isFetchingNextPage) return;
+    fetchNextPage();
+  };
 
   const renderItem = useCallback(({ item }: { item: ItemResponse }) => {
     return (
       <ItemListCard
         title={item.name ?? ''}
         count={item.waitingCount}
-        // imageSrc={item.thumbnail}
         imageSrc={item.images ? item.images[0] : ''}
       />
     );
@@ -59,7 +97,7 @@ const MyInfoMainScreen = ({ navigation }) => {
 
   const flatListProps = useFlatList<ItemResponse>({
     type: 'grid',
-    onEndReached: loadMoreData,
+    onEndReached: handleLoadMoreData,
     renderItem,
   });
 
@@ -68,11 +106,11 @@ const MyInfoMainScreen = ({ navigation }) => {
       <Box>
         <UserSummary
           data={{
-            user: data?.nickname ?? (userId as string),
-            verified: !!data?.phone,
-            countSwitch: data?.switchCount ?? 0,
-            userRate: data?.score ?? 0,
-            bio: data?.introduction,
+            user: myInfoData?.nickname ?? (userId as string),
+            verified: !!myInfoData?.phone,
+            countSwitch: myInfoData?.switchCount ?? 0,
+            userRate: myInfoData?.score ?? 0,
+            bio: myInfoData?.introduction,
           }}
         />
         <Flexbox justifyContent='center' alignItems='center' mt={10} mb={10}>
@@ -81,7 +119,7 @@ const MyInfoMainScreen = ({ navigation }) => {
               type={'normal'}
               size={'medium'}
               onPress={function (): void {
-                navigation.navigate('MyInfoEdit', { userInfo: data });
+                navigation.navigate('MyInfoEdit', { userInfo: myInfoData });
               }}
             >
               내 정보 편집하기
@@ -91,7 +129,11 @@ const MyInfoMainScreen = ({ navigation }) => {
       </Box>
       <Separator />
       <Flexbox height={'100%'}>
-        <ListView<ItemResponse> {...flatListProps} data={STUFF_LIST_MOCK} />
+        <ListView<ItemResponse>
+          {...flatListProps}
+          data={getPageableContent(myItemData)}
+          // data={STUFF_LIST_MOCK}
+        />
       </Flexbox>
     </ScreenWrapper>
   );

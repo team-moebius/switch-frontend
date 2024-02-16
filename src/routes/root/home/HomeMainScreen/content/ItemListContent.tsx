@@ -196,4 +196,4 @@ const ItemListContent = ({
   );
 };
 
-export { ItemListContent };
+export { ItemListContent, SELECT_OPTIONS_QUERY };
