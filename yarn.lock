@@ -3677,10 +3677,10 @@
   resolved "https://registry.yarnpkg.com/@swc/types/-/types-0.1.4.tgz#8d647e111dc97a8e2881bf71c2ee2d011698ff10"
   integrity sha512-z/G02d+59gyyUb7KYhKi9jOhicek6QD2oMaotUyG+lUkybpXoV49dY9bj7Ah5Q+y7knK2jU67UTX9FyfGzaxQg==
 
-"@team-moebius/api-typescript@=0.0.11":
-  version "0.0.11"
-  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.11/860b1ddac1cecf8ac2c54174e725711f5fa58f28#860b1ddac1cecf8ac2c54174e725711f5fa58f28"
-  integrity sha512-sxBJpzT+G4dtRyZXZ3QSeWiCfxcJuDWRK2mnLnvJmII7X0gFVh7LH5fXZDOFuddjcfhhHKnXVG6Cnl6I21lh2g==
+"@team-moebius/api-typescript@=0.0.15":
+  version "0.0.15"
+  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.15/c143132094b77006b794a8ac324e6de2a046a629#c143132094b77006b794a8ac324e6de2a046a629"
+  integrity sha512-M/uPwTIQAH0yG9jGmYvaASwV3bWss+J1mP+CTdbZshTIpeQar2/kvgxP/j77Nd9gYY1ddNtKEhlOdBI2/k9zeg==
   dependencies:
     axios "^1.4.0"
     typescript "^5.2.2"
@@ -6630,6 +6630,13 @@ expo-keep-awake@~12.3.0:
   version "12.3.0"
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-12.3.0.tgz#c42449ae19c993274ddc43aafa618792b6aec408"
   integrity sha512-ujiJg1p9EdCOYS05jh5PtUrfiZnK0yyLy+UewzqrjUqIT8eAGMQbkfOn3C3fHE7AKd5AefSMzJnS3lYZcZYHDw==
+
+expo-local-authentication@~13.4.1:
+  version "13.4.1"
+  resolved "https://registry.yarnpkg.com/expo-local-authentication/-/expo-local-authentication-13.4.1.tgz#908516d395530f6895d7980009e4c85cdcff5327"
+  integrity sha512-FWTUkMNo9aDT3cg02SWAcSFjTiDu20izhCn5CGwdtFNCBpPQUD0BJ/czhjrIFE70teMzE5wZUdbJuSKYonUaWA==
+  dependencies:
+    invariant "^2.2.4"
 
 expo-location@~16.1.0:
   version "16.1.0"

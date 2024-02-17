@@ -1,11 +1,15 @@
-// import { StackScreenProps } from '@react-navigation/stack
-import React, { useContext } from 'react';
+import { useContext } from 'react';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template/ScreenWrapper';
 import { ThemeContext } from 'src/context/theme';
 import { UserContext } from 'src/context/user';
+import { SignRouteParamList } from '.';
+import { StackScreenProps } from '@react-navigation/stack';
 
-const TitleScreen = ({ navigation }) => {
+interface TitleScreenProps
+  extends StackScreenProps<SignRouteParamList, 'Title'> {}
+
+const TitleScreen = ({ navigation }: TitleScreenProps) => {
   const { color } = useContext(ThemeContext);
   const { login } = useContext(UserContext);
 

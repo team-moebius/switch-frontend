@@ -1,60 +1,80 @@
-import { useCallback, useState } from 'react';
-import { Box, Flexbox, Typography } from 'src/components/atom';
+import { useCallback, useContext } from 'react';
+import { Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+import { SecuritySettingParamList } from '..';
 
-const SecuritySettingMain = ({ navigation }) => {
-  const [value, setValue] = useState<{
-    usePassword: boolean;
-    useBioPassword: boolean;
-  }>({ usePassword: false, useBioPassword: false });
-  const { usePassword, useBioPassword } = value;
+import { AppPasswordContext } from 'src/context/password';
+import { StackScreenProps } from '@react-navigation/stack';
 
-  const changeHandler = useCallback(
-    (value: Partial<{ usePassword: boolean; useBioPassword: boolean }>) => {
-      setValue((prev) => ({ ...prev, ...value }));
-    },
-    []
-  );
+interface SecuritySettingMainProps
+  extends StackScreenProps<SecuritySettingParamList, 'SecuritySettingMain'> {}
 
-  const passwordChangeHandler = useCallback((value: boolean) => {
+const SecuritySettingMain = ({ navigation }: SecuritySettingMainProps) => {
+  const {
+    appPasswordList: { isSetPassword, isSetBioPassword },
+    setBioPassword,
+    isBiometricAuth,
+  } = useContext(AppPasswordContext);
+
+  const passwordHandler = useCallback((value: boolean) => {
     if (value === true) {
       navigation.navigate('SecuritySettingPassword');
+    } else {
+      navigation.navigate('SecurityUnlock', { value: 'PASSWORD' });
     }
-    changeHandler({ usePassword: value });
+  }, []);
+
+  const bioPasswordHandler = useCallback((value: boolean) => {
+    if (value === true) {
+      setBioPassword();
+    } else {
+      navigation.navigate('SecurityUnlock', { value: 'BIO_PASSWORD' });
+    }
   }, []);
 
   return (
     <ScreenWrapper>
       <Flexbox flexDirection={'column'} gap={48}>
-        <Box>
+        <Field
+          labelLayout={{ flex: 1 }}
+          childrenLayout={{ flex: 0.5 }}
+          labelAlign='center'
+          label={
+            <Flexbox flexDirection='column' gap={5}>
+              <Typography fontSize={20}>앱 비밀번호 사용</Typography>
+              <Typography fontSize={12}>
+                앱을 시작할 때 비밀 번호를 사용합니다.
+              </Typography>
+            </Flexbox>
+          }
+          name={'usePassword'}
+          fieldType={'toggle'}
+          value={isSetPassword}
+          onChange={({ usePassword }) => passwordHandler(usePassword)}
+        />
+        {isBiometricAuth && isSetPassword && (
           <Field
-            label={<Typography fontSize={20}>앱 비밀번호 사용</Typography>}
-            name={'usePassword'}
-            fieldType={'toggle'}
-            value={usePassword}
-            onChange={({ usePassword }) => passwordChangeHandler(usePassword)}
-          />
-          <Box width={'100%'}>
-            <Typography fontSize={12}>
-              앱을 켤 때 비밀 번호를 사용합니다.
-            </Typography>
-          </Box>
-        </Box>
-        <Box>
-          <Field
-            label={<Typography fontSize={20}>생체 정보 등록</Typography>}
+            labelLayout={{ flex: 1 }}
+            childrenLayout={{ flex: 0.5 }}
+            disabled={!isSetPassword}
+            labelAlign='center'
+            label={
+              <Flexbox flexDirection='column' gap={5}>
+                <Typography fontSize={20}>생체 정보 등록</Typography>
+                <Typography fontSize={12}>
+                  앱을 시작할 때 생체 인식을 사용합니다.
+                </Typography>
+              </Flexbox>
+            }
             name={'useBioPassword'}
             fieldType={'toggle'}
-            value={useBioPassword}
-            onChange={changeHandler}
+            value={isSetBioPassword}
+            onChange={({ useBioPassword }) => {
+              bioPasswordHandler(useBioPassword);
+            }}
           />
-          <Box width={'100%'}>
-            <Typography fontSize={12}>
-              앱을 켤 때 비밀 번호를 사용합니다.
-            </Typography>
-          </Box>
-        </Box>
+        )}
       </Flexbox>
     </ScreenWrapper>
   );
