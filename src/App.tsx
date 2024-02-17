@@ -10,6 +10,7 @@ import { wait } from './utils/wait';
 import NavigationRouter from './routes';
 import { SplashScreen } from './routes/sign/SplashScreen';
 import { SafeAreaView } from 'react-native';
+import { AppPasswordProvider } from './context/password';
 
 const queryClient = new QueryClient();
 
@@ -31,11 +32,13 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
-        <ThemeContextProvider>
-          <SafeAreaView style={{ width: '100%', height: '100%' }}>
-            {!initialized ? <SplashScreen /> : <NavigationRouter />}
-          </SafeAreaView>
-        </ThemeContextProvider>
+        <AppPasswordProvider>
+          <ThemeContextProvider>
+            <SafeAreaView style={{ width: '100%', height: '100%' }}>
+              {!initialized ? <SplashScreen /> : <NavigationRouter />}
+            </SafeAreaView>
+          </ThemeContextProvider>
+        </AppPasswordProvider>
       </UserContextProvider>
     </QueryClientProvider>
   );

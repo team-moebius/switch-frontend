@@ -3,7 +3,7 @@ import globalAxios, { InternalAxiosRequestConfig, AxiosResponse } from 'axios';
 import * as API from '@team-moebius/api-typescript';
 import { setBearerAuthToObject } from '@team-moebius/api-typescript/dist/common';
 
-import { expoSecureStore } from 'src/common/secureStore';
+import { TOKEN, expoSecureStore } from 'src/common/secureStore';
 
 /* 전역 axios 인스턴스에 interceptor 설정 */
 globalAxios.interceptors.request.use(
@@ -32,7 +32,7 @@ globalAxios.interceptors.request.use(
 globalAxios.interceptors.response.use(
   async (config: AxiosResponse): Promise<AxiosResponse> => {
     if ('jwtToken' in config.data)
-      await expoSecureStore.setToken('token', config.data.jwtToken);
+      await expoSecureStore.setToken(TOKEN, config.data.jwtToken);
 
     return config;
   }
