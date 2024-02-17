@@ -18,18 +18,18 @@ export type NavigationRouterParamList = {
 const Stack = createStackNavigator<NavigationRouterParamList>();
 
 const NavigationRouter = () => {
-  const { user } = useContext(UserContext);
+  const { userId } = useContext(UserContext);
   const {
     appPasswordList: { isSetPassword },
   } = useContext(AppPasswordContext);
 
   const initRouteName = useMemo(() => {
-    if (user) {
+    if (userId) {
       if (isSetPassword) return 'AppUnlock';
       else return 'Root';
     }
     return 'Sign';
-  }, [user, isSetPassword]);
+  }, [userId, isSetPassword]);
 
   return (
     <NavigationContainer>
@@ -38,7 +38,7 @@ const NavigationRouter = () => {
         initialRouteName={initRouteName}
       >
         {/* if user signed in, route home */}
-        <Stack.Group navigationKey={user === null ? 'Sign' : 'Main'}>
+        <Stack.Group navigationKey={initRouteName}>
           <Stack.Screen name={'AppUnlock'} component={AppUnlock} />
           <Stack.Screen name={'Root'} component={RootTabs} />
           <Stack.Screen name={'Sign'} component={SignRoute} />
