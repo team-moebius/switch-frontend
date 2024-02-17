@@ -21,13 +21,18 @@ import {
 import { SELECT_OPTIONS_QUERY } from '../../home/HomeMainScreen/content/ItemListContent';
 import { getPageableContent } from 'src/utils/getPageableContent';
 
+import { StackScreenProps } from '@react-navigation/stack';
+import { MyInfoParamList } from '..';
+
 import {
   StuffListItemData,
   STUFF_LIST_MOCK,
 } from '../../home/HomeMainScreen/SwitchList.mock';
 import { USERINFO_MOCK } from './UserInfo.mock';
 
-const MyInfoMainScreen = ({ navigation }) => {
+const MyInfoMainScreen = ({
+  navigation,
+}: StackScreenProps<MyInfoParamList, 'MyInfoMain'>) => {
   const { userId } = useContext(UserContext);
 
   const {
