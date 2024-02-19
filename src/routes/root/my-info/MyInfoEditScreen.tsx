@@ -1,4 +1,5 @@
-import { useContext, useEffect, useState, useLayoutEffect } from 'react';
+import { useContext, useState, useLayoutEffect } from 'react';
+import { Alert } from 'react-native';
 
 import {
   Box,
@@ -15,14 +16,18 @@ import { UserContext } from 'src/context/user';
 
 import { useQueryClient } from 'react-query';
 import { UserApi } from 'src/api';
-import { StackHeaderProps } from '@react-navigation/stack';
+import { StackHeaderProps, StackScreenProps } from '@react-navigation/stack';
 
 import {
   UserInfoResponse,
   UserUpdateRequest,
 } from '@team-moebius/api-typescript';
+import { MyInfoParamList } from '.';
 
-const MyInfoEditScreen = ({ navigation, route }) => {
+const MyInfoEditScreen = ({
+  navigation,
+  route,
+}: StackScreenProps<MyInfoParamList, 'MyInfoEdit'>) => {
   const { userId } = useContext(UserContext);
   const queryClient = useQueryClient();
 
@@ -52,10 +57,10 @@ const MyInfoEditScreen = ({ navigation, route }) => {
     params: { userInfo },
   } = route;
 
-  const [name, setName] = useState(userInfo.nickname);
-  const [introduce, setIntroduce] = useState(userInfo.introduction);
-  const [phone, setPhone] = useState(userInfo.phone);
-  const [email, setEmail] = useState(userInfo.email);
+  const [name, setName] = useState(userInfo?.nickname ?? '');
+  const [introduce, setIntroduce] = useState(userInfo?.introduction ?? '');
+  const [phone, setPhone] = useState(userInfo?.phone ?? '');
+  const [email, setEmail] = useState(userInfo?.email ?? '');
 
   const handleEdit = () => {
     const newInfo = {
@@ -66,28 +71,23 @@ const MyInfoEditScreen = ({ navigation, route }) => {
   };
 
   const certifyHandler = () => {
-    alert('2차 인증');
+    // alert('2차 인증');
+    Alert.alert('알림', '추후 추가될 기능입니다 :)');
   };
 
   const phoneEditHandler = () => {
-    alert('휴대폰 번호 변경');
+    // alert('휴대폰 번호 변경');
+    Alert.alert('알림', '추후 추가될 기능입니다 :)');
   };
 
   const emailEditHandler = () => {
-    alert('이메일 변경');
+    // alert('이메일 변경');
+    Alert.alert('알림', '추후 추가될 기능입니다 :)');
   };
 
   const withdrawHandler = () => {
-    alert('회원 탈퇴하기');
+    return navigation.navigate('Withdraw');
   };
-
-  // useEffect(() => {
-  //   // 기존 value 할당
-  //   setName('집오리');
-  //   setIntroduce('제 꿈은 클립으로 집까지 바꾸는 거에요! :)');
-  //   setPhone('01012341234');
-  //   setEmail('');
-  // }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
