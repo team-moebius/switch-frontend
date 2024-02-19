@@ -1,3 +1,4 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import {
   UserVerificationRequest,
   UserVerificationResponse,
@@ -9,8 +10,12 @@ import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { SignUpRouteParamList } from '.';
 
-const SubmitPhoneNumber = ({ navigation }) => {
+interface SubmitPhoneNumberProps
+  extends StackScreenProps<SignUpRouteParamList, 'SubmitPhone'> {}
+
+const SubmitPhoneNumber = ({ navigation }: SubmitPhoneNumberProps) => {
   const [state, setState] = useState<UserVerificationRequest>({ phone: '' });
 
   const { mutate } = useCommonMutation<

@@ -4,7 +4,7 @@ import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
 import { useCommonMutation } from 'src/hooks/useCommomMutation';
-import { expoSecureStore } from 'src/common/secureStore';
+import { TOKEN, USERNAME, expoSecureStore } from 'src/common/secureStore';
 import { UserContext } from 'src/context/user';
 
 import {
@@ -15,12 +15,27 @@ import {
 } from '@team-moebius/api-typescript';
 import { UserApi } from 'src/api';
 
-const SubmitValidationCode = ({ navigation, route }) => {
+import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { SignUpRouteParamList } from '.';
+import { NavigationRouterParamList } from 'src/routes';
+
+interface SubmitValidationCodeProps
+  extends StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'> {}
+
+const SubmitValidationCode = ({ route }: SubmitValidationCodeProps) => {
   const [state, setState] = useState<LoginRequest>({
-    phone: route?.params?.phoneNumber,
+    phone: route.params.phoneNumber,
     verifiedCode: '',
   });
   const { login } = useContext(UserContext);
+  const navigation =
+    useNavigation<
+      CompositeScreenProps<
+        StackScreenProps<NavigationRouterParamList, 'Root'>,
+        StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'>
+      >
+    >();
 
   const { mutate: validationCodeMutate } = useCommonMutation<
     LoginResponse,
@@ -31,13 +46,13 @@ const SubmitValidationCode = ({ navigation, route }) => {
       console.debug('[UserApi.login]on success:', data, variables);
 
       if (data.jwtToken) {
-        await expoSecureStore.setToken('token', data.jwtToken.split(' ')[1]);
-        await expoSecureStore.setToken('username', 'Test');
+        await expoSecureStore.setToken(TOKEN, data.jwtToken.split(' ')[1]);
+        await expoSecureStore.setToken(USERNAME, 'Test');
       }
 
       login();
 
-      navigation?.reset({
+      navigation.reset({
         index: 0,
         routes: [{ name: 'Root' }],
       });

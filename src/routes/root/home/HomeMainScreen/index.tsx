@@ -6,8 +6,13 @@ import { ScreenWrapper } from 'src/components/template';
 import { HistoryListContent } from './content/HistoryListContent';
 import { ItemListContent } from './content/ItemListContent';
 import { ItemApi } from 'src/api';
+import { StackScreenProps } from '@react-navigation/stack';
+import { HomeRouteParamList } from '..';
 
-const HomeMainScreen = ({ navigation }) => {
+interface HomeMainScreenProps
+  extends StackScreenProps<HomeRouteParamList, 'HomeMain'> {}
+
+const HomeMainScreen = ({ navigation }: HomeMainScreenProps) => {
   const [isItemView, setIsItemView] = useState<boolean>(true);
 
   return (
@@ -23,7 +28,7 @@ const HomeMainScreen = ({ navigation }) => {
             onClickList={(data) => {
               navigation?.navigate('SwitchDetail', { ...data });
             }}
-            api={ItemApi.getAllItems}
+            api={ItemApi.getItems}
           />
         ) : (
           <HistoryListContent />

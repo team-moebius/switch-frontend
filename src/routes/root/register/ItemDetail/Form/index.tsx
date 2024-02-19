@@ -15,14 +15,8 @@ import { SwitchDetailData } from '../type';
 import useExpoLocation from 'src/hooks/useExpoLocation';
 import useFetchAddress from 'src/hooks/useFetchAddress';
 import { AddressModal } from './modals/AddressModal';
-import { AttentionModal } from './modals/AttentionModal';
+import { AttentionModal, DETAILS } from './modals/AttentionModal';
 import { ScreenWrapper } from 'src/components/template';
-
-export const DETAILS = 'details';
-export const SAFETY = 'safety';
-
-const DETAILS = 'details';
-const SAFETY = 'safety';
 
 interface SwitchDetailFormProps {
   initialData?: SwitchDetailData;
