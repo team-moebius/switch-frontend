@@ -9,10 +9,9 @@ import { ItemApi } from 'src/api';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';
 
-interface HomeMainScreenProps
-  extends StackScreenProps<HomeRouteParamList, 'HomeMain'> {}
-
-const HomeMainScreen = ({ navigation }: HomeMainScreenProps) => {
+const HomeMainScreen = ({
+  navigation,
+}: StackScreenProps<HomeRouteParamList, 'HomeMain'>) => {
   const [isItemView, setIsItemView] = useState<boolean>(true);
 
   return (

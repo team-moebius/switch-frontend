@@ -9,15 +9,9 @@ import { AppPasswordContext } from 'src/context/password';
 import { SecuritySettingParamList } from '..';
 import PALETTE from 'src/assets/theme/palettes';
 
-interface SecuritySettingPasswordProps
-  extends StackScreenProps<
-    SecuritySettingParamList,
-    'SecuritySettingPassword'
-  > {}
-
 const SecuritySettingPassword = ({
   navigation,
-}: SecuritySettingPasswordProps) => {
+}: StackScreenProps<SecuritySettingParamList, 'SecuritySettingPassword'>) => {
   const { setPassword: setExpoSecurity } = useContext(AppPasswordContext);
 
   const [password, setPassword] = useState<string>('');
