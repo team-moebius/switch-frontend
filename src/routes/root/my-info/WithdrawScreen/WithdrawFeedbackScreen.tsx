@@ -14,8 +14,12 @@ import { useCommonMutation } from 'src/hooks/useCommomMutation';
 
 const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만족'];
 
-const WithdrawFeedbackScreen = ({ navigation }) => {
   const { user: userId } = useContext(UserContext);
+import { WithdrawParamList } from '.';
+import { StackScreenProps } from '@react-navigation/stack';
+const WithdrawFeedbackScreen = ({
+  navigation,
+}: StackScreenProps<WithdrawParamList, 'WithdrawInfo'>) => {
 
   const { mutate: withdrawMutate } = useCommonMutation<string, number>({
     api: (userId: number) => UserApi.withdrawUser(userId),

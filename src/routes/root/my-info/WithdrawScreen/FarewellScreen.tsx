@@ -1,7 +1,18 @@
 import { useEffect } from 'react';
+
 import { Flexbox, Typography } from 'src/components/atom';
 
-const FarewellScreen = ({ navigation }) => {
+import { StackScreenProps } from '@react-navigation/stack';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { NavigationRouterParamList } from 'src/routes';
+import { WithdrawParamList } from '.';
+
+const FarewellScreen = ({
+  navigation,
+}: CompositeScreenProps<
+  StackScreenProps<WithdrawParamList, 'Farewell'>,
+  StackScreenProps<NavigationRouterParamList, 'Sign'>
+>) => {
   useEffect(() => {
     setTimeout(() => {
       navigation.navigate('Sign');

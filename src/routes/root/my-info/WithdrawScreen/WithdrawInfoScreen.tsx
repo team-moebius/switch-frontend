@@ -1,7 +1,12 @@
 import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 
-const WithdrawInfoScreen = ({ navigation }) => {
+import { StackScreenProps } from '@react-navigation/stack';
+import { WithdrawParamList } from '.';
+
+const WithdrawInfoScreen = ({
+  navigation,
+}: StackScreenProps<WithdrawParamList, 'WithdrawInfo'>) => {
   const onClickHandler = () => {
     navigation.navigate('WithdrawFeedback');
   };
