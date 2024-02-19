@@ -10,11 +10,15 @@ import {
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
-const MyInfoEditScreen = () => {
-  const [name, setName] = useState('');
-  const [introduce, setIntroduce] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+const MyInfoEditScreen = ({ route }) => {
+  const {
+    params: { userInfo },
+  } = route;
+
+  const [name, setName] = useState(userInfo.nickname);
+  const [introduce, setIntroduce] = useState(userInfo.introduction);
+  const [phone, setPhone] = useState(userInfo.phone);
+  const [email, setEmail] = useState(userInfo.email);
 
   const certifyHandler = () => {
     alert('2차 인증');
@@ -31,14 +35,6 @@ const MyInfoEditScreen = () => {
   const withdrawHandler = () => {
     alert('회원 탈퇴하기');
   };
-
-  useEffect(() => {
-    // 기존 value 할당
-    setName('집오리');
-    setIntroduce('제 꿈은 클립으로 집까지 바꾸는 거에요! :)');
-    setPhone('01012341234');
-    setEmail('');
-  }, []);
 
   return (
     <ScreenWrapper>

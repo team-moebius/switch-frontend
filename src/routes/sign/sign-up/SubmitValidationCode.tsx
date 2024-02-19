@@ -4,7 +4,7 @@ import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
 import { useCommonMutation } from 'src/hooks/useCommomMutation';
-import { TOKEN, USERNAME, expoSecureStore } from 'src/common/secureStore';
+import { TOKEN, USER_ID, expoSecureStore } from 'src/common/secureStore';
 import { UserContext } from 'src/context/user';
 
 import {
@@ -47,7 +47,7 @@ const SubmitValidationCode = ({ route }: SubmitValidationCodeProps) => {
 
       if (data.jwtToken) {
         await expoSecureStore.setToken(TOKEN, data.jwtToken.split(' ')[1]);
-        await expoSecureStore.setToken(USERNAME, 'Test');
+        await expoSecureStore.setToken(USER_ID, `${data.userId}`);
       }
 
       login();
