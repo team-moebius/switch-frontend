@@ -24,7 +24,7 @@ const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순']
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
 const SELECT_OPTIONS_QUERY = {
   무작위: ['random', 'asc'],
-  최신순: ['updatedAt', 'asc'],
+  최신순: ['updatedAt', 'desc'],
   '내 위치와 가까운 순': ['distance', 'asc'],
 };
 
@@ -66,7 +66,9 @@ const ListItem = ({
       data={{
         title: item.name ? item.name : '',
         src: item.images ? item.images[0] : '',
-        location: withTitleOnly ? '' : item.preferredCategory || '',
+        location: withTitleOnly
+          ? ''
+          : Array.from(item.preferredLocations || '')[0] || '',
       }}
       onPress={onClick}
       childDirection={'column'}
@@ -194,4 +196,4 @@ const ItemListContent = ({
   );
 };
 
-export { ItemListContent };
+export { ItemListContent, SELECT_OPTIONS_QUERY };

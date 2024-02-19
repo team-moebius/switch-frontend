@@ -22,8 +22,8 @@ import {
   UserUpdateRequest,
 } from '@team-moebius/api-typescript';
 
-const MyInfoEditScreen = ({ navigation }) => {
-  const { user: userId } = useContext(UserContext);
+const MyInfoEditScreen = ({ navigation, route }) => {
+  const { userId } = useContext(UserContext);
   const queryClient = useQueryClient();
 
   const { mutate } = useCommonMutation<UserInfoResponse, UserUpdateRequest>({
@@ -48,10 +48,14 @@ const MyInfoEditScreen = ({ navigation }) => {
     },
   });
 
-  const [name, setName] = useState('');
-  const [introduce, setIntroduce] = useState('');
-  const [phone, setPhone] = useState('');
-  const [email, setEmail] = useState('');
+  const {
+    params: { userInfo },
+  } = route;
+
+  const [name, setName] = useState(userInfo.nickname);
+  const [introduce, setIntroduce] = useState(userInfo.introduction);
+  const [phone, setPhone] = useState(userInfo.phone);
+  const [email, setEmail] = useState(userInfo.email);
 
   const handleEdit = () => {
     const newInfo = {
@@ -77,13 +81,13 @@ const MyInfoEditScreen = ({ navigation }) => {
     alert('회원 탈퇴하기');
   };
 
-  useEffect(() => {
-    // 기존 value 할당
-    setName('집오리');
-    setIntroduce('제 꿈은 클립으로 집까지 바꾸는 거에요! :)');
-    setPhone('01012341234');
-    setEmail('');
-  }, []);
+  // useEffect(() => {
+  //   // 기존 value 할당
+  //   setName('집오리');
+  //   setIntroduce('제 꿈은 클립으로 집까지 바꾸는 거에요! :)');
+  //   setPhone('01012341234');
+  //   setEmail('');
+  // }, []);
 
   useLayoutEffect(() => {
     navigation.setOptions({
