@@ -11,15 +11,28 @@ import { SecuritySettingRoute } from './Security';
 import { ScreenHeader, PressableIcon } from 'src/components/molecule';
 import { Button, Flexbox } from 'src/components/atom';
 import { MyInfoEditScreen } from './MyInfoEditScreen';
+import { UserInfoResponse } from '@team-moebius/api-typescript';
 
-const Stack = createStackNavigator();
+type MyInfoParamList = {
+  MyInfoMain: undefined;
+  MyInfoEdit: { userInfo: UserInfoResponse | undefined };
+  Withdraw: undefined;
+  SettingMain: undefined;
+  Record: undefined;
+  Setting: undefined;
+  Security: undefined;
+  Version: undefined;
+  Feedback: undefined;
+};
+
+const Stack = createStackNavigator<MyInfoParamList>();
 
 const MyInfoRoute = () => {
   return (
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
-          name={'MyInfoHome'}
+          name={'MyInfoMain'}
           component={MyInfoMainScreen}
           options={{
             header: (props) => {
@@ -133,4 +146,4 @@ const MyInfoRoute = () => {
   );
 };
 
-export { MyInfoRoute };
+export { MyInfoRoute, type MyInfoParamList };

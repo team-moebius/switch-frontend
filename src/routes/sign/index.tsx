@@ -3,7 +3,12 @@ import { SignUpRoute } from './sign-up';
 
 import { TitleScreen } from './TitleScreen';
 
-const Stack = createStackNavigator();
+type SignRouteParamList = {
+  Title: undefined;
+  SignUp: undefined;
+};
+
+const Stack = createStackNavigator<SignRouteParamList>();
 
 const SignRoute = () => {
   return (
@@ -18,4 +23,4 @@ const SignRoute = () => {
   );
 };
 
-export { SignRoute };
+export { SignRoute, SignRouteParamList };

@@ -4,7 +4,12 @@ import { SubmitPhoneNumber } from './SubmitPhoneNumber';
 
 import { SubmitValidationCode } from './SubmitValidationCode';
 
-const Stack = createStackNavigator();
+type SignUpRouteParamList = {
+  SubmitPhone: undefined;
+  SubmitValidationCode: { phoneNumber: string };
+};
+
+const Stack = createStackNavigator<SignUpRouteParamList>();
 
 const SignUpRoute = () => {
   return (
@@ -24,4 +29,4 @@ const SignUpRoute = () => {
   );
 };
 
-export { SignUpRoute };
+export { SignUpRoute, SignUpRouteParamList };
