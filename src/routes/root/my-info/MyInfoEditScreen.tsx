@@ -9,8 +9,9 @@ import {
 
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 
-const MyInfoEditScreen = ({ route }) => {
+const MyInfoEditScreen = ({ navigation, route }) => {
   const {
     params: { userInfo },
   } = route;
@@ -37,7 +38,7 @@ const MyInfoEditScreen = ({ route }) => {
   };
 
   return (
-    <ScreenWrapper>
+    <KeyboardScreenWrapper>
       <Box>
         <Separator />
         <Flexbox alignItems='center'>
@@ -83,7 +84,7 @@ const MyInfoEditScreen = ({ route }) => {
         </Flexbox>
         <Separator />
       </Box>
-      <Flexbox.Item padding={10} flex={1}>
+      <Flexbox.Item padding={10} flex={1} mb={'30%'}>
         <Box mb={20}>
           <Box width={100} mb={10}>
             <Button type={'normal'} size={'medium'} onPress={certifyHandler}>
@@ -133,7 +134,7 @@ const MyInfoEditScreen = ({ route }) => {
       <Button type={'transparent'} size={'medium'} onPress={withdrawHandler}>
         회원 탈퇴하기
       </Button>
-    </ScreenWrapper>
+    </KeyboardScreenWrapper>
   );
 };
 

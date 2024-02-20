@@ -17,6 +17,7 @@ const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만�
   const { user: userId } = useContext(UserContext);
 import { WithdrawParamList } from '.';
 import { StackScreenProps } from '@react-navigation/stack';
+import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 const WithdrawFeedbackScreen = ({
   navigation,
 }: StackScreenProps<WithdrawParamList, 'WithdrawInfo'>) => {
@@ -51,8 +52,8 @@ const WithdrawFeedbackScreen = ({
   };
 
   return (
-    <ScreenWrapper>
-      <Flexbox.Item flex={1}>
+    <KeyboardScreenWrapper>
+      <Flexbox.Item flex={1} mb={'10%'}>
         <Flexbox gap={10} flexDirection='column'>
           <Typography fontSize={20}>
             스위치를 탈퇴하시려는 이유가 있을까요?
@@ -70,7 +71,7 @@ const WithdrawFeedbackScreen = ({
       <Button type={'normal'} size={'large'} onPress={onSubmitHandler}>
         제출하기
       </Button>
-    </ScreenWrapper>
+    </KeyboardScreenWrapper>
   );
 };
 
