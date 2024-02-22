@@ -3677,10 +3677,10 @@
   resolved "https://registry.yarnpkg.com/@swc/types/-/types-0.1.4.tgz#8d647e111dc97a8e2881bf71c2ee2d011698ff10"
   integrity sha512-z/G02d+59gyyUb7KYhKi9jOhicek6QD2oMaotUyG+lUkybpXoV49dY9bj7Ah5Q+y7knK2jU67UTX9FyfGzaxQg==
 
-"@team-moebius/api-typescript@=0.0.15":
-  version "0.0.15"
-  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.15/c143132094b77006b794a8ac324e6de2a046a629#c143132094b77006b794a8ac324e6de2a046a629"
-  integrity sha512-M/uPwTIQAH0yG9jGmYvaASwV3bWss+J1mP+CTdbZshTIpeQar2/kvgxP/j77Nd9gYY1ddNtKEhlOdBI2/k9zeg==
+"@team-moebius/api-typescript@=0.0.16":
+  version "0.0.16"
+  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.16/45ef8e8b65e7696d660c845916ff745f83b4e8cc#45ef8e8b65e7696d660c845916ff745f83b4e8cc"
+  integrity sha512-k5RGbQK1yFh7PuL5yCi+cxhshGyubtz8d29MOkN+JIArF6U/ZgsOGnPCinXKAkfWqIlFQISIjVOmVa8W6vEGmw==
   dependencies:
     axios "^1.4.0"
     typescript "^5.2.2"

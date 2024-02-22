@@ -33,8 +33,7 @@ const MyInfoEditScreen = ({
 
   const { mutate } = useCommonMutation<UserInfoResponse, UserUpdateRequest>({
     api: (userData: UserUpdateRequest) =>
-      // TODO : userId 부분 수정하기 + async로 래핑해야 할 수도 있음
-      UserApi.updateUserInfo(userId as unknown as number, userData, userData),
+      UserApi.updateUserInfo(Number(userId), userData),
     onSuccess(data, variables) {
       console.debug(
         '\n\n\n ✅ myInfoEdit_userApi_updateUserInfo data ✅ \n\n',
