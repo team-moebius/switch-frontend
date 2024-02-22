@@ -9,7 +9,7 @@ import { UserApi } from 'src/api';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
-import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import { SignUpRouteParamList } from '.';
 
 interface SubmitPhoneNumberProps

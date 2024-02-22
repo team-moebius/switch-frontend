@@ -10,7 +10,7 @@ import {
 } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 import { UserContext } from 'src/context/user';
-import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
 
 const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만족'];
 
