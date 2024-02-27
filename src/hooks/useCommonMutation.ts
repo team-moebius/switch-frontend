@@ -7,10 +7,7 @@ interface UseCommonMutationParam<Response, Request>
     UseMutationOptions<Response, unknown, Request>,
     'mutationKey' | 'onSuccess' | 'onError'
   > {
-  api: (
-    request1: Request,
-    request2: Request
-  ) => Promise<AxiosResponse<Response>>;
+  api: (request1: Request) => Promise<AxiosResponse<Response>>;
 }
 
 export const useCommonMutation = <
@@ -24,8 +21,7 @@ export const useCommonMutation = <
 }: UseCommonMutationParam<Response, Request>) => {
   const func = useCallback(
     (param: Request) =>
-      api(param, param).then((res) => {
-        console.debug('aaaaa data aaaaa ::: ', res.data);
+      api(param).then((res) => {
         return res.data;
       }),
     [api]
