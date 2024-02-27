@@ -6,10 +6,9 @@ import { UserContext } from 'src/context/user';
 import { SignRouteParamList } from '.';
 import { StackScreenProps } from '@react-navigation/stack';
 
-interface TitleScreenProps
-  extends StackScreenProps<SignRouteParamList, 'Title'> {}
-
-const TitleScreen = ({ navigation }: TitleScreenProps) => {
+const TitleScreen = ({
+  navigation,
+}: StackScreenProps<SignRouteParamList, 'Title'>) => {
   const { color } = useContext(ThemeContext);
   const { login } = useContext(UserContext);
 

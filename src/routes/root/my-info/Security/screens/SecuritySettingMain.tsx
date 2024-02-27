@@ -7,10 +7,9 @@ import { SecuritySettingParamList } from '..';
 import { AppPasswordContext } from 'src/context/password';
 import { StackScreenProps } from '@react-navigation/stack';
 
-interface SecuritySettingMainProps
-  extends StackScreenProps<SecuritySettingParamList, 'SecuritySettingMain'> {}
-
-const SecuritySettingMain = ({ navigation }: SecuritySettingMainProps) => {
+const SecuritySettingMain = ({
+  navigation,
+}: StackScreenProps<SecuritySettingParamList, 'SecuritySettingMain'>) => {
   const {
     appPasswordList: { isSetPassword, isSetBioPassword },
     setBioPassword,

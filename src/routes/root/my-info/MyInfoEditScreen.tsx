@@ -1,4 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useState, useLayoutEffect } from 'react';
+import { Alert } from 'react-native';
+
 import {
   Box,
   Flexbox,
@@ -6,35 +8,109 @@ import {
   Button,
   Separator,
 } from 'src/components/atom';
-
-import { Field } from 'src/components/molecule';
+import { Field, ScreenHeader } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
-const MyInfoEditScreen = ({ route }) => {
+import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { UserContext } from 'src/context/user';
+
+import { useQueryClient } from 'react-query';
+import { UserApi } from 'src/api';
+import { StackHeaderProps, StackScreenProps } from '@react-navigation/stack';
+
+import {
+  UserInfoResponse,
+  UserUpdateRequest,
+} from '@team-moebius/api-typescript';
+import { MyInfoParamList } from '.';
+
+const MyInfoEditScreen = ({
+  navigation,
+  route,
+}: StackScreenProps<MyInfoParamList, 'MyInfoEdit'>) => {
+  const { userId } = useContext(UserContext);
+  const queryClient = useQueryClient();
+
+  const { mutate } = useCommonMutation<UserInfoResponse, UserUpdateRequest>({
+    api: (userData: UserUpdateRequest) =>
+      UserApi.updateUserInfo(Number(userId), userData),
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ myInfoEdit_userApi_updateUserInfo data ✅ \n\n',
+        data,
+        variables
+      );
+      queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+      navigation.goBack();
+    },
+    onError(error, variables) {
+      console.debug(
+        '\n\n\n 🚨 myInfoEdit_userApi_updateUserInfo error 🚨 \n\n',
+        error,
+        variables
+      );
+    },
+  });
+
   const {
     params: { userInfo },
   } = route;
 
-  const [name, setName] = useState(userInfo.nickname);
-  const [introduce, setIntroduce] = useState(userInfo.introduction);
-  const [phone, setPhone] = useState(userInfo.phone);
-  const [email, setEmail] = useState(userInfo.email);
+  const [name, setName] = useState(userInfo?.nickname ?? '');
+  const [introduce, setIntroduce] = useState(userInfo?.introduction ?? '');
+  const [phone, setPhone] = useState(userInfo?.phone ?? '');
+  const [email, setEmail] = useState(userInfo?.email ?? '');
+
+  const handleEdit = () => {
+    const newInfo = {
+      nickname: name,
+      introduction: introduce,
+    };
+    mutate(newInfo);
+  };
 
   const certifyHandler = () => {
-    alert('2차 인증');
+    // alert('2차 인증');
+    Alert.alert('알림', '추후 추가될 기능입니다 :)');
   };
 
   const phoneEditHandler = () => {
-    alert('휴대폰 번호 변경');
+    // alert('휴대폰 번호 변경');
+    Alert.alert('알림', '추후 추가될 기능입니다 :)');
   };
 
   const emailEditHandler = () => {
-    alert('이메일 변경');
+    // alert('이메일 변경');
+    Alert.alert('알림', '추후 추가될 기능입니다 :)');
   };
 
   const withdrawHandler = () => {
-    alert('회원 탈퇴하기');
+    return navigation.navigate('Withdraw');
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props: StackHeaderProps) => {
+        return (
+          <ScreenHeader
+            {...props}
+            center={'내 정보 편집하기'}
+            right={
+              <Flexbox width={'100%'} justifyContent={'flex-end'}>
+                <Button
+                  size={'medium'}
+                  type={'transparent'}
+                  onPress={handleEdit}
+                >
+                  완료
+                </Button>
+              </Flexbox>
+            }
+          />
+        );
+      },
+    });
+  });
 
   return (
     <ScreenWrapper>
