@@ -1,13 +1,14 @@
 import React from 'react';
 import {
   TextInput as BasicInput,
+  DimensionValue,
   KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleSheet,
   TextInputEndEditingEventData,
+  TextStyle,
   ViewStyle,
 } from 'react-native';
-import { LengthElement } from 'src/@types/unit';
 
 interface InputProps {
   name: string;
@@ -17,9 +18,9 @@ interface InputProps {
   ) => void;
   placeholder?: string;
   value: string | undefined;
-  width: LengthElement;
+  width: DimensionValue | undefined;
   disabled?: boolean;
-  style?: ViewStyle;
+  style?: ViewStyle & TextStyle;
   keyboardType?: KeyboardTypeOptions;
 }
 

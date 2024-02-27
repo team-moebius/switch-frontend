@@ -20,10 +20,9 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { SignUpRouteParamList } from '.';
 import { NavigationRouterParamList } from 'src/routes';
 
-interface SubmitValidationCodeProps
-  extends StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'> {}
-
-const SubmitValidationCode = ({ route }: SubmitValidationCodeProps) => {
+const SubmitValidationCode = ({
+  route,
+}: StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'>) => {
   const [state, setState] = useState<LoginRequest>({
     phone: route.params.phoneNumber,
     verifiedCode: '',

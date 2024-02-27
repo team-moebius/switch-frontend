@@ -9,10 +9,10 @@ import { AppPasswordContext } from 'src/context/password';
 
 import { SecuritySettingParamList } from '..';
 
-interface SecurityUnlockProps
-  extends StackScreenProps<SecuritySettingParamList, 'SecurityUnlock'> {}
-
-const SecurityUnlock = ({ navigation, route }: SecurityUnlockProps) => {
+const SecurityUnlock = ({
+  navigation,
+  route,
+}: StackScreenProps<SecuritySettingParamList, 'SecurityUnlock'>) => {
   const {
     unlockPassword,
     unlockBioPassword,
@@ -80,4 +80,4 @@ const SecurityUnlock = ({ navigation, route }: SecurityUnlockProps) => {
   );
 };
 
-export { SecurityUnlock, SecurityUnlockProps };
+export { SecurityUnlock };

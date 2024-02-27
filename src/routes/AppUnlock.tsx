@@ -9,10 +9,9 @@ import { AppPasswordContext } from 'src/context/password';
 
 import { NavigationRouterParamList } from 'src/routes';
 
-interface AppUnlockProps
-  extends StackScreenProps<NavigationRouterParamList, 'AppUnlock'> {}
-
-const AppUnlock = ({ navigation }: AppUnlockProps) => {
+const AppUnlock = ({
+  navigation,
+}: StackScreenProps<NavigationRouterParamList, 'AppUnlock'>) => {
   const { unlockPassword, unlockBioPassword, appPasswordList } =
     useContext(AppPasswordContext);
 

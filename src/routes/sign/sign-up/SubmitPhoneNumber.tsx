@@ -12,10 +12,9 @@ import { ScreenWrapper } from 'src/components/template';
 import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import { SignUpRouteParamList } from '.';
 
-interface SubmitPhoneNumberProps
-  extends StackScreenProps<SignUpRouteParamList, 'SubmitPhone'> {}
-
-const SubmitPhoneNumber = ({ navigation }: SubmitPhoneNumberProps) => {
+const SubmitPhoneNumber = ({
+  navigation,
+}: StackScreenProps<SignUpRouteParamList, 'SubmitPhone'>) => {
   const [state, setState] = useState<UserVerificationRequest>({ phone: '' });
 
   const { mutate } = useCommonMutation<
