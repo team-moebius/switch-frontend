@@ -84,7 +84,7 @@ const MyInfoEditScreen = ({ navigation, route }) => {
         </Flexbox>
         <Separator />
       </Box>
-      <Flexbox.Item padding={10} flex={1} mb={'30%'}>
+      <Flexbox.Item padding={10} flex={1} mb={'40%'}>
         <Box mb={20}>
           <Box width={100} mb={10}>
             <Button type={'normal'} size={'medium'} onPress={certifyHandler}>
