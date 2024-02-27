@@ -31,7 +31,7 @@ globalAxios.interceptors.request.use(
 
 globalAxios.interceptors.response.use(
   async (config: AxiosResponse): Promise<AxiosResponse> => {
-    if ('jwtToken' in config.data)
+    if (typeof config.data === 'object' && 'jwtToken' in config.data)
       await expoSecureStore.setToken(TOKEN, config.data.jwtToken);
 
     return config;
