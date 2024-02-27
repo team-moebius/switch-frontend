@@ -17,7 +17,7 @@ globalAxios.interceptors.request.use(
       urlCondition !== '/api/users'
     ) {
       const configuration = new API.Configuration();
-      const token = await expoSecureStore.getToken('token');
+      const token = await expoSecureStore.getToken(TOKEN);
 
       if (token) {
         configuration.accessToken = token;

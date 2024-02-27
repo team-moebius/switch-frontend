@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { expoSecureStore, USER_ID } from 'src/common/secureStore';
+import { expoSecureStore, TOKEN, USER_ID } from 'src/common/secureStore';
 
 // TODO: DTO 설계 참고하여 추후 설계 필요
 interface UserContextProps {
@@ -28,7 +28,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const login = async () => {
     setLoading(true);
 
-    const token = await expoSecureStore.getToken('token');
+    const token = await expoSecureStore.getToken(TOKEN);
     const userId = await expoSecureStore.getToken(USER_ID);
 
     if (token && userId) setUserId(userId);
@@ -39,8 +39,8 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const logout = async () => {
     setLoading(true);
 
-    await expoSecureStore.deleteToken('token');
-    await expoSecureStore.deleteToken('username');
+    await expoSecureStore.deleteToken(TOKEN);
+    await expoSecureStore.deleteToken(USER_ID);
 
     setUserId(null);
 
