@@ -8,23 +8,16 @@ import {
   Textarea,
   Typography,
 } from 'src/components/atom';
+import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 
 import { UserContext } from 'src/context/user';
 import { useCommonMutation } from 'src/hooks/useCommonMutation';
 
-import {
-  APP_BIO_PASSWORD,
-  APP_PASSWORD,
-  TOKEN,
-  USER_ID,
-  expoSecureStore,
-} from 'src/common/secureStore';
 import { UserApi } from 'src/api';
-
-import { WithdrawParamList } from '.';
-import { StackScreenProps } from '@react-navigation/stack';
 import { UserWithdrawalRequest } from '@team-moebius/api-typescript';
-import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
+
+import { StackScreenProps } from '@react-navigation/stack';
+import { WithdrawParamList } from '.';
 
 const withdrawOption = ['대체 플렛폼 이용', '스위치 간 불만족', '기타'];
 type WithdrawType = '대체 플렛폼 이용' | '스위치 간 불만족' | '기타';
@@ -84,12 +77,10 @@ const WithdrawFeedbackScreen = ({
       reason,
     };
     withdrawMutate(params);
-    navigation.navigate('Farewell');
-
-    expoSecureStore.deleteToken(TOKEN);
-    expoSecureStore.deleteToken(USER_ID);
-    expoSecureStore.deleteToken(APP_PASSWORD);
-    expoSecureStore.deleteToken(APP_BIO_PASSWORD);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Farewell' }],
+    });
   };
 
   return (
