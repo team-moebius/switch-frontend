@@ -33,12 +33,11 @@ const FarewellScreen = () => {
         StackScreenProps<WithdrawParamList, 'Farewell'>
       >
     ) => {
-      // expoSecureStore.deleteToken(TOKEN);
-      // expoSecureStore.deleteToken(USER_ID);
-      // expoSecureStore.deleteToken(APP_PASSWORD);
-      // expoSecureStore.deleteToken(APP_BIO_PASSWORD);
-
       setTimeout(() => {
+        expoSecureStore.deleteToken(TOKEN);
+        expoSecureStore.deleteToken(USER_ID);
+        expoSecureStore.deleteToken(APP_PASSWORD);
+        expoSecureStore.deleteToken(APP_BIO_PASSWORD);
         navigation.reset({
           index: 0,
           routes: [{ name: 'Sign' }],
