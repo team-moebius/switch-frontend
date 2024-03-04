@@ -3,7 +3,13 @@ import { WithdrawFeedbackScreen } from './WithdrawFeedbackScreen';
 import { FarewellScreen } from './FarewellScreen';
 import { WithdrawInfoScreen } from './WithdrawInfoScreen';
 
-const Stack = createStackNavigator();
+type WithdrawParamList = {
+  WithdrawInfo: undefined;
+  WithdrawFeedback: undefined;
+  Farewell: undefined;
+};
+
+const Stack = createStackNavigator<WithdrawParamList>();
 
 const WithdrawRoute = () => {
   return (
@@ -18,4 +24,4 @@ const WithdrawRoute = () => {
   );
 };
 
-export { WithdrawRoute };
+export { WithdrawRoute, type WithdrawParamList };

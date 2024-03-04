@@ -1,16 +1,13 @@
 import { useCallback } from 'react';
 import { useMutation, UseMutationOptions } from 'react-query';
-import { AxiosPromise, AxiosResponse, AxiosInstance } from 'axios';
+import { AxiosResponse } from 'axios';
 
-interface UseCommonMutationParam<Response, Reqeust>
+interface UseCommonMutationParam<Response, Request>
   extends Pick<
-    UseMutationOptions<Response, unknown, Reqeust>,
+    UseMutationOptions<Response, unknown, Request>,
     'mutationKey' | 'onSuccess' | 'onError'
   > {
-  api: (
-    request1: Reqeust,
-    requst2: Reqeust
-  ) => Promise<AxiosResponse<Response>>;
+  api: (request1: Request) => Promise<AxiosResponse<Response>>;
 }
 
 export const useCommonMutation = <
@@ -23,7 +20,10 @@ export const useCommonMutation = <
   ...props
 }: UseCommonMutationParam<Response, Request>) => {
   const func = useCallback(
-    (param: Request) => api(param, param).then((res) => res.data),
+    (param: Request) =>
+      api(param).then((res) => {
+        return res.data;
+      }),
     [api]
   );
   const mutate = useMutation<Response, TError, Request, TContext>({

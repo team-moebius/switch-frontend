@@ -9,13 +9,14 @@ import {
   Separator,
 } from 'src/components/atom';
 import { Field, ScreenHeader } from 'src/components/molecule';
-import { ScreenWrapper } from 'src/components/template';
+import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 
-import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import { UserContext } from 'src/context/user';
 
 import { useQueryClient } from 'react-query';
 import { UserApi } from 'src/api';
+
 import { StackHeaderProps, StackScreenProps } from '@react-navigation/stack';
 
 import {
@@ -113,7 +114,7 @@ const MyInfoEditScreen = ({
   });
 
   return (
-    <ScreenWrapper>
+    <KeyboardScreenWrapper>
       <Box>
         <Separator />
         <Flexbox alignItems='center'>
@@ -159,7 +160,7 @@ const MyInfoEditScreen = ({
         </Flexbox>
         <Separator />
       </Box>
-      <Flexbox.Item padding={10} flex={1}>
+      <Flexbox.Item padding={10} flex={1} mb={'40%'}>
         <Box mb={20}>
           <Box width={100} mb={10}>
             <Button type={'normal'} size={'medium'} onPress={certifyHandler}>
@@ -209,7 +210,7 @@ const MyInfoEditScreen = ({
       <Button type={'transparent'} size={'medium'} onPress={withdrawHandler}>
         회원 탈퇴하기
       </Button>
-    </ScreenWrapper>
+    </KeyboardScreenWrapper>
   );
 };
 

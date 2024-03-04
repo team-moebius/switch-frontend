@@ -17,7 +17,7 @@ globalAxios.interceptors.request.use(
       urlCondition !== '/api/users'
     ) {
       const configuration = new API.Configuration();
-      const token = await expoSecureStore.getToken('token');
+      const token = await expoSecureStore.getToken(TOKEN);
 
       if (token) {
         configuration.accessToken = token;
@@ -31,7 +31,7 @@ globalAxios.interceptors.request.use(
 
 globalAxios.interceptors.response.use(
   async (config: AxiosResponse): Promise<AxiosResponse> => {
-    if ('jwtToken' in config.data)
+    if (typeof config.data === 'object' && 'jwtToken' in config.data)
       await expoSecureStore.setToken(TOKEN, config.data.jwtToken);
 
     return config;
