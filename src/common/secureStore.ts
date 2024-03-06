@@ -3,8 +3,8 @@ import { wrapLogging } from 'src/utils/wrapLogging';
 
 const USER_ID = 'userId';
 const TOKEN = 'token';
-const APP_PASSWORD = 'app_password';
-const APP_BIO_PASSWORD = 'app_bio_password';
+const APP_PASSWORD = 'appPassword';
+const APP_BIO_PASSWORD = 'appBioPassword';
 
 const setToken = (key: string, jwtToken: string) => setItemAsync(key, jwtToken);
 
