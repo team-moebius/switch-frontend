@@ -80,7 +80,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setDarkMode(data);
       })
       .catch((error) => {
-        setDarkMode(true);
+        onChangeDarkMode(false);
       });
     localStore
       .getData<boolean>(FEED_RANGE)
@@ -88,7 +88,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
         setIsFeedThird(data);
       })
       .catch((error) => {
-        setIsFeedThird(true);
+        onChangeFeedRange(true);
       });
   }, []);
 
