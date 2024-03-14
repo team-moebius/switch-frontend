@@ -9,8 +9,10 @@ import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
 import useWebSocket from 'src/hooks/useWebSocket';
-import { AccessDeviceModal } from './content/\bmodals/AccessDeviceModal';
-import { SwitchCompleteModal } from './content/\bmodals/SwitchCompleteModal';
+import { AccessDeviceModal } from './content/modals/AccessDeviceModal';
+import { SwitchCompleteModal } from './content/modals/SwitchCompleteModal';
+import { StackScreenProps } from '@react-navigation/stack';
+import { ChatRouteParamList } from '.';
 
 type SwitchChatData = {
   id: number;
@@ -167,7 +169,9 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
   },
 ];
 
-const ChatDetailScreen = ({ navigation }) => {
+const ChatDetailScreen = ({
+  navigation,
+}: StackScreenProps<ChatRouteParamList, 'ChatDetail'>) => {
   const [chatText, setChatText] = useState('');
   const [accessModalVisible, setAccessModalVisible] = useState(false);
   const [completeModalVisible, setCompleteModalVisible] = useState(false);

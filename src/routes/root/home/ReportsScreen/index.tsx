@@ -4,6 +4,8 @@ import { Flexbox, Icon, Typography } from 'src/components/atom';
 import { ButtonProps } from 'src/components/atom/Button';
 import { ScreenWrapper } from 'src/components/template';
 import { ReportModal } from './modals/ReportModal';
+import { StackScreenProps } from '@react-navigation/stack';
+import { HomeRouteParamList } from '..';
 
 const ReportButton = ({
   children,
@@ -25,7 +27,10 @@ const ReportButton = ({
 
 const SWITCH_DETAIL = 'SwitchDetail';
 
-const ReportsScreen = ({ navigation, route }) => {
+const ReportsScreen = ({
+  navigation,
+  route,
+}: StackScreenProps<HomeRouteParamList, 'Report'>) => {
   const { previousScreen } = route.params;
   const [isReportPost, setIsReportPost] = useState(false);
   const [reportModalVisible, setReportModalVisible] = useState(false);

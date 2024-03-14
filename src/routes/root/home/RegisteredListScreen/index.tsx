@@ -43,7 +43,7 @@ const renderChildren = (
   );
 };
 
-const RegisteredListScreen = ({ navigation }) => {
+const RegisteredListScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
 
   const handleModalOpen = useCallback(() => {
