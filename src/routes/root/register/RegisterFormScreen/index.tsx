@@ -8,17 +8,17 @@ import {
 } from 'src/components/molecule';
 import { Separator } from 'src/components/atom/Separator';
 import { useCallback, useEffect, useState } from 'react';
-import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../../Tags.mock';
-import { ImageUploader } from './ImageUploader';
-import { SWITCH_DETAIL_MOCK } from '../../../home/HomeMainScreen/SwitchList.mock';
-import { SwitchDetailData } from '../type';
+import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
+import { ImageUploader } from './contents/ImageUploader';
+import { SWITCH_DETAIL_MOCK } from '../../home/HomeMainScreen/SwitchList.mock';
+import { SwitchDetailData } from './contents/type';
 import useExpoLocation from 'src/hooks/useExpoLocation';
 import useFetchAddress from 'src/hooks/useFetchAddress';
-import { AddressModal } from './modals/AddressModal';
-import { AttentionModal, DETAILS } from './modals/AttentionModal';
+import { AddressModal } from './contents/modals/AddressModal';
+import { AttentionModal, DETAILS } from './contents/modals/AttentionModal';
 import { ScreenWrapper } from 'src/components/template';
 
-interface SwitchDetailFormProps {
+interface RegisterFormProps {
   initialData?: SwitchDetailData;
   onSubmit?: (data: SwitchDetailData) => void;
   navigation: any;
@@ -31,11 +31,11 @@ const DEFAULT_DATA: SwitchDetailData = {
   oppositeCategories: [],
 };
 
-const SwitchDetailForm = ({
+const RegisterFormScreen = ({
   initialData = DEFAULT_DATA,
   onSubmit,
   navigation,
-}: SwitchDetailFormProps) => {
+}: RegisterFormProps) => {
   const { width: screenWidth } = useWindowDimensions();
 
   const [checkboxState, setCheckboxState] = useState({
@@ -97,7 +97,7 @@ const SwitchDetailForm = ({
 
   const onPressSelectAddress = () => {
     setAddressModalVisible(false);
-    navigation.navigate('PreferredAddress');
+    navigation.navigate('PreferredAddressScreen');
   };
 
   useEffect(() => {
@@ -285,4 +285,4 @@ const SwitchDetailForm = ({
   );
 };
 
-export { SwitchDetailForm };
+export { RegisterFormScreen };

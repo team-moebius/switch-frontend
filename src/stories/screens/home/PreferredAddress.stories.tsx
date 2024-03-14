@@ -1,18 +1,18 @@
 import { ComponentMeta, ComponentStory } from '@storybook/react';
-import { PreferredAddress } from 'src/routes/root/register/PreferredAddress';
+import { PreferredAddressScreen } from 'src/routes/root/register/PreferredAddressScreen';
 
 export default {
-  title: 'PreferredAddress',
-  component: PreferredAddress,
+  title: 'PreferredAddressScreen',
+  component: PreferredAddressScreen,
   parameters: {
     viewport: {
       defaultViewport: 'iphone6',
     },
   },
-} as ComponentMeta<typeof PreferredAddress>;
+} as ComponentMeta<typeof PreferredAddressScreen>;
 
-const Template: ComponentStory<typeof PreferredAddress> = () => (
-  <PreferredAddress />
+const Template: ComponentStory<typeof PreferredAddressScreen> = () => (
+  <PreferredAddressScreen />
 );
 
 export const story = Template.bind({});

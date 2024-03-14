@@ -26,7 +26,7 @@ const PROVINCES = [
 
 type SelectionProvinceType = (typeof PROVINCES)[number];
 
-const PreferredAddress = () => {
+const PreferredAddressScreen = () => {
   const [province, setProvince] = useState<SelectionProvinceType>('서울특별시');
   const [city, setCity] = useState<string>('광진구');
   const [dong, setDong] = useState<string>('화양동');
@@ -98,4 +98,4 @@ const PreferredAddress = () => {
   );
 };
 
-export { PreferredAddress };
+export { PreferredAddressScreen };

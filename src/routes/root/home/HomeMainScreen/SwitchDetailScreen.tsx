@@ -6,8 +6,8 @@ import {
   USERINFO_MOCK,
 } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { SwitchDetailData, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
-import { SwitchDetailView } from '../../register/ItemDetail';
-import { SwitchDetailViewProps } from '../../register/ItemDetail/View';
+import { SwitchDetailView } from './content/SwitchDetailView';
+import { SwitchDetailViewProps } from './content/SwitchDetailView';
 import { ScrollView } from 'react-native';
 
 const userDataResolver = ({
