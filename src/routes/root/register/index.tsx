@@ -1,26 +1,21 @@
 import { createStackNavigator } from '@react-navigation/stack';
-
-import { ScreenWrapper } from 'src/components/template';
 import { SwitchDetailForm } from './ItemDetail/Form';
 import { PreferredAddress } from './PreferredAddress';
 import { ScreenHeader } from 'src/components/molecule';
 
-const Stack = createStackNavigator();
-
-const RegisterMain = ({ navigation }) => {
-  return (
-    <ScreenWrapper>
-      <SwitchDetailForm navigation={navigation} />
-    </ScreenWrapper>
-  );
+type RegisterParamList = {
+  RegisterMain: undefined;
+  PreferredAddress: undefined;
 };
+
+const Stack = createStackNavigator<RegisterParamList>();
 
 const RegisterRoute = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name='RegisterMain'
-        component={RegisterMain}
+        component={SwitchDetailForm}
         options={{
           header: (props) => {
             return <ScreenHeader {...props} center={'물품등록하기'} />;
@@ -40,4 +35,4 @@ const RegisterRoute = () => {
   );
 };
 
-export { RegisterRoute, RegisterMain };
+export { RegisterRoute };

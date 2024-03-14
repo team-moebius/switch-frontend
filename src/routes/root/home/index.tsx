@@ -15,7 +15,7 @@ import { NotificationsScreen } from './NotificationsScreen';
 import { RegisteredListScreen } from './RegisteredListScreen';
 import { ReportsScreen } from './ReportsScreen';
 import { ChatDetailScreen } from '../chat/ChatDetailScreen';
-import { RegisterMain } from '../register';
+import { SwitchDetailForm } from '../register/ItemDetail';
 
 import { UserControlModal } from '../chat/content/modals';
 import { CancelEditModal, MyItemOptionModal } from './modals';
@@ -266,7 +266,7 @@ const HomeRoute = ({
         />
         <Stack.Screen
           name='EditItem'
-          component={RegisterMain}
+          component={SwitchDetailForm}
           options={{
             header: (props) => {
               return (
