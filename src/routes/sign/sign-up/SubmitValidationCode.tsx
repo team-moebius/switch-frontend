@@ -15,8 +15,11 @@ import {
 } from '@team-moebius/api-typescript';
 import { UserApi } from 'src/api';
 
-import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
-import { StackScreenProps } from '@react-navigation/stack';
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from '@react-navigation/native';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { SignUpRouteParamList } from '.';
 import { NavigationRouterParamList } from 'src/routes';
 
@@ -30,9 +33,9 @@ const SubmitValidationCode = ({
   const { login } = useContext(UserContext);
   const navigation =
     useNavigation<
-      CompositeScreenProps<
-        StackScreenProps<NavigationRouterParamList, 'Root'>,
-        StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'>
+      CompositeNavigationProp<
+        StackNavigationProp<NavigationRouterParamList, 'Root'>,
+        StackNavigationProp<SignUpRouteParamList, 'SubmitValidationCode'>
       >
     >();
 

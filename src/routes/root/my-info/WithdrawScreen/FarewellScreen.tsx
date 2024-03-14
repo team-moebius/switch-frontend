@@ -2,8 +2,11 @@ import { useEffect } from 'react';
 
 import { Flexbox, Typography } from 'src/components/atom';
 
-import { StackScreenProps } from '@react-navigation/stack';
-import { CompositeScreenProps, useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from '@react-navigation/native';
 
 import {
   APP_BIO_PASSWORD,
@@ -21,16 +24,16 @@ import { WithdrawParamList } from '.';
 const FarewellScreen = () => {
   const navigation =
     useNavigation<
-      CompositeScreenProps<
-        StackScreenProps<NavigationRouterParamList, 'Sign'>,
-        StackScreenProps<WithdrawParamList, 'Farewell'>
+      CompositeNavigationProp<
+        StackNavigationProp<NavigationRouterParamList, 'Sign'>,
+        StackNavigationProp<WithdrawParamList, 'Farewell'>
       >
     >();
   useEffect(() => {
     const backToSign = async (
-      navigation: CompositeScreenProps<
-        StackScreenProps<NavigationRouterParamList, 'Sign'>,
-        StackScreenProps<WithdrawParamList, 'Farewell'>
+      navigation: CompositeNavigationProp<
+        StackNavigationProp<NavigationRouterParamList, 'Sign'>,
+        StackNavigationProp<WithdrawParamList, 'Farewell'>
       >
     ) => {
       setTimeout(() => {
