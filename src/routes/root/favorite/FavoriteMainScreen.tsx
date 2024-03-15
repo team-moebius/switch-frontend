@@ -4,7 +4,7 @@ import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import {
   STUFF_LIST_MOCK,
   StuffListItemData,
-} from '../home/HomeMainScreen/SwitchList.mock';
+} from '../home/SwitchDetailScreen/SwitchList.mock';
 import { Flexbox, Icon, Typography } from 'src/components/atom';
 import { ImageCard, PressableIcon } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';

@@ -1,14 +1,14 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { RegisterFormScreen } from './RegisterFormScreen';
+import { RegisterFormProps, RegisterFormScreen } from './RegisterFormScreen';
 import { PreferredAddressScreen } from './PreferredAddressScreen';
 import { ScreenHeader } from 'src/components/molecule';
 
-type RegisterParamList = {
-  RegisterMain: undefined;
+type RegisterRouteParamList = {
+  RegisterMain: RegisterFormProps;
   PreferredAddress: undefined;
 };
 
-const Stack = createStackNavigator<RegisterParamList>();
+const Stack = createStackNavigator<RegisterRouteParamList>();
 
 const RegisterRoute = () => {
   return (
@@ -35,4 +35,4 @@ const RegisterRoute = () => {
   );
 };
 
-export { RegisterRoute };
+export { RegisterRoute, type RegisterRouteParamList };

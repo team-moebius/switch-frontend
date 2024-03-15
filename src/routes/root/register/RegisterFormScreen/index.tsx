@@ -10,18 +10,21 @@ import { Separator } from 'src/components/atom/Separator';
 import { useCallback, useEffect, useState } from 'react';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
 import { ImageUploader } from './contents/ImageUploader';
-import { SWITCH_DETAIL_MOCK } from '../../home/HomeMainScreen/SwitchList.mock';
+import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import { SwitchDetailData } from './contents/type';
 import useExpoLocation from 'src/hooks/useExpoLocation';
 import useFetchAddress from 'src/hooks/useFetchAddress';
 import { AddressModal } from './contents/modals/AddressModal';
 import { AttentionModal, DETAILS } from './contents/modals/AttentionModal';
 import { ScreenWrapper } from 'src/components/template';
+import { StackScreenProps } from '@react-navigation/stack';
+import { RegisterRouteParamList } from '..';
+import { useNavigation } from '@react-navigation/native';
 
 interface RegisterFormProps {
   initialData?: SwitchDetailData;
   onSubmit?: (data: SwitchDetailData) => void;
-  navigation: any;
+  navigation: ReturnType<typeof useNavigation>;
 }
 
 const DEFAULT_DATA: SwitchDetailData = {
@@ -32,7 +35,7 @@ const DEFAULT_DATA: SwitchDetailData = {
 };
 
 const RegisterFormScreen = ({
-  initialData = DEFAULT_DATA,
+  initialData,
   onSubmit,
   navigation,
 }: RegisterFormProps) => {
@@ -44,7 +47,7 @@ const RegisterFormScreen = ({
   });
 
   const [data, setData] = useState<SwitchDetailData>({
-    ...initialData,
+    ...(initialData ?? DEFAULT_DATA),
     thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
     categories: INPUT_TAG_MOCK,
     oppositeCategories: INPUT_TAG_MOCK,
@@ -97,7 +100,7 @@ const RegisterFormScreen = ({
 
   const onPressSelectAddress = () => {
     setAddressModalVisible(false);
-    navigation.navigate('PreferredAddressScreen');
+    navigation.navigate('PreferredAddress');
   };
 
   useEffect(() => {
@@ -285,4 +288,4 @@ const RegisterFormScreen = ({
   );
 };
 
-export { RegisterFormScreen };
+export { RegisterFormScreen, type RegisterFormProps };

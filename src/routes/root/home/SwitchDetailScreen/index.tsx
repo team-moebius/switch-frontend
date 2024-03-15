@@ -6,8 +6,8 @@ import {
   USERINFO_MOCK,
 } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { SwitchDetailData, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
-import { SwitchDetailView } from './content/SwitchDetailView';
-import { SwitchDetailViewProps } from './content/SwitchDetailView';
+import { SwitchDetailView } from './contents/SwitchDetailView';
+import { SwitchDetailViewProps } from './contents/SwitchDetailView';
 import { ScrollView } from 'react-native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';

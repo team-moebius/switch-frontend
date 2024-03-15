@@ -18,7 +18,10 @@ import {
 } from '@team-moebius/api-typescript';
 import { AxiosResponse } from 'axios';
 
-import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
+import {
+  StuffListItemData,
+  STUFF_LIST_MOCK,
+} from '../../SwitchDetailScreen/SwitchList.mock';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];

@@ -10,7 +10,7 @@ import { PressableIcon } from 'src/components/molecule';
 import { WithImage } from 'src/components/template';
 
 import { HomeMainScreen } from './HomeMainScreen';
-import { SwitchDetailScreen } from './HomeMainScreen/SwitchDetailScreen';
+import { SwitchDetailScreen } from './SwitchDetailScreen';
 import { NotificationsScreen } from './NotificationsScreen';
 import { RegisteredListScreen } from './RegisteredListScreen';
 import { ReportsScreen } from './ReportsScreen';
