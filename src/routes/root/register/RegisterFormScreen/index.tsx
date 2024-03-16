@@ -1,5 +1,7 @@
-import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
+import { useCallback, useEffect, useState } from 'react';
 import { ScrollView, Pressable, useWindowDimensions } from 'react-native';
+
+import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
 import {
   Field,
   HashTagInput,
@@ -7,24 +9,27 @@ import {
   TagInput,
 } from 'src/components/molecule';
 import { Separator } from 'src/components/atom/Separator';
-import { useCallback, useEffect, useState } from 'react';
-import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
+
 import { ImageUploader } from './contents/ImageUploader';
-import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
-import { SwitchDetailData } from './contents/type';
-import useExpoLocation from 'src/hooks/useExpoLocation';
-import useFetchAddress from 'src/hooks/useFetchAddress';
+
 import { AddressModal } from './contents/modals/AddressModal';
 import { AttentionModal, DETAILS } from './contents/modals/AttentionModal';
+
 import { ScreenWrapper } from 'src/components/template';
-import { StackScreenProps } from '@react-navigation/stack';
+
+import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
+import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
+import { SwitchDetailData } from './contents/type';
+
+import useExpoLocation from 'src/hooks/useExpoLocation';
+import useFetchAddress from 'src/hooks/useFetchAddress';
+
 import { RegisterRouteParamList } from '..';
-import { useNavigation } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
 
 interface RegisterFormProps {
   initialData?: SwitchDetailData;
   onSubmit?: (data: SwitchDetailData) => void;
-  navigation: ReturnType<typeof useNavigation>;
 }
 
 const DEFAULT_DATA: SwitchDetailData = {
@@ -35,10 +40,11 @@ const DEFAULT_DATA: SwitchDetailData = {
 };
 
 const RegisterFormScreen = ({
-  initialData,
-  onSubmit,
   navigation,
-}: RegisterFormProps) => {
+  route,
+}: StackScreenProps<RegisterRouteParamList, 'RegisterMain'>) => {
+  const { initialData, onSubmit } = route.params;
+
   const { width: screenWidth } = useWindowDimensions();
 
   const [checkboxState, setCheckboxState] = useState({

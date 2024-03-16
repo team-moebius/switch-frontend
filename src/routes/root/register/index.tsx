@@ -16,6 +16,7 @@ const RegisterRoute = () => {
       <Stack.Screen
         name='RegisterMain'
         component={RegisterFormScreen}
+        initialParams={{ initialData: undefined }}
         options={{
           header: (props) => {
             return <ScreenHeader {...props} center={'물품등록하기'} />;

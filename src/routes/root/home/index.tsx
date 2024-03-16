@@ -15,7 +15,6 @@ import { NotificationsScreen } from './NotificationsScreen';
 import { RegisteredListScreen } from './RegisteredListScreen';
 import { ReportsScreen } from './ReportsScreen';
 import { ChatDetailScreen } from '../chat/ChatDetailScreen';
-import { RegisterFormScreen } from '../register/RegisterFormScreen';
 
 import { UserControlModal } from '../chat/content/modals';
 import { CancelEditModal, MyItemOptionModal } from './modals';
@@ -30,7 +29,8 @@ import { ItemResponse } from '@team-moebius/api-typescript';
 import { ThemeContext } from 'src/context/theme';
 
 import { RootTabsParamList } from '..';
-import { useNavigation } from '@react-navigation/native';
+import { RegisterRoute, RegisterRouteParamList } from '../register';
+import { NavigatorScreenParams, useNavigation } from '@react-navigation/native';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
@@ -39,7 +39,7 @@ type HomeRouteParamList = {
   Notifications: undefined;
   Report: { previousScreen?: string };
   ChatDetail: undefined;
-  EditItem: undefined;
+  EditItem: NavigatorScreenParams<RegisterRouteParamList>;
 };
 
 const Stack = createStackNavigator<HomeRouteParamList>();
@@ -266,7 +266,7 @@ const HomeRoute = ({
         />
         <Stack.Screen
           name='EditItem'
-          component={RegisterFormScreen}
+          component={RegisterRoute}
           options={{
             header: (props) => {
               return (
@@ -281,18 +281,21 @@ const HomeRoute = ({
           }}
         />
       </Stack.Navigator>
-
+      // TODO : 이 곳에서 MyItemOptioinModal을 호출하면 initial데이터를 받아
+      사용할 수 없을지도 모르겠는걸? 일단은 undefined로 지정
       <MyItemOptionModal
         navigation={navigation}
         visible={myItemModalVisible}
         onPressBack={() => setMyItemModalVisible(false)}
         onEdit={() => {
           setMyItemModalVisible(false);
-          modalNavigation.navigate('EditItem');
+          modalNavigation.navigate('EditItem', {
+            screen: 'RegisterMain',
+            params: { initialData: undefined },
+          });
         }}
         onDeleteModalControl={() => setMyItemModalVisible(false)}
       />
-
       <UserControlModal
         navigation={navigation}
         visible={userModalVisible}
@@ -303,7 +306,6 @@ const HomeRoute = ({
           modalNavigation.navigate('Report', { previousScreen: 'ChatDetail' });
         }}
       />
-
       <CancelEditModal
         visible={cancelModalVisible}
         onPressBack={() => setCancelModalVisible(false)}
