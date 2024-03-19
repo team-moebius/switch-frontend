@@ -281,8 +281,7 @@ const HomeRoute = ({
           }}
         />
       </Stack.Navigator>
-      // TODO : 이 곳에서 MyItemOptioinModal을 호출하면 initial데이터를 받아
-      사용할 수 없을지도 모르겠는걸? 일단은 undefined로 지정
+      {/* TODO : 이 곳에서 MyItemOptioinModal을 호출하면 initial데이터를 받아사용할 수 없을지도 모르겠는걸? 일단은 undefined로 지정 */}
       <MyItemOptionModal
         navigation={navigation}
         visible={myItemModalVisible}
