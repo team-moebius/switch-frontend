@@ -18,33 +18,20 @@ const ImageUploader = ({
 }: ImageUploaderProps) => {
   return (
     <Flexbox width={'100%'} alignItems='center' gap={10}>
-      <Flexbox width={'auto'}>
-        <Pressable onPress={onAdd}>
-          <Box
-            position={'relative'}
-            width={70}
-            height={70}
-            backgroundColor={'#cdcaca'}
-          >
-            <Box
-              position={'absolute'}
-              width={'auto'}
-              top={'20%'}
-              left={'33.5%'}
-            >
-              <Icon name={'camera'} size={24} />
-            </Box>
-            <Box
-              position={'absolute'}
-              width={'auto'}
-              bottom={'20%'}
-              left={'35%'}
-            >
-              <Typography fontSize={14}>{'5/5'}</Typography>
-            </Box>
-          </Box>
-        </Pressable>
-      </Flexbox>
+      <Pressable onPress={onAdd}>
+        <Flexbox
+          width={70}
+          height={70}
+          backgroundColor={'#cdcaca'}
+          justifyContent='center'
+          alignItems='center'
+          flexDirection='column'
+        >
+          <Icon name={'camera'} size={24} />
+          <Typography fontSize={14}>{`${images.length}/5`}</Typography>
+        </Flexbox>
+      </Pressable>
+
       <Flexbox
         width={(screenWidth - 100) as number}
         justifyContent={'center'}
