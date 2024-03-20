@@ -30,7 +30,14 @@
         {
           "faceIDPermission": "$(PRODUCT_NAME)에서 생체인증을 위해 필요합니다."
         }
+      ],
+      [
+        "expo-image-picker",
+        {
+          "photosPermission": "스위치를 사용하기 위해서 사진 접근 권한이 필요합니다."
+        }
       ]
     ]
   }
 }
+// The app accesses your photos to let you share them with your friends.
