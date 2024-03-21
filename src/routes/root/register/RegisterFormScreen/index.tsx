@@ -26,6 +26,7 @@ import useFetchAddress from 'src/hooks/useFetchAddress';
 
 import { RegisterRouteParamList } from '..';
 import { StackScreenProps } from '@react-navigation/stack';
+import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 
 interface RegisterFormProps {
   initialData?: SwitchDetailData;
@@ -60,6 +61,8 @@ const RegisterFormScreen = ({
     hashTags: HASHTAGS_MOCK,
   });
 
+  // 사진
+  const { pickImage } = useExpoImagePicker();
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
   const [hashTagInput, setHashTagInput] = useState<string>();
@@ -109,6 +112,37 @@ const RegisterFormScreen = ({
     navigation.navigate('PreferredAddress');
   };
 
+  const onPressAddPhotos = async () => {
+    const result = await pickImage(data.thumbnails.length);
+
+    if (!Array.isArray(result)) {
+      switch (result?.error) {
+        case 'denied':
+          Alert.alert('사진에 접근이 거부되었습니다.');
+          break;
+        case 'cancelled':
+          Alert.alert('이미지 선택이 취소되었습니다.');
+          break;
+        // 특정 포맷만 요구 될 경우
+        case 'format':
+          Alert.alert('지원되지 않는 이미지 포맷입니다');
+          break;
+      }
+    } else {
+      setData((prev) => ({
+        ...prev,
+        thumbnails: [...prev.thumbnails, ...result],
+      }));
+    }
+  };
+
+  const onPressDeletePhoto = (src: string) => {
+    setData((prev) => ({
+      ...prev,
+      thumbnails: prev.thumbnails.filter((image) => image !== src),
+    }));
+  };
+
   useEffect(() => {
     if (expoPostalCode) {
       fetchAddress(expoPostalCode);
@@ -129,12 +163,13 @@ const RegisterFormScreen = ({
         <ScrollView>
           <ImageUploader
             images={thumbnails}
-            onAdd={() => {
-              alert('add image');
-            }}
-            onDeleteItem={(src, i) => {
-              console.debug('delete click:', src, i);
-            }}
+            onAdd={
+              data.thumbnails.length >= 5
+                ? () =>
+                    Alert.alert('사진 갯수 제한', '5개를 초과할 수 없습니다.')
+                : onPressAddPhotos
+            }
+            onDeleteItem={onPressDeletePhoto}
             screenWidth={screenWidth}
           />
           <Separator width={'100%'} />

@@ -13,6 +13,7 @@ import { AccessDeviceModal } from './content/modals/AccessDeviceModal';
 import { SwitchCompleteModal } from './content/modals/SwitchCompleteModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatRouteParamList } from '.';
+import { Alert } from 'react-native';
 
 type SwitchChatData = {
   id: number;
@@ -180,26 +181,28 @@ const ChatDetailScreen = ({
   const scrollViewRef = useRef<FlatList | null>(null);
   const [firstRendered, setFirstRendered] = useState<boolean>(false);
 
-  const { selectedImages, pickImage } = useExpoImagePicker();
+  const { pickImage } = useExpoImagePicker();
   const { photoUri, openCamera } = useExpoCamera();
   // const { sendMessage } = useWebSocket();
 
-  console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
+  // console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
 
   const checkForCameraRollPermission = async () => {
     const result = await pickImage();
 
-    switch (result?.error) {
-      case 'denied':
-        alert('카메라 롤 접근이 거부되었습니다.');
-        break;
-      case 'cancelled':
-        alert('이미지 선택이 취소되었습니다.');
-        break;
-      // 특정 포맷만 요구 될 경우
-      case 'format':
-        alert('지원되지 않는 이미지 포맷입니다');
-        break;
+    if (!Array.isArray(result)) {
+      switch (result?.error) {
+        case 'denied':
+          Alert.alert('카메라 롤 접근이 거부되었습니다.');
+          break;
+        case 'cancelled':
+          Alert.alert('이미지 선택이 취소되었습니다.');
+          break;
+        // 특정 포맷만 요구 될 경우
+        case 'format':
+          Alert.alert('지원되지 않는 이미지 포맷입니다');
+          break;
+      }
     }
 
     // 앨범 사진 서버로 보내기
@@ -211,10 +214,10 @@ const ChatDetailScreen = ({
 
     switch (result?.error) {
       case 'denied':
-        alert('사진 촬영 접근이 거부되었습니다.');
+        Alert.alert('사진 촬영 접근이 거부되었습니다.');
         break;
       case 'cancelled':
-        alert('촬영이 취소되었습니다.');
+        Alert.alert('촬영이 취소되었습니다.');
         break;
     }
 

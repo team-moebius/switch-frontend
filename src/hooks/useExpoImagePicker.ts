@@ -1,7 +1,6 @@
-import { useState } from 'react';
-import { Alert, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import { getFormat } from 'src/utils/getFormat';
+import { Platform } from 'react-native';
 
 const useExpoImagePicker = () => {
   const [libraryPermissionInfo, requestPermission] =
@@ -18,17 +17,13 @@ const useExpoImagePicker = () => {
     }
 
     if (libraryPermissionInfo?.status === ImagePicker.PermissionStatus.DENIED) {
-      Alert.alert('권한이 없습니다.', '사진 접근 권한이 필요합니다.');
-
       return false;
     }
 
     return true;
   };
 
-  const [selectedImages, setSelectedImages] = useState<string[]>([]);
-
-  const pickImage = async (extensions?: string[]) => {
+  const pickImage = async (selectedImages?: number, extensions?: string[]) => {
     const ios = Platform.OS === 'ios';
     const permissionCameraRollResult = await verifyPermissions();
 
@@ -42,7 +37,8 @@ const useExpoImagePicker = () => {
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsMultipleSelection: true,
       aspect: [4, 3],
-      quality: 1,
+      quality: 0.5,
+      selectionLimit: selectedImages ? 5 - selectedImages : 0,
     });
 
     if (!ios && !result) {
@@ -70,10 +66,11 @@ const useExpoImagePicker = () => {
     }
 
     const imageUris = result.assets.map((asset) => asset.uri);
-    setSelectedImages(imageUris);
+
+    return imageUris;
   };
+
   return {
-    selectedImages,
     pickImage,
   };
 };
