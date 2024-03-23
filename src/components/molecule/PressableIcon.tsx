@@ -1,4 +1,3 @@
-import React from 'react';
 import { Pressable } from 'react-native';
 import { Icon } from '../atom';
 import { IconProps } from '../atom/Icon';
