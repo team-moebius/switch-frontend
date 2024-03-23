@@ -39,6 +39,7 @@ const useExpoImagePicker = () => {
       aspect: [4, 3],
       quality: 0.5,
       selectionLimit: selectedImages ? 5 - selectedImages : 0,
+      base64: true,
     });
 
     if (!ios && !result) {

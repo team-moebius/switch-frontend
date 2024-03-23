@@ -23,7 +23,7 @@ interface SwitchDetailData {
 // }
 
 interface RegisterDto {
-  category?: string;
+  category: string;
   name: string;
   description: string;
   images: Array<string>;

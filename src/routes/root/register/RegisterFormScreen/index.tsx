@@ -1,85 +1,157 @@
+/* react */
 import { useCallback, useEffect, useState } from 'react';
-import { ScrollView, Pressable, useWindowDimensions } from 'react-native';
+import {
+  ScrollView,
+  Pressable,
+  useWindowDimensions,
+  Alert,
+  NativeSyntheticEvent,
+  TextInputEndEditingEventData,
+} from 'react-native';
 
-import { Box, Flexbox, Icon, Typography, Button } from 'src/components/atom';
+/* atom molecule etc.. */
+import {
+  Box,
+  Flexbox,
+  Icon,
+  Typography,
+  Button,
+  Separator,
+} from 'src/components/atom';
 import {
   Field,
   HashTagInput,
   PressableIcon,
   TagInput,
 } from 'src/components/molecule';
-import { Separator } from 'src/components/atom/Separator';
+import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 
 import { ImageUploader } from './contents/ImageUploader';
 
 import { AddressModal } from './contents/modals/AddressModal';
 import { AttentionModal, DETAILS } from './contents/modals/AttentionModal';
 
-import { ScreenWrapper } from 'src/components/template';
-
-import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
-import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
-import { SwitchDetailData } from './contents/type';
-
+/* custom hooks */
 import useExpoLocation from 'src/hooks/useExpoLocation';
 import useFetchAddress from 'src/hooks/useFetchAddress';
-
-import { RegisterRouteParamList } from '..';
-import { StackScreenProps } from '@react-navigation/stack';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 
-interface RegisterFormProps {
-  initialData?: SwitchDetailData;
-  onSubmit?: (data: SwitchDetailData) => void;
-}
+/* navigation */
+import { RegisterRouteParamList } from '..';
+import { StackScreenProps } from '@react-navigation/stack';
 
-const DEFAULT_DATA: SwitchDetailData = {
-  thumbnails: [],
-  hashTags: [],
-  categories: [],
-  oppositeCategories: [],
-};
+/* api */
+import { ItemApi } from 'src/api';
+import {
+  ItemRequest,
+  ItemResponse,
+  ItemUpdateRequest,
+} from '@team-moebius/api-typescript';
+import { RegisterDto } from './contents/type';
+
+/* mock */
+import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
+import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
+
+interface RegisterFormProps {
+  initialData?: ItemResponse;
+  getAddress?: string;
+}
 
 const RegisterFormScreen = ({
   navigation,
   route,
 }: StackScreenProps<RegisterRouteParamList, 'RegisterMain'>) => {
-  const { initialData, onSubmit } = route.params;
+  /* route params */
+  const { initialData: paramsData, getAddress } = route.params;
+  const initialData: RegisterDto | undefined = paramsData && {
+    name: paramsData.name ?? '',
+    description: paramsData.description ?? '',
+    images: paramsData.images ?? [],
+    // category: paramsData.category,
+    category: '',
+    hashtags: Array.from(paramsData.hashtags?.values() ?? []),
+    preferredCategories: Array.from(
+      paramsData.preferredCategories?.values() ?? []
+    ),
+    preferredLocations: Array.from(
+      paramsData.preferredLocations?.values() ?? []
+    ),
+  };
 
+  /* apis */
+  // initData 여부로 api 달아줘도 될듯?
+  const { mutate: createMutate } = useCommonMutation<ItemResponse, ItemRequest>(
+    {
+      api: ItemApi.createItem, // TODO : 유효성 검사하기
+      onSuccess(data, variables) {
+        console.debug(data, variables);
+        // queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+      },
+      onError(error, variables) {
+        console.error(error, variables);
+      },
+    }
+  );
+  const { mutate: editMutate } = useCommonMutation<
+    ItemResponse,
+    ItemUpdateRequest
+  >({
+    api: ItemApi.updateItem, // TODO : 유효성 검사하기
+    onSuccess(data, variables) {
+      console.debug(data, variables);
+      // queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+    },
+    onError(error, variables) {
+      console.error(error, variables);
+    },
+  });
+
+  /* hooks */
+  const { pickImage } = useExpoImagePicker();
   const { width: screenWidth } = useWindowDimensions();
 
+  /* states */
   const [checkboxState, setCheckboxState] = useState({
     details: false,
     safety: false,
   });
-
-  const [data, setData] = useState<SwitchDetailData>({
-    ...(initialData ?? DEFAULT_DATA),
-    thumbnails: SWITCH_DETAIL_MOCK['images'] || [],
-    categories: INPUT_TAG_MOCK,
-    oppositeCategories: INPUT_TAG_MOCK,
-    hashTags: HASHTAGS_MOCK,
+  // 기본 state
+  const [data, setData] = useState<RegisterDto>({
+    name: '',
+    description: '',
+    images: [],
+    category: '',
+    preferredCategories: [],
+    hashtags: [],
+    preferredLocations: [],
   });
-
-  // 사진
-  const { pickImage } = useExpoImagePicker();
+  // 등록하는 물건 종류 input
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
+  // 스위치 원하는 물건 종류 input
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
+  // 해시 태그 input
   const [hashTagInput, setHashTagInput] = useState<string>();
+
   const [addressModalVisible, setAddressModalVisible] = useState(false);
   const [attentionModalVisible, setAttentionModalVisible] = useState(false);
   const { expoPostalCode, getExpoLocation } = useExpoLocation();
   const { fetchAddress, province, city, dong } = useFetchAddress();
+
   const {
-    title,
+    name,
     description = '',
-    thumbnails,
-    hashTags,
-    categories,
-    oppositeCategories,
+    images,
+    hashtags,
+    category,
+    preferredCategories,
+    preferredLocations,
   } = data;
 
-  const changeHandler = useCallback((change: Partial<SwitchDetailData>) => {
+  /* handlers */
+  // name, desc 입력 핸들러
+  const changeHandler = useCallback((change: Partial<RegisterDto>) => {
     setData((prev) => ({ ...prev, ...change }));
   }, []);
 
@@ -113,14 +185,14 @@ const RegisterFormScreen = ({
   };
 
   const onPressAddPhotos = async () => {
-    const result = await pickImage(data.thumbnails.length);
+    const result = await pickImage(images.length);
 
     if (!Array.isArray(result)) {
       switch (result?.error) {
         case 'denied':
           Alert.alert('사진에 접근이 거부되었습니다.');
           break;
-        case 'cancelled':
+        case 'canceled':
           Alert.alert('이미지 선택이 취소되었습니다.');
           break;
         // 특정 포맷만 요구 될 경우
@@ -131,7 +203,7 @@ const RegisterFormScreen = ({
     } else {
       setData((prev) => ({
         ...prev,
-        thumbnails: [...prev.thumbnails, ...result],
+        images: [...prev.images, ...result],
       }));
     }
   };
@@ -139,7 +211,86 @@ const RegisterFormScreen = ({
   const onPressDeletePhoto = (src: string) => {
     setData((prev) => ({
       ...prev,
-      thumbnails: prev.thumbnails.filter((image) => image !== src),
+      images: prev.images.filter((image) => image !== src),
+    }));
+  };
+
+  const onSubmitCategory = (
+    event: NativeSyntheticEvent<TextInputEndEditingEventData>
+  ) => {
+    if (category.length > 0) {
+      Alert.alert('알림', '카테고리는 하나만 입력 가능합니다.');
+    } else if (categoryTagInput && categoryTagInput.length > 0) {
+      setData((prev) => ({
+        ...prev,
+        category: categoryTagInput,
+      }));
+    }
+    setCategoryTagInput('');
+  };
+
+  const onSubmitPreferredCategory = (
+    event: NativeSyntheticEvent<TextInputEndEditingEventData>
+  ) => {
+    if (preferredCategories.length >= 3) {
+      Alert.alert('알림', '선호 카테고리는 3개까지 입력 가능합니다.');
+    } else if (
+      oCategoryTagInput &&
+      oCategoryTagInput.length > 0 &&
+      !preferredCategories.includes(oCategoryTagInput)
+    ) {
+      setData((prev) => ({
+        ...prev,
+        preferredCategories: [...preferredCategories, oCategoryTagInput],
+      }));
+    }
+    setOCategoryTagInput('');
+  };
+
+  const onSubmitHashTags = (
+    event: NativeSyntheticEvent<TextInputEndEditingEventData>
+  ) => {
+    if (hashtags.length >= 5) {
+      Alert.alert('알림', '해쉬태그는 5개까지 입력 가능합니다.');
+    } else if (
+      hashTagInput &&
+      hashTagInput.length > 0 &&
+      !hashtags.includes(hashTagInput)
+    ) {
+      setData((prev) => ({
+        ...prev,
+        hashtags: [...hashtags, `#${hashTagInput}`],
+      }));
+    }
+    setHashTagInput('');
+  };
+
+  const onPressCategory = () => {
+    setData((prev) => ({ ...prev, category: '' }));
+  };
+
+  const onPressPreferredCategory = (preferredCategory: string) => {
+    setData((prev) => ({
+      ...prev,
+      preferredCategories: preferredCategories.filter(
+        (preferred) => preferred !== preferredCategory
+      ),
+    }));
+  };
+
+  const onPressHashtags = (hashtag: string) => {
+    setData((prev) => ({
+      ...prev,
+      hashtags: hashtags.filter((tag) => tag !== hashtag),
+    }));
+  };
+
+  const onPressPreferredLocations = (location: string) => {
+    setData((prev) => ({
+      ...prev,
+      preferredLocations: prev.preferredLocations.filter(
+        (prefer) => prefer !== location
+      ),
     }));
   };
 
@@ -149,10 +300,28 @@ const RegisterFormScreen = ({
     }
   }, [expoPostalCode, fetchAddress]);
 
-  console.log(province, city, dong);
+  useEffect(() => {
+    if (paramsData && initialData) setData(initialData);
+  }, []);
+
+  useEffect(() => {
+    if (getAddress) {
+      if (preferredCategories.length >= 3)
+        return Alert.alert(
+          '알림',
+          '선호 주소는 최대 3개만 입력할 수 있습니다.'
+        );
+      if (!preferredLocations.includes(getAddress)) {
+        setData((prev) => ({
+          ...prev,
+          preferredLocations: [...prev.preferredLocations, getAddress],
+        }));
+      }
+    }
+  }, [getAddress]);
 
   return (
-    <ScreenWrapper>
+    <KeyboardScreenWrapper>
       <Flexbox
         height={'100%'}
         width={'100%'}
@@ -162,9 +331,9 @@ const RegisterFormScreen = ({
       >
         <ScrollView>
           <ImageUploader
-            images={thumbnails}
+            images={images}
             onAdd={
-              data.thumbnails.length >= 5
+              images.length >= 5
                 ? () =>
                     Alert.alert('사진 갯수 제한', '5개를 초과할 수 없습니다.')
                 : onPressAddPhotos
@@ -177,8 +346,8 @@ const RegisterFormScreen = ({
             width={'100%'}
             placeholder={'물품명'}
             fieldType={'textInput'}
-            value={title}
-            name={'title'}
+            value={name}
+            name={'name'}
             style={{ borderWidth: 0 }}
             onChange={changeHandler}
           />
@@ -196,21 +365,61 @@ const RegisterFormScreen = ({
 
           <Separator />
           <TagInput
-            tags={categories}
+            tags={
+              category.length > 0
+                ? [
+                    {
+                      children: category,
+                      color: 'white',
+                      backgroundColor: '#ff480084',
+                      onPress: onPressCategory,
+                    },
+                  ]
+                : []
+            }
             width={'100%'}
             name={'tagInput'}
             onChangeText={setCategoryTagInput}
             placeholder={'등록하는 물건의 종류를 작성해주세요.'}
             value={categoryTagInput}
+            functionalElement={
+              <Flexbox
+                flexDirection={'column'}
+                justifyContent={'space-between'}
+                gap={5}
+              >
+                <Typography color={'black'} fontSize={12}>
+                  {category ? '1/1' : '0/1'}
+                </Typography>
+              </Flexbox>
+            }
+            onSubmitEditing={onSubmitCategory}
           />
           <Separator />
           <TagInput
-            tags={oppositeCategories}
+            tags={preferredCategories.map((preferredCategory) => ({
+              children: preferredCategory,
+              onPress: () => onPressPreferredCategory(preferredCategory),
+              color: 'white',
+              backgroundColor: '#ff480084',
+            }))}
             width={'100%'}
             name={'tagInput'}
             onChangeText={setOCategoryTagInput}
             placeholder={'스위치를 희망하는 물품이나 종류를 작성해주세요.'}
             value={oCategoryTagInput}
+            functionalElement={
+              <Flexbox
+                flexDirection={'column'}
+                justifyContent={'space-between'}
+                gap={5}
+              >
+                <Typography color={'black'} fontSize={12}>
+                  {preferredCategories.length + '/3'}
+                </Typography>
+              </Flexbox>
+            }
+            onSubmitEditing={onSubmitPreferredCategory}
           />
           <Separator />
           <HashTagInput
@@ -221,28 +430,24 @@ const RegisterFormScreen = ({
             placeholder={'물품에 대한 해시태그를 작성해주세요.(선택사항)'}
             disabled={false}
             onChangeText={setHashTagInput}
-            hashTags={hashTags}
+            hashTags={hashtags.map((hashtag) => ({
+              children: hashtag,
+              color: 'black',
+              backgroundColor: 'white',
+              onPress: () => onPressHashtags(hashtag),
+            }))}
             functionalElement={
               <Flexbox
                 flexDirection={'column'}
                 justifyContent={'space-between'}
                 gap={5}
               >
-                <Typography color={'black'} fontSize={14}>
-                  {HASHTAGS_MOCK.length + '/30'}
+                <Typography color={'black'} fontSize={12}>
+                  {hashtags.length + '/5'}
                 </Typography>
-                <Button
-                  type={'normal'}
-                  size={'small'}
-                  onPress={() => {
-                    alert('해시태그 더보기');
-                  }}
-                  wide={false}
-                >
-                  <Typography fontSize={14}>더보기</Typography>
-                </Button>
               </Flexbox>
             }
+            onSubmitEditing={onSubmitHashTags}
           />
           <Separator />
           <Typography fontSize={14}>선호 주소</Typography>
@@ -252,31 +457,47 @@ const RegisterFormScreen = ({
               alignItems={'center'}
               justifyContent={'center'}
             >
-              <PressableIcon
-                size={32}
-                name={'add-circle'}
-                onPress={() => setAddressModalVisible((prev) => !prev)}
-              />
+              {preferredLocations.length < 3 && (
+                <PressableIcon
+                  size={32}
+                  name={'add-circle'}
+                  onPress={() => setAddressModalVisible((prev) => !prev)}
+                />
+              )}
             </Flexbox>
-            <Flexbox width={'100%'} justifyContent='center'>
-              <Flexbox
-                width={'90%'}
-                padding={10}
-                backgroundColor={'#0cd092'}
-                borderRadius={6}
-                alignItems={'center'}
-              >
+            <Flexbox
+              width={'100%'}
+              justifyContent='center'
+              alignItems='center'
+              gap={10}
+              flexDirection='column'
+            >
+              {preferredLocations.map((location) => (
                 <Flexbox
-                  width={'100%'}
+                  width={'90%'}
+                  padding={10}
+                  backgroundColor={'#0cd092'}
+                  borderRadius={6}
                   alignItems={'center'}
-                  justifyContent={'space-between'}
+                  key={location}
                 >
-                  <Typography fontSize={18} fontWeight={'200'} color={'#fff'}>
-                    경기도 부천시 상동
-                  </Typography>
-                  <Icon name='close' size={24} color={'#fff'} />
+                  <Flexbox
+                    width={'100%'}
+                    alignItems={'center'}
+                    justifyContent={'space-between'}
+                  >
+                    <Typography fontSize={18} fontWeight={'200'} color={'#fff'}>
+                      {location}
+                    </Typography>
+                    <PressableIcon
+                      name='close'
+                      size={24}
+                      color={'#fff'}
+                      onPress={() => onPressPreferredLocations(location)}
+                    />
+                  </Flexbox>
                 </Flexbox>
-              </Flexbox>
+              ))}
             </Flexbox>
           </Flexbox>
           <Separator />
@@ -303,7 +524,16 @@ const RegisterFormScreen = ({
                 type='normal'
                 size='medium'
                 onPress={() => {
-                  onSubmit && onSubmit(data);
+                  if (paramsData) {
+                  } else {
+                    createMutate({
+                      ...data,
+                      hashtags: new Set(hashtags),
+                      preferredCategories: new Set(preferredCategories),
+                      preferredLocations: new Set(preferredLocations),
+                      type: 'GOODS',
+                    });
+                  }
                 }}
               >
                 확인
@@ -325,7 +555,7 @@ const RegisterFormScreen = ({
           handleCloseAttentionModal={handleCloseAttentionModal}
         />
       </Flexbox>
-    </ScreenWrapper>
+    </KeyboardScreenWrapper>
   );
 };
 
