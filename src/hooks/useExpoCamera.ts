@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import * as ImagePicker from 'expo-image-picker';
-import { Alert } from 'react-native';
 
 const useExpoCamera = () => {
   const [photoUri, setPhotoUri] = useState<string | null>(null);
@@ -18,8 +17,6 @@ const useExpoCamera = () => {
     }
 
     if (cameraPermissionInfo?.status === ImagePicker.PermissionStatus.DENIED) {
-      Alert.alert('권한이 없습니다.', '카메라 접근 권한이 필요합니다.');
-
       return false;
     }
 
@@ -36,7 +33,7 @@ const useExpoCamera = () => {
     }
 
     const cameraImage = await ImagePicker.launchCameraAsync({
-      quality: 0.7,
+      quality: 0.5,
       allowsEditing: false,
       aspect: [16, 9],
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
