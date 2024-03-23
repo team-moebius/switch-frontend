@@ -22,6 +22,7 @@ const TagInput = ({
   width,
   functionalElement: children,
   tags,
+  onSubmitEditing,
 }: TagInputProps) => {
   return (
     <WithInputCreator
@@ -35,6 +36,7 @@ const TagInput = ({
       inputPosition={inputPosition}
       itemsPosition={tagsPosition}
       functionalElement={children}
+      onSubmitEditing={onSubmitEditing}
       items={tags.map(({ children, ...props }, index) => (
         <Tag key={index + children} {...props}>
           {children}

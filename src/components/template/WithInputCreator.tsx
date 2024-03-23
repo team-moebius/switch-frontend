@@ -65,6 +65,7 @@ const WithInputCreator = ({
   functionalElement,
   inputPosition = 'top',
   itemsPosition = 'left',
+  onSubmitEditing,
 }: WithInputCreatorProps) => {
   return (
     <Flexbox width={width} {...inputPositionStyle[inputPosition]} gap={5}>
@@ -77,6 +78,7 @@ const WithInputCreator = ({
           width={'100%'}
           disabled={disabled}
           style={{ borderWidth: 0 }}
+          onSubmitEditing={onSubmitEditing}
         />
       </Flexbox.Item>
       <Flexbox.Item alignSelf='stretch'>
