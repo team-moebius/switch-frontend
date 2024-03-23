@@ -195,7 +195,7 @@ const ChatDetailScreen = ({
         case 'denied':
           Alert.alert('카메라 롤 접근이 거부되었습니다.');
           break;
-        case 'cancelled':
+        case 'canceled':
           Alert.alert('이미지 선택이 취소되었습니다.');
           break;
         // 특정 포맷만 요구 될 경우
@@ -216,7 +216,7 @@ const ChatDetailScreen = ({
       case 'denied':
         Alert.alert('사진 촬영 접근이 거부되었습니다.');
         break;
-      case 'cancelled':
+      case 'canceled':
         Alert.alert('촬영이 취소되었습니다.');
         break;
     }

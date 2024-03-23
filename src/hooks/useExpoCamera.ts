@@ -41,7 +41,7 @@ const useExpoCamera = () => {
 
     if (cameraImage.canceled || !cameraImage.assets.length) {
       return {
-        error: 'cancelled',
+        error: 'canceled',
       };
     }
 

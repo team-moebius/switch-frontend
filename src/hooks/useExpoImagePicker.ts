@@ -52,7 +52,7 @@ const useExpoImagePicker = () => {
 
     if (result.canceled || !result.assets.length) {
       return {
-        error: 'cancelled',
+        error: 'canceled',
       };
     }
     const formats = result.assets.map((asset) => getFormat(asset.uri));
