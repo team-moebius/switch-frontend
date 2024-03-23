@@ -34,11 +34,11 @@ const AddressModal = ({
             선호주소를 어떻게 설정하시겠어요?
           </Typography>
         </Flexbox.Item>
-        <Flexbox.Item width='70%'>
+        {/* <Flexbox.Item width='70%'>
           <Button size='medium' type='normal' onPress={handleGetLocation}>
             현재 위치로 설정
           </Button>
-        </Flexbox.Item>
+        </Flexbox.Item> */}
         <Flexbox.Item width='70%'>
           <Button size='medium' type='normal' onPress={onPressSelectAddress}>
             직접 선택
