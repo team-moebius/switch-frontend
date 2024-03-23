@@ -4,7 +4,7 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { Color } from 'src/@types/unit';
 import { Box } from './Box';
 import Flexbox from './Flexbox';
@@ -99,38 +99,40 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
         </Flexbox>
       </Pressable>
       <Modal visible={modalVisible} onPressBack={toggleModal}>
-        {options.map((option) => {
-          const {
-            value: optionValue,
-            disabled: optionDisabled = false,
-            InnerComponent,
-          } = typeof option === 'object'
-            ? {
-                ...option,
-                InnerComponent: option?.render || BasicOption,
-              }
-            : {
-                InnerComponent: BasicOption,
-                value: option,
-              };
-          return (
-            <Pressable
-              key={optionValue}
-              onPress={() => {
-                if (!optionDisabled) {
-                  onPressItem(optionValue);
-                  toggleModal();
+        <ScrollView>
+          {options.map((option) => {
+            const {
+              value: optionValue,
+              disabled: optionDisabled = false,
+              InnerComponent,
+            } = typeof option === 'object'
+              ? {
+                  ...option,
+                  InnerComponent: option?.render || BasicOption,
                 }
-              }}
-            >
-              <InnerComponent
-                value={optionValue}
-                disabled={disabled}
-                selected={optionValue === value}
-              />
-            </Pressable>
-          );
-        })}
+              : {
+                  InnerComponent: BasicOption,
+                  value: option,
+                };
+            return (
+              <Pressable
+                key={optionValue}
+                onPress={() => {
+                  if (!optionDisabled) {
+                    onPressItem(optionValue);
+                    toggleModal();
+                  }
+                }}
+              >
+                <InnerComponent
+                  value={optionValue}
+                  disabled={disabled}
+                  selected={optionValue === value}
+                />
+              </Pressable>
+            );
+          })}
+        </ScrollView>
       </Modal>
     </>
   );
