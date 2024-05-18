@@ -59,6 +59,16 @@ interface RegisterFormProps {
   getAddress?: string;
 }
 
+const defaultForm = {
+  name: '',
+  description: '',
+  images: [],
+  category: '',
+  preferredCategories: [],
+  hashtags: [],
+  preferredLocations: [],
+};
+
 const RegisterFormScreen = ({
   navigation,
   route,
@@ -118,15 +128,17 @@ const RegisterFormScreen = ({
     safety: false,
   });
   // 기본 state
-  const [data, setData] = useState<RegisterDto>({
-    name: '',
-    description: '',
-    images: [],
-    category: '',
-    preferredCategories: [],
-    hashtags: [],
-    preferredLocations: [],
-  });
+  const [data, setData] = useState<RegisterDto>(defaultForm);
+  const {
+    name,
+    description = '',
+    images,
+    hashtags,
+    category,
+    preferredCategories,
+    preferredLocations,
+  } = data;
+
   // 등록하는 물건 종류 input
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   // 스위치 원하는 물건 종류 input
@@ -138,16 +150,6 @@ const RegisterFormScreen = ({
   const [attentionModalVisible, setAttentionModalVisible] = useState(false);
   const { expoPostalCode, getExpoLocation } = useExpoLocation();
   const { fetchAddress, province, city, dong } = useFetchAddress();
-
-  const {
-    name,
-    description = '',
-    images,
-    hashtags,
-    category,
-    preferredCategories,
-    preferredLocations,
-  } = data;
 
   /* handlers */
   // name, desc 입력 핸들러
@@ -171,6 +173,25 @@ const RegisterFormScreen = ({
 
   const handleCloseAttentionModal = () => {
     // api call
+    if (paramsData) {
+    } else if (
+      name.length <= 0 ||
+      description.length <= 0 ||
+      category.length <= 0
+    ) {
+      Alert.alert('알림', '제목, 설명, 카테고리는 반드시 채워주셔야 합니다.');
+    } else if (!checkboxState.details || !checkboxState.safety) {
+      Alert.alert('알림', '주의사항에 모두 동의해 주셔야 합니다.');
+    } else {
+      createMutate({
+        ...data,
+        hashtags,
+        preferredCategories,
+        preferredLocations,
+        type: 'GOODS',
+      });
+    }
+
     setCheckboxState({ details: false, safety: false });
     setAttentionModalVisible(false);
   };
@@ -294,6 +315,7 @@ const RegisterFormScreen = ({
     }));
   };
 
+  /* useEffect */
   useEffect(() => {
     if (expoPostalCode) {
       fetchAddress(expoPostalCode);
@@ -306,7 +328,7 @@ const RegisterFormScreen = ({
 
   useEffect(() => {
     if (getAddress) {
-      if (preferredCategories.length >= 3)
+      if (preferredLocations.length >= 3)
         return Alert.alert(
           '알림',
           '선호 주소는 최대 3개만 입력할 수 있습니다.'
@@ -501,39 +523,17 @@ const RegisterFormScreen = ({
             </Flexbox>
           </Flexbox>
           <Separator />
-          <Flexbox alignItems={'center'} justifyContent='space-between'>
-            <Flexbox>
-              <Typography fontSize={14}>게시글 작성 유의사항</Typography>
-            </Flexbox>
-            <Pressable
-              onPress={() => setAttentionModalVisible((prev) => !prev)}
-            >
-              <Flexbox alignItems='center' justifyContent='flex-end'>
-                <Typography fontSize={14}>확인하기</Typography>
-                <Icon name='chevron-up' size={24} />
-              </Flexbox>
-            </Pressable>
-          </Flexbox>
           <Flexbox
             width={'100%'}
             alignItems={'center'}
             justifyContent={'center'}
           >
-            <Box width={'90%'} pt={20}>
+            <Box width={'90%'} pt={20} pb={20}>
               <Button
                 type='normal'
                 size='medium'
                 onPress={() => {
-                  if (paramsData) {
-                  } else {
-                    createMutate({
-                      ...data,
-                      hashtags: new Set(hashtags),
-                      preferredCategories: new Set(preferredCategories),
-                      preferredLocations: new Set(preferredLocations),
-                      type: 'GOODS',
-                    });
-                  }
+                  setAttentionModalVisible(true);
                 }}
               >
                 확인
