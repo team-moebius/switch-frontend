@@ -5,6 +5,7 @@ import { ScreenWrapper } from 'src/components/template';
 import { RegisterRouteParamList } from '.';
 import { address } from './address';
 import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
+import { Alert } from 'react-native';
 
 // TODO: onPressItem type 지정해주기
 
@@ -13,7 +14,6 @@ type SelectionProvinceType = (typeof PROVINCES)[number];
 
 const PreferredAddressScreen = ({
   navigation,
-  route,
 }: StackScreenProps<RegisterRouteParamList, 'PreferredAddress'>) => {
   const [province, setProvince] = useState<SelectionProvinceType>(PROVINCES[0]);
   const [city, setCity] = useState<string>('');
@@ -81,6 +81,8 @@ const PreferredAddressScreen = ({
               type={'normal'}
               size={'medium'}
               onPress={() => {
+                if (city.length <= 0 || dong.length <= 0)
+                  return Alert.alert('알림', '위치를 정확히 입력해 주세요.');
                 navigation.navigate('RegisterMain', {
                   getAddress: fullAddress,
                 });
