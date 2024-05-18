@@ -1,8 +1,10 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
 import { Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ChattingListItem } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
+import { ChatRouteParamList } from '.';
 
 const CHAT_MOCK_DATA = [
   {
@@ -22,7 +24,9 @@ This is usually because the modules which have changed (and their parents) do no
   },
 ];
 
-const ChatMainScreen = ({ navigation }) => {
+const ChatMainScreen = ({
+  navigation,
+}: StackScreenProps<ChatRouteParamList, 'ChatMain'>) => {
   return (
     <ScreenWrapper>
       <Flexbox width={'100%'} height={'100%'}>

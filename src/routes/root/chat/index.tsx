@@ -1,16 +1,29 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  StackNavigationProp,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import { ChatMainScreen } from './ChatMainScreen';
 import { SwitchResultScreen } from './SwitchResultScreen';
 import { ChatDetailScreen } from './ChatDetailScreen';
 import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 import { Flexbox } from 'src/components/atom';
 import { useState } from 'react';
-import { UserControlModal } from './content/\bmodals/UserControlModal';
+import { UserControlModal } from './content/modals/UserControlModal';
+import { useNavigation } from '@react-navigation/native';
+import { HomeRouteParamList } from '../home';
 
-const Stack = createStackNavigator();
+type ChatRouteParamList = {
+  ChatMain: undefined;
+  SwitchResult: undefined;
+  ChatDetail: undefined;
+};
 
-const ChatRoute = ({ navigation }) => {
+const Stack = createStackNavigator<ChatRouteParamList>();
+
+const ChatRoute = () => {
   const [userModalVisible, setUserModalVisible] = useState(false);
+
+  const navigation = useNavigation<StackNavigationProp<HomeRouteParamList>>();
 
   return (
     <>
@@ -93,4 +106,4 @@ const ChatRoute = ({ navigation }) => {
   );
 };
 
-export { ChatRoute };
+export { ChatRoute, type ChatRouteParamList };

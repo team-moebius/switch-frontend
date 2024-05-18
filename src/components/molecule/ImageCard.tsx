@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import { useMemo } from 'react';
 import { Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { Card } from './Card';

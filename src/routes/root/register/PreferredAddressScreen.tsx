@@ -1,44 +1,35 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import React, { useState } from 'react';
 import { Box, Button, Flexbox, Select, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
+import { RegisterRouteParamList } from '.';
+import { address } from './address';
+import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
+import { Alert } from 'react-native';
 
 // TODO: onPressItem type 지정해주기
 
-const PROVINCES = [
-  '서울특별시',
-  '부산광역시',
-  '대구광역시',
-  '인천광역시',
-  '광주광역시',
-  '대전광역시',
-  '울산광역시',
-  '세종특별자치시',
-  '경기도',
-  '강원도',
-  '충청북도',
-  '충청남도',
-  '전라북도',
-  '전라남도',
-  '경상북도',
-  '경상남도',
-  '제주특별자치도',
-];
-
+const PROVINCES = Object.keys(address);
 type SelectionProvinceType = (typeof PROVINCES)[number];
 
-const PreferredAddress = () => {
-  const [province, setProvince] = useState<SelectionProvinceType>('서울특별시');
-  const [city, setCity] = useState<string>('광진구');
-  const [dong, setDong] = useState<string>('화양동');
-  const [cityList, setCityList] = useState<string[]>([]);
+const PreferredAddressScreen = ({
+  navigation,
+}: StackScreenProps<RegisterRouteParamList, 'PreferredAddress'>) => {
+  const [province, setProvince] = useState<SelectionProvinceType>(PROVINCES[0]);
+  const [city, setCity] = useState<string>('');
+  const [dong, setDong] = useState<string>('');
+  const [cityList, setCityList] = useState<string[]>(
+    Object.keys(address[province])
+  );
   const [dongList, setDongList] = useState<string[]>([]);
+  const fullAddress = `${province} ${city} ${dong}`;
 
   return (
     <ScreenWrapper>
       <Flexbox
         flexDirection={'column'}
         width={'100%'}
-        height={'100%'}
+        height={'95%'}
         justifyContent={'space-between'}
       >
         <Flexbox
@@ -53,32 +44,34 @@ const PreferredAddress = () => {
             <Select
               value={province}
               options={PROVINCES}
-              onPressItem={(value) =>
-                setProvince(value as SelectionProvinceType)
-              }
+              onPressItem={(value) => {
+                setProvince(value as SelectionProvinceType);
+                setCityList(Object.keys(address[value]));
+              }}
             />
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
             <Select
               value={city}
               options={cityList}
-              onPressItem={(value) => setCity(value)}
+              onPressItem={(value) => {
+                setCity(value as string);
+                setDongList(address[province][value]);
+              }}
             />
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
             <Select
               value={dong}
               options={dongList}
-              onPressItem={(value) => setDong(value)}
+              onPressItem={(value) => setDong(value as string)}
             />
           </Flexbox.Item>
           <Flexbox.Item width={'100%'} alignSelf={'center'} pt={30}>
             <Typography fontSize={18}>입력한 주소</Typography>
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
-            <Typography fontSize={14}>
-              {`${province} ${city} ${dong}`}
-            </Typography>
+            <Typography fontSize={14}>{fullAddress}</Typography>
           </Flexbox.Item>
         </Flexbox>
 
@@ -87,7 +80,13 @@ const PreferredAddress = () => {
             <Button
               type={'normal'}
               size={'medium'}
-              onPress={() => window.alert('확인')}
+              onPress={() => {
+                if (city.length <= 0 || dong.length <= 0)
+                  return Alert.alert('알림', '위치를 정확히 입력해 주세요.');
+                navigation.navigate('RegisterMain', {
+                  getAddress: fullAddress,
+                });
+              }}
             >
               확인
             </Button>
@@ -98,4 +97,4 @@ const PreferredAddress = () => {
   );
 };
 
-export { PreferredAddress };
+export { PreferredAddressScreen };

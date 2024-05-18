@@ -1,5 +1,3 @@
-import { Pageable } from '@team-moebius/api-typescript';
-
 import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 import {
@@ -8,6 +6,12 @@ import {
   UseInfiniteQueryOptions,
   useInfiniteQuery,
 } from 'react-query';
+
+export interface Pageable {
+  page?: number;
+  size?: number;
+  sort?: Array<string>;
+}
 
 interface UseCommonInfiniteQueryParam<
   Response,

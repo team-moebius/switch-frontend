@@ -6,9 +6,11 @@ import {
   USERINFO_MOCK,
 } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { SwitchDetailData, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
-import { SwitchDetailView } from '../../register/ItemDetail';
-import { SwitchDetailViewProps } from '../../register/ItemDetail/View';
+import { SwitchDetailView } from './contents/SwitchDetailView';
+import { SwitchDetailViewProps } from './contents/SwitchDetailView';
 import { ScrollView } from 'react-native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { HomeRouteParamList } from '..';
 
 const userDataResolver = ({
   userName,
@@ -48,7 +50,9 @@ SwitchDetailData): SwitchDetailViewProps['itemData'] => {
   };
 };
 
-const SwitchDetailScreen = ({ navigation }) => {
+const SwitchDetailScreen = ({
+  navigation,
+}: StackScreenProps<HomeRouteParamList, 'SwitchDetail'>) => {
   // 스위치 제안이 안 온 경우 최상위 Flexbox의 pt={0}
 
   return (

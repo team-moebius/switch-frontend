@@ -16,6 +16,8 @@ const MyItemOptionModal = ({
   onDeleteModalControl,
   navigation,
 }: MyItemOptionModalProps) => {
+  // QUESTION : onEdit은 외부에서 주입을 해야할 필요성이 있을지 잘 모르겠다.
+
   const [showDeleteSwitchModal, setShowDeleteSwitchModal] = useState(false);
 
   const handleDelete = () => {
@@ -23,6 +25,7 @@ const MyItemOptionModal = ({
   };
 
   const handleDeleteConfirmModal = () => {
+    // TODO : 게시물 삭제 api
     setShowDeleteSwitchModal(false);
     onDeleteModalControl();
     navigation.navigate('HomeMain');

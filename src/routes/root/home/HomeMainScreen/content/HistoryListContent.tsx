@@ -4,7 +4,7 @@ import { HistoryListItem } from 'src/components/molecule';
 import {
   SwitchHistoryListItemData,
   SWITCH_HISTORY_LIST_MOCK,
-} from '../SwitchList.mock';
+} from '../../SwitchDetailScreen/SwitchList.mock';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 import {
   Pageable,

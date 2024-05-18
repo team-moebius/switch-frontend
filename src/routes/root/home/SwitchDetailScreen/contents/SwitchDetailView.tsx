@@ -3,7 +3,7 @@ import { Pressable, useWindowDimensions } from 'react-native';
 import { Box, Flexbox, Typography, Image } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ItemCard, UserSummary } from 'src/components/molecule';
-import { SwitchDetailData } from '../type';
+import { SwitchDetailData } from '../../../register/RegisterFormScreen/contents/type';
 import { UserSummaryData } from 'src/components/molecule/UserSummary';
 import Swiper from 'react-native-swiper';
 

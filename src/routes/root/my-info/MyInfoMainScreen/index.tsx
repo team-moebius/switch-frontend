@@ -27,7 +27,7 @@ import { MyInfoParamList } from '..';
 import {
   StuffListItemData,
   STUFF_LIST_MOCK,
-} from '../../home/HomeMainScreen/SwitchList.mock';
+} from '../../home/SwitchDetailScreen/SwitchList.mock';
 import { USERINFO_MOCK } from './UserInfo.mock';
 
 const MyInfoMainScreen = ({

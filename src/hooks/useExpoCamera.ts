@@ -4,24 +4,44 @@ import * as ImagePicker from 'expo-image-picker';
 const useExpoCamera = () => {
   const [photoUri, setPhotoUri] = useState<string | null>(null);
 
-  const openCamera = async () => {
-    const permissionResult = await ImagePicker.requestCameraPermissionsAsync();
+  const [cameraPermissionInfo, requestPermission] =
+    ImagePicker.useCameraPermissions();
 
-    if (permissionResult.status !== 'granted') {
+  const verifyPermissions = async () => {
+    if (
+      cameraPermissionInfo?.status === ImagePicker.PermissionStatus.UNDETERMINED
+    ) {
+      const permissionResponse = await requestPermission();
+
+      return permissionResponse.granted;
+    }
+
+    if (cameraPermissionInfo?.status === ImagePicker.PermissionStatus.DENIED) {
+      return false;
+    }
+
+    return true;
+  };
+
+  const openCamera = async () => {
+    const permissionResult = await verifyPermissions();
+
+    if (!permissionResult) {
       return {
         error: 'denied',
       };
     }
 
     const cameraImage = await ImagePicker.launchCameraAsync({
-      quality: 0.7,
+      quality: 0.5,
       allowsEditing: false,
       aspect: [16, 9],
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
     });
 
     if (cameraImage.canceled || !cameraImage.assets.length) {
       return {
-        error: 'cancelled',
+        error: 'canceled',
       };
     }
 

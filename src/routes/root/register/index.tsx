@@ -1,26 +1,22 @@
 import { createStackNavigator } from '@react-navigation/stack';
-
-import { ScreenWrapper } from 'src/components/template';
-import { SwitchDetailForm } from './ItemDetail/Form';
-import { PreferredAddress } from './PreferredAddress';
+import { RegisterFormProps, RegisterFormScreen } from './RegisterFormScreen';
+import { PreferredAddressScreen } from './PreferredAddressScreen';
 import { ScreenHeader } from 'src/components/molecule';
 
-const Stack = createStackNavigator();
-
-const RegisterMain = ({ navigation }) => {
-  return (
-    <ScreenWrapper>
-      <SwitchDetailForm navigation={navigation} />
-    </ScreenWrapper>
-  );
+type RegisterRouteParamList = {
+  RegisterMain: RegisterFormProps;
+  PreferredAddress: undefined;
 };
+
+const Stack = createStackNavigator<RegisterRouteParamList>();
 
 const RegisterRoute = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
         name='RegisterMain'
-        component={RegisterMain}
+        component={RegisterFormScreen}
+        initialParams={{ initialData: undefined }}
         options={{
           header: (props) => {
             return <ScreenHeader {...props} center={'물품등록하기'} />;
@@ -29,7 +25,7 @@ const RegisterRoute = () => {
       />
       <Stack.Screen
         name='PreferredAddress'
-        component={PreferredAddress}
+        component={PreferredAddressScreen}
         options={{
           header: (props) => {
             return <ScreenHeader {...props} center={'스위치 선호 주소'} />;
@@ -40,4 +36,4 @@ const RegisterRoute = () => {
   );
 };
 
-export { RegisterRoute, RegisterMain };
+export { RegisterRoute, type RegisterRouteParamList };

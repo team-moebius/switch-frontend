@@ -1,35 +1,45 @@
-import { createStackNavigator } from '@react-navigation/stack';
+import {
+  StackNavigationProp,
+  StackScreenProps,
+  createStackNavigator,
+} from '@react-navigation/stack';
 import { useCallback, useContext, useState } from 'react';
 
 import { Button, Flexbox, Icon, Tag, TextInput } from 'src/components/atom';
+import { PressableIcon } from 'src/components/molecule';
+import { WithImage } from 'src/components/template';
+
+import { HomeMainScreen } from './HomeMainScreen';
+import { SwitchDetailScreen } from './SwitchDetailScreen';
+import { NotificationsScreen } from './NotificationsScreen';
+import { RegisteredListScreen } from './RegisteredListScreen';
+import { ReportsScreen } from './ReportsScreen';
+import { ChatDetailScreen } from '../chat/ChatDetailScreen';
+
+import { UserControlModal } from '../chat/content/modals';
+import { CancelEditModal, MyItemOptionModal } from './modals';
 
 import {
   ScreenHeader,
   ScreenHeaderProps,
 } from 'src/components/molecule/ScreenHeader';
-import { ThemeContext } from 'src/context/theme';
-
-import { HomeMainScreen } from './HomeMainScreen';
-import { SwitchDetailScreen } from './HomeMainScreen/SwitchDetailScreen';
-import { NotificationsScreen } from './NotificationsScreen';
-import { RegisteredListScreen } from './RegisteredListScreen';
-import { ReportsScreen } from './ReportsScreen';
-import { PressableIcon } from 'src/components/molecule';
-import { WithImage } from 'src/components/template';
-import { ChatDetailScreen } from '../chat/ChatDetailScreen';
-import { RegisterMain } from '../register';
-import { MyItemOptionModal } from './modals/MyItemOptionModal';
-import { UserControlModal } from '../chat/content/\bmodals/UserControlModal';
-import { CancelEditModal } from './modals/CancelEditModal';
 
 import { ItemResponse } from '@team-moebius/api-typescript';
+
+import { ThemeContext } from 'src/context/theme';
+
+import { RootTabsParamList } from '..';
+import { RegisterRoute, RegisterRouteParamList } from '../register';
+import { NavigatorScreenParams, useNavigation } from '@react-navigation/native';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
   SwitchDetail: ItemResponse;
   RegisteredList: undefined;
   Notifications: undefined;
-  Report: undefined;
+  Report: { previousScreen?: string };
+  ChatDetail: undefined;
+  EditItem: NavigatorScreenParams<RegisterRouteParamList>;
 };
 
 const Stack = createStackNavigator<HomeRouteParamList>();
@@ -72,10 +82,15 @@ const HomeRouteHeader = ({
   );
 };
 
-const HomeRoute = ({ navigation }) => {
+const HomeRoute = ({
+  navigation,
+}: StackScreenProps<RootTabsParamList, 'Home'>) => {
   const [myItemModalVisible, setMyItemModalVisible] = useState(false);
   const [userModalVisible, setUserModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
+
+  const modalNavigation =
+    useNavigation<StackNavigationProp<HomeRouteParamList>>();
 
   return (
     <>
@@ -251,7 +266,7 @@ const HomeRoute = ({ navigation }) => {
         />
         <Stack.Screen
           name='EditItem'
-          component={RegisterMain}
+          component={RegisterRoute}
           options={{
             header: (props) => {
               return (
@@ -266,18 +281,20 @@ const HomeRoute = ({ navigation }) => {
           }}
         />
       </Stack.Navigator>
-
+      {/* TODO : 이 곳에서 MyItemOptioinModal을 호출하면 initial데이터를 받아사용할 수 없을지도 모르겠는걸? 일단은 undefined로 지정 */}
       <MyItemOptionModal
         navigation={navigation}
         visible={myItemModalVisible}
         onPressBack={() => setMyItemModalVisible(false)}
         onEdit={() => {
           setMyItemModalVisible(false);
-          navigation.navigate('EditItem');
+          modalNavigation.navigate('EditItem', {
+            screen: 'RegisterMain',
+            params: { initialData: undefined },
+          });
         }}
         onDeleteModalControl={() => setMyItemModalVisible(false)}
       />
-
       <UserControlModal
         navigation={navigation}
         visible={userModalVisible}
@@ -285,10 +302,9 @@ const HomeRoute = ({ navigation }) => {
         onDeclineSwitch={() => setUserModalVisible(false)}
         onReportBlock={() => {
           setUserModalVisible(false);
-          navigation.navigate('Report', { previousScreen: 'ChatDetail' });
+          modalNavigation.navigate('Report', { previousScreen: 'ChatDetail' });
         }}
       />
-
       <CancelEditModal
         visible={cancelModalVisible}
         onPressBack={() => setCancelModalVisible(false)}
