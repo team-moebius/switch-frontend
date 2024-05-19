@@ -1,10 +1,12 @@
 import { ScreenWrapper, WithMirror } from 'src/components/template';
 import { ItemListContent } from '../HomeMainScreen/content/ItemListContent';
-import { useCallback, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useState } from 'react';
 import { Button, Flexbox, Icon, Modal, Typography } from 'src/components/atom';
 import { ItemDetail } from 'src/components/molecule/SwitchListItem';
 import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
 import { ItemApi } from 'src/api';
+import { UserContext } from 'src/context/user';
+import { Alert } from 'react-native';
 
 const MY_ITEM = {
   name: '이브이',
@@ -45,6 +47,7 @@ const renderChildren = (
 
 const RegisteredListScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const { userId } = useContext(UserContext);
 
   const handleModalOpen = useCallback(() => {
     setModalVisible((prev) => !prev);
@@ -64,7 +67,23 @@ const RegisteredListScreen = () => {
       <ItemListContent
         onClickList={handleModalOpen}
         withTitleOnly
-        api={ItemApi.getItems}
+        api={
+          userId
+            ? (params) =>
+                ItemApi.getItems(
+                  Number(userId),
+                  params.page,
+                  params.size,
+                  params.sort
+                )
+            : () =>
+                Promise.reject(
+                  Alert.alert(
+                    '알림',
+                    '비정상적인 접근입니다. 다시 로그인 해주세요.'
+                  )
+                )
+        }
       />
       <Modal
         visible={modalVisible}

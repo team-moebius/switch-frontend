@@ -11,11 +11,8 @@ import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 import { getPageableContent } from 'src/utils/getPageableContent';
 
-import {
-  Pageable,
-  SliceItemResponse,
-  ItemResponse,
-} from '@team-moebius/api-typescript';
+import { SliceItemResponse, ItemResponse } from '@team-moebius/api-typescript';
+import { Pageable } from 'src/hooks/useCommonInfiniteQuery';
 import { AxiosResponse } from 'axios';
 
 import {
