@@ -27,7 +27,9 @@ const HomeMainScreen = ({
             onClickList={(data) => {
               navigation?.navigate('SwitchDetail', { ...data });
             }}
-            api={ItemApi.getItems}
+            api={(params) =>
+              ItemApi.getItems(undefined, params.page, params.size, params.sort)
+            }
           />
         ) : (
           <HistoryListContent />
