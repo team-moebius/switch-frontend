@@ -1,6 +1,10 @@
-import moment from 'moment';
-import 'moment/locale/ko';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import 'dayjs/locale/ko';
+
+dayjs.extend(relativeTime);
+dayjs.locale('ko');
 
 export const convertLocalTime = (utcTime: string) => {
-  return moment(utcTime).fromNow();
+  return dayjs(utcTime).fromNow();
 };
