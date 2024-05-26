@@ -10,7 +10,7 @@ interface ItemListCardProps {
 const ItemListCard = ({ count, title, imageSrc }: ItemListCardProps) => {
   return (
     <Flexbox.Item flex={1} position='relative' padding={10}>
-      {count && (
+      {!!count && (
         <Flexbox
           position='absolute'
           zIndex={1}
