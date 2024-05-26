@@ -55,7 +55,8 @@ const MyInfoMainScreen = ({
     data: myItemData,
     isFetchingNextPage,
   } = useCommonInfiniteQuery<SliceItemResponse>({
-    api: ItemApi.getItemsByLoginUser,
+    api: (param) =>
+      ItemApi.getItemsByLoginUser(param.page, param.size, param.sort),
     queryString: { size: 20, sort: SELECT_OPTIONS_QUERY['최신순'] },
     queryKey: [
       'myInfoMain_ItemApi_getItemsByLoginUser',
