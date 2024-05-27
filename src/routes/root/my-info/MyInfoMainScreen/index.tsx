@@ -1,6 +1,7 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useMemo, useRef } from 'react';
+import { Animated, useWindowDimensions } from 'react-native';
 
-import { Box, Button, Flexbox, Separator } from 'src/components/atom';
+import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { UserSummary } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { ListView } from 'src/components/template/ListView';
@@ -18,12 +19,11 @@ import {
   UserInfoResponse,
 } from '@team-moebius/api-typescript';
 
-import { SELECT_OPTIONS_QUERY } from '../../home/HomeMainScreen/content/ItemListContent';
-import { getPageableContent } from 'src/utils/getPageableContent';
-
 import { StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '..';
 
+import { SELECT_OPTIONS_QUERY } from '../../home/HomeMainScreen/content/ItemListContent';
+import { getPageableContent } from 'src/utils/getPageableContent';
 import {
   StuffListItemData,
   STUFF_LIST_MOCK,
@@ -34,6 +34,8 @@ const MyInfoMainScreen = ({
   navigation,
 }: StackScreenProps<MyInfoParamList, 'MyInfoMain'>) => {
   const { userId } = useContext(UserContext);
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const screenWidth = useWindowDimensions().width;
 
   const {
     data: myInfoData,
@@ -107,9 +109,28 @@ const MyInfoMainScreen = ({
     renderItem,
   });
 
+  const handleButtonPress = (toValue: number) => {
+    Animated.timing(slideAnim, {
+      toValue: toValue * (screenWidth / 2),
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animatedStyle = useMemo(
+    () => ({
+      transform: [
+        {
+          translateX: slideAnim,
+        },
+      ],
+    }),
+    [slideAnim]
+  );
+
   return (
     <ScreenWrapper>
-      <Box>
+      <Box pl={15} pr={15}>
         <UserSummary
           data={{
             user: myInfoData?.nickname ?? (userId as string),
@@ -133,7 +154,39 @@ const MyInfoMainScreen = ({
           </Box>
         </Flexbox>
       </Box>
-      <Separator />
+      <Box mt={15}>
+        <Flexbox flexDirection='row'>
+          <Flexbox width={'50%'} justifyContent='center'>
+            <Button
+              type={'transparent'}
+              size={'medium'}
+              onPress={() => handleButtonPress(0)}
+            >
+              <Typography fontSize={17}>진행중</Typography>
+            </Button>
+          </Flexbox>
+          <Flexbox width={'50%'} justifyContent='center'>
+            <Button
+              type={'transparent'}
+              size={'medium'}
+              onPress={() => handleButtonPress(1)}
+            >
+              <Typography fontSize={17}>완료</Typography>
+            </Button>
+          </Flexbox>
+        </Flexbox>
+        <Animated.View
+          style={[
+            {
+              height: 1,
+              width: '50%',
+              backgroundColor: '#3489eb',
+            },
+            animatedStyle,
+          ]}
+        />
+      </Box>
+      {/* <Separator /> */}
       <Flexbox height={'100%'}>
         <ListView<ItemResponse>
           {...flatListProps}
