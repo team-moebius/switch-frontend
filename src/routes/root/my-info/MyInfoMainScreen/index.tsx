@@ -32,10 +32,12 @@ import { USERINFO_MOCK } from './UserInfo.mock';
 
 const MyInfoMainScreen = ({
   navigation,
+  route,
 }: StackScreenProps<MyInfoParamList, 'MyInfoMain'>) => {
   const { userId } = useContext(UserContext);
   const slideAnim = useRef(new Animated.Value(0)).current;
   const screenWidth = useWindowDimensions().width;
+  const { otherUserId } = route.params;
 
   const {
     data: myInfoData,
@@ -43,7 +45,7 @@ const MyInfoMainScreen = ({
     isSuccess,
   } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
     api: UserApi.getUserInfo,
-    queryKey: ['myInfoMain_userApi_getUserInfo', userId],
+    queryKey: ['myInfoMain_userApi_getUserInfo', otherUserId || userId],
     onSuccess(data) {
       console.debug('\n\n✅ myInfoMain_userApi_getUserInfo ✅\n', data);
     },
@@ -141,17 +143,19 @@ const MyInfoMainScreen = ({
           }}
         />
         <Flexbox justifyContent='center' alignItems='center' mt={10} mb={10}>
-          <Box width={200}>
-            <Button
-              type={'normal'}
-              size={'medium'}
-              onPress={function (): void {
-                navigation.navigate('MyInfoEdit', { userInfo: myInfoData });
-              }}
-            >
-              내 정보 편집하기
-            </Button>
-          </Box>
+          {Number(myInfoData?.id) === Number(userId) ? (
+            <Box width={200}>
+              <Button
+                type={'normal'}
+                size={'medium'}
+                onPress={function (): void {
+                  navigation.navigate('MyInfoEdit', { userInfo: myInfoData });
+                }}
+              >
+                내 정보 편집하기
+              </Button>
+            </Box>
+          ) : null}
         </Flexbox>
       </Box>
       <Box mt={15}>

@@ -16,7 +16,7 @@ import { MyInfoEditScreen } from './MyInfoEditScreen';
 import { UserInfoResponse } from '@team-moebius/api-typescript';
 
 type MyInfoParamList = {
-  MyInfoMain: undefined;
+  MyInfoMain: { otherUserId?: number };
   MyInfoEdit: { userInfo: UserInfoResponse | undefined };
   Withdraw: undefined;
   SettingMain: undefined;
