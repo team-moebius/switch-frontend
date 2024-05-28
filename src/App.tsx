@@ -1,16 +1,16 @@
 import { useEffect, useMemo, useState } from 'react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { Platform, SafeAreaView, StatusBar } from 'react-native';
 
 import useAssets from './hooks/useAssets';
 import FONT_MAP from './assets/fonts';
 import { ThemeContextProvider } from './context/theme';
 import { UserContextProvider } from './context/user';
 import { wait } from './utils/wait';
-
 import NavigationRouter from './routes';
 import { SplashScreen } from './routes/sign/SplashScreen';
-import { SafeAreaView } from 'react-native';
 import { AppPasswordProvider } from './context/password';
+
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 const queryClient = new QueryClient();
 
@@ -34,7 +34,14 @@ export default function App() {
       <UserContextProvider>
         <AppPasswordProvider>
           <ThemeContextProvider>
-            <SafeAreaView style={{ width: '100%', height: '100%' }}>
+            <SafeAreaView
+              style={{
+                width: '100%',
+                height: '100%',
+                paddingTop:
+                  Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+              }}
+            >
               {!initialized ? <SplashScreen /> : <NavigationRouter />}
             </SafeAreaView>
           </ThemeContextProvider>
