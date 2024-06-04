@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 import {
   Box,
   Button,
@@ -12,6 +12,9 @@ import { FeedbackModal } from './MyInfoMainScreen/content/modals/FeedbackModal';
 import { LogoutModal } from './MyInfoMainScreen/content/modals/LogoutModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '.';
+import { useNavigation } from '@react-navigation/native';
+import { NavigationRouterParamList } from 'src/routes';
+import { UserContext } from 'src/context/user';
 
 const SettingButton = ({
   children,
@@ -38,11 +41,24 @@ const SettingMainScreen = ({
 }: StackScreenProps<MyInfoParamList, 'SettingMain'>) => {
   const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
+  const { logout } = useContext(UserContext);
+
+  const { navigation: signupNav } =
+    useNavigation<StackScreenProps<NavigationRouterParamList, 'Sign'>>();
 
   const pressFeedbackDirect = useCallback(() => {
     setFeedbackModalVisible(false);
     navigation.navigate('Feedback');
   }, [navigation]);
+
+  const onLogoutConfirm = () => {
+    setLogoutModalVisible(false);
+    logout();
+    signupNav.reset({
+      index: 0,
+      routes: [{ name: 'Sign' }],
+    });
+  };
 
   return (
     <ScreenWrapper>
@@ -71,10 +87,7 @@ const SettingMainScreen = ({
       <LogoutModal
         visible={logoutModalVisible}
         onPressBack={() => setLogoutModalVisible(false)}
-        onConfirm={() => {
-          setLogoutModalVisible(false);
-          navigation.navigate('Sign');
-        }}
+        onConfirm={onLogoutConfirm}
       />
     </ScreenWrapper>
   );
