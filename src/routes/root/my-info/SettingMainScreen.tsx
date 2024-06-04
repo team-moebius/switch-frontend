@@ -10,6 +10,8 @@ import { ButtonProps } from 'src/components/atom/Button';
 import { ScreenWrapper } from 'src/components/template';
 import { FeedbackModal } from './MyInfoMainScreen/content/modals/FeedbackModal';
 import { LogoutModal } from './MyInfoMainScreen/content/modals/LogoutModal';
+import { StackScreenProps } from '@react-navigation/stack';
+import { MyInfoParamList } from '.';
 
 const SettingButton = ({
   children,
@@ -31,7 +33,9 @@ const SettingButton = ({
   );
 };
 
-const SettingMainScreen = ({ navigation }) => {
+const SettingMainScreen = ({
+  navigation,
+}: StackScreenProps<MyInfoParamList, 'SettingMain'>) => {
   const [feedbackModalVisible, setFeedbackModalVisible] = useState(false);
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
 
@@ -42,12 +46,6 @@ const SettingMainScreen = ({ navigation }) => {
 
   return (
     <ScreenWrapper>
-      <SettingButton onPress={() => navigation.navigate('Record')}>
-        스위치 내역
-      </SettingButton>
-      <SettingButton onPress={() => navigation.navigate('Setting')}>
-        스위치 설정
-      </SettingButton>
       <SettingButton onPress={() => navigation.navigate('Security')}>
         보안 설정
       </SettingButton>

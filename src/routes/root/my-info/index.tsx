@@ -20,8 +20,6 @@ type MyInfoParamList = {
   MyInfoEdit: { userInfo: UserInfoResponse | undefined };
   Withdraw: undefined;
   SettingMain: undefined;
-  Record: undefined;
-  Setting: undefined;
   Security: undefined;
   Version: undefined;
   Feedback: undefined;
@@ -85,20 +83,6 @@ const MyInfoRoute = () => {
           name={'SettingMain'}
           component={SettingMainScreen}
           options={{ header: ScreenHeader }}
-        />
-        <Stack.Screen
-          name={'Record'}
-          component={SwitchRecordsScreen}
-          options={{ header: ScreenHeader }}
-        />
-        <Stack.Screen
-          name={'Setting'}
-          component={SettingScreen}
-          options={{
-            header: (props) => (
-              <ScreenHeader {...props} center={'스위치 설정'} />
-            ),
-          }}
         />
       </Stack.Group>
       <Stack.Group>
