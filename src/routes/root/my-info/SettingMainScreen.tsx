@@ -10,9 +10,12 @@ import { ButtonProps } from 'src/components/atom/Button';
 import { ScreenWrapper } from 'src/components/template';
 import { FeedbackModal } from './MyInfoMainScreen/content/modals/FeedbackModal';
 import { LogoutModal } from './MyInfoMainScreen/content/modals/LogoutModal';
-import { StackScreenProps } from '@react-navigation/stack';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '.';
-import { useNavigation } from '@react-navigation/native';
+import {
+  CompositeNavigationProp,
+  useNavigation,
+} from '@react-navigation/native';
 import { NavigationRouterParamList } from 'src/routes';
 import { UserContext } from 'src/context/user';
 
@@ -43,8 +46,13 @@ const SettingMainScreen = ({
   const [logoutModalVisible, setLogoutModalVisible] = useState(false);
   const { logout } = useContext(UserContext);
 
-  const { navigation: signupNav } =
-    useNavigation<StackScreenProps<NavigationRouterParamList, 'Sign'>>();
+  const signupNav =
+    useNavigation<
+      CompositeNavigationProp<
+        StackNavigationProp<NavigationRouterParamList, 'Sign'>,
+        StackNavigationProp<MyInfoParamList, 'SettingMain'>
+      >
+    >();
 
   const pressFeedbackDirect = useCallback(() => {
     setFeedbackModalVisible(false);
