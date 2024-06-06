@@ -1,5 +1,5 @@
 import { createContext, ReactNode, useEffect, useState } from 'react';
-import { DARK_MODE, FEED_RANGE, localStore } from 'src/common/localStore';
+import { DARK_MODE, localStore } from 'src/common/localStore';
 import { expoSecureStore, TOKEN, USER_ID } from 'src/common/secureStore';
 
 // TODO: DTO 설계 참고하여 추후 설계 필요
@@ -10,8 +10,6 @@ interface UserContextProps {
   logout: () => void;
   darkMode: boolean;
   onChangeDarkMode: (value: boolean) => void;
-  isFeedThird: boolean;
-  onChangeFeedRange: (value: boolean) => void;
 }
 const USER_CONTEXT_DEFAULT: UserContextProps = {
   userId: null,
@@ -20,8 +18,6 @@ const USER_CONTEXT_DEFAULT: UserContextProps = {
   logout: () => undefined,
   darkMode: false,
   onChangeDarkMode: (value: boolean) => undefined,
-  isFeedThird: true,
-  onChangeFeedRange: (value: boolean) => undefined,
 };
 
 const UserContext = createContext<UserContextProps>(USER_CONTEXT_DEFAULT);
@@ -34,7 +30,6 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
   const [userId, setUserId] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [darkMode, setDarkMode] = useState(false);
-  const [isFeedThird, setIsFeedThird] = useState(false);
 
   const login = async () => {
     setLoading(true);
@@ -63,11 +58,6 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
     setDarkMode(value);
   };
 
-  const onChangeFeedRange = async (value: boolean) => {
-    await localStore.setData(FEED_RANGE, value);
-    setIsFeedThird(value);
-  };
-
   // context 컴포넌트가 최초 렌더링 될 때 로그인 여부를 초기화
   useEffect(() => {
     login();
@@ -82,14 +72,6 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
       .catch((error) => {
         onChangeDarkMode(false);
       });
-    localStore
-      .getData<boolean>(FEED_RANGE)
-      .then((data) => {
-        setIsFeedThird(data);
-      })
-      .catch((error) => {
-        onChangeFeedRange(true);
-      });
   }, []);
 
   return (
@@ -100,9 +82,7 @@ const UserContextProvider = ({ children }: UserContextProviderProps) => {
         login,
         logout,
         darkMode,
-        isFeedThird,
         onChangeDarkMode,
-        onChangeFeedRange,
       }}
     >
       {children}

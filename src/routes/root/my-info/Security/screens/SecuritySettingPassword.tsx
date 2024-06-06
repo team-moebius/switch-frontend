@@ -53,7 +53,7 @@ const SecuritySettingPassword = ({
     if (confirmPassword.length >= 4) {
       if (password === confirmPassword) {
         setExpoSecurity(password);
-        navigation.navigate('SecuritySettingMain');
+        navigation.goBack();
       } else {
         setIsFailtoConfirm(true);
         setPassword('');

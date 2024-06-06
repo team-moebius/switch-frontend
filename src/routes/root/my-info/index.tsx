@@ -3,26 +3,23 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { Flexbox } from 'src/components/atom';
 import { ScreenHeader, PressableIcon } from 'src/components/molecule';
 
-import { SecuritySettingRoute } from './Security';
+import { SecuritySettingParamList, SecuritySettingRoute } from './Security';
 import { WithdrawRoute } from './WithdrawScreen';
 
 import { MyInfoMainScreen } from './MyInfoMainScreen';
 import { FeedbackScreen } from './FeedbackScreen';
 import { VersionScreen } from './VersionScreen';
-import { SettingScreen } from './SettingScreen';
-import { SwitchRecordsScreen } from './SwitchRecordsScreen';
 import { SettingMainScreen } from './SettingMainScreen';
 import { MyInfoEditScreen } from './MyInfoEditScreen';
 import { UserInfoResponse } from '@team-moebius/api-typescript';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 type MyInfoParamList = {
   MyInfoMain: undefined;
   MyInfoEdit: { userInfo: UserInfoResponse | undefined };
   Withdraw: undefined;
   SettingMain: undefined;
-  Record: undefined;
-  Setting: undefined;
-  Security: undefined;
+  Security: NavigatorScreenParams<SecuritySettingParamList>;
   Version: undefined;
   Feedback: undefined;
 };
@@ -80,27 +77,11 @@ const MyInfoRoute = () => {
           options={{ header: ScreenHeader }}
         />
       </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          name={'SettingMain'}
-          component={SettingMainScreen}
-          options={{ header: ScreenHeader }}
-        />
-        <Stack.Screen
-          name={'Record'}
-          component={SwitchRecordsScreen}
-          options={{ header: ScreenHeader }}
-        />
-        <Stack.Screen
-          name={'Setting'}
-          component={SettingScreen}
-          options={{
-            header: (props) => (
-              <ScreenHeader {...props} center={'스위치 설정'} />
-            ),
-          }}
-        />
-      </Stack.Group>
+      <Stack.Screen
+        name={'SettingMain'}
+        component={SettingMainScreen}
+        options={{ header: ScreenHeader }}
+      />
       <Stack.Group>
         <Stack.Screen
           name={'Security'}
