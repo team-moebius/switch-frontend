@@ -12,15 +12,11 @@ import { FeedbackModal } from './MyInfoMainScreen/content/modals/FeedbackModal';
 import { LogoutModal } from './MyInfoMainScreen/content/modals/LogoutModal';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '.';
-import {
-  CompositeNavigationProp,
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { NavigationRouterParamList } from 'src/routes';
 import { UserContext } from 'src/context/user';
 import { Field } from 'src/components/molecule';
 import { AppPasswordContext } from 'src/context/password';
-import { SecuritySettingParamList } from './Security';
 
 const SettingButton = ({
   children,
@@ -51,12 +47,7 @@ const SettingMainScreen = ({
 
   /* navigations */
   const signupNav =
-    useNavigation<
-      CompositeNavigationProp<
-        StackNavigationProp<NavigationRouterParamList, 'Sign'>,
-        StackNavigationProp<MyInfoParamList, 'SettingMain'>
-      >
-    >();
+    useNavigation<StackNavigationProp<NavigationRouterParamList, 'Sign'>>();
 
   /* custom hooks */
   const {

@@ -3,10 +3,7 @@ import { useEffect } from 'react';
 import { Flexbox, Typography } from 'src/components/atom';
 
 import { StackNavigationProp } from '@react-navigation/stack';
-import {
-  CompositeNavigationProp,
-  useNavigation,
-} from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   APP_BIO_PASSWORD,
@@ -19,22 +16,13 @@ import {
 import BASE_COLORS from 'src/assets/theme/colors/base';
 
 import { NavigationRouterParamList } from 'src/routes';
-import { WithdrawParamList } from '.';
 
 const FarewellScreen = () => {
   const navigation =
-    useNavigation<
-      CompositeNavigationProp<
-        StackNavigationProp<NavigationRouterParamList, 'Sign'>,
-        StackNavigationProp<WithdrawParamList, 'Farewell'>
-      >
-    >();
+    useNavigation<StackNavigationProp<NavigationRouterParamList, 'Sign'>>();
   useEffect(() => {
     const backToSign = async (
-      navigation: CompositeNavigationProp<
-        StackNavigationProp<NavigationRouterParamList, 'Sign'>,
-        StackNavigationProp<WithdrawParamList, 'Farewell'>
-      >
+      navigation: StackNavigationProp<NavigationRouterParamList>
     ) => {
       setTimeout(() => {
         expoSecureStore.deleteToken(TOKEN);

@@ -23,7 +23,8 @@ const Stack = createStackNavigator<ChatRouteParamList>();
 const ChatRoute = () => {
   const [userModalVisible, setUserModalVisible] = useState(false);
 
-  const navigation = useNavigation<StackNavigationProp<HomeRouteParamList>>();
+  const navigation =
+    useNavigation<StackNavigationProp<HomeRouteParamList, 'ChatDetail'>>();
 
   return (
     <>
