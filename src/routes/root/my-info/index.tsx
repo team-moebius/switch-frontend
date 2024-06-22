@@ -4,7 +4,7 @@ import { Flexbox } from 'src/components/atom';
 import { ScreenHeader, PressableIcon } from 'src/components/molecule';
 
 import { SecuritySettingParamList, SecuritySettingRoute } from './Security';
-import { WithdrawRoute } from './WithdrawScreen';
+import { WithdrawParamList, WithdrawRoute } from './WithdrawScreen';
 
 import { MyInfoMainScreen } from './MyInfoMainScreen';
 import { FeedbackScreen } from './FeedbackScreen';
@@ -17,7 +17,7 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 type MyInfoParamList = {
   MyInfoMain: undefined;
   MyInfoEdit: { userInfo: UserInfoResponse | undefined };
-  Withdraw: undefined;
+  Withdraw: NavigatorScreenParams<WithdrawParamList>;
   SettingMain: undefined;
   Security: NavigatorScreenParams<SecuritySettingParamList>;
   Version: undefined;

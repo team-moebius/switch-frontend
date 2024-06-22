@@ -1,16 +1,17 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import { ChatRoute } from './chat';
-import { FavoriteRoute } from './favorite';
-import { HomeRoute } from './home';
-import { MyInfoRoute } from './my-info';
-import { RegisterRoute } from './register';
+import { ChatRoute, ChatRouteParamList } from './chat';
+import { FavoriteRoute, FavoriteRouteParamList } from './favorite';
+import { HomeRoute, HomeRouteParamList } from './home';
+import { MyInfoParamList, MyInfoRoute } from './my-info';
+import { RegisterRoute, RegisterRouteParamList } from './register';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 type RootTabsParamList = {
-  Home: undefined;
-  Favorite: undefined;
-  Register: undefined;
-  Chat: undefined;
-  MyInfo: undefined;
+  Home: NavigatorScreenParams<HomeRouteParamList>;
+  Favorite: NavigatorScreenParams<FavoriteRouteParamList>;
+  Register: NavigatorScreenParams<RegisterRouteParamList>;
+  Chat: NavigatorScreenParams<ChatRouteParamList>;
+  MyInfo: NavigatorScreenParams<MyInfoParamList>;
 };
 
 const Tab = createBottomTabNavigator<RootTabsParamList>();
