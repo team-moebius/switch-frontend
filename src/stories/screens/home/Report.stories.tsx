@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { ReportsScreen } from 'src/routes/root/home/ReportsScreen';
 
 export default {
@@ -9,9 +9,9 @@ export default {
       defaultViewport: 'iphone6',
     },
   },
-} as ComponentMeta<typeof ReportsScreen>;
+} as Meta<typeof ReportsScreen>;
 
-const Template: ComponentStory<typeof ReportsScreen> = () => <ReportsScreen />;
+const Template: StoryFn<typeof ReportsScreen> = () => <ReportsScreen />;
 
 export const story = Template.bind({});
 

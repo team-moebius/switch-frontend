@@ -1,4 +1,4 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { PreferredAddressScreen } from 'src/routes/root/register/PreferredAddressScreen';
 
 export default {
@@ -9,9 +9,9 @@ export default {
       defaultViewport: 'iphone6',
     },
   },
-} as ComponentMeta<typeof PreferredAddressScreen>;
+} as Meta<typeof PreferredAddressScreen>;
 
-const Template: ComponentStory<typeof PreferredAddressScreen> = () => (
+const Template: StoryFn<typeof PreferredAddressScreen> = () => (
   <PreferredAddressScreen />
 );
 
