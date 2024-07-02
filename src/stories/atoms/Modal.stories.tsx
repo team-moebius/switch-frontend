@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React, { useState } from 'react';
 import { Button, Flexbox, Modal } from 'src/components/atom';
 
 export default {
   title: 'Modal',
   component: Modal,
-} as ComponentMeta<typeof Modal>;
+} as Meta<typeof Modal>;
 
-const Template: ComponentStory<typeof Modal> = (args) => {
+const Template: StoryFn<typeof Modal> = (args) => {
   const [modalVisible, setModalVisible] = useState(false);
   const handleModalOpen = () => {
     setModalVisible((prev) => !prev);

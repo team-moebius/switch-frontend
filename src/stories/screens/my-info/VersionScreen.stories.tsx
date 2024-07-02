@@ -1,13 +1,12 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { VersionScreen } from 'src/routes/root/my-info/VersionScreen';
 
 export default {
   title: 'VersionScreen',
   component: VersionScreen,
-} as ComponentMeta<typeof VersionScreen>;
+} as Meta<typeof VersionScreen>;
 
-const Template: ComponentStory<typeof VersionScreen> = () => <VersionScreen />;
+const Template: StoryFn<typeof VersionScreen> = () => <VersionScreen />;
 
 export const story = Template.bind({});
 

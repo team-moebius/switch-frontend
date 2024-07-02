@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import { TagInput } from 'src/components/molecule';
 
 export default {
   title: 'TagInput',
   component: TagInput,
-} as ComponentMeta<typeof TagInput>;
+} as Meta<typeof TagInput>;
 
-const Template: ComponentStory<typeof TagInput> = (args) => {
+const Template: StoryFn<typeof TagInput> = (args) => {
   const [value, setValue] = useState<string>('');
   const onChangeText = (inputValue: string) => {
     setValue(inputValue);

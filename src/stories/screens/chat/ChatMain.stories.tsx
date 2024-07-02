@@ -1,18 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { ChatMainScreen } from 'src/routes/root/chat/ChatMainScreen';
 
 export default {
   title: 'ChatMain',
   component: ChatMainScreen,
-  parameter: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof ChatMainScreen>;
+} as Meta<typeof ChatMainScreen>;
 
-const Template: ComponentStory<typeof ChatMainScreen> = () => (
   <ChatMainScreen />
+const Template: StoryFn<typeof ChatMainScreen> = () => (
 );
 
 export const story = Template.bind({});

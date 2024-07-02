@@ -1,15 +1,14 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { WithdrawFeedbackScreen } from 'src/routes/root/my-info/WithdrawScreen/WithdrawFeedbackScreen';
 
 export default {
   title: 'WithdrawFeedbackScreen',
   component: WithdrawFeedbackScreen,
-} as ComponentMeta<typeof WithdrawFeedbackScreen>;
+} as Meta<typeof WithdrawFeedbackScreen>;
 
-const Template: ComponentStory<typeof WithdrawFeedbackScreen> = () => (
   <WithdrawFeedbackScreen />
 );
+const Template: StoryFn<typeof WithdrawFeedbackScreen> = () => {
 
 export const story = Template.bind({});
 

@@ -1,21 +1,14 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import React from 'react';
+import { Meta, StoryFn } from '@storybook/react';
 import { SwitchDetailScreen } from 'src/routes/root/home/SwitchDetailScreen';
 
 export default {
   title: 'SwitchDetail',
   component: SwitchDetailScreen,
-  parameters: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof SwitchDetailScreen>;
-
-const Template: ComponentStory<typeof SwitchDetailScreen> = () => (
   <SwitchDetailScreen />
 );
+} as Meta<typeof SwitchDetailScreen>;
 
+const Template: StoryFn<typeof SwitchDetailScreen> = () => {
 export const story = Template.bind({});
 
 story.storyName = 'default';

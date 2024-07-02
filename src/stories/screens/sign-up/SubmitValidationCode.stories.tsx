@@ -1,15 +1,14 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { SubmitValidationCode } from 'src/routes/sign/sign-up/SubmitValidationCode';
 
 export default {
   title: 'SubmitValidationCode',
   component: SubmitValidationCode,
-} as ComponentMeta<typeof SubmitValidationCode>;
+} as Meta<typeof SubmitValidationCode>;
 
-const Template: ComponentStory<typeof SubmitValidationCode> = () => (
   <SubmitValidationCode />
 );
+const Template: StoryFn<typeof SubmitValidationCode> = () => {
 
 export const story = Template.bind({});
 

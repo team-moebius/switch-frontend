@@ -1,15 +1,13 @@
-import React from 'react';
-import { ComponentStory } from '@storybook/react';
-import { RegisterMain } from 'src/routes/root/register';
-import { SubmitValidationCode } from 'src/routes/sign/sign-up/SubmitValidationCode';
+import { StoryFn, Meta } from '@storybook/react';
+import { RegisterFormScreen } from 'src/routes/root/register/RegisterFormScreen';
 
 export default {
-  title: 'RegisterMain',
-  component: RegisterMain,
-};
+  title: 'RegisterForm',
+  component: RegisterFormScreen,
+} as Meta<typeof RegisterFormScreen>;
 
-const Template: ComponentStory<typeof SubmitValidationCode> = () => (
-  <RegisterMain />
+const Template: StoryFn<typeof RegisterFormScreen> = () => (
+  <RegisterFormScreen />
 );
 
 export const story = Template.bind({});

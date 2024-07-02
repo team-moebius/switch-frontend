@@ -1,14 +1,13 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { FavoriteMainScreen } from 'src/routes/root/favorite/FavoriteMainScreen';
 
 export default {
   title: 'FavoriteMainScreen',
   component: FavoriteMainScreen,
-} as ComponentMeta<typeof FavoriteMainScreen>;
+} as Meta<typeof FavoriteMainScreen>;
 
-const Template: ComponentStory<typeof FavoriteMainScreen> = () => (
   <FavoriteMainScreen />
+const Template: StoryFn<typeof FavoriteMainScreen> = () => (
 );
 
 export const story = Template.bind({});

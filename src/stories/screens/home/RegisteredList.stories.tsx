@@ -1,17 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { RegisteredListScreen } from 'src/routes/root/home/RegisteredListScreen';
 
 export default {
   title: 'RegisteredList',
   component: RegisteredListScreen,
-  parameters: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof RegisteredListScreen>;
+} as Meta<typeof RegisteredListScreen>;
 
-const Template: ComponentStory<typeof RegisteredListScreen> = () => (
+const Template: StoryFn<typeof RegisteredListScreen> = () => (
   <RegisteredListScreen />
 );
 

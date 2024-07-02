@@ -1,20 +1,14 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
-import React from 'react';
+import { Meta, StoryFn } from '@storybook/react';
 import { HomeMainScreen } from 'src/routes/root/home/HomeMainScreen';
 
 export default {
   title: 'HomeMain',
   component: HomeMainScreen,
-  parameters: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof HomeMainScreen>;
+} as Meta<typeof HomeMainScreen>;
 
-const Template: ComponentStory<typeof HomeMainScreen> = () => (
   <HomeMainScreen />
 );
+const Template: StoryFn<typeof HomeMainScreen> = () => {
 
 export const story = Template.bind({});
 

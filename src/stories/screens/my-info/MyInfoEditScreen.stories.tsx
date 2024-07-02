@@ -1,15 +1,14 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { MyInfoEditScreen } from 'src/routes/root/my-info/MyInfoEditScreen';
 
 export default {
   title: 'MyInfoEditScreen',
   component: MyInfoEditScreen,
-} as ComponentMeta<typeof MyInfoEditScreen>;
+} as Meta<typeof MyInfoEditScreen>;
 
-const Template: ComponentStory<typeof MyInfoEditScreen> = () => (
   <MyInfoEditScreen />
 );
+const Template: StoryFn<typeof MyInfoEditScreen> = () => {
 
 export const story = Template.bind({});
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { ImageCard } from 'src/components/molecule';
 import { FlatList, TouchableOpacity } from 'react-native';
 import { Flexbox } from 'src/components/atom';
@@ -7,9 +7,9 @@ import { Flexbox } from 'src/components/atom';
 export default {
   title: 'ImageCard',
   component: ImageCard,
-} as ComponentMeta<typeof ImageCard>;
+} as Meta<typeof ImageCard>;
 
-const Template: ComponentStory<typeof ImageCard> = (args) => {
+const Template: StoryFn<typeof ImageCard> = (args) => {
   const DATA = [
     {
       desc: '서울 천왕동',
