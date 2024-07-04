@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { ChattingListItem } from 'src/components/molecule';
 
 export default {
   title: 'ChattingListItem',
   component: ChattingListItem,
-} as ComponentMeta<typeof ChattingListItem>;
+} as Meta<typeof ChattingListItem>;
 
-const Template: ComponentStory<typeof ChattingListItem> = (args) => (
+const Template: StoryFn<typeof ChattingListItem> = (args) => (
   <ChattingListItem {...args} />
 );
 

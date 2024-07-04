@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { NotiListItem } from 'src/components/molecule';
 
 export default {
   title: 'NotiListItem',
   component: NotiListItem,
-} as ComponentMeta<typeof NotiListItem>;
+} as Meta<typeof NotiListItem>;
 
-const Template: ComponentStory<typeof NotiListItem> = (args) => (
+const Template: StoryFn<typeof NotiListItem> = (args) => (
   <NotiListItem {...args} />
 );
 

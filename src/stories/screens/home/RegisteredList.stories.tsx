@@ -1,19 +1,20 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Meta, StoryFn } from '@storybook/react';
+import { HomeRouteParamList } from 'src/routes/root/home';
 import { RegisteredListScreen } from 'src/routes/root/home/RegisteredListScreen';
 
 export default {
   title: 'RegisteredList',
   component: RegisteredListScreen,
-  parameters: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof RegisteredListScreen>;
+} as Meta<typeof RegisteredListScreen>;
 
-const Template: ComponentStory<typeof RegisteredListScreen> = () => (
-  <RegisteredListScreen />
-);
+const Template: StoryFn<typeof RegisteredListScreen> = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<HomeRouteParamList, 'RegisteredList'>>();
+  const route = useRoute<RouteProp<HomeRouteParamList, 'RegisteredList'>>();
+  return <RegisteredListScreen navigation={navigation} route={route} />;
+};
 
 export const story = Template.bind({});
 

@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Image } from 'src/components/atom';
 
 export default {
   title: 'Image',
   component: Image,
-} as ComponentMeta<typeof Image>;
+} as Meta<typeof Image>;
 
-const Template: ComponentStory<typeof Image> = (args) => <Image {...args} />;
+const Template: StoryFn<typeof Image> = (args) => <Image {...args} />;
 
 export const story = Template.bind({});
 

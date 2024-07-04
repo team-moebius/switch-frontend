@@ -4,7 +4,7 @@ import { PreferredAddressScreen } from './PreferredAddressScreen';
 import { ScreenHeader } from 'src/components/molecule';
 
 type RegisterRouteParamList = {
-  RegisterMain: RegisterFormProps;
+  RegisterForm: RegisterFormProps;
   PreferredAddress: undefined;
 };
 
@@ -14,7 +14,7 @@ const RegisterRoute = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name='RegisterMain'
+        name='RegisterForm'
         component={RegisterFormScreen}
         initialParams={{ initialData: undefined }}
         options={{

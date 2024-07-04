@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Textarea } from 'src/components/atom';
 
 export default {
   title: 'Textarea',
   component: Textarea,
-} as ComponentMeta<typeof Textarea>;
+} as Meta<typeof Textarea>;
 
-const Template: ComponentStory<typeof Textarea> = (args) => {
+const Template: StoryFn<typeof Textarea> = (args) => {
   return <Textarea {...args} />;
 };
 

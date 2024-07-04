@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Select } from 'src/components/atom';
 
 export default {
   title: 'Select',
   component: Select,
-} as ComponentMeta<typeof Select>;
+} as Meta<typeof Select>;
 
-const Template: ComponentStory<typeof Select> = (args) => {
+const Template: StoryFn<typeof Select> = (args) => {
   const [value, setValue] = useState(args.value);
   return <Select {...args} value={value} onPressItem={setValue} />;
 };

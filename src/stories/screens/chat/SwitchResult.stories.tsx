@@ -1,17 +1,12 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { SwitchResultScreen } from 'src/routes/root/chat/SwitchResultScreen';
 
 export default {
   title: 'SwitchResult',
   component: SwitchResultScreen,
-  parameter: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof SwitchResultScreen>;
+} as Meta<typeof SwitchResultScreen>;
 
-const Template: ComponentStory<typeof SwitchResultScreen> = () => (
+const Template: StoryFn<typeof SwitchResultScreen> = () => (
   <SwitchResultScreen />
 );
 

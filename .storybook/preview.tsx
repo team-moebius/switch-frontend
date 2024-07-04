@@ -1,9 +1,9 @@
 import React from 'react';
-import type { Preview } from '@storybook/react';
+import { type Preview } from '@storybook/react';
 import { ThemeContextProvider } from '../src/context/theme';
 import { INITIAL_VIEWPORTS } from '@storybook/addon-viewport';
-import { QueryClientProvider, QueryCache, QueryClient } from 'react-query';
-import { ReactQueryDevtools } from 'react-query/devtools';
+import { QueryClientProvider, QueryClient } from 'react-query';
+import { NavigationDecorator } from './NavigationDecorator';
 
 const queryClient = new QueryClient();
 
@@ -23,15 +23,32 @@ const preview: Preview = {
   },
   decorators: [
     (Story, context) => {
+      const fileName = context.parameters.fileName;
+      const isScreen = fileName.includes('screens');
+
+      if (isScreen) {
+        return (
+          <QueryClientProvider client={queryClient}>
+            <ThemeContextProvider>
+              <style>
+                {`html, body, #storybook-root {
+            height: 100%; #storybook-root > div {
+                height: 100%;
+              }}`}
+              </style>
+              <NavigationDecorator Story={Story} />
+            </ThemeContextProvider>
+          </QueryClientProvider>
+        );
+      }
       return (
         <QueryClientProvider client={queryClient}>
           <ThemeContextProvider>
             <style>
               {`html, body, #storybook-root {
-              height: 100%;`}
+          height: 100%; }`}
             </style>
             <Story {...context} />
-            {/* <ReactQueryDevtools /> */}
           </ThemeContextProvider>
         </QueryClientProvider>
       );

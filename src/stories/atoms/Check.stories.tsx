@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Check } from 'src/components/atom';
 
 export default {
   title: 'Check',
   component: Check,
-} as ComponentMeta<typeof Check>;
+} as Meta<typeof Check>;
 
-const Template: ComponentStory<typeof Check> = (args) => {
+const Template: StoryFn<typeof Check> = (args) => {
   return <Check {...args} />;
 };
 

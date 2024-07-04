@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Field } from 'src/components/molecule';
 
 import { Box } from 'src/components/atom';
@@ -7,7 +7,7 @@ import { Box } from 'src/components/atom';
 export default {
   title: 'Field',
   component: Field,
-} as ComponentMeta<typeof Field>;
+} as Meta<typeof Field>;
 
 type Region = '서울' | '대구' | '부산';
 type Person = {
@@ -19,7 +19,7 @@ type Person = {
 };
 
 const WIDTH = 300;
-const Template: ComponentStory<typeof Field> = () => {
+const Template: StoryFn<typeof Field> = () => {
   const [state, setState] = useState<Person>({
     name: '',
     region: '서울',

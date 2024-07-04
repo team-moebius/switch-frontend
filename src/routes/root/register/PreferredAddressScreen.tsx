@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Flexbox, Select, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 import { RegisterRouteParamList } from '.';
@@ -83,7 +83,7 @@ const PreferredAddressScreen = ({
               onPress={() => {
                 if (city.length <= 0 || dong.length <= 0)
                   return Alert.alert('알림', '위치를 정확히 입력해 주세요.');
-                navigation.navigate('RegisterMain', {
+                navigation.navigate('RegisterForm', {
                   getAddress: fullAddress,
                 });
               }}

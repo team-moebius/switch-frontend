@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Radio } from 'src/components/atom';
 
 export default {
   title: 'Radio',
   component: Radio,
-} as ComponentMeta<typeof Radio>;
+} as Meta<typeof Radio>;
 
-const Template: ComponentStory<typeof Radio> = (args) => <Radio {...args} />;
+const Template: StoryFn<typeof Radio> = (args) => <Radio {...args} />;
 
 export const story = Template.bind({});
 
