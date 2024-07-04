@@ -5,16 +5,19 @@ import { createStackNavigator } from '@react-navigation/stack';
 const StoryBookStack = createStackNavigator();
 
 export const NavigationDecorator = ({
-  story,
+  Story,
+  context,
 }: {
-  story: (param: any) => JSX.Element;
+  Story: (param: any) => JSX.Element;
+  context: any;
 }) => {
+  const Renderer = () => <Story {...context} />;
   return (
     <NavigationContainer independent={true}>
       <StoryBookStack.Navigator>
         <StoryBookStack.Screen
+          component={Renderer}
           name='MyStorybookScreen'
-          component={story}
           options={{ header: () => null }}
         />
       </StoryBookStack.Navigator>
