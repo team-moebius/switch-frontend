@@ -187,6 +187,7 @@ const HomeRoute = ({
               header: (props) => {
                 return <ScreenHeader {...props} center={'신고하기'} />;
               },
+              // presentation:'modal'
             }}
           />
           <Stack.Screen
@@ -289,7 +290,7 @@ const HomeRoute = ({
         onEdit={() => {
           setMyItemModalVisible(false);
           modalNavigation.navigate('EditItem', {
-            screen: 'RegisterMain',
+            screen: 'RegisterForm',
             params: { initialData: undefined },
           });
         }}

@@ -83,7 +83,7 @@ const PreferredAddressScreen = ({
               onPress={() => {
                 if (city.length <= 0 || dong.length <= 0)
                   return Alert.alert('알림', '위치를 정확히 입력해 주세요.');
-                navigation.navigate('RegisterMain', {
+                navigation.navigate('RegisterForm', {
                   getAddress: fullAddress,
                 });
               }}

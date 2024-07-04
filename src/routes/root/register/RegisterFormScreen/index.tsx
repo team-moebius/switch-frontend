@@ -72,7 +72,7 @@ const defaultForm = {
 const RegisterFormScreen = ({
   navigation,
   route,
-}: StackScreenProps<RegisterRouteParamList, 'RegisterMain'>) => {
+}: StackScreenProps<RegisterRouteParamList, 'RegisterForm'>) => {
   /* route params */
   const { initialData: paramsData, getAddress } = route.params;
   const initialData: RegisterDto | undefined = paramsData && {
