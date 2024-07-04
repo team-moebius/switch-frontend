@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Box, Button, Flexbox, Select, Typography } from 'src/components/atom';
 import { ScreenWrapper } from 'src/components/template';
 import { RegisterRouteParamList } from '.';
