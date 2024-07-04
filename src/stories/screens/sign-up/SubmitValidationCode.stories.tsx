@@ -2,7 +2,8 @@ import { StoryFn, Meta } from '@storybook/react';
 import { SubmitValidationCode } from 'src/routes/sign/sign-up/SubmitValidationCode';
 import { SignUpRouteParamList } from 'src/routes/sign/sign-up';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { mockRoute } from 'src/utils/mockRoute';
 
 export default {
   title: 'SubmitValidationCode',
@@ -14,10 +15,16 @@ const Template: StoryFn<typeof SubmitValidationCode> = () => {
     useNavigation<
       StackNavigationProp<SignUpRouteParamList, 'SubmitValidationCode'>
     >();
-  const route =
-    useRoute<RouteProp<SignUpRouteParamList, 'SubmitValidationCode'>>();
 
-  return <SubmitValidationCode navigation={navigation} route={route} />;
+  return (
+    <SubmitValidationCode
+      navigation={navigation}
+      route={mockRoute<SignUpRouteParamList, 'SubmitValidationCode'>(
+        { phoneNumber: '01012345678' },
+        'SubmitValidationCode'
+      )}
+    />
+  );
 };
 
 export const story = Template.bind({});
