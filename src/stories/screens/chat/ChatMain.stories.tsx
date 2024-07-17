@@ -1,19 +1,21 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { Meta, StoryFn } from '@storybook/react';
+import { ChatRouteParamList } from 'src/routes/root/chat';
 import { ChatMainScreen } from 'src/routes/root/chat/ChatMainScreen';
 
 export default {
   title: 'ChatMain',
   component: ChatMainScreen,
-  parameter: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof ChatMainScreen>;
+} as Meta<typeof ChatMainScreen>;
 
-const Template: ComponentStory<typeof ChatMainScreen> = () => (
-  <ChatMainScreen />
-);
+const Template: StoryFn<typeof ChatMainScreen> = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<ChatRouteParamList, 'ChatMain'>>();
+  const route = useRoute<RouteProp<ChatRouteParamList, 'ChatMain'>>();
+
+  return <ChatMainScreen navigation={navigation} route={route} />;
+};
 
 export const story = Template.bind({});
 

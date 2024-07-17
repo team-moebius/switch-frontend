@@ -1,20 +1,20 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { RouteProp, useNavigation, useRoute } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
+import { StoryFn, Meta } from '@storybook/react';
+import { SignUpRouteParamList } from 'src/routes/sign/sign-up';
 import { SubmitPhoneNumber } from 'src/routes/sign/sign-up/SubmitPhoneNumber';
 
 export default {
   title: 'SubmitPhoneNumber',
   component: SubmitPhoneNumber,
-  parameters: {
-    viewport: {
-      defaultViewport: 'iphone6',
-    },
-  },
-} as ComponentMeta<typeof SubmitPhoneNumber>;
+} as Meta<typeof SubmitPhoneNumber>;
 
-const Template: ComponentStory<typeof SubmitPhoneNumber> = () => (
-  <SubmitPhoneNumber navigation={{}} />
-);
+const Template: StoryFn<typeof SubmitPhoneNumber> = () => {
+  const navigation =
+    useNavigation<StackNavigationProp<SignUpRouteParamList, 'SubmitPhone'>>();
+  const route = useRoute<RouteProp<SignUpRouteParamList, 'SubmitPhone'>>();
+  return <SubmitPhoneNumber navigation={navigation} route={route} />;
+};
 
 export const story = Template.bind({});
 

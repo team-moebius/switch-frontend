@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import { UserSummary } from 'src/components/molecule';
 
 export default {
   title: 'UserSummary',
   component: UserSummary,
-} as ComponentMeta<typeof UserSummary>;
+} as Meta<typeof UserSummary>;
 
-const Template: ComponentStory<typeof UserSummary> = (args) => (
+const Template: StoryFn<typeof UserSummary> = (args) => (
   <UserSummary {...args} />
 );
 

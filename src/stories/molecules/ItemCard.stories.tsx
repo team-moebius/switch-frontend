@@ -1,13 +1,13 @@
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import React from 'react';
 import { ItemCard } from 'src/components/molecule/ItemCard';
 
 export default {
   title: 'ItemCard',
   component: ItemCard,
-} as ComponentMeta<typeof ItemCard>;
+} as Meta<typeof ItemCard>;
 
-const Template: ComponentStory<typeof ItemCard> = (args) => {
+const Template: StoryFn<typeof ItemCard> = (args) => {
   return <ItemCard {...args} />;
 };
 

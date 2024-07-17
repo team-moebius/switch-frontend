@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Tag } from 'src/components/atom';
 
 export default {
   title: 'Tag',
   component: Tag,
-} as ComponentMeta<typeof Tag>;
+} as Meta<typeof Tag>;
 
-const Template: ComponentStory<typeof Tag> = (args) => {
+const Template: StoryFn<typeof Tag> = (args) => {
   const onDeleteHandler = () => {
     console.log('delete');
   };

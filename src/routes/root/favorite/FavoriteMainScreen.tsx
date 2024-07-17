@@ -10,6 +10,8 @@ import { ImageCard, PressableIcon } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { Pressable } from 'react-native';
 import { itemJustifyStyle } from 'src/components/molecule/TradingListItem';
+import { StackScreenProps } from '@react-navigation/stack';
+import { FavoriteRouteParamList } from '.';
 
 const GridItem = ({
   item,
@@ -112,7 +114,9 @@ const ListItem = ({
   );
 };
 
-const FavoriteMainScreen = ({ navigation }) => {
+const FavoriteMainScreen = ({
+  navigation,
+}: StackScreenProps<FavoriteRouteParamList, 'FavoriteMain'>) => {
   const [type, setType] = useState<ListViewType>('grid');
 
   const loadMoreData = useCallback(() => {

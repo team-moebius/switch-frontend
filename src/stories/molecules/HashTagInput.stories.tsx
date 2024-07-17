@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { HashTagInput } from 'src/components/molecule';
@@ -8,9 +8,9 @@ import { TagProps } from 'src/components/atom/Tag';
 export default {
   title: 'HashTagInput',
   component: HashTagInput,
-} as ComponentMeta<typeof HashTagInput>;
+} as Meta<typeof HashTagInput>;
 
-const Template: ComponentStory<typeof HashTagInput> = (args) => {
+const Template: StoryFn<typeof HashTagInput> = (args) => {
   const [value, setValue] = useState<string>('');
   const [showMore, setShowMore] = useState<boolean>(false);
   const slicedHashTags = args.hashTags.slice(0, 3);

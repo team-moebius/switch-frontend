@@ -1,15 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Checkbox } from 'src/components/molecule';
 
 export default {
   title: 'Checkbox',
   component: Checkbox,
-} as ComponentMeta<typeof Checkbox>;
+} as Meta<typeof Checkbox>;
 
-const Template: ComponentStory<typeof Checkbox> = (args) => (
-  <Checkbox {...args} />
-);
+const Template: StoryFn<typeof Checkbox> = (args) => <Checkbox {...args} />;
 
 export const story = Template.bind({});
 

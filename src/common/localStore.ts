@@ -2,7 +2,6 @@ import Storage from 'react-native-storage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const DARK_MODE = 'darkMode';
-const FEED_RANGE = 'feedRange';
 
 const storage = new Storage({
   size: 1000,
@@ -21,4 +20,4 @@ const localStore = {
   removeData: removeStorage,
 };
 
-export { localStore, DARK_MODE, FEED_RANGE };
+export { localStore, DARK_MODE };

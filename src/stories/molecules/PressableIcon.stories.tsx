@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { PressableIcon } from 'src/components/molecule';
 
 export default {
   title: 'PressableIcon',
   component: PressableIcon,
-} as ComponentMeta<typeof PressableIcon>;
+} as Meta<typeof PressableIcon>;
 
-const Template: ComponentStory<typeof PressableIcon> = (args) => (
+const Template: StoryFn<typeof PressableIcon> = (args) => (
   <PressableIcon {...args} />
 );
 

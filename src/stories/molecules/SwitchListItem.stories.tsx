@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { SwitchListItem } from 'src/components/molecule';
 
 export default {
   title: 'SwitchListItem',
   component: SwitchListItem,
-} as ComponentMeta<typeof SwitchListItem>;
+} as Meta<typeof SwitchListItem>;
 
-const Template: ComponentStory<typeof SwitchListItem> = (args) => (
+const Template: StoryFn<typeof SwitchListItem> = (args) => (
   <SwitchListItem {...args} />
 );
 
