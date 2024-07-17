@@ -20,7 +20,7 @@
     "@react-navigation/bottom-tabs": "^6.5.8",
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.17",
-    "@team-moebius/api-typescript": "=0.0.25",
+    "@team-moebius/api-typescript": "=0.0.26",
     "dayjs": "^1.11.11",
     "expo": "~51.0.8",
     "expo-application": "~5.9.1",
@@ -83,5 +83,6 @@
     "tsconfig-paths-webpack-plugin": "^4.0.1",
     "typescript": "~5.3.3"
   },
-  "private": true
+  "private": true,
+  "packageManager": "yarn@1.22.21+sha1.1959a18351b811cdeedbd484a8f86c3cc3bbaf72"
 }
