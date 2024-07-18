@@ -101,6 +101,7 @@ const MyInfoMainScreen = ({
         title={item.name ?? ''}
         count={item.waitingCount}
         imageSrc={item.images ? item.images[0] : ''}
+        status={item.status}
       />
     );
   }, []);
@@ -166,7 +167,7 @@ const MyInfoMainScreen = ({
               size={'medium'}
               onPress={() => handleButtonPress(0)}
             >
-              <Typography fontSize={17}>진행중</Typography>
+              <Typography fontSize={17}>대기중</Typography>
             </Button>
           </Flexbox>
           <Flexbox width={'50%'} justifyContent='center'>
