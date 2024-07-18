@@ -1,3 +1,4 @@
+import { ItemResponseStatusEnum } from '@team-moebius/api-typescript';
 import { Flexbox, Tag } from 'src/components/atom';
 import { ImageCard } from 'src/components/molecule';
 
@@ -5,9 +6,15 @@ interface ItemListCardProps {
   count?: number;
   title: string;
   imageSrc?: string;
+  status?: ItemResponseStatusEnum;
 }
 
-const ItemListCard = ({ count, title, imageSrc }: ItemListCardProps) => {
+const ItemListCard = ({
+  count,
+  title,
+  imageSrc,
+  status,
+}: ItemListCardProps) => {
   return (
     <Flexbox.Item flex={1} position='relative' padding={10}>
       {!!count && (
@@ -19,11 +26,9 @@ const ItemListCard = ({ count, title, imageSrc }: ItemListCardProps) => {
           justifyContent='center'
           alignItems='center'
         >
-          <Tag
-            disabled={false}
-            color={'#FFFFFF'}
-            backgroundColor={'#21BD9E'}
-          >{`+${count}`}</Tag>
+          <Tag disabled={false} color={'#FFFFFF'} backgroundColor={'#21BD9E'}>
+            {status === 'IN_PROGRESS' ? 'ing' : `+${count}`}
+          </Tag>
         </Flexbox>
       )}
       <ImageCard
