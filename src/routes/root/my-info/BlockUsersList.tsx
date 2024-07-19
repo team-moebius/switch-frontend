@@ -1,5 +1,5 @@
-import { View, Text } from 'react-native';
-import React from 'react';
+import { View, Text, Alert, Pressable } from 'react-native';
+import React, { useCallback } from 'react';
 import { ScreenWrapper } from 'src/components/template';
 import { ListView } from 'src/components/template/ListView';
 import { UserInfoResponse } from '@team-moebius/api-typescript';
@@ -56,29 +56,33 @@ export const mockBlockUserList: Array<BlockUserProp> = [
   },
 ];
 
-  const renderBlockUser = ({ item }: { item: BlockUserProp }) => {
-    const { nickname, block } = item;
-    return (
-      <Box width={'100%'}>
-        <Flexbox justifyContent='space-between' alignItems='center'>
-          <Typography children={nickname ? nickname : ''} fontSize={15} />
-          <Flexbox.Item flex={0.3}>
-            <Button
-              type={block ? 'normal' : 'cancel'}
-              size={'small'}
-              onPress={function (): void {
-                throw new Error('Function not implemented.');
-              }}
-              children={block ? '차단 중' : '차단하기'}
-            />
-          </Flexbox.Item>
-        </Flexbox>
-      </Box>
-    );
-  };
 const BlockUsersList = ({
   navigation,
 }: StackScreenProps<MyInfoParamList, 'BlockUsers'>) => {
+  const renderBlockUser = useCallback(
+    ({ item }: { item: BlockUserProp }) => {
+      const { nickname, block } = item;
+      return (
+        <Box width={'100%'}>
+          <Pressable onPress={() => navigation.navigate('MyInfoMain')}>
+            <Flexbox justifyContent='space-between' alignItems='center'>
+              <Typography children={nickname ? nickname : ''} fontSize={18} />
+              <Flexbox.Item flex={0.3}>
+                <Button
+                  type={block ? 'normal' : 'cancel'}
+                  size={'medium'}
+                  onPress={() => Alert.alert(`${block}`)}
+                  children={block ? '차단 중' : '차단하기'}
+                />
+              </Flexbox.Item>
+            </Flexbox>
+          </Pressable>
+        </Box>
+      );
+    },
+    [navigation]
+  );
+
   const flatListProps = useFlatList<BlockUserProp>({
     type: 'list',
     onEndReached: () => {},
@@ -87,7 +91,7 @@ const BlockUsersList = ({
 
   return (
     <ScreenWrapper>
-      <Flexbox height={'100%'}>
+      <Flexbox height={'100%'} padding={10}>
         <ListView<BlockUserProp> data={mockBlockUserList} {...flatListProps} />
       </Flexbox>
     </ScreenWrapper>
