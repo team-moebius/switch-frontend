@@ -48,7 +48,6 @@
     "@babel/plugin-transform-class-properties": "^7.24.7",
     "@babel/plugin-transform-private-methods": "^7.24.7",
     "@babel/plugin-transform-private-property-in-object": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
     "@storybook/addon-essentials": "^7.0.2",
     "@storybook/addon-interactions": "^7.0.2",
     "@storybook/addon-links": "^7.0.2",
