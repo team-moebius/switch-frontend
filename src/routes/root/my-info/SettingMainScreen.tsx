@@ -141,7 +141,11 @@ const SettingMainScreen = ({
       )}
 
       <Separator width={'100%'} />
+      <SettingButton onPress={() => navigation.navigate('BlockUsers')}>
+        차단 회원 관리
+      </SettingButton>
 
+      <Separator width={'100%'} />
       <SettingButton onPress={() => navigation.navigate('Version')}>
         버전
       </SettingButton>
