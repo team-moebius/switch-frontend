@@ -5,6 +5,8 @@ import { ListView } from 'src/components/template/ListView';
 import { UserInfoResponse } from '@team-moebius/api-typescript';
 import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { useFlatList } from 'src/hooks/useFlatList';
+import { StackScreenProps } from '@react-navigation/stack';
+import { MyInfoParamList } from '.';
 
 type BlockUserProp = UserInfoResponse & { block: boolean };
 export const mockBlockUserList: Array<BlockUserProp> = [
@@ -54,7 +56,6 @@ export const mockBlockUserList: Array<BlockUserProp> = [
   },
 ];
 
-const BlockUsersList = () => {
   const renderBlockUser = ({ item }: { item: BlockUserProp }) => {
     const { nickname, block } = item;
     return (
@@ -75,6 +76,9 @@ const BlockUsersList = () => {
       </Box>
     );
   };
+const BlockUsersList = ({
+  navigation,
+}: StackScreenProps<MyInfoParamList, 'BlockUsers'>) => {
   const flatListProps = useFlatList<BlockUserProp>({
     type: 'list',
     onEndReached: () => {},
