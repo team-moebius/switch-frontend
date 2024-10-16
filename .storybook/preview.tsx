@@ -36,7 +36,7 @@ const preview: Preview = {
                 height: 100%;
               }}`}
               </style>
-              <NavigationDecorator Story={Story} />
+              <NavigationDecorator Story={Story} context={context} />
             </ThemeContextProvider>
           </QueryClientProvider>
         );

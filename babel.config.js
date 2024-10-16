@@ -1,15 +1,23 @@
 module.exports = function (api) {
-  api.cache(true);
-  return {
-    presets: [
-      'module:metro-react-native-babel-preset',
-      '@babel/preset-env',
-      'babel-preset-expo',
-    ],
-    plugins: [
+  const isStorybook = api.env('storybook');
+
+  if (!isStorybook) api.cache(true);
+
+  const presets = ['babel-preset-expo'];
+
+  const plugins = [];
+
+  if (isStorybook) {
+    presets.push('module:metro-react-native-babel-preset');
+    plugins.push(
       ['@babel/plugin-transform-class-properties'],
       ['@babel/plugin-transform-private-methods'],
-      ['@babel/plugin-transform-private-property-in-object'],
-    ],
+      ['@babel/plugin-transform-private-property-in-object']
+    );
+  }
+
+  return {
+    presets,
+    plugins,
   };
 };
