@@ -1,10 +1,7 @@
-import { View, Text, Alert, Pressable } from 'react-native';
-import React, { useCallback } from 'react';
+import { Alert, Pressable, ScrollView } from 'react-native';
 import { ScreenWrapper } from 'src/components/template';
-import { ListView } from 'src/components/template/ListView';
 import { UserInfoResponse } from '@team-moebius/api-typescript';
 import { Box, Button, Flexbox, Typography } from 'src/components/atom';
-import { useFlatList } from 'src/hooks/useFlatList';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '.';
 
@@ -54,45 +51,163 @@ export const mockBlockUserList: Array<BlockUserProp> = [
     switchAbortCount: 3,
     score: 4,
   },
+  {
+    nickname: '첫 번째',
+    block: true,
+    id: 5,
+    phone: '01012341234',
+    email: 'example1@gmail.com',
+    introduction: 'hkhkhkhkhkhk',
+    switchCount: 4,
+    switchAbortCount: 0,
+    score: 3,
+  },
+  {
+    nickname: '두 번째',
+    block: false,
+    id: 6,
+    phone: '01012343311',
+    email: 'example2@gmail.com',
+    introduction: 'hkhkuuuuhkhkhkhk',
+    switchCount: 1,
+    switchAbortCount: 3,
+    score: 2.5,
+  },
+  {
+    nickname: '세 번째',
+    block: true,
+    id: 7,
+    phone: '01033331234',
+    email: 'example3@gmail.com',
+    introduction: 'hkhkhkhoijojkhkhk',
+    switchCount: 8,
+    switchAbortCount: 1,
+    score: 1.5,
+  },
+  {
+    nickname: '네 번째',
+    block: true,
+    id: 8,
+    phone: '01000000000',
+    email: 'example4@gmail.com',
+    introduction: 'hkhkkhkhk',
+    switchCount: 5,
+    switchAbortCount: 3,
+    score: 4,
+  },
+  {
+    nickname: '첫 번째',
+    block: true,
+    id: 9,
+    phone: '01012341234',
+    email: 'example1@gmail.com',
+    introduction: 'hkhkhkhkhkhk',
+    switchCount: 4,
+    switchAbortCount: 0,
+    score: 3,
+  },
+  {
+    nickname: '두 번째',
+    block: false,
+    id: 10,
+    phone: '01012343311',
+    email: 'example2@gmail.com',
+    introduction: 'hkhkuuuuhkhkhkhk',
+    switchCount: 1,
+    switchAbortCount: 3,
+    score: 2.5,
+  },
+  {
+    nickname: '세 번째',
+    block: true,
+    id: 11,
+    phone: '01033331234',
+    email: 'example3@gmail.com',
+    introduction: 'hkhkhkhoijojkhkhk',
+    switchCount: 8,
+    switchAbortCount: 1,
+    score: 1.5,
+  },
+  {
+    nickname: '네 번째',
+    block: true,
+    id: 12,
+    phone: '01000000000',
+    email: 'example4@gmail.com',
+    introduction: 'hkhkkhkhk',
+    switchCount: 5,
+    switchAbortCount: 3,
+    score: 4,
+  },
+  {
+    nickname: '네 번째',
+    block: true,
+    id: 13,
+    phone: '01000000000',
+    email: 'example4@gmail.com',
+    introduction: 'hkhkkhkhk',
+    switchCount: 5,
+    switchAbortCount: 3,
+    score: 4,
+  },
+  {
+    nickname: '네 번째',
+    block: true,
+    id: 14,
+    phone: '01000000000',
+    email: 'example4@gmail.com',
+    introduction: 'hkhkkhkhk',
+    switchCount: 5,
+    switchAbortCount: 3,
+    score: 4,
+  },
+  {
+    nickname: '네 번째',
+    block: true,
+    id: 15,
+    phone: '01000000000',
+    email: 'example4@gmail.com',
+    introduction: 'hkhkkhkhk',
+    switchCount: 5,
+    switchAbortCount: 3,
+    score: 4,
+  },
 ];
 
 const BlockUsersList = ({
   navigation,
 }: StackScreenProps<MyInfoParamList, 'BlockUsers'>) => {
-  const renderBlockUser = useCallback(
-    ({ item }: { item: BlockUserProp }) => {
-      const { nickname, block } = item;
-      return (
-        <Box width={'100%'}>
-          <Pressable onPress={() => navigation.navigate('MyInfoMain')}>
-            <Flexbox justifyContent='space-between' alignItems='center'>
-              <Typography children={nickname ? nickname : ''} fontSize={18} />
-              <Flexbox.Item flex={0.3}>
-                <Button
-                  type={block ? 'normal' : 'cancel'}
-                  size={'medium'}
-                  onPress={() => Alert.alert(`${block}`)}
-                  children={block ? '차단 중' : '차단하기'}
-                />
-              </Flexbox.Item>
-            </Flexbox>
-          </Pressable>
-        </Box>
-      );
-    },
-    [navigation]
-  );
-
-  const flatListProps = useFlatList<BlockUserProp>({
-    type: 'list',
-    onEndReached: () => {},
-    renderItem: renderBlockUser,
-  });
+  const BlockUser = ({ item }: { item: BlockUserProp }) => {
+    const { nickname, block } = item;
+    return (
+      <Box width={'100%'}>
+        <Pressable onPress={() => navigation.navigate('MyInfoMain')}>
+          <Flexbox justifyContent='space-between' alignItems='center'>
+            <Typography children={nickname ? nickname : ''} fontSize={18} />
+            <Flexbox.Item flex={0.3}>
+              <Button
+                type={block ? 'normal' : 'cancel'}
+                size={'medium'}
+                onPress={() => Alert.alert(`${block}`)}
+                children={block ? '차단 중' : '차단하기'}
+              />
+            </Flexbox.Item>
+          </Flexbox>
+        </Pressable>
+      </Box>
+    );
+  };
 
   return (
     <ScreenWrapper>
       <Flexbox height={'100%'} padding={10}>
-        <ListView<BlockUserProp> data={mockBlockUserList} {...flatListProps} />
+        <ScrollView>
+          <Flexbox gap={15} flexDirection='column'>
+            {mockBlockUserList.map((user) => (
+              <BlockUser item={user} key={user.id} />
+            ))}
+          </Flexbox>
+        </ScrollView>
       </Flexbox>
     </ScreenWrapper>
   );
