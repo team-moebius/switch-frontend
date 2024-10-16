@@ -1,16 +1,21 @@
+import { ScrollView } from 'react-native';
+
 import { Box, Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ScreenWrapper } from 'src/components/template';
+
+import { SwitchDetailView } from './contents/SwitchDetailView';
+import { SwitchDetailViewProps } from './contents/SwitchDetailView';
+
+import { UserContext } from 'src/context/user';
+
+import { HomeRouteParamList } from '..';
+import { StackScreenProps } from '@react-navigation/stack';
 import {
   UserInfoData,
   USERINFO_MOCK,
 } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { SwitchDetailData, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
-import { SwitchDetailView } from './contents/SwitchDetailView';
-import { SwitchDetailViewProps } from './contents/SwitchDetailView';
-import { ScrollView } from 'react-native';
-import { StackScreenProps } from '@react-navigation/stack';
-import { HomeRouteParamList } from '..';
 
 const userDataResolver = ({
   userName,
