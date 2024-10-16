@@ -1,3 +1,4 @@
+import { useCallback, useContext } from 'react';
 import { ScrollView } from 'react-native';
 
 import { Box, Button, Flexbox } from 'src/components/atom';
@@ -58,27 +59,15 @@ SwitchDetailData): SwitchDetailViewProps['itemData'] => {
 const SwitchDetailScreen = ({
   navigation,
 }: StackScreenProps<HomeRouteParamList, 'SwitchDetail'>) => {
-  // 스위치 제안이 안 온 경우 최상위 Flexbox의 pt={0}
+  const { userId } = useContext(UserContext);
 
-  return (
-    <ScreenWrapper>
-      <ScrollView>
-        <Flexbox pt={120} width={'100%'} flexDirection={'column'}>
-          <Flexbox.Item>
-            <Separator width={'100%'} />
-          </Flexbox.Item>
-          <Flexbox.Item width={'100%'} flex={1}>
-            <SwitchDetailView
-              onClickReport={() =>
-                navigation.navigate('Report', {
-                  previousScreen: 'SwitchDetail',
-                })
-              }
-              userData={userDataResolver(USERINFO_MOCK)}
-              itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
-            />
-          </Flexbox.Item>
-          <Separator width={'100%'} />
+  const FooterUI = useCallback(() => {
+    // TODO : 🚨 이 아이템 등록자 달아야 됨
+    if (userId === null) return undefined;
+    if (userId !== '글쓴이') {
+      if (false) {
+        // 스위치 제안을 하지 않았다면
+        return (
           <Flexbox
             width={'100%'}
             alignItems={'center'}
@@ -104,8 +93,10 @@ const SwitchDetailScreen = ({
               </Button>
             </Box>
           </Flexbox>
-          {/*내가 스위치 제안 중인 경우 아래 버튼이 보이게 됩니다 */}
-          {/* <Flexbox
+        );
+      } else {
+        return (
+          <Flexbox
             width={'100%'}
             alignItems={'center'}
             justifyContent={'center'}
@@ -130,34 +121,61 @@ const SwitchDetailScreen = ({
                 제안 취소
               </Button>
             </Box>
-          </Flexbox> */}
-          {/*내가 스위치 제안 받은 경우 아래 버튼이 보이게 됩니다 */}
-          {/* <Flexbox
-            width={'100%'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            flexDirection={'row'}
-            gap={10}
-          >
-            <Box width={'44%'}>
-              <Button
-                type={'normal'}
-                size={'medium'}
-                onPress={() => navigation.navigate('ChatDetail')}
-              >
-                협의
-              </Button>
-            </Box>
-            <Box width={'44%'}>
-              <Button
-                type={'cancel'}
-                size={'medium'}
-                onPress={() => console.debug('스위치 거절')}
-              >
-                거절
-              </Button>
-            </Box>
-          </Flexbox> */}
+          </Flexbox>
+        );
+      }
+    } else if (userId === '글쓴이') {
+      return (
+        <Flexbox
+          width={'100%'}
+          alignItems={'center'}
+          justifyContent={'center'}
+          flexDirection={'row'}
+          gap={10}
+        >
+          <Box width={'44%'}>
+            <Button
+              type={'normal'}
+              size={'medium'}
+              onPress={() => navigation.navigate('ChatDetail')}
+            >
+              협의
+            </Button>
+          </Box>
+          <Box width={'44%'}>
+            <Button
+              type={'cancel'}
+              size={'medium'}
+              onPress={() => console.debug('스위치 거절')}
+            >
+              거절
+            </Button>
+          </Box>
+        </Flexbox>
+      );
+    }
+  }, [userId, navigation]);
+
+  return (
+    <ScreenWrapper>
+      <ScrollView>
+        <Flexbox width={'100%'} flexDirection={'column'}>
+          <Flexbox.Item>
+            <Separator width={'100%'} />
+          </Flexbox.Item>
+          <Flexbox.Item width={'100%'} flex={1}>
+            <SwitchDetailView
+              onClickReport={() =>
+                navigation.navigate('Report', {
+                  previousScreen: 'SwitchDetail',
+                })
+              }
+              userData={userDataResolver(USERINFO_MOCK)}
+              itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
+            />
+          </Flexbox.Item>
+          <Separator width={'100%'} />
+          <FooterUI />
         </Flexbox>
       </ScrollView>
     </ScreenWrapper>
