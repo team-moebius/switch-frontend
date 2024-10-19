@@ -20,7 +20,7 @@ import {
 } from 'src/components/atom';
 import {
   Field,
-  HashTagInput,
+  HashtagInput,
   PressableIcon,
   TagInput,
 } from 'src/components/molecule';
@@ -144,7 +144,7 @@ const RegisterFormScreen = ({
   // 스위치 원하는 물건 종류 input
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
   // 해시 태그 input
-  const [hashTagInput, setHashTagInput] = useState<string>();
+  const [hashtagInput, setHashtagInput] = useState<string>();
 
   const [addressModalVisible, setAddressModalVisible] = useState(false);
   const [attentionModalVisible, setAttentionModalVisible] = useState(false);
@@ -274,16 +274,16 @@ const RegisterFormScreen = ({
     if (hashtags.length >= 5) {
       Alert.alert('알림', '해쉬태그는 5개까지 입력 가능합니다.');
     } else if (
-      hashTagInput &&
-      hashTagInput.length > 0 &&
-      !hashtags.includes(hashTagInput)
+      hashtagInput &&
+      hashtagInput.length > 0 &&
+      !hashtags.includes(hashtagInput)
     ) {
       setData((prev) => ({
         ...prev,
-        hashtags: [...hashtags, `#${hashTagInput}`],
+        hashtags: [...hashtags, `#${hashtagInput}`],
       }));
     }
-    setHashTagInput('');
+    setHashtagInput('');
   };
 
   const onPressCategory = () => {
@@ -444,15 +444,15 @@ const RegisterFormScreen = ({
             onSubmitEditing={onSubmitPreferredCategory}
           />
           <Separator />
-          <HashTagInput
-            value={hashTagInput}
+          <HashtagInput
+            value={hashtagInput}
             width={'100%'}
             itemsWrap={'wrap'}
             name={'tagInput'}
             placeholder={'물품에 대한 해시태그를 작성해주세요.(선택사항)'}
             disabled={false}
-            onChangeText={setHashTagInput}
-            hashTags={hashtags.map((hashtag) => ({
+            onChangeText={setHashtagInput}
+            hashtags={hashtags.map((hashtag) => ({
               children: hashtag,
               color: 'black',
               backgroundColor: 'white',

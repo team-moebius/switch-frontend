@@ -6,7 +6,7 @@ interface SwitchDetailData {
   thumbnails: Array<string>;
   date?: Date;
   description?: string;
-  hashTags: Array<TagProps>;
+  hashtags: Array<TagProps>;
   location?: string;
   categories: Array<TagProps>;
   oppositeCategories: Array<TagProps>;

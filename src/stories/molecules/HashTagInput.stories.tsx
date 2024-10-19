@@ -2,18 +2,18 @@ import React, { useState } from 'react';
 import { Meta, StoryFn } from '@storybook/react';
 
 import { Button, Flexbox, Typography } from 'src/components/atom';
-import { HashTagInput } from 'src/components/molecule';
+import { HashtagInput } from 'src/components/molecule';
 import { TagProps } from 'src/components/atom/Tag';
 
 export default {
-  title: 'HashTagInput',
-  component: HashTagInput,
-} as Meta<typeof HashTagInput>;
+  title: 'HashtagInput',
+  component: HashtagInput,
+} as Meta<typeof HashtagInput>;
 
-const Template: StoryFn<typeof HashTagInput> = (args) => {
+const Template: StoryFn<typeof HashtagInput> = (args) => {
   const [value, setValue] = useState<string>('');
   const [showMore, setShowMore] = useState<boolean>(false);
-  const slicedHashTags = args.hashTags.slice(0, 3);
+  const slicedHashtags = args.hashtags.slice(0, 3);
 
   const onChangeText = (inputValue: string) => {
     setValue(inputValue);
@@ -24,14 +24,14 @@ const Template: StoryFn<typeof HashTagInput> = (args) => {
   };
 
   return (
-    <HashTagInput
+    <HashtagInput
       {...args}
       value={value}
       onChangeText={onChangeText}
-      hashTags={
+      hashtags={
         showMore
-          ? (args.hashTags as TagProps[])
-          : (slicedHashTags as TagProps[])
+          ? (args.hashtags as TagProps[])
+          : (slicedHashtags as TagProps[])
       }
       functionalElement={
         <Flexbox
@@ -41,7 +41,7 @@ const Template: StoryFn<typeof HashTagInput> = (args) => {
           gap={5}
         >
           <Typography color={'black'} fontSize={14}>
-            {args.hashTags.length + '/30'}
+            {args.hashtags.length + '/30'}
           </Typography>
           <Button title='더보기' onPress={showMoreHandler} />
         </Flexbox>
@@ -59,7 +59,7 @@ story.args = {
   itemsWrap: 'wrap',
   name: 'tagInput',
   width: 350,
-  hashTags: [
+  hashtags: [
     {
       children: '#패션',
       backgroundColor: 'transparent',

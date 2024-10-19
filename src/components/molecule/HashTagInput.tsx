@@ -6,11 +6,11 @@ import { WithInputCreator } from '../template';
 import { TagProps } from '../atom/Tag';
 import { WithInputCreatorProps } from '../template/WithInputCreator';
 
-interface HashTagInputProps extends Omit<WithInputCreatorProps, 'items'> {
-  hashTags: TagProps[];
+interface HashtagInputProps extends Omit<WithInputCreatorProps, 'items'> {
+  hashtags: TagProps[];
 }
 
-const HashTagInput = ({
+const HashtagInput = ({
   placeholder,
   name,
   onChangeText,
@@ -21,9 +21,9 @@ const HashTagInput = ({
   itemsPosition: tagsPosition,
   width,
   functionalElement: children,
-  hashTags,
+  hashtags,
   onSubmitEditing,
-}: HashTagInputProps) => {
+}: HashtagInputProps) => {
   return (
     <WithInputCreator
       width={width}
@@ -37,7 +37,7 @@ const HashTagInput = ({
       itemsPosition={tagsPosition}
       onSubmitEditing={onSubmitEditing}
       functionalElement={children}
-      items={hashTags.map(({ children, ...props }, index) => (
+      items={hashtags.map(({ children, ...props }, index) => (
         <Tag key={index + children} {...props}>
           {children}
         </Tag>
@@ -46,4 +46,4 @@ const HashTagInput = ({
   );
 };
 
-export { HashTagInput };
+export { HashtagInput };

@@ -17,7 +17,7 @@ const SwitchDetailView = ({
   itemData,
   onClickReport,
 }: SwitchDetailViewProps) => {
-  const { title, date, description, hashTags, location, thumbnails } = itemData;
+  const { title, date, description, hashtags, location, thumbnails } = itemData;
   const { width: screenWidth } = useWindowDimensions();
 
   return (
@@ -55,7 +55,7 @@ const SwitchDetailView = ({
             desc: description,
             // wantedItem: oppositeCategories.map(({ children }) => children),
             location: location,
-            hashTags: hashTags,
+            hashtags: hashtags,
             // liked: SWITCH_DETAIL_MOCK.liked,
           }}
         />

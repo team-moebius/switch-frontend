@@ -12,7 +12,7 @@ interface ItemCardProps {
     desc?: string;
     wantedItem?: string;
     location?: string;
-    hashTags?: TagProps[];
+    hashtags?: TagProps[];
     liked?: boolean;
   };
   margin?: Margin;
@@ -91,7 +91,7 @@ const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
     desc = '',
     wantedItem = '',
     location = '',
-    hashTags = [],
+    hashtags = [],
     liked = false,
   } = data;
 

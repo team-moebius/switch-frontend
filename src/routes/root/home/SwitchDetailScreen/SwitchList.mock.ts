@@ -24,7 +24,7 @@ type SwitchDetailData = {
   images?: string[];
   wantedItem?: string;
   location?: string;
-  hashTags?: TagProps[];
+  hashtags?: TagProps[];
   liked?: boolean;
 };
 
@@ -430,7 +430,7 @@ const SWITCH_DETAIL_MOCK: SwitchDetailData = {
   ],
   wantedItem: '여성 신발이나 잡화',
   location: '서울 천왕동',
-  hashTags: [
+  hashtags: [
     {
       children: '#키보드',
       backgroundColor: 'transparent',
