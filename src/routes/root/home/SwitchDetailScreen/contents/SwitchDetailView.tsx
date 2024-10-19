@@ -64,7 +64,7 @@ const SwitchDetailView = ({
       <Flexbox.Item width={'100%'}>
         <Flexbox alignItems='center' justifyContent='center'>
           <Pressable onPress={onClickReport}>
-            <Typography fontSize={20} color={'#F1952B'}>
+            <Typography fontSize={20} color={'#d22f26'}>
               신고하기
             </Typography>
           </Pressable>

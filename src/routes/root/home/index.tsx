@@ -20,6 +20,7 @@ import { UserControlModal } from '../chat/content/modals';
 import { CancelEditModal, MyItemOptionModal } from './modals';
 
 import {
+  HEADER_PADDING,
   ScreenHeader,
   ScreenHeaderProps,
 } from 'src/components/molecule/ScreenHeader';
@@ -62,7 +63,7 @@ const HomeRouteHeader = ({
   return (
     <Flexbox
       width={'100%'}
-      padding={16}
+      padding={HEADER_PADDING}
       backgroundColor={color.container_background}
       justifyContent={'space-around'}
       alignItems={'center'}
@@ -168,7 +169,7 @@ const HomeRoute = ({
                     </Flexbox>
                   }
                   right={
-                    <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
                       <PressableIcon
                         size={24}
                         name={'menu'}

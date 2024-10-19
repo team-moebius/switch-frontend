@@ -40,6 +40,10 @@ const typeStyle = StyleSheet.create({
     backgroundColor: '#d1d1d1',
     color: '#3489eb',
   },
+  warning: {
+    backgroundColor: '#d22f26',
+    color: '#ffffff',
+  },
 });
 
 interface ButtonProps {

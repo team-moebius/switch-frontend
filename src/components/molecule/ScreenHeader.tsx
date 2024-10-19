@@ -14,12 +14,14 @@ interface ScreenHeaderProps extends StackHeaderProps {
   isConfirmGoBack?: boolean;
 }
 
+const HEADER_PADDING = 16;
 const DEFAULT_STYLE = {
   width: '100%',
   height: 60,
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
+  padding: HEADER_PADDING,
 } as FlexboxProps;
 
 const ScreenHeader = ({
@@ -44,7 +46,7 @@ const ScreenHeader = ({
       }
     >
       <Flexbox.Item flex={1}>
-        <Flexbox width={'100%'} pl={8}>
+        <Flexbox width={'100%'}>
           {backVisible && navigation.canGoBack() && (
             <Pressable
               onPress={() => {
@@ -74,4 +76,4 @@ const ScreenHeader = ({
   );
 };
 
-export { ScreenHeader, ScreenHeaderProps };
+export { ScreenHeader, ScreenHeaderProps, HEADER_PADDING };
