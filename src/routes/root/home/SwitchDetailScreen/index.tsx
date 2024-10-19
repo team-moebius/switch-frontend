@@ -1,7 +1,7 @@
 import { useCallback, useContext } from 'react';
-import { ScrollView } from 'react-native';
+import { Alert, ScrollView } from 'react-native';
 
-import { Box, Button, Flexbox } from 'src/components/atom';
+import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ScreenWrapper } from 'src/components/template';
 
@@ -65,66 +65,43 @@ const SwitchDetailScreen = ({
     // TODO : 🚨 이 아이템 등록자 달아야 됨
     if (userId === null) return undefined;
     if (userId !== '글쓴이') {
-      if (false) {
-        // 스위치 제안을 하지 않았다면
-        return (
-          <Flexbox
-            width={'100%'}
-            alignItems={'center'}
-            flexDirection={'column'}
-            gap={10}
-          >
-            <Box width={'90%'}>
+      // if (false) {
+      // 스위치 제안을 하지 않았다면
+      return (
+        <Flexbox
+          width={'100%'}
+          alignItems={'center'}
+          flexDirection={'column'}
+          gap={10}
+          pb={20}
+        >
+          <Box width={'90%'}>
+            {/* TODO : 🚨 제안 여부에 따라 분기처리 */}
+            {false ? (
               <Button
                 type={'normal'}
                 size={'medium'}
                 onPress={() => navigation.navigate('RegisteredList')}
               >
-                스위치 제안하기
+                스위치 요청하기
               </Button>
-            </Box>
-            <Box width={'90%'}>
+            ) : (
               <Button
-                type={'transparent'}
+                type={'warning'}
                 size={'medium'}
-                onPress={() => window.alert('몇명이 줄서고 있어요')}
+                onPress={() => Alert.alert('요청 취소', '요청이 취소됐습니다.')}
               >
-                3명이 줄서고 있어요
+                요청 취소하기
               </Button>
-            </Box>
+            )}
+          </Box>
+          <Flexbox width={'90%'} justifyContent='center'>
+            <Typography fontSize={16}>3명이 줄서고 있어요</Typography>
           </Flexbox>
-        );
-      } else {
-        return (
-          <Flexbox
-            width={'100%'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            flexDirection={'row'}
-            gap={10}
-          >
-            <Box width={'44%'}>
-              <Button
-                type={'normal'}
-                size={'medium'}
-                onPress={() => window.alert('스위치 제안 중')}
-              >
-                스위치 제안 중
-              </Button>
-            </Box>
-            <Box width={'44%'}>
-              <Button
-                type={'cancel'}
-                size={'medium'}
-                onPress={() => navigation.navigate('HomeMain')}
-              >
-                제안 취소
-              </Button>
-            </Box>
-          </Flexbox>
-        );
-      }
+        </Flexbox>
+      );
     } else if (userId === '글쓴이') {
+      // } else if (true) {
       return (
         <Flexbox
           width={'100%'}
@@ -132,6 +109,7 @@ const SwitchDetailScreen = ({
           justifyContent={'center'}
           flexDirection={'row'}
           gap={10}
+          pb={20}
         >
           <Box width={'44%'}>
             <Button
