@@ -6,10 +6,10 @@ interface SwitchDetailData {
   thumbnails: Array<string>;
   date?: Date;
   description?: string;
-  hashtags: Array<TagProps>;
+  preferredCategories: Array<string>;
   location?: string;
-  categories: Array<TagProps>;
-  oppositeCategories: Array<TagProps>;
+  category?: string;
+  oppositeCategories: Array<string>;
 }
 
 // interface SwitchDetailData {
@@ -27,7 +27,6 @@ interface RegisterDto {
   name: string;
   description: string;
   images: Array<string>;
-  hashtags: Array<string>;
   preferredCategories: Array<string>;
   preferredLocations: Array<string>;
 }

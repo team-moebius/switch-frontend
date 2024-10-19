@@ -5,7 +5,6 @@ import { Field } from './Field';
 import { UserSummary } from './UserSummary';
 import { TagInput } from './TagInput';
 import { NotiListItem } from './NotiListItem';
-import { HashtagInput } from './HashtagInput';
 import { SwitchListItem } from './SwitchListItem';
 import { ChattingListItem } from './ChattingListItem';
 import { HistoryListItem } from './HistoryListItem';
@@ -26,7 +25,6 @@ export {
   Field,
   NumberPad,
   TagInput,
-  HashtagInput,
   UserSummary,
   NotiListItem,
   SwitchListItem,

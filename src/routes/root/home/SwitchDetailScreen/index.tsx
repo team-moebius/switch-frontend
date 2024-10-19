@@ -41,7 +41,7 @@ const itemDataResolver = ({
   images,
   // wantedItem,
   location,
-  hashtags,
+  category,
 }: // liked,
 SwitchDetailData): SwitchDetailViewProps['itemData'] => {
   return {
@@ -50,8 +50,7 @@ SwitchDetailData): SwitchDetailViewProps['itemData'] => {
     date: new Date(date),
     thumbnails: images || [],
     location: location,
-    hashtags: hashtags || [],
-    categories: [],
+    category: category,
     oppositeCategories: [],
   };
 };
