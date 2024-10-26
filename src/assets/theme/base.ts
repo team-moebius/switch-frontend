@@ -35,7 +35,7 @@ const FONT_SIZE = {
   smaller: 13,
 };
 const PADDING = {
-  vertical: 16,
+  wrapper: { vertical: 16 },
 };
 
 export { COLORS, FONT_SIZE, PADDING };
