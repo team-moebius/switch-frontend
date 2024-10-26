@@ -3,6 +3,7 @@ import { Box, Flexbox, Textarea, Typography } from '../atom';
 import { TextareaProps } from '../atom/Textarea';
 import { Border } from 'src/@types/unit';
 import PALETTE from 'src/assets/theme/colors/palettes';
+import { FONT_SIZE } from 'src/assets/theme/base';
 interface CountingTextareaProps extends TextareaProps {
   onChange: (text: string) => void;
   value: string;
@@ -27,7 +28,7 @@ const CountingTextarea = ({
       />
       <Flexbox justifyContent='flex-end' pt={10}>
         <Flexbox.Item>
-          <Typography fontSize={12}>
+          <Typography fontSize={FONT_SIZE.smaller}>
             {value.length + '/' + maxLength}
           </Typography>
         </Flexbox.Item>

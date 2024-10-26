@@ -18,6 +18,7 @@ import { UserWithdrawalRequest } from '@team-moebius/api-typescript';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { WithdrawParamList } from '.';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 const withdrawOption = ['대체 플렛폼 이용', '스위치 간 불만족', '기타'];
 type WithdrawType = '대체 플렛폼 이용' | '스위치 간 불만족' | '기타';
@@ -87,7 +88,7 @@ const WithdrawFeedbackScreen = ({
     <KeyboardScreenWrapper>
       <Flexbox.Item flex={1} mb={'10%'}>
         <Flexbox gap={10} flexDirection='column'>
-          <Typography fontSize={20}>
+          <Typography fontSize={FONT_SIZE.header}>
             스위치를 탈퇴하시려는 이유가 있을까요?
           </Typography>
           <Box>

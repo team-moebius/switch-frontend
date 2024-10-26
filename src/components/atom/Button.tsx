@@ -2,26 +2,26 @@ import { ReactNode, useMemo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Flexbox from './Flexbox';
 import { Typography } from './Typograph';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 const sizeStyle = StyleSheet.create({
   small: {
     height: 24,
-    fontSize: 12,
+    fontSize: FONT_SIZE.smaller,
     borderRadius: 4,
     paddingHorizontal: 4,
     paddingVertical: 2,
   },
   medium: {
     height: 36,
-    fontSize: 16,
+    fontSize: FONT_SIZE.normal,
     borderRadius: 4,
     paddingHorizontal: 8,
     paddingVertical: 4,
   },
   large: {
     height: 48,
-    fontSize: 20,
+    fontSize: FONT_SIZE.header,
     borderRadius: 8,
     paddingHorizontal: 8,
     paddingVertical: 4,

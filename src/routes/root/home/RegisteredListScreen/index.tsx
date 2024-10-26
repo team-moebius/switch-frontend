@@ -7,7 +7,7 @@ import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
 import { ItemApi } from 'src/api';
 import { UserContext } from 'src/context/user';
 import { Alert } from 'react-native';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 const MY_ITEM = {
   name: '이브이',
@@ -32,7 +32,9 @@ const renderChildren = (
       gap={10}
     >
       {/** myItem prop 대신 data상에서 나의 아이템인지 확인 할 수 있는 속성이 있다면 대신 사용해도 좋을 것 같아요*/}
-      <Typography fontSize={17}>{myItem ? '나의' : '상대의'}</Typography>
+      <Typography fontSize={FONT_SIZE.bigger}>
+        {myItem ? '나의' : '상대의'}
+      </Typography>
       <WithImage
         text={item?.name}
         src={item?.src || ''}
@@ -110,7 +112,9 @@ const RegisteredListScreen = () => {
             />
           </Flexbox.Item>
           <Flexbox.Item alignSelf='center'>
-            <Typography fontSize={17}>스위치를 제안합니다.</Typography>
+            <Typography fontSize={FONT_SIZE.bigger}>
+              스위치를 제안합니다.
+            </Typography>
           </Flexbox.Item>
           <Flexbox
             width={'80%'}

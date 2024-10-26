@@ -54,7 +54,7 @@ import { RegisterDto } from './contents/type';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
 import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import PALETTE from 'src/assets/theme/colors/palettes';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 interface RegisterFormProps {
   initialData?: ItemResponse;
@@ -412,7 +412,7 @@ const RegisterFormScreen = ({
                 justifyContent={'space-between'}
                 gap={5}
               >
-                <Typography color={'black'} fontSize={12}>
+                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
                   {category ? '1/1' : '0/1'}
                 </Typography>
               </Flexbox>
@@ -438,7 +438,7 @@ const RegisterFormScreen = ({
                 justifyContent={'space-between'}
                 gap={5}
               >
-                <Typography color={'black'} fontSize={12}>
+                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
                   {preferredCategories.length + '/3'}
                 </Typography>
               </Flexbox>
@@ -466,7 +466,7 @@ const RegisterFormScreen = ({
                 justifyContent={'space-between'}
                 gap={5}
               >
-                <Typography color={'black'} fontSize={12}>
+                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
                   {hashtags.length + '/5'}
                 </Typography>
               </Flexbox>
@@ -474,7 +474,7 @@ const RegisterFormScreen = ({
             onSubmitEditing={onSubmitHashTags}
           />
           <Separator />
-          <Typography fontSize={14}>선호 주소</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>선호 주소</Typography>
           <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
             <Flexbox
               width={'100%'}
@@ -511,7 +511,7 @@ const RegisterFormScreen = ({
                     justifyContent={'space-between'}
                   >
                     <Typography
-                      fontSize={18}
+                      fontSize={FONT_SIZE.bigger}
                       fontWeight={'200'}
                       color={COLORS.neutral.white}
                     >

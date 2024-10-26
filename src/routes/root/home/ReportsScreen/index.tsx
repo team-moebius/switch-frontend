@@ -6,6 +6,7 @@ import { ScreenWrapper } from 'src/components/template';
 import { ReportModal } from './modals/ReportModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 const ReportButton = ({
   children,
@@ -18,7 +19,7 @@ const ReportButton = ({
         alignItems='center'
         justifyContent='space-between'
       >
-        <Typography fontSize={16}>{children}</Typography>
+        <Typography fontSize={FONT_SIZE.normal}>{children}</Typography>
         <Icon name='ios-chevron-forward' size={20} />
       </Flexbox>
     </Pressable>

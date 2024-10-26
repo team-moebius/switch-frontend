@@ -1,7 +1,7 @@
 import { Box, Flexbox, Icon, Typography } from 'src/components/atom';
 import { Pressable, ScrollView } from 'react-native';
 import { ImageItem } from './ImageItem';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 // Image API 명세 확인 후 구체적인 작업 필요.
 interface ImageUploaderProps {
@@ -29,7 +29,9 @@ const ImageUploader = ({
           flexDirection='column'
         >
           <Icon name={'camera'} size={24} />
-          <Typography fontSize={14}>{`${images.length}/5`}</Typography>
+          <Typography
+            fontSize={FONT_SIZE.smaller}
+          >{`${images.length}/5`}</Typography>
         </Flexbox>
       </Pressable>
 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 import { Box, Flexbox, Typography } from 'src/components/atom';
 
 interface ChatBubbleProps {
@@ -29,7 +29,11 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
           alignSelf='flex-end'
           key={index}
         >
-          <Typography fontSize={16} color={COLORS.text} key={index}>
+          <Typography
+            fontSize={FONT_SIZE.bigger}
+            color={COLORS.text}
+            key={index}
+          >
             {item.message}
           </Typography>
           <Flexbox.Item
@@ -67,7 +71,11 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
           key={index}
         >
           <Flexbox justifyContent='center'>
-            <Typography fontSize={16} color={COLORS.text} key={index}>
+            <Typography
+              fontSize={FONT_SIZE.bigger}
+              color={COLORS.text}
+              key={index}
+            >
               {item.message}
             </Typography>
           </Flexbox>

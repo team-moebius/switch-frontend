@@ -1,4 +1,4 @@
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -34,7 +34,9 @@ const FeedbackModal = ({
         justifyContent={'center'}
       >
         <Flexbox.Item>
-          <Typography fontSize={14}>피드백을 어디에 남기시겠어요?</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            피드백을 어디에 남기시겠어요?
+          </Typography>
         </Flexbox.Item>
         <Flexbox
           alignItems={'center'}

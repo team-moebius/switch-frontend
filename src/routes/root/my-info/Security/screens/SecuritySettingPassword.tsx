@@ -7,7 +7,7 @@ import { ScreenWrapper, UnlockPassword } from 'src/components/template';
 import { AppPasswordContext } from 'src/context/password';
 
 import { SecuritySettingParamList } from '..';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 const SecuritySettingPassword = ({
   navigation,
@@ -34,16 +34,20 @@ const SecuritySettingPassword = ({
   };
 
   const errorMessage = isFailtoConfirm && (
-    <Typography fontSize={16} color={COLORS.error}>
+    <Typography fontSize={FONT_SIZE.normal} color={COLORS.error}>
       비밀번호가 일치하지 않습니다. 다시 입력해주세요.
     </Typography>
   );
 
   const instructionMessage =
     password.length >= 4 ? (
-      <Typography fontSize={16}>한 번 더 비밀번호를 입력하세요.</Typography>
+      <Typography fontSize={FONT_SIZE.normal}>
+        한 번 더 비밀번호를 입력하세요.
+      </Typography>
     ) : (
-      <Typography fontSize={16}>새로운 비밀번호를 입력하세요.</Typography>
+      <Typography fontSize={FONT_SIZE.normal}>
+        새로운 비밀번호를 입력하세요.
+      </Typography>
     );
 
   const validationMessage = errorMessage || instructionMessage;

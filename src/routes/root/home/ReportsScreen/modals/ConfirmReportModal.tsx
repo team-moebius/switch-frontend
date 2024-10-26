@@ -1,4 +1,4 @@
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -33,7 +33,7 @@ const ConfirmReportModal = ({
         gap={40}
       >
         <Flexbox.Item>
-          <Typography fontSize={14}>
+          <Typography fontSize={FONT_SIZE.normal}>
             {isReportPost
               ? '게시글을 신고했습니다.'
               : `${'청둥오리'}님을 신고했습니다.`}

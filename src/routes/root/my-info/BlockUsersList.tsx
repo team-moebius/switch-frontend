@@ -4,6 +4,7 @@ import { UserInfoResponse } from '@team-moebius/api-typescript';
 import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '.';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 type BlockUserProp = UserInfoResponse & { block: boolean };
 export const mockBlockUserList: Array<BlockUserProp> = [
@@ -183,7 +184,10 @@ const BlockUsersList = ({
       <Box width={'100%'}>
         <Pressable onPress={() => navigation.navigate('MyInfoMain')}>
           <Flexbox justifyContent='space-between' alignItems='center'>
-            <Typography children={nickname ? nickname : ''} fontSize={18} />
+            <Typography
+              children={nickname ? nickname : ''}
+              fontSize={FONT_SIZE.bigger}
+            />
             <Flexbox.Item flex={0.3}>
               <Button
                 type={block ? 'normal' : 'cancel'}

@@ -3,6 +3,7 @@ import { Color } from 'src/@types/unit';
 import Flexbox from './Flexbox';
 import { Typography } from './Typograph';
 import PALETTE from 'src/assets/theme/colors/palettes';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface TagProps {
   color: string;
@@ -30,7 +31,7 @@ const Tag = ({
       alignItems={'center'}
     >
       <Pressable onPress={onPress} disabled={disabled}>
-        <Typography fontSize={12} color={color}>
+        <Typography fontSize={FONT_SIZE.smaller} color={color}>
           {children}
         </Typography>
       </Pressable>

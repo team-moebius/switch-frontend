@@ -4,7 +4,7 @@ import { Pressable } from 'react-native';
 import { ThemeContext } from 'src/context/theme';
 import { Flexbox, Icon, Typography } from '../atom';
 import { FlexboxProps } from '../atom/Flexbox';
-import { PADDING } from 'src/assets/theme/base';
+import { FONT_SIZE, PADDING } from 'src/assets/theme/base';
 
 interface ScreenHeaderProps extends StackHeaderProps {
   center?: ReactNode;
@@ -63,7 +63,7 @@ const ScreenHeader = ({
       <Flexbox.Item flex={3}>
         <Flexbox width={'100%'} justifyContent={'center'}>
           {typeof center === 'string' ? (
-            <Typography fontSize={20} color={color.text}>
+            <Typography fontSize={FONT_SIZE.header} color={color.text}>
               {center}
             </Typography>
           ) : (

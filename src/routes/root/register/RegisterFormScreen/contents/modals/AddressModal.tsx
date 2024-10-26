@@ -1,4 +1,4 @@
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -31,7 +31,7 @@ const AddressModal = ({
         gap={20}
       >
         <Flexbox.Item pb={30}>
-          <Typography fontSize={15}>
+          <Typography fontSize={FONT_SIZE.normal}>
             선호주소를 어떻게 설정하시겠어요?
           </Typography>
         </Flexbox.Item>

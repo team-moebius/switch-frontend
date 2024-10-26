@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { ConfirmReportModal } from './ConfirmReportModal';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 interface ReportModalProps extends ModalProps {
   isReportPost: boolean;
@@ -53,7 +53,7 @@ const ReportModal = ({
         justifyContent={'center'}
       >
         <Flexbox.Item>
-          <Typography fontSize={14}>
+          <Typography fontSize={FONT_SIZE.normal}>
             {isReportPost
               ? '게시글을 신고할까요?'
               : `${'청둥오리'}님을 신고할까요?`}

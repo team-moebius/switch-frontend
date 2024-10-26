@@ -6,6 +6,7 @@ import { RegisterRouteParamList } from '.';
 import { address } from './address';
 import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 import { Alert } from 'react-native';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 // TODO: onPressItem type 지정해주기
 
@@ -68,10 +69,10 @@ const PreferredAddressScreen = ({
             />
           </Flexbox.Item>
           <Flexbox.Item width={'100%'} alignSelf={'center'} pt={30}>
-            <Typography fontSize={18}>입력한 주소</Typography>
+            <Typography fontSize={FONT_SIZE.bigger}>입력한 주소</Typography>
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
-            <Typography fontSize={14}>{fullAddress}</Typography>
+            <Typography fontSize={FONT_SIZE.normal}>{fullAddress}</Typography>
           </Flexbox.Item>
         </Flexbox>
 

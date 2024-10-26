@@ -2,7 +2,7 @@ import { ReactElement, useContext, useMemo } from 'react';
 import { FlatList, Pressable } from 'react-native';
 import { Box, Flexbox, Icon, Typography } from '../atom';
 import { ThemeContext } from 'src/context/theme';
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 import PALETTE from 'src/assets/theme/colors/palettes';
 
 interface NumberPadProps {
@@ -27,7 +27,7 @@ const Pad = ({
       case 'number':
         return (
           <Typography
-            fontSize={16}
+            fontSize={FONT_SIZE.bigger}
             color={COLORS.neutral.black}
           >{`${value}`}</Typography>
         );

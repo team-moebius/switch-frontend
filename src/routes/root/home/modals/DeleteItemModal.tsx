@@ -1,4 +1,4 @@
-import { COLORS } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -31,14 +31,16 @@ const DeleteItemModal = ({
       >
         <Flexbox flexDirection={'column'} alignItems={'center'} gap={30}>
           <Flexbox flexDirection={'column'} alignItems={'center'}>
-            <Typography fontSize={14}>
+            <Typography fontSize={FONT_SIZE.normal}>
               {`- ${'5'}명이 이 물품을 대기중이예요`}
             </Typography>
-            <Typography fontSize={14}>
+            <Typography fontSize={FONT_SIZE.normal}>
               {`- ${'페이커'}님과 스위치 협의 중이예요`}
             </Typography>
           </Flexbox>
-          <Typography fontSize={14}>물품을 정말 삭제하시겠어요?</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            물품을 정말 삭제하시겠어요?
+          </Typography>
         </Flexbox>
         <Flexbox
           width={'100%'}
