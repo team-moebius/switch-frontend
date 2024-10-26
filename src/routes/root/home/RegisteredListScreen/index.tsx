@@ -7,6 +7,7 @@ import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
 import { ItemApi } from 'src/api';
 import { UserContext } from 'src/context/user';
 import { Alert } from 'react-native';
+import COLORS from 'src/assets/theme/base';
 
 const MY_ITEM = {
   name: '이브이',
@@ -89,7 +90,7 @@ const RegisteredListScreen = () => {
         visible={modalVisible}
         width={'80%'}
         height={'45%'}
-        backgroundColor={'#fefefe'}
+        backgroundColor={COLORS.container_background}
         onPressBack={() => setModalVisible(false)}
         position={'center'}
       >
@@ -120,7 +121,7 @@ const RegisteredListScreen = () => {
           >
             <Flexbox.Item margin={'auto'}>
               <Button
-                type='cancel'
+                type='warning'
                 size='medium'
                 onPress={() => setModalVisible(false)}
               >

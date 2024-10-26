@@ -1,3 +1,4 @@
+import COLORS from 'src/assets/theme/base';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -16,7 +17,7 @@ const ConfirmReportModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={130}
       position={'center'}

@@ -1,4 +1,4 @@
-import React from 'react';
+import COLORS from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -11,7 +11,7 @@ const LogoutModal = ({ visible, onPressBack, onConfirm }: LogoutModalProps) => {
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'18%'}
       position={'center'}
@@ -36,7 +36,11 @@ const LogoutModal = ({ visible, onPressBack, onConfirm }: LogoutModalProps) => {
           gap={10}
         >
           <Flexbox.Item flex={1}>
-            <Button size='medium' type='cancel' onPress={() => onPressBack?.()}>
+            <Button
+              size='medium'
+              type='warning'
+              onPress={() => onPressBack?.()}
+            >
               취소
             </Button>
           </Flexbox.Item>

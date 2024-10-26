@@ -32,6 +32,7 @@ import { ThemeContext } from 'src/context/theme';
 import { RootTabsParamList } from '..';
 import { RegisterRoute, RegisterRouteParamList } from '../register';
 import { NavigatorScreenParams, useNavigation } from '@react-navigation/native';
+import COLORS from 'src/assets/theme/base';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
@@ -136,7 +137,7 @@ const HomeRoute = ({
                 <ScreenHeader
                   {...props}
                   containerStyle={{
-                    backgroundColor: '#fff',
+                    backgroundColor: COLORS.container_background,
                     position: 'absolute',
                     height: 120,
                   }}

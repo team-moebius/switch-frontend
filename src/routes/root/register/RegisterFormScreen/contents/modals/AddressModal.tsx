@@ -1,3 +1,4 @@
+import COLORS from 'src/assets/theme/base';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -16,7 +17,7 @@ const AddressModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'40%'}
       position={'center'}
@@ -45,7 +46,7 @@ const AddressModal = ({
           </Button>
         </Flexbox.Item>
         <Flexbox.Item width='70%'>
-          <Button size='medium' type='cancel' onPress={() => onPressBack?.()}>
+          <Button size='medium' type='warning' onPress={() => onPressBack?.()}>
             취소
           </Button>
         </Flexbox.Item>

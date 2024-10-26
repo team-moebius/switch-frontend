@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { ConfirmReportModal } from './ConfirmReportModal';
+import COLORS from 'src/assets/theme/base';
 
 interface ReportModalProps extends ModalProps {
   isReportPost: boolean;
@@ -36,7 +37,7 @@ const ReportModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'18%'}
       position={'center'}
@@ -67,7 +68,7 @@ const ReportModal = ({
           <Flexbox.Item flex={1}>
             <Button
               size='medium'
-              type='cancel'
+              type='warning'
               onPress={() => onPressBack && onPressBack()}
             >
               취소

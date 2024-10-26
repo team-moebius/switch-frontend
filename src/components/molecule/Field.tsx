@@ -19,6 +19,8 @@ import { ToggleProps } from '../atom/Toggle';
 import { WithLabelProps } from '../template/WithLabel';
 import { CountingTextarea, CountingTextareaProps } from './CountingTextarea';
 import { ViewStyle } from 'react-native';
+import COLORS from 'src/assets/theme/base';
+import PALETTE from 'src/assets/theme/colors/palettes';
 
 type FieldPropsType =
   | InputProps
@@ -158,7 +160,9 @@ const Field = ({
             handleOnPress={() => {
               onChange({ [name]: !value });
             }}
-            backgroundColor={value === false ? '#E0E0E0' : '#2ECC71'}
+            backgroundColor={
+              value === false ? PALETTE.white[300] : COLORS.success
+            }
           />
         );
       case 'countingTextarea':

@@ -2,6 +2,7 @@ import React, { ReactNode, useMemo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Box } from './Box';
 import { Color } from 'src/@types/unit';
+import COLORS from 'src/assets/theme/base';
 
 const { defaultWrapper } = StyleSheet.create({
   defaultWrapper: {
@@ -29,8 +30,8 @@ const Toggle = ({
   handleOnPress,
   iconA,
   iconB,
-  selectColor = '#FFFFFF',
-  backgroundColor = '#2ECC71',
+  selectColor = COLORS.neutral.white,
+  backgroundColor = COLORS.success,
   disabled = false,
 }: ToggleProps) => {
   const absolutePositions = useMemo(() => {

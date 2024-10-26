@@ -1,3 +1,4 @@
+import COLORS from 'src/assets/theme/base';
 import { Flexbox, Tag } from 'src/components/atom';
 import { ImageCard } from 'src/components/molecule';
 
@@ -21,8 +22,8 @@ const ItemListCard = ({ count, title, imageSrc }: ItemListCardProps) => {
         >
           <Tag
             disabled={false}
-            color={'#FFFFFF'}
-            backgroundColor={'#21BD9E'}
+            color={COLORS.neutral.white}
+            backgroundColor={COLORS.secondary[200]}
           >{`+${count}`}</Tag>
         </Flexbox>
       )}

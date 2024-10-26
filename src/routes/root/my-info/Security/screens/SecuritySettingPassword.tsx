@@ -7,7 +7,7 @@ import { ScreenWrapper, UnlockPassword } from 'src/components/template';
 import { AppPasswordContext } from 'src/context/password';
 
 import { SecuritySettingParamList } from '..';
-import PALETTE from 'src/assets/theme/palettes';
+import COLORS from 'src/assets/theme/base';
 
 const SecuritySettingPassword = ({
   navigation,
@@ -34,7 +34,7 @@ const SecuritySettingPassword = ({
   };
 
   const errorMessage = isFailtoConfirm && (
-    <Typography fontSize={16} color={PALETTE.color.error}>
+    <Typography fontSize={16} color={COLORS.error}>
       비밀번호가 일치하지 않습니다. 다시 입력해주세요.
     </Typography>
   );

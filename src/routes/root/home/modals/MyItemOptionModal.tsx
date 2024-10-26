@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Flexbox, Modal } from 'src/components/atom';
 import { ModalProps } from 'src/components/atom/Modal';
 import { DeleteItemModal } from './DeleteItemModal';
+import COLORS from 'src/assets/theme/base';
 
 interface MyItemOptionModalProps extends ModalProps {
   onEdit: () => void;
@@ -39,7 +40,7 @@ const MyItemOptionModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'18%'}
       position={'center'}
@@ -60,7 +61,7 @@ const MyItemOptionModal = ({
           </Button>
         </Flexbox.Item>
         <Flexbox.Item width={'100%'}>
-          <Button type='cancel' size='medium' onPress={handleDelete}>
+          <Button type='warning' size='medium' onPress={handleDelete}>
             삭제
           </Button>
         </Flexbox.Item>

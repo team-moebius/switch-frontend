@@ -2,6 +2,7 @@ import React from 'react';
 import { Box, Flexbox, Textarea, Typography } from '../atom';
 import { TextareaProps } from '../atom/Textarea';
 import { Border } from 'src/@types/unit';
+import PALETTE from 'src/assets/theme/colors/palettes';
 interface CountingTextareaProps extends TextareaProps {
   onChange: (text: string) => void;
   value: string;
@@ -13,7 +14,7 @@ const CountingTextarea = ({
   maxLength,
   onChange,
   value,
-  border = '1 solid #979797',
+  border = `1 solid ${PALETTE.gray['200']}`,
 }: CountingTextareaProps) => {
   return (
     <Box border={border} borderRadius={8}>
@@ -22,7 +23,7 @@ const CountingTextarea = ({
         maxLength={maxLength}
         value={value}
         onChangeText={onChange}
-        style={{ borderWidth: 0, color: '#7a7a7a' }}
+        style={{ borderWidth: 0, color: PALETTE.gray['300'] }}
       />
       <Flexbox justifyContent='flex-end' pt={10}>
         <Flexbox.Item>

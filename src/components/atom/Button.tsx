@@ -1,7 +1,8 @@
-import React, { ReactNode, useMemo } from 'react';
+import { ReactNode, useMemo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Flexbox from './Flexbox';
 import { Typography } from './Typograph';
+import COLORS from 'src/assets/theme/base';
 
 const sizeStyle = StyleSheet.create({
   small: {
@@ -29,20 +30,20 @@ const sizeStyle = StyleSheet.create({
 
 const typeStyle = StyleSheet.create({
   normal: {
-    backgroundColor: '#3489eb',
-    color: '#ffffff',
+    backgroundColor: COLORS.success,
+    color: COLORS.neutral.white,
   },
   transparent: {
     backgroundColor: 'transparent',
-    color: 'gray',
+    color: COLORS.success,
   },
   cancel: {
-    backgroundColor: '#d1d1d1',
-    color: '#3489eb',
+    backgroundColor: COLORS.neutral.gray,
+    color: COLORS.primary[200],
   },
   warning: {
-    backgroundColor: '#d22f26',
-    color: '#ffffff',
+    backgroundColor: COLORS.error,
+    color: COLORS.neutral.white,
   },
 });
 

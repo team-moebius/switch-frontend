@@ -1,4 +1,3 @@
-import React from 'react';
 import {
   TextInput as BasicInput,
   DimensionValue,
@@ -9,6 +8,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
+import COLORS from 'src/assets/theme/base';
 
 interface InputProps {
   name: string;
@@ -31,8 +31,8 @@ const { defaultInput: defaultStyles } = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     padding: 8,
-    borderColor: '#cccccc',
-    color: '#7a7a7a',
+    borderColor: COLORS.neutral.white,
+    color: COLORS.neutral.black,
   },
 });
 

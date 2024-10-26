@@ -1,3 +1,4 @@
+import COLORS from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -14,7 +15,7 @@ const DeleteItemModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'27%'}
       position={'center'}
@@ -60,7 +61,11 @@ const DeleteItemModal = ({
             </Button>
           </Flexbox.Item>
           <Flexbox.Item width='100%'>
-            <Button size='medium' type='cancel' onPress={() => onPressBack?.()}>
+            <Button
+              size='medium'
+              type='warning'
+              onPress={() => onPressBack?.()}
+            >
               취소
             </Button>
           </Flexbox.Item>

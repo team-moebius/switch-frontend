@@ -1,6 +1,7 @@
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { Check } from 'src/components/atom/Check';
+import COLORS from 'src/assets/theme/base';
 
 export const DETAILS = 'details';
 export const SAFETY = 'safety';
@@ -25,7 +26,7 @@ const AttentionModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'40%'}
       position={'center'}

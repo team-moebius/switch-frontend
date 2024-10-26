@@ -2,6 +2,8 @@ import { ReactElement, useContext, useMemo } from 'react';
 import { FlatList, Pressable } from 'react-native';
 import { Box, Flexbox, Icon, Typography } from '../atom';
 import { ThemeContext } from 'src/context/theme';
+import COLORS from 'src/assets/theme/base';
+import PALETTE from 'src/assets/theme/colors/palettes';
 
 interface NumberPadProps {
   maxLength: number;
@@ -24,7 +26,10 @@ const Pad = ({
     switch (typeof value) {
       case 'number':
         return (
-          <Typography fontSize={16} color={'#000000'}>{`${value}`}</Typography>
+          <Typography
+            fontSize={16}
+            color={COLORS.neutral.black}
+          >{`${value}`}</Typography>
         );
       case typeof null:
         return null;
@@ -41,7 +46,7 @@ const Pad = ({
     <Flexbox overflow='hidden' borderRadius={40}>
       <Pressable
         onPress={onClick}
-        android_ripple={{ color: '#ccc' }}
+        android_ripple={{ color: PALETTE.white[300] }}
         style={({ pressed }) => [
           {
             width: 80,
@@ -50,7 +55,7 @@ const Pad = ({
             justifyContent: 'center',
             alignItems: 'center',
           },
-          pressed && { backgroundColor: '#ccc', opacity: 0.7 },
+          pressed && { backgroundColor: PALETTE.white[300], opacity: 0.7 },
         ]}
       >
         {label}

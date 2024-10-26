@@ -24,6 +24,7 @@ import {
   UserUpdateRequest,
 } from '@team-moebius/api-typescript';
 import { MyInfoParamList } from '.';
+import COLORS from 'src/assets/theme/base';
 
 const MyInfoEditScreen = ({
   navigation,
@@ -134,7 +135,7 @@ const MyInfoEditScreen = ({
             labelLayout={{ flex: 0.3, width: '30%' }}
             width={'100%'}
             placeholder='이름을 입력해주세요.'
-            style={{ borderWidth: 0, color: '#000000' }}
+            style={{ borderWidth: 0, color: COLORS.text }}
           />
         </Flexbox>
         <Separator />

@@ -1,3 +1,4 @@
+import COLORS from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -16,7 +17,7 @@ const CancelEditModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'18%'}
       position={'center'}
@@ -53,7 +54,7 @@ const CancelEditModal = ({
             </Button>
           </Flexbox.Item>
           <Flexbox.Item width='100%'>
-            <Button size='medium' type='cancel' onPress={() => onCancel()}>
+            <Button size='medium' type='warning' onPress={() => onCancel()}>
               취소
             </Button>
           </Flexbox.Item>
