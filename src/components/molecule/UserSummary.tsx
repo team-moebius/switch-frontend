@@ -1,5 +1,6 @@
 import React from 'react';
 import { Box, Flexbox, Tag, Typography } from '../atom';
+import COLORS from 'src/assets/theme/base';
 
 type UserSummaryData = {
   nickname: string;
@@ -29,7 +30,7 @@ const UserSummary = ({ data }: UserSummaryProps) => {
         <Flexbox.Item flex={1}>
           <Flexbox flexDirection={'column'} justifyContent='center' gap={5}>
             <Typography fontSize={20}>{nickname}</Typography>
-            <Tag color={'#fff'} backgroundColor={tagColor}>
+            <Tag color={COLORS.neutral.white} backgroundColor={tagColor}>
               {verified ? '인증완료' : '미인증 유저'}
             </Tag>
           </Flexbox>

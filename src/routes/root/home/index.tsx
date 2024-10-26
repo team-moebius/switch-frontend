@@ -20,7 +20,6 @@ import { UserControlModal } from '../chat/content/modals';
 import { CancelEditModal, MyItemOptionModal } from './modals';
 
 import {
-  HEADER_PADDING,
   ScreenHeader,
   ScreenHeaderProps,
 } from 'src/components/molecule/ScreenHeader';
@@ -28,6 +27,7 @@ import {
 import { ItemResponse } from '@team-moebius/api-typescript';
 
 import { ThemeContext } from 'src/context/theme';
+import { COLORS, PADDING } from 'src/assets/theme/base';
 
 import { RootTabsParamList } from '..';
 import { RegisterRoute, RegisterRouteParamList } from '../register';
@@ -63,7 +63,7 @@ const HomeRouteHeader = ({
   return (
     <Flexbox
       width={'100%'}
-      padding={HEADER_PADDING}
+      padding={PADDING.wrapper.vertical}
       backgroundColor={color.container_background}
       justifyContent={'space-around'}
       alignItems={'center'}
@@ -136,7 +136,7 @@ const HomeRoute = ({
                 <ScreenHeader
                   {...props}
                   containerStyle={{
-                    backgroundColor: '#fff',
+                    backgroundColor: COLORS.container_background,
                     position: 'absolute',
                     height: 120,
                   }}

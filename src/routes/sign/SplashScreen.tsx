@@ -16,7 +16,11 @@ const SplashScreen = () => {
         width={'100%'}
         alignItems={'center'}
       >
-        <Typography fontWeight={'300'} fontSize={40} color={color.neutral[300]}>
+        <Typography
+          fontWeight={'300'}
+          fontSize={40}
+          color={color.container_background}
+        >
           Switch
         </Typography>
       </Flexbox>

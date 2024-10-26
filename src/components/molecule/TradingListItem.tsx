@@ -4,6 +4,7 @@ import { WithImage } from '../template';
 import { flexDirectionStyle, fontSizeStyle } from '../template/WithImage';
 import { Flexbox, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface TradingListItemProps {
   data: {
@@ -55,7 +56,7 @@ const TradingListItem = ({
             imageResizeMode={imageResizeMode}
             renderItem={
               location ? (
-                <Typography fontSize={13}>{location}</Typography>
+                <Typography fontSize={FONT_SIZE.smaller}>{location}</Typography>
               ) : (
                 <></>
               )

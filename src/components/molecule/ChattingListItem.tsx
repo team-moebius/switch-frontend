@@ -3,6 +3,7 @@ import { Pressable, StyleSheet } from 'react-native';
 import { Flexbox, Icon, Typography } from '../atom';
 import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
 import { fontSizeStyle } from '../template/WithImage';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface ChattingListItemProps {
   data: {
@@ -81,7 +82,7 @@ const ChattingListItem = ({
                 )}
                 <Flexbox.Item>
                   <Typography
-                    fontSize={15}
+                    fontSize={FONT_SIZE.normal}
                     numberOfLines={1}
                     ellipsizeMode={'tail'}
                   >

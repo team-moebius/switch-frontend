@@ -13,9 +13,10 @@ import {
   expoSecureStore,
 } from 'src/common/secureStore';
 
-import BASE_COLORS from 'src/assets/theme/colors/base';
+import PALETTE from 'src/assets/theme/colors/palettes';
 
 import { NavigationRouterParamList } from 'src/routes';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 const FarewellScreen = () => {
   const navigation =
@@ -43,9 +44,9 @@ const FarewellScreen = () => {
       alignItems='center'
       justifyContent='center'
       height={'100%'}
-      backgroundColor={BASE_COLORS.white[100]}
+      backgroundColor={PALETTE.white[100]}
     >
-      <Typography fontSize={20}>
+      <Typography fontSize={FONT_SIZE.header}>
         그 동안 스위치를 이용해 주셔서 감사합니다.
       </Typography>
     </Flexbox>

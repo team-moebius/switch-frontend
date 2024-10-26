@@ -19,6 +19,7 @@ import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
 import { SignUpRouteParamList } from '.';
 import { NavigationRouterParamList } from 'src/routes';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 const SubmitValidationCode = ({
   route,
@@ -83,7 +84,7 @@ const SubmitValidationCode = ({
         mt={'30%'}
       >
         <Flexbox.Item mb={40}>
-          <Typography fontSize={14}>
+          <Typography fontSize={FONT_SIZE.normal}>
             휴대폰 번호로 전송된 인증 코드를 입력해주세요.
           </Typography>
         </Flexbox.Item>

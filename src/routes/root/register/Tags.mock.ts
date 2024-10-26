@@ -1,3 +1,4 @@
+import PALETTE from 'src/assets/theme/colors/palettes';
 import { TagProps } from 'src/components/atom/Tag';
 
 const HASHTAGS_MOCK: TagProps[] = [
@@ -238,7 +239,7 @@ const HASHTAGS_MOCK: TagProps[] = [
 const INPUT_TAG_MOCK: TagProps[] = [
   {
     children: '여성의류',
-    backgroundColor: '#797979',
+    backgroundColor: PALETTE.gray[200],
     color: 'white',
     onPress: () => {
       alert('삭제됩니다');
@@ -246,7 +247,7 @@ const INPUT_TAG_MOCK: TagProps[] = [
   },
   {
     children: '패션',
-    backgroundColor: '#7979ae',
+    backgroundColor: PALETTE.purple[200],
     color: 'white',
     onPress: () => {
       alert('삭제됩니다');
@@ -254,7 +255,7 @@ const INPUT_TAG_MOCK: TagProps[] = [
   },
   {
     children: '잡화',
-    backgroundColor: '#79ef79',
+    backgroundColor: PALETTE.green[200],
     color: 'white',
     onPress: () => {
       alert('삭제됩니다');
@@ -262,7 +263,7 @@ const INPUT_TAG_MOCK: TagProps[] = [
   },
   {
     children: '직거래',
-    backgroundColor: '#37f3bc',
+    backgroundColor: PALETTE.green[100],
     color: 'white',
     onPress: () => {
       alert('삭제됩니다');
@@ -270,7 +271,7 @@ const INPUT_TAG_MOCK: TagProps[] = [
   },
   {
     children: '내고가능',
-    backgroundColor: '#bfa89b',
+    backgroundColor: PALETTE.gray[300],
     color: 'white',
     onPress: () => {
       alert('삭제됩니다');
@@ -278,7 +279,7 @@ const INPUT_TAG_MOCK: TagProps[] = [
   },
   {
     children: '아이폰이면더좋음',
-    backgroundColor: '#ff480084',
+    backgroundColor: PALETTE.yellow[200],
     color: 'white',
     onPress: () => {
       alert('삭제됩니다');

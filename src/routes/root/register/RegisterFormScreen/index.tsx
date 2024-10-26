@@ -48,6 +48,8 @@ import { RegisterDto } from './contents/type';
 /* mock */
 import { INPUT_TAG_MOCK } from '../Tags.mock';
 import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
+import PALETTE from 'src/assets/theme/colors/palettes';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 interface RegisterFormProps {
   initialData?: ItemResponse;
@@ -346,7 +348,7 @@ const RegisterFormScreen = ({
             value={description}
             onChange={changeHandler}
             maxLength={200}
-            border={'0 solid #979797'}
+            border={`0 solid ${PALETTE.gray[300]}`}
           />
 
           <Separator />
@@ -357,7 +359,7 @@ const RegisterFormScreen = ({
                     {
                       children: category,
                       color: 'white',
-                      backgroundColor: '#ff480084',
+                      backgroundColor: PALETTE.yellow[200],
                       onPress: onPressCategory,
                     },
                   ]
@@ -374,7 +376,7 @@ const RegisterFormScreen = ({
                 justifyContent={'space-between'}
                 gap={5}
               >
-                <Typography color={'black'} fontSize={12}>
+                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
                   {category ? '1/1' : '0/1'}
                 </Typography>
               </Flexbox>
@@ -387,7 +389,7 @@ const RegisterFormScreen = ({
               children: preferredCategory,
               onPress: () => onPressPreferredCategory(preferredCategory),
               color: 'white',
-              backgroundColor: '#ff480084',
+              backgroundColor: PALETTE.yellow[200],
             }))}
             width={'100%'}
             name={'tagInput'}
@@ -400,7 +402,7 @@ const RegisterFormScreen = ({
                 justifyContent={'space-between'}
                 gap={5}
               >
-                <Typography color={'black'} fontSize={12}>
+                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
                   {preferredCategories.length + '/3'}
                 </Typography>
               </Flexbox>
@@ -408,8 +410,7 @@ const RegisterFormScreen = ({
             onSubmitEditing={onSubmitPreferredCategory}
           />
           <Separator />
-          <Separator />
-          <Typography fontSize={14}>선호 주소</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>선호 주소</Typography>
           <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
             <Flexbox
               width={'100%'}
@@ -435,7 +436,7 @@ const RegisterFormScreen = ({
                 <Flexbox
                   width={'90%'}
                   padding={10}
-                  backgroundColor={'#0cd092'}
+                  backgroundColor={COLORS.secondary[200]}
                   borderRadius={6}
                   alignItems={'center'}
                   key={location}
@@ -445,13 +446,17 @@ const RegisterFormScreen = ({
                     alignItems={'center'}
                     justifyContent={'space-between'}
                   >
-                    <Typography fontSize={18} fontWeight={'200'} color={'#fff'}>
+                    <Typography
+                      fontSize={FONT_SIZE.bigger}
+                      fontWeight={'200'}
+                      color={COLORS.neutral.white}
+                    >
                       {location}
                     </Typography>
                     <PressableIcon
                       name='close'
                       size={24}
-                      color={'#fff'}
+                      color={COLORS.neutral.white}
                       onPress={() => onPressPreferredLocations(location)}
                     />
                   </Flexbox>

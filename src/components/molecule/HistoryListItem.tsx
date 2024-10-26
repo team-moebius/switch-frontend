@@ -3,6 +3,7 @@ import { Pressable } from 'react-native';
 import { Flexbox, Icon, Typography } from '../atom';
 import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
 import { fontSizeStyle } from '../template/WithImage';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface HistoryListItemProps {
   data: {
@@ -59,7 +60,7 @@ const HistoryListItem = ({
           </Flexbox>
         </Flexbox.Item>
         <Flexbox.Item width={'100%'}>
-          {ago && <Typography fontSize={13}>{ago}</Typography>}
+          {ago && <Typography fontSize={FONT_SIZE.smaller}>{ago}</Typography>}
         </Flexbox.Item>
       </Flexbox>
     </Pressable>

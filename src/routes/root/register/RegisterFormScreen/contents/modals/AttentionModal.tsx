@@ -1,6 +1,7 @@
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { Check } from 'src/components/atom/Check';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 export const DETAILS = 'details';
 export const SAFETY = 'safety';
@@ -25,7 +26,7 @@ const AttentionModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'40%'}
       position={'center'}
@@ -40,14 +41,18 @@ const AttentionModal = ({
         justifyContent={'center'}
       >
         <Flexbox.Item>
-          <Typography fontSize={14}>물품 등록시 꼭 지켜주세요!</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            물품 등록시 꼭 지켜주세요!
+          </Typography>
         </Flexbox.Item>
         <Flexbox flexDirection={'column'} gap={20}>
           <Flexbox.Item width='90%'>
             <Flexbox>
               <Flexbox.Item width={'90%'}>
-                <Typography fontSize={14}>1. 물품 설명은 정확하게</Typography>
-                <Typography fontSize={14}>
+                <Typography fontSize={FONT_SIZE.normal}>
+                  1. 물품 설명은 정확하게
+                </Typography>
+                <Typography fontSize={FONT_SIZE.normal}>
                   사진, 물품에 대한 설명을 꼭 사실대로 올려주세요.
                 </Typography>
               </Flexbox.Item>
@@ -65,10 +70,10 @@ const AttentionModal = ({
           <Flexbox.Item width='90%'>
             <Flexbox>
               <Flexbox.Item width={'90%'}>
-                <Typography fontSize={14}>
+                <Typography fontSize={FONT_SIZE.normal}>
                   2. 스위치 하기 안전한 물품만
                 </Typography>
-                <Typography fontSize={14}>
+                <Typography fontSize={FONT_SIZE.normal}>
                   사용 기한 초과, 제품의 안정성 등으로 인하여 발생하는 문제에
                   대해, 스위치는 법적 책임을 지지 않습니다.
                 </Typography>
