@@ -11,6 +11,7 @@ import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import { SignUpRouteParamList } from '.';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 const SubmitPhoneNumber = ({
   navigation,
@@ -48,7 +49,7 @@ const SubmitPhoneNumber = ({
         mt={'30%'}
       >
         <Flexbox.Item mb={40}>
-          <Typography fontSize={14}>
+          <Typography fontSize={FONT_SIZE.normal}>
             사용하실 본인 명의의 휴대폰 번호를 입력해주세요.
           </Typography>
         </Flexbox.Item>

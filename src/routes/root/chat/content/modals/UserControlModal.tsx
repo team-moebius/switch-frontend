@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Button, Flexbox } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { DeclineSwitchModal } from './DeclineSwitchModal';
+import { COLORS } from 'src/assets/theme/base';
 
 interface UserControlModalProps extends ModalProps {
   onDeclineSwitch: () => void;
@@ -36,7 +37,7 @@ const UserControlModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'50%'}
       height={'15%'}
       position={'center'}
@@ -56,7 +57,7 @@ const UserControlModal = ({
           </Button>
         </Flexbox.Item>
         <Flexbox.Item margin={'auto'}>
-          <Button type='cancel' size='medium' onPress={onReportBlock}>
+          <Button type='warning' size='medium' onPress={onReportBlock}>
             신고 및 차단
           </Button>
         </Flexbox.Item>

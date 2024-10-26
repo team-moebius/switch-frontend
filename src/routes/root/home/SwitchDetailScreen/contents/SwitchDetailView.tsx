@@ -6,6 +6,7 @@ import { ItemCard, UserSummary } from 'src/components/molecule';
 import { SwitchDetailData } from '../../../register/RegisterFormScreen/contents/type';
 import { UserSummaryData } from 'src/components/molecule/UserSummary';
 import Swiper from 'react-native-swiper';
+import PALETTE from 'src/assets/theme/colors/palettes';
 
 type SwitchDetailViewProps = {
   itemData: SwitchDetailData;
@@ -64,7 +65,7 @@ const SwitchDetailView = ({
       <Flexbox.Item width={'100%'}>
         <Flexbox alignItems='center' justifyContent='center'>
           <Pressable onPress={onClickReport}>
-            <Typography fontSize={20} color={'#d22f26'}>
+            <Typography fontSize={20} color={PALETTE.red[200]}>
               신고하기
             </Typography>
           </Pressable>

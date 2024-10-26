@@ -4,6 +4,7 @@ import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 
 import { nativeApplicationVersion, applicationId } from 'expo-application';
 import { ScreenWrapper } from 'src/components/template';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 // mock
 const CURRENT_VERSION = '1.0';
@@ -36,12 +37,16 @@ const VersionScreen = () => {
     () =>
       isLatest ? (
         <>
-          <Typography fontSize={15}>스위치가 최신 버전입니다.</Typography>
-          <Typography fontSize={15}>{`v ${version}`}</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            스위치가 최신 버전입니다.
+          </Typography>
+          <Typography fontSize={FONT_SIZE.normal}>{`v ${version}`}</Typography>
         </>
       ) : (
         <>
-          <Typography fontSize={15}>스위치 업데이트가 가능합니다.</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            스위치 업데이트가 가능합니다.
+          </Typography>
           <Flexbox.Item flex={1} width={'100%'}>
             {updateContents.map((content) => (
               <Typography

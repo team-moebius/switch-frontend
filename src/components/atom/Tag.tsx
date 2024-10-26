@@ -1,8 +1,9 @@
-import React from 'react';
 import { Pressable } from 'react-native';
 import { Color } from 'src/@types/unit';
 import Flexbox from './Flexbox';
 import { Typography } from './Typograph';
+import PALETTE from 'src/assets/theme/colors/palettes';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface TagProps {
   color: string;
@@ -15,7 +16,7 @@ interface TagProps {
 const Tag = ({
   color,
   children,
-  backgroundColor = '#797979',
+  backgroundColor = PALETTE.purple['100'],
   onPress,
   disabled,
 }: TagProps) => {
@@ -30,7 +31,7 @@ const Tag = ({
       alignItems={'center'}
     >
       <Pressable onPress={onPress} disabled={disabled}>
-        <Typography fontSize={12} color={color}>
+        <Typography fontSize={FONT_SIZE.smaller} color={color}>
           {children}
         </Typography>
       </Pressable>

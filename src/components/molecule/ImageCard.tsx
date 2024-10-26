@@ -3,6 +3,7 @@ import { Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { Card } from './Card';
 import { Pressable } from 'react-native';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface ImageCardProps extends ImageProps {
   title?: string;
@@ -20,7 +21,12 @@ const ImageCard = ({
   onClickHandler,
 }: ImageCardProps) => {
   const header = useMemo(
-    () => (desc ? <Typography fontSize={15}>{desc}</Typography> : <></>),
+    () =>
+      desc ? (
+        <Typography fontSize={FONT_SIZE.normal}>{desc}</Typography>
+      ) : (
+        <></>
+      ),
     [desc]
   );
   const content = useMemo(
@@ -30,7 +36,12 @@ const ImageCard = ({
     [width, height, src, resizeMode]
   );
   const footer = useMemo(
-    () => (title ? <Typography fontSize={15}>{title}</Typography> : <></>),
+    () =>
+      title ? (
+        <Typography fontSize={FONT_SIZE.normal}>{title}</Typography>
+      ) : (
+        <></>
+      ),
     [title]
   );
 

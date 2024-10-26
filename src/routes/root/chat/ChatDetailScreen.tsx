@@ -14,6 +14,7 @@ import { SwitchCompleteModal } from './content/modals/SwitchCompleteModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatRouteParamList } from '.';
 import { Alert } from 'react-native';
+import { COLORS } from 'src/assets/theme/base';
 
 type SwitchChatData = {
   id: number;
@@ -302,7 +303,12 @@ const ChatDetailScreen = ({
           />
         </Flexbox.Item>
       </Flexbox>
-      <Flexbox width={'100%'} height={'auto'} mt={10} backgroundColor={'#fff'}>
+      <Flexbox
+        width={'100%'}
+        height={'auto'}
+        mt={10}
+        backgroundColor={COLORS.container_background}
+      >
         <ChatInput
           value={chatText}
           onChangeText={onChatTextHandler}

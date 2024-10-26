@@ -3,6 +3,7 @@ import { Button, Flexbox, Icon, Typography } from '../atom';
 import { WithImage } from '../template';
 import { fontSizeStyle } from '../template/WithImage';
 import { WithMirror, mirrorDirectionStyle } from '../template/WithMirror';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 export type ItemDetail = {
   name?: string;
@@ -72,7 +73,7 @@ const SwitchListItem = ({
       </Flexbox>
       <Flexbox justifyContent='center'>
         <Button type={'transparent'} size={'medium'} onPress={onPress}>
-          <Typography fontSize={15} color={'blue'}>
+          <Typography fontSize={FONT_SIZE.normal} color={'blue'}>
             평가 남기기
           </Typography>
         </Button>
