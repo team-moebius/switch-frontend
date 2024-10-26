@@ -4,6 +4,7 @@ import { Card } from './Card';
 import { PressableIcon } from './PressableIcon';
 import { useCallback } from 'react';
 import { SwitchDetailData } from 'src/routes/root/home/SwitchDetailScreen/SwitchList.mock';
+import { FONT_SIZE, COLORS } from 'src/assets/theme/base';
 
 interface ItemCardProps {
   data: Omit<SwitchDetailData, 'date'> & { date: string };
@@ -25,11 +26,11 @@ const Header = ({
       <Tag
         backgroundColor='#FFA500'
         disabled
-        color={'white'}
+        color={COLORS.text}
         children={category}
       />
-      <Typography fontSize={20}>{name}</Typography>
-      <Typography fontSize={15}>{date}</Typography>
+      <Typography fontSize={FONT_SIZE.header}>{name}</Typography>
+      <Typography fontSize={FONT_SIZE.smaller}>{date}</Typography>
     </Flexbox>
   );
 };
