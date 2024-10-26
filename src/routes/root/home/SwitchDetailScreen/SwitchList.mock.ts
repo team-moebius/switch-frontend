@@ -1,4 +1,8 @@
-import { ItemResponse } from '@team-moebius/api-typescript';
+import {
+  ItemResponse,
+  ItemResponseStatusEnum,
+  ItemResponseTypeEnum,
+} from '@team-moebius/api-typescript';
 import { TagProps } from 'src/components/atom/Tag';
 
 type DateString = string; // ex- '2023-08-26T08:42:49.821Z'
@@ -18,13 +22,18 @@ type SwitchHistoryListItemData = {
 };
 
 type SwitchDetailData = {
-  title?: string;
-  date?: string;
-  desc?: string;
+  id?: number;
+  type?: ItemResponseTypeEnum;
+  userId?: number;
+  name?: string;
+  description?: string;
   images?: string[];
   preferredCategories?: string[];
-  location?: string;
+  preferredLocations?: string[];
+  waitingCount?: number;
+  status?: ItemResponseStatusEnum;
   category?: string;
+  date?: Date;
   liked?: boolean;
 };
 
@@ -397,9 +406,13 @@ const SWITCH_HISTORY_LIST_MOCK: Array<SwitchHistoryListItemData> = [
 ];
 
 const SWITCH_DETAIL_MOCK: SwitchDetailData = {
-  title: '커스텀 키보드',
-  date: '2023/03/08',
-  desc: '신입 개발자 시절 일에 대한 열정을 불태워줄 수 있도록 도와줬던 키보드입니다. 이걸로 업무봤을 때 좀 더 잘 되는 것 같았어요.',
+  id: 2,
+  type: 'GOODS',
+  userId: 3,
+  name: '커스텀 키보드',
+  date: new Date('2023-03-08'),
+  description:
+    '신입 개발자 시절 일에 대한 열정을 불태워줄 수 있도록 도와줬던 키보드입니다. 이걸로 업무봤을 때 좀 더 잘 되는 것 같았어요.',
   images: [
     'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
@@ -408,8 +421,16 @@ const SWITCH_DETAIL_MOCK: SwitchDetailData = {
     'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     'https://i.pinimg.com/736x/31/51/2a/31512a374041bcc7ba0983f37b67016e.jpg',
   ],
-  preferredCategories: ['여성 신발이나 잡화'],
-  location: '서울 천왕동',
+  preferredCategories: [
+    '여성 신발',
+    '잡화',
+    'loremloremloremloremloremloremlorem',
+  ],
+  preferredLocations: ['서울 천왕동', '서울 동작구', '서울 종로'],
+  waitingCount: 4,
+  status: 'READY',
+  liked: false,
+  category: 'PC 주변기기',
 };
 
 export {

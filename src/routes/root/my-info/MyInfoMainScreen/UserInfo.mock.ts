@@ -1,17 +1,14 @@
-type UserInfoData = {
-  userName: string;
-  verified: boolean;
-  switchCount: number;
-  userRate: number;
-  introduce: string;
+import { UserInfoResponse } from '@team-moebius/api-typescript';
+
+const USERINFO_MOCK: UserInfoResponse = {
+  id: 30,
+  phone: '01012345678',
+  email: 'example@ex.com',
+  nickname: '집닭',
+  introduction: '제 꿈은 집 닭으로 날개를 펴는 거에요!',
+  switchCount: 2,
+  switchAbortCount: 5,
+  score: 3.2,
 };
 
-const USERINFO_MOCK: UserInfoData = {
-  userName: '집오리',
-  verified: true,
-  switchCount: 4,
-  userRate: 0.8,
-  introduce: '제 꿈은 클립으로 집까지 바꾸는거에요:)',
-};
-
-export { UserInfoData, USERINFO_MOCK };
+export { USERINFO_MOCK };
