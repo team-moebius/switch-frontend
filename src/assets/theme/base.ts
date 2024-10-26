@@ -28,4 +28,14 @@ const COLORS = {
   ...COMPONENT_COLORS,
 } as const;
 
-export { COLORS };
+const FONT_SIZE = {
+  header: 20,
+  bigger: 17,
+  normal: 15,
+  smaller: 13,
+};
+const PADDING = {
+  vertical: 16,
+};
+
+export { COLORS, FONT_SIZE, PADDING };
