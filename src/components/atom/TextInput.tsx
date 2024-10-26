@@ -8,7 +8,7 @@ import {
   TextStyle,
   ViewStyle,
 } from 'react-native';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 interface InputProps {
   name: string;

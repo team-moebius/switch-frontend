@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Flexbox } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { DeclineSwitchModal } from './DeclineSwitchModal';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 interface UserControlModalProps extends ModalProps {
   onDeclineSwitch: () => void;

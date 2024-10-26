@@ -1,7 +1,7 @@
 import { Box, Flexbox, Icon, Typography } from 'src/components/atom';
 import { Pressable, ScrollView } from 'react-native';
 import { ImageItem } from './ImageItem';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 // Image API 명세 확인 후 구체적인 작업 필요.
 interface ImageUploaderProps {

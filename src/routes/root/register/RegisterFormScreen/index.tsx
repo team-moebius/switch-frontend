@@ -54,7 +54,7 @@ import { RegisterDto } from './contents/type';
 import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
 import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import PALETTE from 'src/assets/theme/colors/palettes';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 interface RegisterFormProps {
   initialData?: ItemResponse;

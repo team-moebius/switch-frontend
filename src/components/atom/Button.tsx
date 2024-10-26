@@ -2,7 +2,7 @@ import { ReactNode, useMemo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import Flexbox from './Flexbox';
 import { Typography } from './Typograph';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 const sizeStyle = StyleSheet.create({
   small: {

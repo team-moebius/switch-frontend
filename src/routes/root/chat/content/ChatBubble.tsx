@@ -1,5 +1,5 @@
 import React from 'react';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 import { Box, Flexbox, Typography } from 'src/components/atom';
 
 interface ChatBubbleProps {

@@ -2,7 +2,7 @@ import { ReactElement, useContext, useMemo } from 'react';
 import { FlatList, Pressable } from 'react-native';
 import { Box, Flexbox, Icon, Typography } from '../atom';
 import { ThemeContext } from 'src/context/theme';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 import PALETTE from 'src/assets/theme/colors/palettes';
 
 interface NumberPadProps {

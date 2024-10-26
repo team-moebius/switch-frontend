@@ -2,7 +2,7 @@ import React, { ReactNode, useMemo } from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { Box } from './Box';
 import { Color } from 'src/@types/unit';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 const { defaultWrapper } = StyleSheet.create({
   defaultWrapper: {

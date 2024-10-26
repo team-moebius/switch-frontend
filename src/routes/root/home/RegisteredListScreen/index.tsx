@@ -7,7 +7,7 @@ import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
 import { ItemApi } from 'src/api';
 import { UserContext } from 'src/context/user';
 import { Alert } from 'react-native';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 const MY_ITEM = {
   name: '이브이',

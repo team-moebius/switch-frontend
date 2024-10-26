@@ -1,6 +1,6 @@
 import { createContext, ReactNode, useMemo, useState } from 'react';
 import React from 'react';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 type Theme = { color: typeof COLORS };
 

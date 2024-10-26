@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button, Flexbox, Modal } from 'src/components/atom';
 import { ModalProps } from 'src/components/atom/Modal';
 import { DeleteItemModal } from './DeleteItemModal';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 interface MyItemOptionModalProps extends ModalProps {
   onEdit: () => void;

@@ -1,4 +1,4 @@
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 import { Flexbox, Tag } from 'src/components/atom';
 import { ImageCard } from 'src/components/molecule';
 

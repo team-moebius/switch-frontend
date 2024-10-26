@@ -14,7 +14,7 @@ import { SwitchCompleteModal } from './content/modals/SwitchCompleteModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatRouteParamList } from '.';
 import { Alert } from 'react-native';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 type SwitchChatData = {
   id: number;

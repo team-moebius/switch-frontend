@@ -7,7 +7,7 @@ import { ScreenWrapper, UnlockPassword } from 'src/components/template';
 import { AppPasswordContext } from 'src/context/password';
 
 import { SecuritySettingParamList } from '..';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 const SecuritySettingPassword = ({
   navigation,

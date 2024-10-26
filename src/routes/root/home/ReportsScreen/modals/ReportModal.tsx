@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { ConfirmReportModal } from './ConfirmReportModal';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 interface ReportModalProps extends ModalProps {
   isReportPost: boolean;

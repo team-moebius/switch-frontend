@@ -24,7 +24,7 @@ import {
   UserUpdateRequest,
 } from '@team-moebius/api-typescript';
 import { MyInfoParamList } from '.';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 const MyInfoEditScreen = ({
   navigation,

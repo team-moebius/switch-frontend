@@ -63,7 +63,7 @@ const ScreenHeader = ({
       <Flexbox.Item flex={3}>
         <Flexbox width={'100%'} justifyContent={'center'}>
           {typeof center === 'string' ? (
-            <Typography fontSize={20} color={color.neutral['300']}>
+            <Typography fontSize={20} color={color.text}>
               {center}
             </Typography>
           ) : (

@@ -1,4 +1,4 @@
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 

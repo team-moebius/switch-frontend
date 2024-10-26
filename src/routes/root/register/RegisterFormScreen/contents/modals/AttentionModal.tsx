@@ -1,7 +1,7 @@
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { Check } from 'src/components/atom/Check';
-import COLORS from 'src/assets/theme/base';
+import { COLORS } from 'src/assets/theme/base';
 
 export const DETAILS = 'details';
 export const SAFETY = 'safety';

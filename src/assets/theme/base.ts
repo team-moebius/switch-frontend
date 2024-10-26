@@ -28,4 +28,4 @@ const COLORS = {
   ...COMPONENT_COLORS,
 } as const;
 
-export default COLORS;
+export { COLORS };
