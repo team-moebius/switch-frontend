@@ -59,7 +59,7 @@ const HistoryListContent = () => {
       <FlatList<SwitchResponse>
         data={getPageableContent(data)}
         renderItem={ListItem}
-        keyExtractor={(item, index) => `${item.id}` ?? `${index}`}
+        keyExtractor={(item) => `${item.id}`}
         numColumns={1}
         onEndReached={handleLoadMoreData}
         onEndReachedThreshold={0.1}
