@@ -157,7 +157,8 @@ const ItemListContent = ({
   return (
     <ListView<ItemResponse>
       {...flatListProps}
-      data={getPageableContent(data)}
+      // data={getPageableContent(data)}
+      data={STUFF_LIST_MOCK}
       optionBar={
         <Flexbox
           width={'100%'}

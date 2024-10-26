@@ -12,48 +12,9 @@ import { UserContext } from 'src/context/user';
 
 import { HomeRouteParamList } from '..';
 import { StackScreenProps } from '@react-navigation/stack';
-import {
-  UserInfoData,
-  USERINFO_MOCK,
-} from '../../my-info/MyInfoMainScreen/UserInfo.mock';
+import { USERINFO_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { SwitchDetailData, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
-
-const userDataResolver = ({
-  userName,
-  verified,
-  switchCount,
-  userRate,
-  introduce,
-}: UserInfoData): SwitchDetailViewProps['userData'] => {
-  return {
-    user: userName,
-    verified: verified,
-    countSwitch: switchCount,
-    userRate: userRate,
-    bio: introduce,
-  };
-};
-
-const itemDataResolver = ({
-  title,
-  date = '',
-  desc,
-  images,
-  // wantedItem,
-  location,
-  category,
-}: // liked,
-SwitchDetailData): SwitchDetailViewProps['itemData'] => {
-  return {
-    title: title,
-    description: desc,
-    date: new Date(date),
-    thumbnails: images || [],
-    location: location,
-    category: category,
-    oppositeCategories: [],
-  };
-};
+import { convertLocalTime } from 'src/utils/convertLocalTime';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -147,8 +108,19 @@ const SwitchDetailScreen = ({
                   previousScreen: 'SwitchDetail',
                 })
               }
-              userData={userDataResolver(USERINFO_MOCK)}
-              itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
+              userData={{
+                score: USERINFO_MOCK.score as number,
+                verified: true,
+                switchCount: USERINFO_MOCK.switchCount as number,
+                nickname: USERINFO_MOCK.nickname as string,
+                introduction: USERINFO_MOCK.introduction as string,
+              }}
+              itemData={{
+                ...SWITCH_DETAIL_MOCK,
+                date: SWITCH_DETAIL_MOCK.date
+                  ? convertLocalTime(SWITCH_DETAIL_MOCK.date?.toUTCString())
+                  : '',
+              }}
             />
           </Flexbox.Item>
           <Separator width={'100%'} />

@@ -3,12 +3,12 @@ import { Pressable, useWindowDimensions } from 'react-native';
 import { Box, Flexbox, Typography, Image } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ItemCard, UserSummary } from 'src/components/molecule';
-import { SwitchDetailData } from '../../../register/RegisterFormScreen/contents/type';
 import { UserSummaryData } from 'src/components/molecule/UserSummary';
 import Swiper from 'react-native-swiper';
+import { SwitchDetailData } from '../SwitchList.mock';
 
 type SwitchDetailViewProps = {
-  itemData: SwitchDetailData;
+  itemData: Omit<SwitchDetailData, 'date'> & { date: string };
   userData: UserSummaryData;
   onClickReport: () => void;
 };
@@ -17,7 +17,16 @@ const SwitchDetailView = ({
   itemData,
   onClickReport,
 }: SwitchDetailViewProps) => {
-  const { title, date, description, hashtags, location, thumbnails } = itemData;
+  const {
+    name,
+    date,
+    description,
+    preferredLocations,
+    preferredCategories,
+    images,
+    liked,
+    category,
+  } = itemData;
   const { width: screenWidth } = useWindowDimensions();
 
   return (
@@ -35,28 +44,29 @@ const SwitchDetailView = ({
             height: 285,
           }}
         >
-          {thumbnails.map((src, index) => (
-            <Box key={index} width={'100%'} height={'100%'}>
-              <Image
-                src={src}
-                width={'100%'}
-                height={'100%'}
-                resizeMode={'contain'}
-              />
-            </Box>
-          ))}
+          {images &&
+            images.map((src, index) => (
+              <Box key={index} width={'100%'} height={'100%'}>
+                <Image
+                  src={src}
+                  width={'100%'}
+                  height={'100%'}
+                  resizeMode={'contain'}
+                />
+              </Box>
+            ))}
         </Swiper>
       </Flexbox.Item>
-      <Flexbox.Item width={'90%'} pt={20}>
+      <Flexbox.Item width={'90%'} pt={5}>
         <ItemCard
           data={{
-            title: title,
-            date: date?.toDateString(),
-            desc: description,
-            // wantedItem: oppositeCategories.map(({ children }) => children),
-            location: location,
-            hashtags: hashtags,
-            // liked: SWITCH_DETAIL_MOCK.liked,
+            name,
+            date,
+            description,
+            category,
+            preferredLocations,
+            preferredCategories,
+            liked,
           }}
         />
       </Flexbox.Item>
