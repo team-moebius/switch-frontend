@@ -21,7 +21,7 @@ const DEFAULT_STYLE = {
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: PADDING.wrapper.vertical,
+  padding: PADDING.wrapper.horizontal,
 } as FlexboxProps;
 
 const ScreenHeader = ({
