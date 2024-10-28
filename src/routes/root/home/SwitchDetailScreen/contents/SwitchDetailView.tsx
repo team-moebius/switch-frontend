@@ -7,6 +7,7 @@ import { UserSummaryData } from 'src/components/molecule/UserSummary';
 import Swiper from 'react-native-swiper';
 import { SwitchDetailData } from '../SwitchList.mock';
 import PALETTE from 'src/assets/theme/colors/palettes';
+import { FONT_SIZE, PADDING } from 'src/assets/theme/base';
 
 type SwitchDetailViewProps = {
   itemData: Omit<SwitchDetailData, 'date'> & { date: string };
@@ -52,13 +53,17 @@ const SwitchDetailView = ({
                   src={src}
                   width={'100%'}
                   height={'100%'}
-                  resizeMode={'contain'}
+                  resizeMode={'cover'}
                 />
               </Box>
             ))}
         </Swiper>
       </Flexbox.Item>
-      <Flexbox.Item width={'90%'} pt={5}>
+      <Flexbox.Item
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+        pt={20}
+      >
         <ItemCard
           data={{
             name,
@@ -73,16 +78,16 @@ const SwitchDetailView = ({
       </Flexbox.Item>
       <Separator width={'100%'} />
       <Flexbox.Item width={'100%'}>
-        <Flexbox alignItems='center' justifyContent='center'>
-          <Pressable onPress={onClickReport}>
-            <Typography fontSize={20} color={PALETTE.red[200]}>
+        <Pressable onPress={onClickReport} style={{ width: '100%' }}>
+          <Flexbox alignItems='center' justifyContent='center'>
+            <Typography fontSize={FONT_SIZE.header} color={PALETTE.red[200]}>
               신고하기
             </Typography>
-          </Pressable>
-        </Flexbox>
+          </Flexbox>
+        </Pressable>
       </Flexbox.Item>
       <Separator width={'100%'} />
-      <Flexbox width={'90%'}>
+      <Flexbox pl={PADDING.wrapper.horizontal} pr={PADDING.wrapper.horizontal}>
         <UserSummary data={userData} />
       </Flexbox>
     </Flexbox>
