@@ -1,24 +1,16 @@
 // import Swiper from 'react-native-swiper';
-import { Pressable, useWindowDimensions } from 'react-native';
-import { Box, Flexbox, Typography, Image } from 'src/components/atom';
+import { useWindowDimensions } from 'react-native';
+import { Box, Flexbox, Image } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
-import { ItemCard, UserSummary } from 'src/components/molecule';
-import { UserSummaryData } from 'src/components/molecule/UserSummary';
+import { ItemCard } from 'src/components/molecule';
 import Swiper from 'react-native-swiper';
 import { SwitchDetailData } from '../SwitchList.mock';
-import PALETTE from 'src/assets/theme/colors/palettes';
-import { FONT_SIZE, PADDING } from 'src/assets/theme/base';
+import { PADDING } from 'src/assets/theme/base';
 
 type SwitchDetailViewProps = {
   itemData: Omit<SwitchDetailData, 'date'> & { date: string };
-  userData: UserSummaryData;
-  onClickReport: () => void;
 };
-const SwitchDetailView = ({
-  userData,
-  itemData,
-  onClickReport,
-}: SwitchDetailViewProps) => {
+const SwitchDetailView = ({ itemData }: SwitchDetailViewProps) => {
   const {
     name,
     date,
@@ -77,19 +69,6 @@ const SwitchDetailView = ({
         />
       </Flexbox.Item>
       <Separator width={'100%'} />
-      <Flexbox.Item width={'100%'}>
-        <Pressable onPress={onClickReport} style={{ width: '100%' }}>
-          <Flexbox alignItems='center' justifyContent='center'>
-            <Typography fontSize={FONT_SIZE.header} color={PALETTE.red[200]}>
-              신고하기
-            </Typography>
-          </Flexbox>
-        </Pressable>
-      </Flexbox.Item>
-      <Separator width={'100%'} />
-      <Flexbox pl={PADDING.wrapper.horizontal} pr={PADDING.wrapper.horizontal}>
-        <UserSummary data={userData} />
-      </Flexbox>
     </Flexbox>
   );
 };
