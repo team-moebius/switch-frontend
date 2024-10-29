@@ -11,7 +11,6 @@ import {
 } from 'src/components/atom';
 import { TradingListItem, UserSummary } from 'src/components/molecule';
 import { UserSummaryData } from 'src/components/molecule/UserSummary';
-import { UserContext } from 'src/context/user';
 
 interface SwitchDetailFooterProp {
   handleClickReport: () => void;
