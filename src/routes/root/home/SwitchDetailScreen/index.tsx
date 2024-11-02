@@ -58,21 +58,6 @@ const SwitchDetailScreen = ({
           isMine={isMine}
         />
       </ScrollView>
-      {isMine && (
-        <Box
-          position='absolute'
-          bottom={10}
-          pl={PADDING.wrapper.horizontal + 10}
-          pr={PADDING.wrapper.horizontal + 10}
-        >
-          <Button
-            type={'normal'}
-            size={'medium'}
-            onPress={handleClickCheckoutPropose}
-            children={'제안 받은 물품 보기'}
-          />
-        </Box>
-      )}
     </ScreenWrapper>
   );
 };

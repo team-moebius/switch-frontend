@@ -134,39 +134,6 @@ const SwitchDetailFooter = ({
         </Box>
       );
     }
-    // 아래는 '제안 받은 협의 보기'를 눌렀을 때...
-    else if (false) {
-      return (
-        <Flexbox
-          alignItems={'center'}
-          justifyContent={'center'}
-          flexDirection={'row'}
-          gap={10}
-          pb={20}
-          pr={PADDING.wrapper.horizontal}
-          pl={PADDING.wrapper.horizontal}
-        >
-          <Flexbox.Item flex={1}>
-            <Button
-              type={'normal'}
-              size={'medium'}
-              onPress={handleClickNegotiate}
-            >
-              협의
-            </Button>
-          </Flexbox.Item>
-          <Flexbox.Item flex={1}>
-            <Button
-              type={'warning'}
-              size={'medium'}
-              onPress={handleClickDecline}
-            >
-              거절
-            </Button>
-          </Flexbox.Item>
-        </Flexbox>
-      );
-    }
   }
 };
 
