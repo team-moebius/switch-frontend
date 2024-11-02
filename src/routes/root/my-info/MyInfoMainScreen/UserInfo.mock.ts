@@ -1,6 +1,4 @@
-import { UserInfoResponse } from '@team-moebius/api-typescript';
-
-const USERINFO_MOCK: UserInfoResponse = {
+const USERINFO_MOCK = {
   id: 30,
   phone: '01012345678',
   email: 'example@ex.com',
@@ -11,4 +9,12 @@ const USERINFO_MOCK: UserInfoResponse = {
   score: 3.2,
 };
 
-export { USERINFO_MOCK };
+const USERSUMMARY_MOCK = {
+  score: USERINFO_MOCK.score,
+  verified: true,
+  switchCount: USERINFO_MOCK.switchCount,
+  nickname: USERINFO_MOCK.nickname,
+  introduction: USERINFO_MOCK.introduction,
+};
+
+export { USERINFO_MOCK, USERSUMMARY_MOCK };
