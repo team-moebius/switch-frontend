@@ -10,6 +10,7 @@ interface UserSummaryData {
 }
 interface UserSummaryProps {
   data: UserSummaryData;
+  onPressUsername?: () => void;
 }
 
 const UserSummary = ({ data }: UserSummaryProps) => {
@@ -28,7 +29,6 @@ const UserSummary = ({ data }: UserSummaryProps) => {
             >
               {nickname}
             </Typography>
-
             <Tag color={COLORS.neutral.white} backgroundColor={tagColor}>
               {verified ? '인증완료' : '미인증 유저'}
             </Tag>

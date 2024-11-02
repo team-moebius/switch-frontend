@@ -54,6 +54,7 @@ const SwitchDetailFooter = ({
           pl={PADDING.wrapper.horizontal}
           pr={PADDING.wrapper.horizontal}
         >
+          {/* TODO : 🚨 onPressUsername에 상대 유저 정보로 갈 수 있도록 핸들러 연결해줘야 됨 */}
           <UserSummary data={userSummaryData} />
         </Flexbox>
         <Separator width={'100%'} />
