@@ -13,27 +13,23 @@ import { TradingListItem, UserSummary } from 'src/components/molecule';
 import { UserSummaryData } from 'src/components/molecule/UserSummary';
 
 interface SwitchDetailFooterProp {
-  handleClickReport: () => void;
-  handleClickPropose: () => void;
-  handleClickRevoke: () => void;
-  handleClickNegotiate: () => void;
-  handleClickDecline: () => void;
+  onPressReport: () => void;
+  onPressPropose: () => void;
+  onPressRevoke: () => void;
   userSummaryData: UserSummaryData;
   offeredList: ItemResponse[];
   isMine: boolean;
 }
 
 const SwitchDetailFooter = ({
-  handleClickReport,
-  handleClickPropose,
-  handleClickRevoke,
-  handleClickNegotiate,
-  handleClickDecline,
+  onPressReport,
+  onPressPropose,
+  onPressRevoke,
   userSummaryData,
   offeredList,
   isMine,
 }: SwitchDetailFooterProp) => {
-  const handleClickOfferList = (item: any) => {
+  const onPressOfferList = (item: any) => {
     // TODO : 🚨 해당 아이템으로 navigation 걸어야 됨
     Alert.alert(item, '을 클릭했습니다.');
   };
@@ -45,7 +41,7 @@ const SwitchDetailFooter = ({
     return (
       <>
         <Flexbox.Item width={'100%'}>
-          <Pressable onPress={handleClickReport} style={{ width: '100%' }}>
+          <Pressable onPress={onPressReport} style={{ width: '100%' }}>
             <Flexbox alignItems='center' justifyContent='center'>
               <Typography fontSize={FONT_SIZE.header} color={PALETTE.red[200]}>
                 신고하기
@@ -76,7 +72,7 @@ const SwitchDetailFooter = ({
                 <Button
                   type={'normal'}
                   size={'medium'}
-                  onPress={handleClickPropose}
+                  onPress={onPressPropose}
                 >
                   스위치 요청하기
                 </Button>
@@ -87,11 +83,7 @@ const SwitchDetailFooter = ({
             </>
           ) : (
             <Box>
-              <Button
-                type={'warning'}
-                size={'medium'}
-                onPress={handleClickRevoke}
-              >
+              <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
                 요청 취소하기
               </Button>
             </Box>
@@ -119,7 +111,7 @@ const SwitchDetailFooter = ({
             return (
               <TradingListItem
                 key={index}
-                onPress={() => handleClickOfferList(offer.name)}
+                onPress={() => onPressOfferList(offer.name)}
                 childDirection='column'
                 data={{
                   src: offer.images ? offer.images[0] : '',

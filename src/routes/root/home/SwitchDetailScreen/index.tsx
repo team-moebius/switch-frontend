@@ -24,17 +24,23 @@ const SwitchDetailScreen = ({
   // TODO : 🚨 아이템 api 받아서 이 아이템이 내 아이템인지 확인하는 반응형 변수 만들기
   // const isMine = userId === '물품id';
   const isMine = true;
-  const handleClickReport = () =>
+  const onPressReport = () =>
     navigation.navigate('Report', {
       previousScreen: 'SwitchDetail',
     });
-  const handleClickPropose = () => navigation.navigate('RegisteredList');
+  const onPressPropose = () => navigation.navigate('RegisteredList');
   // TODO : 🚨 모달 띄우기
-  const handleClickRevoke = () =>
-    Alert.alert('요청 취소', '요청이 취소됐습니다.');
-  const handleClickNegotiate = () => navigation.navigate('ChatDetail');
-  const handleClickDecline = () => {};
-  const handleClickCheckoutPropose = () => Alert.alert('물품을 보겠습니다.');
+  const onPressRevoke = () => {
+    Alert.alert('스위치 취소 모달 실행!');
+    setRevokeModalVisible(true);
+  };
+  const onPressRevokeConfirm = () => {
+    Alert.alert('요청 성공!');
+    setRevokeModalVisible(false);
+  };
+  const onPresssRevokeModalBack = () => {
+    setRevokeModalVisible(false);
+  };
 
   return (
     <ScreenWrapper>
@@ -48,11 +54,9 @@ const SwitchDetailScreen = ({
           }}
         />
         <SwitchDetailFooter
-          handleClickReport={handleClickReport}
-          handleClickPropose={handleClickPropose}
-          handleClickRevoke={handleClickRevoke}
-          handleClickNegotiate={handleClickNegotiate}
-          handleClickDecline={handleClickDecline}
+          onPressReport={onPressReport}
+          onPressPropose={onPressPropose}
+          onPressRevoke={onPressRevoke}
           userSummaryData={USERSUMMARY_MOCK}
           offeredList={STUFF_LIST_MOCK}
           isMine={isMine}
