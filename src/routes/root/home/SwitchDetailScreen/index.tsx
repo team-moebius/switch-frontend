@@ -21,16 +21,16 @@ const SwitchDetailScreen = ({
 }: StackScreenProps<HomeRouteParamList, 'SwitchDetail'>) => {
   const [revokeModalVisible, setRevokeModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
-  console.log('params 입니다 ::: ', route.params, userId);
-  // TODO : 🚨 아이템 api 받아서 이 아이템이 내 아이템인지 확인하는 반응형 변수 만들기
   // const isMine = userId === '물품id';
   const isMine = false;
+  // console.log('params 입니다 ::: ', route.params, userId);
+  // TODO : 🚨 아이템 api 받아서 이 아이템이 내 아이템인지 확인하는 반응형 변수 만들기
+  // TODO : 🚨 북마크 api 달아야 됨
   const onPressReport = () =>
     navigation.navigate('Report', {
       previousScreen: 'SwitchDetail',
     });
   const onPressPropose = () => navigation.navigate('RegisteredList');
-  // TODO : 🚨 모달 띄우기
   const onPressRevoke = () => {
     Alert.alert('스위치 취소 모달 실행!');
     setRevokeModalVisible(true);
