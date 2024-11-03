@@ -64,9 +64,9 @@ const ListItem = ({
   return (
     <TradingListItem
       data={{
-        title: item.name ? item.name : '',
+        name: item.name ? item.name : '',
         src: item.images ? item.images[0] : '',
-        location: withTitleOnly
+        preferredLocation: withTitleOnly
           ? ''
           : Array.from(item.preferredLocations || '')[0] || '',
       }}
@@ -157,7 +157,8 @@ const ItemListContent = ({
   return (
     <ListView<ItemResponse>
       {...flatListProps}
-      data={getPageableContent(data)}
+      // data={getPageableContent(data)}
+      data={STUFF_LIST_MOCK}
       optionBar={
         <Flexbox
           width={'100%'}

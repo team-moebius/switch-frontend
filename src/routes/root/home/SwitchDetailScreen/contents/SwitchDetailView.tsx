@@ -1,24 +1,26 @@
 // import Swiper from 'react-native-swiper';
-import { Pressable, useWindowDimensions } from 'react-native';
-import { Box, Flexbox, Typography, Image } from 'src/components/atom';
+import { useWindowDimensions } from 'react-native';
+import { Box, Flexbox, Image } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
-import { ItemCard, UserSummary } from 'src/components/molecule';
-import { SwitchDetailData } from '../../../register/RegisterFormScreen/contents/type';
-import { UserSummaryData } from 'src/components/molecule/UserSummary';
+import { ItemCard } from 'src/components/molecule';
 import Swiper from 'react-native-swiper';
-import PALETTE from 'src/assets/theme/colors/palettes';
+import { SwitchDetailData } from '../SwitchList.mock';
+import { PADDING } from 'src/assets/theme/base';
 
 type SwitchDetailViewProps = {
-  itemData: SwitchDetailData;
-  userData: UserSummaryData;
-  onClickReport: () => void;
+  itemData: Omit<SwitchDetailData, 'date'> & { date: string };
 };
-const SwitchDetailView = ({
-  userData,
-  itemData,
-  onClickReport,
-}: SwitchDetailViewProps) => {
-  const { title, date, description, hashTags, location, thumbnails } = itemData;
+const SwitchDetailView = ({ itemData }: SwitchDetailViewProps) => {
+  const {
+    name,
+    date,
+    description,
+    preferredLocations,
+    preferredCategories,
+    images,
+    liked,
+    category,
+  } = itemData;
   const { width: screenWidth } = useWindowDimensions();
 
   return (
@@ -36,45 +38,37 @@ const SwitchDetailView = ({
             height: 285,
           }}
         >
-          {thumbnails.map((src, index) => (
-            <Box key={index} width={'100%'} height={'100%'}>
-              <Image
-                src={src}
-                width={'100%'}
-                height={'100%'}
-                resizeMode={'contain'}
-              />
-            </Box>
-          ))}
+          {images &&
+            images.map((src, index) => (
+              <Box key={index} width={'100%'} height={'100%'}>
+                <Image
+                  src={src}
+                  width={'100%'}
+                  height={'100%'}
+                  resizeMode={'cover'}
+                />
+              </Box>
+            ))}
         </Swiper>
       </Flexbox.Item>
-      <Flexbox.Item width={'90%'} pt={20}>
+      <Flexbox.Item
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+        pt={20}
+      >
         <ItemCard
           data={{
-            title: title,
-            date: date?.toDateString(),
-            desc: description,
-            // wantedItem: oppositeCategories.map(({ children }) => children),
-            location: location,
-            hashTags: hashTags,
-            // liked: SWITCH_DETAIL_MOCK.liked,
+            name,
+            date,
+            description,
+            category,
+            preferredLocations,
+            preferredCategories,
+            liked,
           }}
         />
       </Flexbox.Item>
       <Separator width={'100%'} />
-      <Flexbox.Item width={'100%'}>
-        <Flexbox alignItems='center' justifyContent='center'>
-          <Pressable onPress={onClickReport}>
-            <Typography fontSize={20} color={PALETTE.red[200]}>
-              신고하기
-            </Typography>
-          </Pressable>
-        </Flexbox>
-      </Flexbox.Item>
-      <Separator width={'100%'} />
-      <Flexbox width={'90%'}>
-        <UserSummary data={userData} />
-      </Flexbox>
     </Flexbox>
   );
 };

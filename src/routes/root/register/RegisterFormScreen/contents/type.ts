@@ -1,16 +1,16 @@
 import { ItemResponse } from '@team-moebius/api-typescript';
 import { TagProps } from 'src/components/atom/Tag';
 
-interface SwitchDetailData {
-  title?: string;
-  thumbnails: Array<string>;
-  date?: Date;
-  description?: string;
-  hashTags: Array<TagProps>;
-  location?: string;
-  categories: Array<TagProps>;
-  oppositeCategories: Array<TagProps>;
-}
+// interface SwitchDetailData {
+//   title?: string;
+//   thumbnails: Array<string>;
+//   date?: Date;
+//   description?: string;
+//   preferredCategories: Array<string>;
+//   location?: string;
+//   category?: string;
+//   oppositeCategories: Array<string>;
+// }
 
 // interface SwitchDetailData {
 //   name: string;
@@ -27,9 +27,8 @@ interface RegisterDto {
   name: string;
   description: string;
   images: Array<string>;
-  hashtags: Array<string>;
   preferredCategories: Array<string>;
   preferredLocations: Array<string>;
 }
 
-export { SwitchDetailData, RegisterDto };
+export { RegisterDto };

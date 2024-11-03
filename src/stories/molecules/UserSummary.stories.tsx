@@ -16,10 +16,10 @@ export const story = Template.bind({});
 story.storyName = 'default';
 story.args = {
   data: {
-    user: '집오리',
+    nickname: '집오리',
     verified: true,
-    countSwitch: '15',
-    userRate: '5/5',
-    bio: '제 꿈은 클립으로 집까지 바꾸는거예요 :)',
+    switchCount: 15,
+    score: 3,
+    introduction: '제 꿈은 클립으로 집까지 바꾸는거예요 :)',
   },
 };

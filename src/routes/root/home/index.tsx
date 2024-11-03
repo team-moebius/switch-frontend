@@ -63,7 +63,7 @@ const HomeRouteHeader = ({
   return (
     <Flexbox
       width={'100%'}
-      padding={PADDING.wrapper.vertical}
+      padding={PADDING.wrapper.horizontal}
       backgroundColor={color.container_background}
       justifyContent={'space-around'}
       alignItems={'center'}
@@ -128,57 +128,8 @@ const HomeRoute = ({
           <Stack.Screen
             name={'SwitchDetail'}
             component={SwitchDetailScreen}
-            // 스위치 제안이 온 경우
-            // height 120, 아니면 80?
-            // 스위치 제안이 안 온 경우 center, right는 비어있습니다.
             options={{
-              header: (props) => (
-                <ScreenHeader
-                  {...props}
-                  containerStyle={{
-                    backgroundColor: COLORS.container_background,
-                    position: 'absolute',
-                    height: 120,
-                  }}
-                  center={
-                    <Flexbox
-                      width={'100%'}
-                      flexDirection='column'
-                      alignItems='center'
-                    >
-                      <Flexbox gap={10}>
-                        <Flexbox.Item>
-                          <WithImage
-                            src='https://cdn-gq.github.io/pokemon/133.webp'
-                            text='이브이 스티커'
-                            imageWidth={80}
-                            imageHeight={80}
-                          />
-                        </Flexbox.Item>
-                        <Flexbox.Item alignSelf='center'>
-                          <Tag
-                            disabled={false}
-                            color={'#FFFFFF'}
-                            backgroundColor={'#21BD9E'}
-                          >{`+${4}`}</Tag>
-                        </Flexbox.Item>
-                      </Flexbox>
-                      <Flexbox.Item>
-                        <Icon name='swap-horizontal' size={24} />
-                      </Flexbox.Item>
-                    </Flexbox>
-                  }
-                  right={
-                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                      <PressableIcon
-                        size={24}
-                        name={'menu'}
-                        onPress={() => setMyItemModalVisible((prev) => !prev)}
-                      />
-                    </Flexbox>
-                  }
-                />
-              ),
+              header: (props) => <ScreenHeader {...props} />,
             }}
           />
           <Stack.Screen

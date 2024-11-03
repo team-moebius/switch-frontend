@@ -18,12 +18,7 @@ import {
   Button,
   Separator,
 } from 'src/components/atom';
-import {
-  Field,
-  HashTagInput,
-  PressableIcon,
-  TagInput,
-} from 'src/components/molecule';
+import { Field, PressableIcon, TagInput } from 'src/components/molecule';
 import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 
 import { ImageUploader } from './contents/ImageUploader';
@@ -51,7 +46,7 @@ import {
 import { RegisterDto } from './contents/type';
 
 /* mock */
-import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
+import { INPUT_TAG_MOCK } from '../Tags.mock';
 import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import PALETTE from 'src/assets/theme/colors/palettes';
 import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
@@ -67,7 +62,6 @@ const defaultForm = {
   images: [],
   category: '',
   preferredCategories: [],
-  hashtags: [],
   preferredLocations: [],
 };
 
@@ -83,7 +77,6 @@ const RegisterFormScreen = ({
     images: paramsData.images ?? [],
     // category: paramsData.category,
     category: '',
-    hashtags: Array.from(paramsData.hashtags?.values() ?? []),
     preferredCategories: Array.from(
       paramsData.preferredCategories?.values() ?? []
     ),
@@ -135,7 +128,6 @@ const RegisterFormScreen = ({
     name,
     description = '',
     images,
-    hashtags,
     category,
     preferredCategories,
     preferredLocations,
@@ -145,8 +137,6 @@ const RegisterFormScreen = ({
   const [categoryTagInput, setCategoryTagInput] = useState<string>();
   // 스위치 원하는 물건 종류 input
   const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
-  // 해시 태그 input
-  const [hashTagInput, setHashTagInput] = useState<string>();
 
   const [addressModalVisible, setAddressModalVisible] = useState(false);
   const [attentionModalVisible, setAttentionModalVisible] = useState(false);
@@ -187,7 +177,6 @@ const RegisterFormScreen = ({
     } else {
       createMutate({
         ...data,
-        hashtags,
         preferredCategories,
         preferredLocations,
         type: 'GOODS',
@@ -270,24 +259,6 @@ const RegisterFormScreen = ({
     setOCategoryTagInput('');
   };
 
-  const onSubmitHashTags = (
-    event: NativeSyntheticEvent<TextInputEndEditingEventData>
-  ) => {
-    if (hashtags.length >= 5) {
-      Alert.alert('알림', '해쉬태그는 5개까지 입력 가능합니다.');
-    } else if (
-      hashTagInput &&
-      hashTagInput.length > 0 &&
-      !hashtags.includes(hashTagInput)
-    ) {
-      setData((prev) => ({
-        ...prev,
-        hashtags: [...hashtags, `#${hashTagInput}`],
-      }));
-    }
-    setHashTagInput('');
-  };
-
   const onPressCategory = () => {
     setData((prev) => ({ ...prev, category: '' }));
   };
@@ -298,13 +269,6 @@ const RegisterFormScreen = ({
       preferredCategories: preferredCategories.filter(
         (preferred) => preferred !== preferredCategory
       ),
-    }));
-  };
-
-  const onPressHashtags = (hashtag: string) => {
-    setData((prev) => ({
-      ...prev,
-      hashtags: hashtags.filter((tag) => tag !== hashtag),
     }));
   };
 
@@ -444,34 +408,6 @@ const RegisterFormScreen = ({
               </Flexbox>
             }
             onSubmitEditing={onSubmitPreferredCategory}
-          />
-          <Separator />
-          <HashTagInput
-            value={hashTagInput}
-            width={'100%'}
-            itemsWrap={'wrap'}
-            name={'tagInput'}
-            placeholder={'물품에 대한 해시태그를 작성해주세요.(선택사항)'}
-            disabled={false}
-            onChangeText={setHashTagInput}
-            hashTags={hashtags.map((hashtag) => ({
-              children: hashtag,
-              color: 'black',
-              backgroundColor: 'white',
-              onPress: () => onPressHashtags(hashtag),
-            }))}
-            functionalElement={
-              <Flexbox
-                flexDirection={'column'}
-                justifyContent={'space-between'}
-                gap={5}
-              >
-                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
-                  {hashtags.length + '/5'}
-                </Typography>
-              </Flexbox>
-            }
-            onSubmitEditing={onSubmitHashTags}
           />
           <Separator />
           <Typography fontSize={FONT_SIZE.normal}>선호 주소</Typography>

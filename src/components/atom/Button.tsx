@@ -30,12 +30,12 @@ const sizeStyle = StyleSheet.create({
 
 const typeStyle = StyleSheet.create({
   normal: {
-    backgroundColor: COLORS.success,
+    backgroundColor: COLORS.info,
     color: COLORS.neutral.white,
   },
   transparent: {
     backgroundColor: 'transparent',
-    color: COLORS.success,
+    color: COLORS.info,
   },
   cancel: {
     backgroundColor: COLORS.neutral.gray,

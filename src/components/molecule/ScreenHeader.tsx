@@ -17,11 +17,14 @@ interface ScreenHeaderProps extends StackHeaderProps {
 
 const DEFAULT_STYLE = {
   width: '100%',
-  height: 60,
+  height: 50,
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  padding: PADDING.wrapper.vertical,
+  pl: PADDING.wrapper.horizontal,
+  pr: PADDING.wrapper.horizontal,
+  pt: 10,
+  pb: 10,
 } as FlexboxProps;
 
 const ScreenHeader = ({
