@@ -155,9 +155,13 @@ const RegisterFormScreen = ({
   } = data;
 
   // 등록하는 물건 종류 input
-  const [categoryTagInput, setCategoryTagInput] = useState<string>();
+  const [categoryInput, setCategoryInput] = useState<
+    RegisterCategory | '카테고리 선택'
+  >('카테고리 선택');
   // 스위치 원하는 물건 종류 input
-  const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
+  const [preferredCategoryInput, setPreferredCategoryInput] = useState<
+    RegisterCategory | '스위치 희망 카테고리 선택'
+  >('스위치 희망 카테고리 선택');
 
   const [addressModalVisible, setAddressModalVisible] = useState(false);
   const [attentionModalVisible, setAttentionModalVisible] = useState(false);
