@@ -2,7 +2,6 @@
 import { useCallback, useEffect, useState } from 'react';
 import {
   ScrollView,
-  Pressable,
   useWindowDimensions,
   Alert,
   NativeSyntheticEvent,
@@ -13,18 +12,23 @@ import {
 import {
   Box,
   Flexbox,
-  Icon,
   Typography,
   Button,
   Separator,
+  Select,
 } from 'src/components/atom';
-import { Field, PressableIcon, TagInput } from 'src/components/molecule';
+import {
+  CountingTextarea,
+  Field,
+  PressableIcon,
+} from 'src/components/molecule';
 import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 
 import { ImageUploader } from './contents/ImageUploader';
 
 import { AddressModal } from './contents/modals/AddressModal';
 import { AttentionModal, DETAILS } from './contents/modals/AttentionModal';
+import { OptionValue } from 'src/components/atom/Select';
 
 /* custom hooks */
 import useExpoLocation from 'src/hooks/useExpoLocation';
@@ -46,8 +50,6 @@ import {
 import { RegisterDto } from './contents/type';
 
 /* mock */
-import { INPUT_TAG_MOCK } from '../Tags.mock';
-import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import PALETTE from 'src/assets/theme/colors/palettes';
 import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
@@ -252,49 +254,14 @@ const RegisterFormScreen = ({
     }));
   };
 
-  const onSubmitCategory = (
-    event: NativeSyntheticEvent<TextInputEndEditingEventData>
+  const onClickCategory = (value: RegisterCategory | '카테고리 선택') => {
+    setCategoryInput(value);
+  };
+
+  const onClickPreferredCategory = (
+    value: RegisterCategory | '스위치 희망 카테고리 선택'
   ) => {
-    if (category.length > 0) {
-      Alert.alert('알림', '카테고리는 하나만 입력 가능합니다.');
-    } else if (categoryTagInput && categoryTagInput.length > 0) {
-      setData((prev) => ({
-        ...prev,
-        category: categoryTagInput,
-      }));
-    }
-    setCategoryTagInput('');
-  };
-
-  const onSubmitPreferredCategory = (
-    event: NativeSyntheticEvent<TextInputEndEditingEventData>
-  ) => {
-    if (preferredCategories.length >= 3) {
-      Alert.alert('알림', '선호 카테고리는 3개까지 입력 가능합니다.');
-    } else if (
-      oCategoryTagInput &&
-      oCategoryTagInput.length > 0 &&
-      !preferredCategories.includes(oCategoryTagInput)
-    ) {
-      setData((prev) => ({
-        ...prev,
-        preferredCategories: [...preferredCategories, oCategoryTagInput],
-      }));
-    }
-    setOCategoryTagInput('');
-  };
-
-  const onPressCategory = () => {
-    setData((prev) => ({ ...prev, category: '' }));
-  };
-
-  const onPressPreferredCategory = (preferredCategory: string) => {
-    setData((prev) => ({
-      ...prev,
-      preferredCategories: preferredCategories.filter(
-        (preferred) => preferred !== preferredCategory
-      ),
-    }));
+    setPreferredCategoryInput(value);
   };
 
   const onPressPreferredLocations = (location: string) => {
@@ -354,141 +321,95 @@ const RegisterFormScreen = ({
             onDeleteItem={onPressDeletePhoto}
             screenWidth={screenWidth}
           />
-          <Separator width={'100%'} />
-          <Field
-            width={'100%'}
-            placeholder={'물품명'}
-            fieldType={'textInput'}
-            value={name}
-            name={'name'}
-            style={{ borderWidth: 0 }}
-            onChange={changeHandler}
-          />
-          <Separator />
-
-          <Field
-            fieldType={'countingTextarea'}
-            name={'description'}
-            placeholder={'물품에 대한 설명이나 스토리를 작성해주세요.'}
+          <Box mt={20}>
+            <Field
+              width={'100%'}
+              placeholder={'물품명'}
+              fieldType={'textInput'}
+              value={name}
+              name={'name'}
+              style={{ borderWidth: 1, borderColor: 'black' }}
+              onChange={changeHandler}
+            />
+          </Box>
+          <Box mt={20}>
+            <Select<RegisterCategory | '카테고리 선택'>
+              options={[...REGISTER_CATEGORY]}
+              value={categoryInput ?? '카테고리 선택'}
+              onPressItem={onClickCategory} // TODO : 🚨 need to modify value, name and handler
+            />
+          </Box>
+          <Box mt={20} mb={20}>
+            <Select<RegisterCategory | '스위치 희망 카테고리 선택'>
+              options={[...REGISTER_CATEGORY]}
+              onPressItem={onClickPreferredCategory} // TODO : 🚨 need to modify value, name and handler
+              value={preferredCategoryInput ?? '스위치 희망 카테고리 선택'}
+            />
+          </Box>
+          <CountingTextarea
+            placeholder='물품에 대한 설명이나 스토리를 작성해주세요.'
             value={description}
-            onChange={changeHandler}
             maxLength={200}
-            border={`0 solid ${PALETTE.gray[300]}`}
+            onChange={(str) => changeHandler}
           />
-
-          <Separator />
-          <TagInput
-            tags={
-              category.length > 0
-                ? [
-                    {
-                      children: category,
-                      color: 'white',
-                      backgroundColor: PALETTE.yellow[200],
-                      onPress: onPressCategory,
-                    },
-                  ]
-                : []
-            }
-            width={'100%'}
-            name={'tagInput'}
-            onChangeText={setCategoryTagInput}
-            placeholder={'등록하는 물건의 종류를 작성해주세요.'}
-            value={categoryTagInput}
-            functionalElement={
+          <Box mt={20}>
+            <Typography fontSize={FONT_SIZE.normal}>
+              선호 주소 (최대 3곳까지 추가가능)
+            </Typography>
+            <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
               <Flexbox
-                flexDirection={'column'}
-                justifyContent={'space-between'}
-                gap={5}
+                width={'100%'}
+                alignItems={'center'}
+                justifyContent={'center'}
               >
-                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
-                  {category ? '1/1' : '0/1'}
-                </Typography>
+                {preferredLocations.length < 3 && (
+                  <PressableIcon
+                    size={32}
+                    name={'add-circle'}
+                    onPress={() => setAddressModalVisible((prev) => !prev)}
+                  />
+                )}
               </Flexbox>
-            }
-            onSubmitEditing={onSubmitCategory}
-          />
-          <Separator />
-          <TagInput
-            tags={preferredCategories.map((preferredCategory) => ({
-              children: preferredCategory,
-              onPress: () => onPressPreferredCategory(preferredCategory),
-              color: 'white',
-              backgroundColor: PALETTE.yellow[200],
-            }))}
-            width={'100%'}
-            name={'tagInput'}
-            onChangeText={setOCategoryTagInput}
-            placeholder={'스위치를 희망하는 물품이나 종류를 작성해주세요.'}
-            value={oCategoryTagInput}
-            functionalElement={
               <Flexbox
-                flexDirection={'column'}
-                justifyContent={'space-between'}
-                gap={5}
+                width={'100%'}
+                justifyContent='center'
+                alignItems='center'
+                gap={10}
+                flexDirection='column'
               >
-                <Typography color={'black'} fontSize={FONT_SIZE.smaller}>
-                  {preferredCategories.length + '/3'}
-                </Typography>
-              </Flexbox>
-            }
-            onSubmitEditing={onSubmitPreferredCategory}
-          />
-          <Separator />
-          <Typography fontSize={FONT_SIZE.normal}>선호 주소</Typography>
-          <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
-            <Flexbox
-              width={'100%'}
-              alignItems={'center'}
-              justifyContent={'center'}
-            >
-              {preferredLocations.length < 3 && (
-                <PressableIcon
-                  size={32}
-                  name={'add-circle'}
-                  onPress={() => setAddressModalVisible((prev) => !prev)}
-                />
-              )}
-            </Flexbox>
-            <Flexbox
-              width={'100%'}
-              justifyContent='center'
-              alignItems='center'
-              gap={10}
-              flexDirection='column'
-            >
-              {preferredLocations.map((location) => (
-                <Flexbox
-                  width={'90%'}
-                  padding={10}
-                  backgroundColor={COLORS.secondary[200]}
-                  borderRadius={6}
-                  alignItems={'center'}
-                  key={location}
-                >
+                {preferredLocations.map((location) => (
                   <Flexbox
-                    width={'100%'}
+                    width={'90%'}
+                    padding={10}
+                    backgroundColor={COLORS.secondary[200]}
+                    borderRadius={6}
                     alignItems={'center'}
-                    justifyContent={'space-between'}
+                    key={location}
                   >
-                    <Typography
-                      fontSize={FONT_SIZE.bigger}
-                      fontWeight={'200'}
-                      color={COLORS.neutral.white}
+                    <Flexbox
+                      width={'100%'}
+                      alignItems={'center'}
+                      justifyContent={'space-between'}
                     >
-                      {location}
-                    </Typography>
-                    <PressableIcon
-                      name='close'
-                      size={24}
-                      color={COLORS.neutral.white}
-                      onPress={() => onPressPreferredLocations(location)}
-                    />
+                      <Typography
+                        fontSize={FONT_SIZE.bigger}
+                        fontWeight={'200'}
+                        color={COLORS.neutral.white}
+                      >
+                        {location}
+                      </Typography>
+                      <PressableIcon
+                        name='close'
+                        size={24}
+                        color={COLORS.neutral.white}
+                        onPress={() => onPressPreferredLocations(location)}
+                      />
+                    </Flexbox>
                   </Flexbox>
-                </Flexbox>
-              ))}
+                ))}
+              </Flexbox>
             </Flexbox>
-          </Flexbox>
+          </Box>
           <Separator />
           <Flexbox
             width={'100%'}
