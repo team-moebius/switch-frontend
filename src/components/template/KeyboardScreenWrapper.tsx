@@ -19,13 +19,7 @@ const KeyboardScreenWrapper = ({ children }: KeyboardScreenWrapperProps) => {
       style={{ flex: 1, backgroundColor: color.container_background }}
     >
       <ScrollView>
-        <Box
-          backgroundColor={color.container_background}
-          width={'100%'}
-          height={'100%'}
-        >
-          {children}
-        </Box>
+        <Box backgroundColor={color.container_background}>{children}</Box>
       </ScrollView>
     </KeyboardAvoidingView>
   );
