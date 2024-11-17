@@ -49,19 +49,17 @@ const ScreenHeader = ({
       }
     >
       <Flexbox.Item flex={1}>
-        <Flexbox width={'100%'}>
-          {backVisible && navigation.canGoBack() && (
-            <Pressable
-              onPress={() => {
-                if (isConfirmGoBack && setModalVisible) {
-                  setModalVisible(true);
-                } else navigation.goBack();
-              }}
-            >
-              <Icon size={24} name={'chevron-back'} />
-            </Pressable>
-          )}
-        </Flexbox>
+        {backVisible && navigation.canGoBack() && (
+          <Pressable
+            onPress={() => {
+              if (isConfirmGoBack && setModalVisible) {
+                setModalVisible(true);
+              } else navigation.goBack();
+            }}
+          >
+            <Icon size={24} name={'chevron-back'} />
+          </Pressable>
+        )}
       </Flexbox.Item>
       <Flexbox.Item flex={3}>
         <Flexbox width={'100%'} justifyContent={'center'}>

@@ -69,7 +69,12 @@ const useToggle = (defaultValue: boolean): [boolean, () => void] => {
   return [value, toggle];
 };
 
-const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
+const Select = <T extends OptionValue>({
+  value,
+  disabled,
+  onPressItem,
+  options,
+}: SelectProps<T>) => {
   const [modalVisible, toggleModal] = useToggle(false);
 
   return (
@@ -123,13 +128,13 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
                 key={optionValue}
                 onPress={() => {
                   if (!optionDisabled) {
-                    onPressItem(optionValue);
+                    onPressItem(optionValue as T);
                     toggleModal();
                   }
                 }}
               >
                 <InnerComponent
-                  value={optionValue}
+                  value={optionValue as T}
                   disabled={disabled}
                   selected={optionValue === value}
                 />
@@ -142,4 +147,4 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
   );
 };
 
-export { Select, SelectProps };
+export { Select, SelectProps, OptionValue };

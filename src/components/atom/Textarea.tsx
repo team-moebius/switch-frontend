@@ -16,7 +16,7 @@ const { default: defaultStyles } = StyleSheet.create({
     height: 100,
     backgroundColor: 'white',
     paddingHorizontal: 10,
-    paddingVertical: 20,
+    paddingVertical: 10,
     borderColor: 'gray',
     borderWidth: 1,
     borderRadius: 8,
