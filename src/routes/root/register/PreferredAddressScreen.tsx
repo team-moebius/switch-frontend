@@ -13,6 +13,10 @@ import { FONT_SIZE } from 'src/assets/theme/base';
 const PROVINCES = Object.keys(address);
 type SelectionProvinceType = (typeof PROVINCES)[number];
 
+interface PreferredAddressProps {
+  prevAddress: string | undefined;
+}
+
 const PreferredAddressScreen = ({
   navigation,
 }: StackScreenProps<RegisterRouteParamList, 'PreferredAddress'>) => {
@@ -98,4 +102,4 @@ const PreferredAddressScreen = ({
   );
 };
 
-export { PreferredAddressScreen };
+export { PreferredAddressScreen, type PreferredAddressProps };
