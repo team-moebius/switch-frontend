@@ -1,25 +1,25 @@
-import { Box, Flexbox, Icon, Typography } from 'src/components/atom';
+import { Flexbox, Icon, Typography } from 'src/components/atom';
 import { Pressable, ScrollView } from 'react-native';
 import { ImageItem } from './ImageItem';
-import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 
 // Image API 명세 확인 후 구체적인 작업 필요.
 interface ImageUploaderProps {
   images: Array<string>;
-  onAdd: () => void;
+  onClickAdd: () => void;
   onDeleteItem?: (value: string, index?: number) => void;
   screenWidth: number;
 }
 
 const ImageUploader = ({
   images,
-  onAdd,
+  onClickAdd,
   onDeleteItem,
   screenWidth,
 }: ImageUploaderProps) => {
   return (
-    <Flexbox width={'100%'} alignItems='center' gap={10}>
-      <Pressable onPress={onAdd}>
+    <Flexbox alignItems='center' gap={10}>
+      <Pressable onPress={onClickAdd}>
         <Flexbox
           width={70}
           height={70}
@@ -34,12 +34,10 @@ const ImageUploader = ({
           >{`${images.length}/5`}</Typography>
         </Flexbox>
       </Pressable>
-
       <Flexbox
-        width={(screenWidth - 100) as number}
-        justifyContent={'center'}
-        alignItems='center'
-        gap={10}
+        width={
+          (screenWidth - PADDING.wrapper.horizontal * 2 - 70 - 10) as number
+        }
       >
         <ScrollView horizontal nestedScrollEnabled>
           {images.map((src, i) => (
