@@ -21,6 +21,7 @@ const SwitchDetailScreen = ({
 }: StackScreenProps<HomeRouteParamList, 'SwitchDetail'>) => {
   const [revokeModalVisible, setRevokeModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
+  // TODO : 🚨 내꺼면 헤더에 햄버거 버튼? 그 있ㅓ야 됨. 게시글 수정&삭제 보여주는
   // const isMine = userId === '물품id';
   const isMine = false;
   // console.log('params 입니다 ::: ', route.params, userId);
