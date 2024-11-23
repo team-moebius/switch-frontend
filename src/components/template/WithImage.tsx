@@ -44,6 +44,10 @@ export const flexDirectionStyle = StyleSheet.create({
   column: {
     flexDirection: 'column',
   },
+  columnCentral: {
+    flexDirection: 'column',
+    alignItems: 'center',
+  },
   row: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -78,18 +82,20 @@ const WithImage = ({
       gap={10}
       {...layoutStyle.mostOutlineLayout}
     >
-      <Flexbox>
-        <Image
-          width={imageWidth}
-          height={imageHeight}
-          src={src}
-          resizeMode={imageResizeMode}
-        />
-      </Flexbox>
+      <Image
+        width={imageWidth}
+        height={imageHeight}
+        src={src}
+        resizeMode={imageResizeMode}
+      />
       <Flexbox.Item {...layoutStyle.titleContainerLayout}>
         <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
           <Flexbox.Item {...layoutStyle.textBoxLayout}>
-            <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+            <Typography
+              {...fontSizeStyle[fontSize]}
+              numberOfLines={6}
+              ellipsizeMode={'tail'}
+            >
               {text}
             </Typography>
           </Flexbox.Item>
