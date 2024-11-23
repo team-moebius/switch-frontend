@@ -5,6 +5,7 @@ import { PressableIcon } from './PressableIcon';
 import { useCallback } from 'react';
 import { SwitchDetailData } from 'src/routes/root/home/SwitchDetailScreen/SwitchList.mock';
 import { FONT_SIZE, COLORS } from 'src/assets/theme/base';
+import PALETTE from 'src/assets/theme/colors/palettes';
 
 interface ItemCardProps {
   data: Omit<SwitchDetailData, 'date'> & { date: string };
@@ -24,7 +25,7 @@ const Header = ({
   return (
     <Flexbox flexDirection='column' gap={5}>
       <Tag
-        backgroundColor='#FFA500'
+        backgroundColor={PALETTE.yellow[100]}
         disabled
         color={COLORS.text}
         children={category}
@@ -43,58 +44,71 @@ const Content = ({
   onLikeHandler,
 }: {
   description: string;
-  preferredCategories: string[];
-  preferredLocations: string[];
+  preferredCategories?: string[];
+  preferredLocations?: string[];
   liked: boolean;
   onLikeHandler: () => void;
 }) => {
   const PreferredCategories = useCallback(
     () =>
-      preferredCategories.map((preferredCategory) => {
-        return (
-          <Tag
-            backgroundColor='#FFA500'
-            disabled
-            color={'white'}
-            children={preferredCategory}
-          />
-        );
-      }),
+      preferredCategories
+        ? preferredCategories.map((preferredCategory) => (
+            <Tag
+              backgroundColor={PALETTE.yellow[100]}
+              disabled
+              color={COLORS.text}
+              children={preferredCategory}
+            />
+          ))
+        : undefined,
     [preferredCategories]
+  );
+  const PreferredLocations = useCallback(
+    () =>
+      preferredLocations
+        ? preferredLocations.map((location, el, arr) =>
+            arr.length - 1 === el ? (
+              <Typography fontSize={FONT_SIZE.normal}>{location}</Typography>
+            ) : (
+              <Typography
+                fontSize={FONT_SIZE.normal}
+              >{`${location} | `}</Typography>
+            )
+          )
+        : undefined,
+    [preferredLocations]
   );
   return (
     <Flexbox flexDirection={'column'} width={'100%'} gap={10}>
       <Flexbox.Item pb={30}>
-        <Typography fontSize={17}>{description}</Typography>
+        <Typography fontSize={FONT_SIZE.bigger}>{description}</Typography>
       </Flexbox.Item>
-      <Flexbox alignItems='center' gap={5} flexWrap='wrap'>
-        <Icon name={'swap-horizontal'} size={20} />
-        <PreferredCategories />
-      </Flexbox>
-      <Flexbox
-        alignItems='center'
-        justifyContent='space-between'
-        width={'100%'}
-      >
-        <Flexbox.Item flex={0.9}>
-          <Flexbox alignItems='center' gap={5} flexWrap='wrap'>
-            <Icon name={'location-outline'} size={20} />
-            {preferredLocations.map((location, el, arr) =>
-              arr.length - 1 === el ? (
-                <Typography fontSize={15}>{location}</Typography>
-              ) : (
-                <Typography fontSize={15}>{`${location} | `}</Typography>
-              )
-            )}
-          </Flexbox>
-        </Flexbox.Item>
-        <PressableIcon
-          name={liked ? 'heart' : 'heart-outline'}
-          size={32}
-          onPress={onLikeHandler}
-          color='#d22f26'
-        />
-      </Flexbox>
+      {preferredCategories ? (
+        <Flexbox alignItems='center' gap={5} flexWrap='wrap'>
+          <Icon name={'swap-horizontal'} size={20} />
+          <PreferredCategories />
+        </Flexbox>
+      ) : undefined}
+      {preferredLocations ? (
+        <Flexbox
+          alignItems='center'
+          justifyContent='space-between'
+          width={'100%'}
+        >
+          <Flexbox.Item flex={0.9}>
+            <Flexbox alignItems='center' gap={5} flexWrap='wrap'>
+              <Icon name={'location-outline'} size={20} />
+              <PreferredLocations />
+            </Flexbox>
+          </Flexbox.Item>
+          <PressableIcon
+            name={liked ? 'heart' : 'heart-outline'}
+            size={32}
+            onPress={onLikeHandler}
+            color={PALETTE.red[200]}
+          />
+        </Flexbox>
+      ) : undefined}
     </Flexbox>
   );
 };
@@ -104,8 +118,8 @@ const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
     name = '',
     date = '',
     description = '',
-    preferredCategories = [''],
-    preferredLocations = [''],
+    preferredCategories,
+    preferredLocations,
     category = '',
     liked = false,
   } = data;
