@@ -20,7 +20,7 @@ const ReportButton = ({
         justifyContent='space-between'
       >
         <Typography fontSize={FONT_SIZE.normal}>{children}</Typography>
-        <Icon name='ios-chevron-forward' size={20} />
+        <Icon name='chevron-forward' size={20} />
       </Flexbox>
     </Pressable>
   );
