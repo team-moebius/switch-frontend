@@ -65,12 +65,17 @@ const ReportsScreen = ({
             </Flexbox.Item>
             <Flexbox.Item width={'100%'}>
               <ReportButton onPress={() => handleReport(true)}>
-                판매 금지 물품
+                음란/폭력 게시글
               </ReportButton>
             </Flexbox.Item>
             <Flexbox.Item width={'100%'}>
               <ReportButton onPress={() => handleReport(true)}>
                 광고성 게시글
+              </ReportButton>
+            </Flexbox.Item>
+            <Flexbox.Item width={'100%'}>
+              <ReportButton onPress={() => handleReport(true)}>
+                스위치 금지 물품
               </ReportButton>
             </Flexbox.Item>
             <Flexbox.Item width={'100%'}>
@@ -100,7 +105,7 @@ const ReportsScreen = ({
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
             <ReportButton onPress={() => handleReport(false)}>
-              업자 의심
+              현금 요구
             </ReportButton>
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
