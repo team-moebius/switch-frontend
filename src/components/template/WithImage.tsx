@@ -1,36 +1,52 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Flexbox, Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { StyleSheet } from 'react-native';
-import { mirrorDirectionStyle } from './WithMirror';
+import { FlexAlign, LengthElement } from 'src/@types/unit';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 type modifiedImageProps = {
   imageWidth?: ImageProps['width'];
   imageHeight?: ImageProps['height'];
   imageResizeMode?: ImageProps['resizeMode'];
 };
+
+interface ContainerLayout {
+  maxWidth?: LengthElement;
+  width?: LengthElement;
+  flex?: number;
+}
+
 interface WithImageProps extends modifiedImageProps {
   src: string;
   text?: string;
   renderItem?: ReactNode;
   fontSize?: keyof typeof fontSizeStyle;
   childDirection?: keyof typeof flexDirectionStyle;
-  mirrorDirection?: keyof typeof mirrorDirectionStyle;
   cardDirection?: keyof typeof flexDirectionStyle;
+  layoutStyle?: {
+    mostOutlineLayout?: ContainerLayout;
+    titleContainerLayout?: ContainerLayout & { alignSelf?: FlexAlign };
+    textBoxLayout?: ContainerLayout;
+  };
 }
 
 export const fontSizeStyle = StyleSheet.create({
   cardList: {
-    fontSize: 15,
+    fontSize: FONT_SIZE.normal,
   },
   switchList: {
-    fontSize: 17,
+    fontSize: FONT_SIZE.bigger,
   },
 });
 
 export const flexDirectionStyle = StyleSheet.create({
   column: {
     flexDirection: 'column',
+  },
+  columnCentral: {
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',
@@ -48,21 +64,38 @@ const WithImage = ({
   fontSize = 'cardList',
   childDirection = 'row',
   cardDirection = 'row',
+  layoutStyle = {
+    mostOutlineLayout: {
+      width: '100%',
+    },
+    titleContainerLayout: {
+      flex: 1,
+    },
+    textBoxLayout: {
+      flex: 1,
+    },
+  },
 }: WithImageProps) => {
   return (
-    <Flexbox {...flexDirectionStyle[cardDirection]} gap={10} width={'100%'}>
-      <Flexbox.Item>
-        <Image
-          width={imageWidth}
-          height={imageHeight}
-          src={src}
-          resizeMode={imageResizeMode}
-        />
-      </Flexbox.Item>
-      <Flexbox.Item alignSelf='center'>
+    <Flexbox
+      {...flexDirectionStyle[cardDirection]}
+      gap={10}
+      {...layoutStyle.mostOutlineLayout}
+    >
+      <Image
+        width={imageWidth}
+        height={imageHeight}
+        src={src}
+        resizeMode={imageResizeMode}
+      />
+      <Flexbox.Item {...layoutStyle.titleContainerLayout}>
         <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
-          <Flexbox.Item>
-            <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+          <Flexbox.Item {...layoutStyle.textBoxLayout}>
+            <Typography
+              {...fontSizeStyle[fontSize]}
+              numberOfLines={6}
+              ellipsizeMode={'tail'}
+            >
               {text}
             </Typography>
           </Flexbox.Item>

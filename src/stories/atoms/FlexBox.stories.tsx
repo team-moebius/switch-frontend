@@ -1,13 +1,14 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Flexbox } from 'src/components/atom';
+import { COLORS } from 'src/assets/theme/base';
 
 export default {
   title: 'Flexbox',
   component: Flexbox,
-} as ComponentMeta<typeof Flexbox>;
+} as Meta<typeof Flexbox>;
 
-const Template: ComponentStory<typeof Flexbox> = (args) => (
+const Template: StoryFn<typeof Flexbox> = (args) => (
   <>
     <Flexbox {...args}>
       <Flexbox.Item flex={1} backgroundColor={'red'}>
@@ -45,7 +46,7 @@ export const FlexBoxTemplate = Template.bind({});
 FlexBoxTemplate.storyName = 'container';
 FlexBoxTemplate.args = {
   flexDirection: 'row',
-  backgroundColor: '#000000',
+  backgroundColor: COLORS.neutral.black,
   border: '1 solid orange',
   padding: 12,
   gap: 4,

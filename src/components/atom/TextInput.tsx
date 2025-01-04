@@ -1,13 +1,14 @@
-import React from 'react';
 import {
   TextInput as BasicInput,
+  DimensionValue,
   KeyboardTypeOptions,
   NativeSyntheticEvent,
   StyleSheet,
   TextInputEndEditingEventData,
+  TextStyle,
   ViewStyle,
 } from 'react-native';
-import { LengthElement } from 'src/@types/unit';
+import { COLORS } from 'src/assets/theme/base';
 
 interface InputProps {
   name: string;
@@ -17,9 +18,9 @@ interface InputProps {
   ) => void;
   placeholder?: string;
   value: string | undefined;
-  width: LengthElement;
+  width: DimensionValue | undefined;
   disabled?: boolean;
-  style?: ViewStyle;
+  style?: ViewStyle & TextStyle;
   keyboardType?: KeyboardTypeOptions;
 }
 
@@ -30,8 +31,8 @@ const { defaultInput: defaultStyles } = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 4,
     padding: 8,
-    borderColor: '#cccccc',
-    color: '#7a7a7a',
+    borderColor: COLORS.neutral.white,
+    color: COLORS.neutral.black,
   },
 });
 

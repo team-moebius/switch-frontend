@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+
 import {
   Box,
   Button,
@@ -7,42 +8,107 @@ import {
   Textarea,
   Typography,
 } from 'src/components/atom';
-import { ScreenWrapper } from 'src/components/template';
+import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 
-const selectType = ['기타', '대체 플렛폼 이용', '스위치 간 불만족'];
+import { UserContext } from 'src/context/user';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
 
-const WithdrawFeedbackScreen = ({ navigation }) => {
-  const [option, setOption] = useState('기타');
+import { UserApi } from 'src/api';
+import { UserWithdrawalRequest } from '@team-moebius/api-typescript';
 
-  const onSelectHandler = (value) => {
-    setOption(value);
+import { StackScreenProps } from '@react-navigation/stack';
+import { WithdrawParamList } from '.';
+import { FONT_SIZE } from 'src/assets/theme/base';
+
+const withdrawOption = ['대체 플렛폼 이용', '스위치 간 불만족', '기타'];
+type WithdrawType = '대체 플렛폼 이용' | '스위치 간 불만족' | '기타';
+interface MutationType {
+  userId: number;
+  option: WithdrawType;
+  reason: string;
+}
+
+const withdrawFeedbackMutation = (params: MutationType) => {
+  const { userId, option, reason } = params;
+  const combineOptRes: UserWithdrawalRequest = {
+    withdrawalReason: `${option} - ${reason}`,
+  };
+  return UserApi.withdrawUser(userId, combineOptRes);
+};
+
+const WithdrawFeedbackScreen = ({
+  navigation,
+}: StackScreenProps<WithdrawParamList, 'WithdrawFeedback'>) => {
+  const { userId } = useContext(UserContext);
+
+  const { mutate: withdrawMutate } = useCommonMutation<string, MutationType>({
+    api: withdrawFeedbackMutation,
+    onSuccess(data, varaiables) {
+      console.debug(
+        '\n\n\n ✅ MyInfoEdit_UserApi_withdrawUser data ✅ \n\n',
+        data,
+        varaiables
+      );
+    },
+    onError(error, varaiables) {
+      console.debug(
+        '\n\n\n 🚨 MyInfoEdit_UserApi_withdrawUser error 🚨 \n\n',
+        error,
+        varaiables
+      );
+    },
+  });
+
+  const [option, setOption] = useState<WithdrawType>('대체 플렛폼 이용');
+  const [reason, setReason] = useState('');
+
+  const onSelectHandler = (value: string | number) => {
+    setOption(value as WithdrawType);
   };
 
+  function onHandleReason(value: string) {
+    setReason(value);
+  }
+
   const onSubmitHandler = () => {
-    navigation.navigate('Farewell');
+    if (!userId) return;
+    const params: MutationType = {
+      userId: Number(userId),
+      option,
+      reason,
+    };
+    withdrawMutate(params);
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Farewell' }],
+    });
   };
 
   return (
-    <ScreenWrapper>
-      <Flexbox.Item flex={1}>
+    <KeyboardScreenWrapper>
+      <Flexbox.Item flex={1} mb={'10%'}>
         <Flexbox gap={10} flexDirection='column'>
-          <Typography fontSize={20}>
+          <Typography fontSize={FONT_SIZE.header}>
             스위치를 탈퇴하시려는 이유가 있을까요?
           </Typography>
           <Box>
             <Select
-              options={selectType}
+              options={withdrawOption}
               onPressItem={onSelectHandler}
               value={option}
             />
           </Box>
-          <Textarea placeholder='이유를 입력해주세요.' />
+          <Textarea
+            placeholder='이유를 입력해주세요.'
+            onChangeText={onHandleReason}
+            value={reason}
+          />
         </Flexbox>
       </Flexbox.Item>
       <Button type={'normal'} size={'large'} onPress={onSubmitHandler}>
         제출하기
       </Button>
-    </ScreenWrapper>
+    </KeyboardScreenWrapper>
   );
 };
 

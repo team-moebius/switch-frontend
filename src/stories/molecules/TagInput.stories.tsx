@@ -1,14 +1,15 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 
 import { TagInput } from 'src/components/molecule';
+import PALETTE from 'src/assets/theme/colors/palettes';
 
 export default {
   title: 'TagInput',
   component: TagInput,
-} as ComponentMeta<typeof TagInput>;
+} as Meta<typeof TagInput>;
 
-const Template: ComponentStory<typeof TagInput> = (args) => {
+const Template: StoryFn<typeof TagInput> = (args) => {
   const [value, setValue] = useState<string>('');
   const onChangeText = (inputValue: string) => {
     setValue(inputValue);
@@ -29,7 +30,7 @@ story.args = {
   tags: [
     {
       children: '여성의류',
-      backgroundColor: '#797979',
+      backgroundColor: PALETTE.gray[200],
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -37,7 +38,7 @@ story.args = {
     },
     {
       children: '패션',
-      backgroundColor: '#7979ae',
+      backgroundColor: PALETTE.purple[100],
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -45,7 +46,7 @@ story.args = {
     },
     {
       children: '잡화',
-      backgroundColor: '#79ef79',
+      backgroundColor: PALETTE.gray[200],
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -53,7 +54,7 @@ story.args = {
     },
     {
       children: '직거래',
-      backgroundColor: '#37f3bc',
+      backgroundColor: PALETTE.green[100],
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -61,7 +62,7 @@ story.args = {
     },
     {
       children: '내고가능',
-      backgroundColor: '#bfa89b',
+      backgroundColor: PALETTE.gray[300],
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');
@@ -69,7 +70,7 @@ story.args = {
     },
     {
       children: '아이폰이면더좋음',
-      backgroundColor: '#ff480084',
+      backgroundColor: PALETTE.yellow[200],
       color: 'white',
       onPress: () => {
         alert('삭제됩니다');

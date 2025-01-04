@@ -1,13 +1,14 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Box, Button } from 'src/components/atom';
+import { COLORS } from 'src/assets/theme/base';
 
 export default {
   title: 'Box',
   component: Box,
-} as ComponentMeta<typeof Box>;
+} as Meta<typeof Box>;
 
-const Template: ComponentStory<typeof Box> = (args) => (
+const Template: StoryFn<typeof Box> = (args) => (
   <Box {...args}>
     <Button
       title='테스트 버튼'
@@ -22,7 +23,7 @@ export const BoxTemplate = Template.bind({});
 
 BoxTemplate.storyName = 'default';
 BoxTemplate.args = {
-  backgroundColor: '#000000',
+  backgroundColor: COLORS.neutral.black,
   border: '1 solid orange',
   padding: 12,
 };

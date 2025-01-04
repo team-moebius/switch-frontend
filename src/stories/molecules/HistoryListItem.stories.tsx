@@ -1,13 +1,13 @@
 import React from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { HistoryListItem } from 'src/components/molecule';
 
 export default {
   title: 'HistoryListItem',
   component: HistoryListItem,
-} as ComponentMeta<typeof HistoryListItem>;
+} as Meta<typeof HistoryListItem>;
 
-const Template: ComponentStory<typeof HistoryListItem> = (args) => (
+const Template: StoryFn<typeof HistoryListItem> = (args) => (
   <HistoryListItem {...args} />
 );
 

@@ -1,25 +1,39 @@
 import { createStackNavigator } from '@react-navigation/stack';
 
+import { Flexbox } from 'src/components/atom';
+import { ScreenHeader, PressableIcon } from 'src/components/molecule';
+
+import { SecuritySettingParamList, SecuritySettingRoute } from './Security';
+import { WithdrawParamList, WithdrawRoute } from './WithdrawScreen';
+
 import { MyInfoMainScreen } from './MyInfoMainScreen';
 import { FeedbackScreen } from './FeedbackScreen';
 import { VersionScreen } from './VersionScreen';
-import { SettingScreen } from './SettingScreen';
-import { SwitchRecordsScreen } from './SwitchRecordsScreen';
 import { SettingMainScreen } from './SettingMainScreen';
-import { WithdrawRoute } from './WithdrawScreen';
-import { SecuritySettingRoute } from './Security';
-import { ScreenHeader, PressableIcon } from 'src/components/molecule';
-import { Button, Flexbox } from 'src/components/atom';
 import { MyInfoEditScreen } from './MyInfoEditScreen';
+import { UserInfoResponse } from '@team-moebius/api-typescript';
+import { NavigatorScreenParams } from '@react-navigation/native';
+import { BlockUsersList } from './BlockUsersList';
 
-const Stack = createStackNavigator();
+type MyInfoParamList = {
+  MyInfoMain: undefined;
+  MyInfoEdit: { userInfo: UserInfoResponse | undefined };
+  Withdraw: NavigatorScreenParams<WithdrawParamList>;
+  SettingMain: undefined;
+  Security: NavigatorScreenParams<SecuritySettingParamList>;
+  Version: undefined;
+  Feedback: undefined;
+  BlockUsers: undefined;
+};
+
+const Stack = createStackNavigator<MyInfoParamList>();
 
 const MyInfoRoute = () => {
   return (
     <Stack.Navigator>
       <Stack.Group>
         <Stack.Screen
-          name={'MyInfoHome'}
+          name={'MyInfoMain'}
           component={MyInfoMainScreen}
           options={{
             header: (props) => {
@@ -58,60 +72,18 @@ const MyInfoRoute = () => {
             },
           }}
         />
-        <Stack.Screen
-          name={'MyInfoEdit'}
-          component={MyInfoEditScreen}
-          options={{
-            header: (props) => {
-              return (
-                <ScreenHeader
-                  {...props}
-                  title={'내 정보 편집하기'}
-                  right={
-                    <Flexbox width={'100%'} justifyContent={'flex-end'}>
-                      <Button
-                        size={'medium'}
-                        type={'transparent'}
-                        onPress={() => {
-                          props.navigation.setParams({ isEditMode: true });
-                        }}
-                      >
-                        편집
-                      </Button>
-                    </Flexbox>
-                  }
-                />
-              );
-            },
-          }}
-        />
+        <Stack.Screen name={'MyInfoEdit'} component={MyInfoEditScreen} />
         <Stack.Screen
           name={'Withdraw'}
           component={WithdrawRoute}
           options={{ header: ScreenHeader }}
         />
       </Stack.Group>
-      <Stack.Group>
-        <Stack.Screen
-          name={'SettingMain'}
-          component={SettingMainScreen}
-          options={{ header: ScreenHeader }}
-        />
-        <Stack.Screen
-          name={'Record'}
-          component={SwitchRecordsScreen}
-          options={{ header: ScreenHeader }}
-        />
-        <Stack.Screen
-          name={'Setting'}
-          component={SettingScreen}
-          options={{
-            header: (props) => (
-              <ScreenHeader {...props} title={'스위치 설정'} />
-            ),
-          }}
-        />
-      </Stack.Group>
+      <Stack.Screen
+        name={'SettingMain'}
+        component={SettingMainScreen}
+        options={{ header: ScreenHeader }}
+      />
       <Stack.Group>
         <Stack.Screen
           name={'Security'}
@@ -129,8 +101,17 @@ const MyInfoRoute = () => {
         component={FeedbackScreen}
         options={{ header: ScreenHeader }}
       />
+      <Stack.Screen
+        name={'BlockUsers'}
+        component={BlockUsersList}
+        options={{
+          header: (props) => (
+            <ScreenHeader center='차단 회원 관리' {...props} />
+          ),
+        }}
+      />
     </Stack.Navigator>
   );
 };
 
-export { MyInfoRoute };
+export { MyInfoRoute, type MyInfoParamList };

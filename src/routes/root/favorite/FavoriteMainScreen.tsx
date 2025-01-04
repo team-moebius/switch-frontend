@@ -4,12 +4,14 @@ import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
 import {
   STUFF_LIST_MOCK,
   StuffListItemData,
-} from '../home/HomeMainScreen/SwitchList.mock';
+} from '../home/SwitchDetailScreen/SwitchList.mock';
 import { Flexbox, Icon, Typography } from 'src/components/atom';
 import { ImageCard, PressableIcon } from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { Pressable } from 'react-native';
 import { itemJustifyStyle } from 'src/components/molecule/TradingListItem';
+import { StackScreenProps } from '@react-navigation/stack';
+import { FavoriteRouteParamList } from '.';
 
 const GridItem = ({
   item,
@@ -87,7 +89,18 @@ const ListItem = ({
                   imageHeight={70}
                   imageResizeMode={'cover'}
                   renderItem={
-                    <Typography fontSize={13}>{location as string}</Typography>
+                    <Flexbox justifyContent='space-between' width={'100%'}>
+                      <Typography fontSize={13}>
+                        {location as string}
+                      </Typography>
+                      <Flexbox.Item>
+                        <Pressable onPress={onLikeHandler}>
+                          {/* TODO : like에 따라 분기처리 해야 함 */}
+                          {/* <Icon name={'heart'} color='red' size={32} /> */}
+                          <Icon name={'heart-outline'} size={32} />
+                        </Pressable>
+                      </Flexbox.Item>
+                    </Flexbox>
                   }
                   childDirection={'column'}
                   cardDirection={'row'}
@@ -96,19 +109,14 @@ const ListItem = ({
             </Flexbox>
           </Pressable>
         </Flexbox.Item>
-        <Flexbox.Item alignSelf='center'>
-          <Pressable onPress={onLikeHandler}>
-            {/* TODO : like에 따라 분기처리 해야 함 */}
-            {/* <Icon name={'heart'} color='red' size={32} /> */}
-            <Icon name={'heart-outline'} size={32} />
-          </Pressable>
-        </Flexbox.Item>
       </Flexbox>
     </>
   );
 };
 
-const FavoriteMainScreen = ({ navigation }) => {
+const FavoriteMainScreen = ({
+  navigation,
+}: StackScreenProps<FavoriteRouteParamList, 'FavoriteMain'>) => {
   const [type, setType] = useState<ListViewType>('grid');
 
   const loadMoreData = useCallback(() => {

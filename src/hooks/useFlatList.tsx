@@ -1,12 +1,8 @@
 import { useMemo } from 'react';
 import { FlatListProps } from 'react-native/types';
-import { Box } from 'src/components/atom';
+import { Separator } from 'src/components/atom';
 
 export type ListViewType = 'grid' | 'list';
-
-const Separator = () => (
-  <Box height={1} backgroundColor={'gray'} mt={10} mb={10} />
-);
 
 interface UseFlatListArgs<T>
   extends Pick<

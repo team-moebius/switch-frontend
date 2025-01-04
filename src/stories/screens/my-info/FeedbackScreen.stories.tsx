@@ -1,15 +1,12 @@
-import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { FeedbackScreen } from 'src/routes/root/my-info/FeedbackScreen';
 
 export default {
   title: 'FeedbackScreen',
   component: FeedbackScreen,
-} as ComponentMeta<typeof FeedbackScreen>;
+} as Meta<typeof FeedbackScreen>;
 
-const Template: ComponentStory<typeof FeedbackScreen> = () => (
-  <FeedbackScreen />
-);
+const Template: StoryFn<typeof FeedbackScreen> = () => <FeedbackScreen />;
 
 export const story = Template.bind({});
 

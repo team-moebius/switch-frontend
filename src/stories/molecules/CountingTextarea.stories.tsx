@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { CountingTextarea } from 'src/components/molecule';
 
 export default {
   title: 'CountingTextarea',
   component: CountingTextarea,
-} as ComponentMeta<typeof CountingTextarea>;
+} as Meta<typeof CountingTextarea>;
 
-const Template: ComponentStory<typeof CountingTextarea> = (args) => {
+const Template: StoryFn<typeof CountingTextarea> = (args) => {
   const [text, setText] = useState<string>('');
   const onTextHandler = (text: string) => {
     setText(text);

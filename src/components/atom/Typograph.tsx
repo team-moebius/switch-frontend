@@ -7,7 +7,7 @@ import { Font } from 'src/assets/fonts';
 interface TypographyProps
   extends Pick<TextStyle, 'fontFamily' | 'color' | 'fontWeight'> {
   children: string | number;
-  fontSize: TextStyle['fontSize'] | 'inherit';
+  fontSize: TextStyle['fontSize'];
   onLayout?: (event: LayoutChangeEvent) => void;
   fontFamily?: Font;
   ellipsizeMode?: 'tail' | 'head' | 'middle' | 'clip';
@@ -25,14 +25,12 @@ const Typography = ({
   return (
     <Text
       {...props}
-      style={
-        {
-          color,
-          fontFamily,
-          fontSize,
-          fontWeight,
-        } as TextStyle
-      }
+      style={{
+        color,
+        fontFamily,
+        fontSize,
+        fontWeight,
+      }}
     >
       {children}
     </Text>

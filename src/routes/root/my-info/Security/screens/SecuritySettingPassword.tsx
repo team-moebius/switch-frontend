@@ -1,28 +1,79 @@
-import { useState } from 'react';
-import { Flexbox, Typography } from 'src/components/atom';
-import { NumberPad } from 'src/components/molecule';
-import { ScreenWrapper } from 'src/components/template';
+import { useContext, useEffect, useMemo, useState } from 'react';
+import { StackScreenProps } from '@react-navigation/stack';
 
-const SecuritySettingPassword = () => {
+import { Typography } from 'src/components/atom';
+import { ScreenWrapper, UnlockPassword } from 'src/components/template';
+
+import { AppPasswordContext } from 'src/context/password';
+
+import { SecuritySettingParamList } from '..';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
+
+const SecuritySettingPassword = ({
+  navigation,
+}: StackScreenProps<SecuritySettingParamList, 'SecuritySettingPassword'>) => {
+  const { setPassword: setExpoSecurity } = useContext(AppPasswordContext);
+
   const [password, setPassword] = useState<string>('');
+  const [confirmPassword, setConfirmPassword] = useState<string>('');
+  const [isFailtoConfirm, setIsFailtoConfirm] = useState(false);
+
+  const handlePassword = (value: string) => {
+    if (value === 'reset') {
+      // 리셋버튼을 누르면 처음부터 다시 입력할 수 있도록
+      setIsFailtoConfirm(false);
+      setConfirmPassword('');
+      setPassword('');
+    } else if (password.length >= 4) {
+      // 패스워드 4자리를 입력 후 비밀번호 확인을 입력할 수 있도록 안내 문구가 다시 노출될 수 있게 하기
+      isFailtoConfirm ?? setIsFailtoConfirm(false);
+      setConfirmPassword(`${value}`);
+    } else {
+      setPassword(`${value}`);
+    }
+  };
+
+  const errorMessage = isFailtoConfirm && (
+    <Typography fontSize={FONT_SIZE.normal} color={COLORS.error}>
+      비밀번호가 일치하지 않습니다. 다시 입력해주세요.
+    </Typography>
+  );
+
+  const instructionMessage =
+    password.length >= 4 ? (
+      <Typography fontSize={FONT_SIZE.normal}>
+        한 번 더 비밀번호를 입력하세요.
+      </Typography>
+    ) : (
+      <Typography fontSize={FONT_SIZE.normal}>
+        새로운 비밀번호를 입력하세요.
+      </Typography>
+    );
+
+  const validationMessage = errorMessage || instructionMessage;
+
+  useEffect(() => {
+    if (password.length >= 4) setIsFailtoConfirm(false);
+    if (confirmPassword.length >= 4) {
+      if (password === confirmPassword) {
+        setExpoSecurity(password);
+        navigation.goBack();
+      } else {
+        setIsFailtoConfirm(true);
+        setPassword('');
+        setConfirmPassword('');
+      }
+    }
+  }, [password, confirmPassword]);
+
   return (
     <ScreenWrapper>
-      <Flexbox height={'100%'} flexDirection={'column'} alignItems={'center'}>
-        <Flexbox.Item flex={1} mt={20} mb={24}>
-          <Flexbox flexDirection={'row'} height={'100%'} alignItems={'center'}>
-            <Typography fontSize={16}>새로운 비밀번호를 입력하세요.</Typography>
-          </Flexbox>
-        </Flexbox.Item>
-        <Flexbox.Item flex={4}>
-          <Flexbox
-            height={'100%'}
-            justifyContent={'center'}
-            alignItems={'center'}
-          >
-            <NumberPad value={password} maxLength={4} onChange={setPassword} />
-          </Flexbox>
-        </Flexbox.Item>
-      </Flexbox>
+      <UnlockPassword
+        value={password.length >= 4 ? confirmPassword : password}
+        maxLength={4}
+        onChange={handlePassword}
+        notice={validationMessage}
+      />
     </ScreenWrapper>
   );
 };

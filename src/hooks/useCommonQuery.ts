@@ -1,5 +1,5 @@
 import { QueryKey, useQuery, UseQueryOptions } from 'react-query';
-import { AxiosPromise, AxiosResponse, AxiosInstance } from 'axios';
+import { AxiosResponse } from 'axios';
 import { useCallback } from 'react';
 
 interface UseCommonQueryParam<
@@ -33,6 +33,7 @@ export const useCommonQuery = <
   }, [api, queryKey]);
   const query = useQuery<Response, TError, Response, TQueryKey>({
     queryFn,
+    queryKey,
     ...props,
   });
   return query;

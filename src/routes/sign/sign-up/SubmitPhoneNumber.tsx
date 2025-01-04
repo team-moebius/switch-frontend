@@ -1,3 +1,4 @@
+import { StackScreenProps } from '@react-navigation/stack';
 import {
   UserVerificationRequest,
   UserVerificationResponse,
@@ -8,9 +9,13 @@ import { UserApi } from 'src/api';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
-import { useCommonMutation } from 'src/hooks/useCommomMutation';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
+import { SignUpRouteParamList } from '.';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
-const SubmitPhoneNumber = ({ navigation }) => {
+const SubmitPhoneNumber = ({
+  navigation,
+}: StackScreenProps<SignUpRouteParamList, 'SubmitPhone'>) => {
   const [state, setState] = useState<UserVerificationRequest>({ phone: '' });
 
   const { mutate } = useCommonMutation<
@@ -44,7 +49,7 @@ const SubmitPhoneNumber = ({ navigation }) => {
         mt={'30%'}
       >
         <Flexbox.Item mb={40}>
-          <Typography fontSize={14}>
+          <Typography fontSize={FONT_SIZE.normal}>
             사용하실 본인 명의의 휴대폰 번호를 입력해주세요.
           </Typography>
         </Flexbox.Item>

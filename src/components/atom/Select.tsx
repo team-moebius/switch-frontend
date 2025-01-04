@@ -4,13 +4,14 @@ import React, {
   useMemo,
   useState,
 } from 'react';
-import { Pressable } from 'react-native';
+import { Pressable, ScrollView } from 'react-native';
 import { Color } from 'src/@types/unit';
 import { Box } from './Box';
 import Flexbox from './Flexbox';
 import { Icon } from './Icon';
 import { Modal } from './Modal';
 import { Typography } from './Typograph';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 type OptionValue = string | number;
 type OptionProps<T = OptionValue> = Omit<OptionObject<T>, 'render'> & {
@@ -29,11 +30,11 @@ type Option<T = OptionValue> = T | OptionObject<T>;
 const BasicOption = ({ value, selected, disabled }: OptionProps) => {
   const [fontColor, backgroundColor] = useMemo((): [Color, Color] => {
     if (selected) {
-      return ['white', 'blue'];
+      return [COLORS.neutral.white, COLORS.success];
     } else if (disabled) {
-      return ['gray', 'white'];
+      return [COLORS.neutral.gray, COLORS.neutral.white];
     } else {
-      return ['black', 'white'];
+      return [COLORS.neutral.black, COLORS.neutral.white];
     }
   }, [selected, disabled]);
   return (
@@ -45,7 +46,7 @@ const BasicOption = ({ value, selected, disabled }: OptionProps) => {
       padding={16}
     >
       <Flexbox.Item flex={1}>
-        <Typography fontSize={14} color={fontColor}>
+        <Typography fontSize={FONT_SIZE.normal} color={fontColor}>
           {value}
         </Typography>
       </Flexbox.Item>
@@ -68,7 +69,12 @@ const useToggle = (defaultValue: boolean): [boolean, () => void] => {
   return [value, toggle];
 };
 
-const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
+const Select = <T extends OptionValue>({
+  value,
+  disabled,
+  onPressItem,
+  options,
+}: SelectProps<T>) => {
   const [modalVisible, toggleModal] = useToggle(false);
 
   return (
@@ -85,7 +91,10 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
           justifyContent={'space-between'}
         >
           <Flexbox.Item>
-            <Typography fontSize={14} color={disabled ? 'black' : 'gray'}>
+            <Typography
+              fontSize={FONT_SIZE.normal}
+              color={disabled ? 'black' : 'gray'}
+            >
               {value}
             </Typography>
           </Flexbox.Item>
@@ -99,41 +108,43 @@ const Select = ({ value, disabled, onPressItem, options }: SelectProps) => {
         </Flexbox>
       </Pressable>
       <Modal visible={modalVisible} onPressBack={toggleModal}>
-        {options.map((option) => {
-          const {
-            value: optionValue,
-            disabled: optionDisabled = false,
-            InnerComponent,
-          } = typeof option === 'object'
-            ? {
-                ...option,
-                InnerComponent: option?.render || BasicOption,
-              }
-            : {
-                InnerComponent: BasicOption,
-                value: option,
-              };
-          return (
-            <Pressable
-              key={optionValue}
-              onPress={() => {
-                if (!optionDisabled) {
-                  onPressItem(optionValue);
-                  toggleModal();
+        <ScrollView>
+          {options.map((option) => {
+            const {
+              value: optionValue,
+              disabled: optionDisabled = false,
+              InnerComponent,
+            } = typeof option === 'object'
+              ? {
+                  ...option,
+                  InnerComponent: option?.render || BasicOption,
                 }
-              }}
-            >
-              <InnerComponent
-                value={optionValue}
-                disabled={disabled}
-                selected={optionValue === value}
-              />
-            </Pressable>
-          );
-        })}
+              : {
+                  InnerComponent: BasicOption,
+                  value: option,
+                };
+            return (
+              <Pressable
+                key={optionValue}
+                onPress={() => {
+                  if (!optionDisabled) {
+                    onPressItem(optionValue as T);
+                    toggleModal();
+                  }
+                }}
+              >
+                <InnerComponent
+                  value={optionValue as T}
+                  disabled={disabled}
+                  selected={optionValue === value}
+                />
+              </Pressable>
+            );
+          })}
+        </ScrollView>
       </Modal>
     </>
   );
 };
 
-export { Select, SelectProps };
+export { Select, SelectProps, OptionValue };

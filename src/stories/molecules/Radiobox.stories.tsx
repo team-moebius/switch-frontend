@@ -1,15 +1,13 @@
 import React from 'react';
-import { ComponentStory, ComponentMeta } from '@storybook/react';
+import { StoryFn, Meta } from '@storybook/react';
 import { Radiobox } from 'src/components/molecule';
 
 export default {
   title: 'Radiobox',
   component: Radiobox,
-} as ComponentMeta<typeof Radiobox>;
+} as Meta<typeof Radiobox>;
 
-const Template: ComponentStory<typeof Radiobox> = (args) => (
-  <Radiobox {...args} />
-);
+const Template: StoryFn<typeof Radiobox> = (args) => <Radiobox {...args} />;
 
 export const story = Template.bind({});
 

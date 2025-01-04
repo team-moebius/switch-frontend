@@ -1,9 +1,15 @@
 import { createStackNavigator } from '@react-navigation/stack';
-import { SignUpRoute } from './sign-up';
+import { SignUpRoute, SignUpRouteParamList } from './sign-up';
 
 import { TitleScreen } from './TitleScreen';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
-const Stack = createStackNavigator();
+type SignRouteParamList = {
+  Title: undefined;
+  SignUp: NavigatorScreenParams<SignUpRouteParamList>;
+};
+
+const Stack = createStackNavigator<SignRouteParamList>();
 
 const SignRoute = () => {
   return (
@@ -18,4 +24,4 @@ const SignRoute = () => {
   );
 };
 
-export { SignRoute };
+export { SignRoute, SignRouteParamList };

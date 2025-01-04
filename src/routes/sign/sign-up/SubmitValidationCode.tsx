@@ -3,8 +3,8 @@ import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 
-import { useCommonMutation } from 'src/hooks/useCommomMutation';
-import { expoSecureStore } from 'src/common/secureStore';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
+import { TOKEN, USER_ID, expoSecureStore } from 'src/common/secureStore';
 import { UserContext } from 'src/context/user';
 
 import {
@@ -15,12 +15,22 @@ import {
 } from '@team-moebius/api-typescript';
 import { UserApi } from 'src/api';
 
-const SubmitValidationCode = ({ navigation, route }) => {
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
+import { SignUpRouteParamList } from '.';
+import { NavigationRouterParamList } from 'src/routes';
+import { FONT_SIZE } from 'src/assets/theme/base';
+
+const SubmitValidationCode = ({
+  route,
+}: StackScreenProps<SignUpRouteParamList, 'SubmitValidationCode'>) => {
   const [state, setState] = useState<LoginRequest>({
-    phone: route?.params?.phoneNumber,
+    phone: route.params.phoneNumber,
     verifiedCode: '',
   });
   const { login } = useContext(UserContext);
+  const navigation =
+    useNavigation<StackNavigationProp<NavigationRouterParamList, 'Root'>>();
 
   const { mutate: validationCodeMutate } = useCommonMutation<
     LoginResponse,
@@ -31,13 +41,13 @@ const SubmitValidationCode = ({ navigation, route }) => {
       console.debug('[UserApi.login]on success:', data, variables);
 
       if (data.jwtToken) {
-        await expoSecureStore.setToken('token', data.jwtToken.split(' ')[1]);
-        await expoSecureStore.setToken('username', 'Test');
+        await expoSecureStore.setToken(TOKEN, data.jwtToken.split(' ')[1]);
+        await expoSecureStore.setToken(USER_ID, `${data.userId}`);
       }
 
       login();
 
-      navigation?.reset({
+      navigation.reset({
         index: 0,
         routes: [{ name: 'Root' }],
       });
@@ -74,7 +84,7 @@ const SubmitValidationCode = ({ navigation, route }) => {
         mt={'30%'}
       >
         <Flexbox.Item mb={40}>
-          <Typography fontSize={14}>
+          <Typography fontSize={FONT_SIZE.normal}>
             휴대폰 번호로 전송된 인증 코드를 입력해주세요.
           </Typography>
         </Flexbox.Item>

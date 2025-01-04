@@ -1,5 +1,6 @@
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Pressable } from 'react-native';
+import { FONT_SIZE } from 'src/assets/theme/base';
 import { Box, Button, Flexbox, Icon, Typography } from 'src/components/atom';
 import { ScoreQuestion } from 'src/components/molecule';
 import { ScreenWrapper, WithMirror } from 'src/components/template';
@@ -25,6 +26,11 @@ const renderChildren = (children: string, src: string) => {
       imageHeight={90}
       cardDirection={'column'}
       imageResizeMode={'center'}
+      layoutStyle={{
+        titleContainerLayout: {
+          alignSelf: 'center',
+        },
+      }}
     />
   );
 };
@@ -66,7 +72,7 @@ const SwitchResultScreen = () => {
           <WithMirror
             renderItem={[childrenA, childrenB]}
             mirrorDirection='row'
-            centerAxis={<Icon name={'code-outline'} size={20} />}
+            centerAxis={<Icon name={'swap-horizontal'} size={20} />}
           />
         </Flexbox.Item>
         <Flexbox.Item alignSelf={'center'}>
@@ -74,7 +80,7 @@ const SwitchResultScreen = () => {
             rating={mannerRating}
             ratingHandler={(e) => ratingHandler(e, 'manner')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={FONT_SIZE.bigger}
             ratingSize={24}
             itemJustify={'center'}
           >
@@ -86,7 +92,7 @@ const SwitchResultScreen = () => {
             rating={conditionRating}
             ratingHandler={(e) => ratingHandler(e, 'condition')}
             maxRating={5}
-            fontSize={'inherit'}
+            fontSize={FONT_SIZE.bigger}
             ratingSize={24}
             itemJustify={'center'}
           >
@@ -99,11 +105,11 @@ const SwitchResultScreen = () => {
           justifyContent={'space-between'}
         >
           <Flexbox>
-            <Typography fontSize={14}>평가 유의사항</Typography>
+            <Typography fontSize={FONT_SIZE.normal}>평가 유의사항</Typography>
           </Flexbox>
           <Pressable onPress={() => window.alert('clicked')}>
             <Flexbox alignItems='center' justifyContent='flex-end'>
-              <Typography fontSize={14}>확인하기</Typography>
+              <Typography fontSize={FONT_SIZE.normal}>확인하기</Typography>
               <Icon name='chevron-up' size={24} />
             </Flexbox>
           </Pressable>

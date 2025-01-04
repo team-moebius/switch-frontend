@@ -1,7 +1,11 @@
 import { createStackNavigator } from '@react-navigation/stack';
 import { FavoriteMainScreen } from './FavoriteMainScreen';
 
-const Stack = createStackNavigator();
+type FavoriteRouteParamList = {
+  FavoriteMain: undefined;
+};
+
+const Stack = createStackNavigator<FavoriteRouteParamList>();
 
 const FavoriteRoute = () => {
   return (
@@ -11,4 +15,4 @@ const FavoriteRoute = () => {
   );
 };
 
-export { FavoriteRoute };
+export { FavoriteRoute, FavoriteRouteParamList };

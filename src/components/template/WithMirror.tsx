@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { Flexbox } from '../atom';
 import { StyleSheet } from 'react-native';
 
@@ -23,7 +23,7 @@ export const mirrorDirectionStyle = StyleSheet.create({
 
 export const WidthStyle = StyleSheet.create({
   default: {
-    maxWidth: '50%',
+    maxWidth: '100%',
   },
 });
 

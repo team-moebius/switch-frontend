@@ -1,17 +1,17 @@
 import { ReactElement, useContext, useMemo } from 'react';
 import { FlatList, Pressable } from 'react-native';
-import { ThemeContext } from 'src/context/theme';
 import { Box, Flexbox, Icon, Typography } from '../atom';
+import { ThemeContext } from 'src/context/theme';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
+import PALETTE from 'src/assets/theme/colors/palettes';
 
 interface NumberPadProps {
   maxLength: number;
   value: string;
   onChange?: (value: string) => void;
-  // onDeleteClick?: () => void;
-  // onNumberClick?: (value: number) => void;
 }
 
-type PadValue = number | 'delete' | null;
+type PadValue = number | 'delete' | 'reset';
 
 const Pad = ({
   size = 40,
@@ -26,29 +26,41 @@ const Pad = ({
     switch (typeof value) {
       case 'number':
         return (
-          <Typography fontSize={16} color={'#000000'}>{`${value}`}</Typography>
+          <Typography
+            fontSize={FONT_SIZE.bigger}
+            color={COLORS.neutral.black}
+          >{`${value}`}</Typography>
         );
       case typeof null:
         return null;
       case 'string':
         if (value === 'delete') {
           return <Icon name={'arrow-back'} />;
+        } else if (value === 'reset') {
+          return <Icon name={'reload'} />;
         }
     }
   }, [value]);
 
   return (
-    <Pressable onPress={onClick}>
-      <Flexbox
-        backgroundColor={'white'}
-        alignItems={'center'}
-        justifyContent={'center'}
-        width={size}
-        height={size}
+    <Flexbox overflow='hidden' borderRadius={40}>
+      <Pressable
+        onPress={onClick}
+        android_ripple={{ color: PALETTE.white[300] }}
+        style={({ pressed }) => [
+          {
+            width: 80,
+            height: 80,
+            borderRadius: 40,
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+          pressed && { backgroundColor: PALETTE.white[300], opacity: 0.7 },
+        ]}
       >
         {label}
-      </Flexbox>
-    </Pressable>
+      </Pressable>
+    </Flexbox>
   );
 };
 
@@ -62,14 +74,14 @@ const Dot = ({ size = 16, filled }: DotProps) => {
   return (
     <Box
       backgroundColor={filled ? color.primary[100] : color.neutral[200]}
-      borderRadius={'50%'}
+      borderRadius={50}
       width={size}
       height={size}
     ></Box>
   );
 };
 
-const NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, null, 0, 'delete'] as const;
+const NUMS = [1, 2, 3, 4, 5, 6, 7, 8, 9, 'reset', 0, 'delete'] as const;
 
 const NumberPad = ({ value, maxLength, onChange }: NumberPadProps) => {
   const dots = useMemo(() => {
@@ -105,6 +117,8 @@ const NumberPad = ({ value, maxLength, onChange }: NumberPadProps) => {
                   if (onChange) {
                     if (item === 'delete') {
                       onChange(value.slice(0, value.length - 1));
+                    } else if (item === 'reset') {
+                      onChange('reset');
                     } else if (typeof item === 'number') {
                       onChange(`${value}${item}`);
                     }
@@ -119,4 +133,4 @@ const NumberPad = ({ value, maxLength, onChange }: NumberPadProps) => {
   );
 };
 
-export { NumberPad };
+export { NumberPad, NumberPadProps };

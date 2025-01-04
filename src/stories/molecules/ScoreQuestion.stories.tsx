@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import { ComponentMeta, ComponentStory } from '@storybook/react';
+import { Meta, StoryFn } from '@storybook/react';
 import { ScoreQuestion } from 'src/components/molecule';
 
 export default {
   title: 'ScoreQuestion',
   component: ScoreQuestion,
-} as ComponentMeta<typeof ScoreQuestion>;
+} as Meta<typeof ScoreQuestion>;
 
-const Template: ComponentStory<typeof ScoreQuestion> = (args) => {
+const Template: StoryFn<typeof ScoreQuestion> = (args) => {
   const [rating, setRating] = useState(0);
   const ratingHandler = (rating: number) => {
     setRating(rating);
@@ -23,6 +23,6 @@ story.storyName = 'default';
 story.args = {
   children: '상대방의 매너는 어땠나요?',
   maxRating: 5,
-  fontSize: 'inherit',
+  fontSize: 16,
   ratingSize: 32,
 };

@@ -1,20 +1,39 @@
-import { useCallback, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
+
 import { Flexbox, Select } from 'src/components/atom';
-import { ImageCard, TradingListItem } from 'src/components/molecule';
+import {
+  ImageCard,
+  TradingListItem,
+  PressableIcon,
+} from 'src/components/molecule';
 import { ListView } from 'src/components/template/ListView';
 import { ListViewType, useFlatList } from 'src/hooks/useFlatList';
-import { StuffListItemData, STUFF_LIST_MOCK } from '../SwitchList.mock';
-import { PressableIcon } from 'src/components/molecule';
+import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
+import { getPageableContent } from 'src/utils/getPageableContent';
+
+import { SliceItemResponse, ItemResponse } from '@team-moebius/api-typescript';
+import { Pageable } from 'src/hooks/useCommonInfiniteQuery';
+import { AxiosResponse } from 'axios';
+
+import {
+  StuffListItemData,
+  STUFF_LIST_MOCK,
+} from '../../SwitchDetailScreen/SwitchList.mock';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
+const SELECT_OPTIONS_QUERY = {
+  무작위: ['random', 'asc'],
+  최신순: ['updatedAt', 'desc'],
+  '내 위치와 가까운 순': ['distance', 'asc'],
+};
 
 const GridItem = ({
   item,
   withTitleOnly,
   onClick,
 }: {
-  item: StuffListItemData;
+  item: ItemResponse;
   withTitleOnly?: boolean;
   onClick?: () => void;
 }) => {
@@ -22,8 +41,8 @@ const GridItem = ({
     <Flexbox.Item flex={1} width={'100%'}>
       <ImageCard
         title={item.name}
-        src={item.thumbnail}
-        desc={withTitleOnly ? '' : item.location}
+        src={item.images ? item.images[0] : ''}
+        desc={withTitleOnly ? '' : item.description}
         width={'100%'}
         height={150}
         resizeMode={'cover'}
@@ -38,16 +57,18 @@ const ListItem = ({
   withTitleOnly,
   onClick,
 }: {
-  item: StuffListItemData;
+  item: ItemResponse;
   withTitleOnly?: boolean;
   onClick: () => void;
 }) => {
   return (
     <TradingListItem
       data={{
-        title: item.name,
-        src: item.thumbnail || '',
-        location: withTitleOnly ? '' : item.location || '',
+        name: item.name ? item.name : '',
+        src: item.images ? item.images[0] : '',
+        preferredLocation: withTitleOnly
+          ? ''
+          : Array.from(item.preferredLocations || '')[0] || '',
       }}
       onPress={onClick}
       childDirection={'column'}
@@ -59,24 +80,54 @@ const ListItem = ({
   );
 };
 
+interface ItemListContentProps {
+  onClickList: (data: ItemResponse) => void;
+  withTitleOnly?: boolean;
+  api: (args: Pageable) => Promise<AxiosResponse<SliceItemResponse, any>>;
+}
+
 const ItemListContent = ({
   onClickList,
   withTitleOnly,
-}: {
-  onClickList: (data: StuffListItemData) => void;
-  withTitleOnly?: boolean;
-}) => {
+  api,
+}: ItemListContentProps) => {
   const [type, setType] = useState<ListViewType>('grid');
-  const [sort, setSort] = useState<SectionOptionType>('무작위');
+  const [sort, setSort] = useState<SectionOptionType>('최신순');
 
-  const loadMoreData = useCallback(() => {
-    console.debug('reacted end');
-  }, []);
+  const queryKey = ['homeMain_itemApi_getAllItems', SELECT_OPTIONS_QUERY[sort]];
+
+  const { fetchNextPage, data, isFetchingNextPage } =
+    useCommonInfiniteQuery<SliceItemResponse>({
+      api,
+      queryString: { size: 20, sort: SELECT_OPTIONS_QUERY[sort] },
+      queryKey,
+      getNextPageParam(page) {
+        let nextPageNumber: number | undefined;
+        if (page.pageable && !page.last) {
+          nextPageNumber = (page.pageable.pageNumber as number) + 1;
+        } else {
+          nextPageNumber = undefined;
+        }
+
+        return nextPageNumber;
+      },
+      onSuccess(data) {
+        console.debug('✅ home main success!! \n', data.pages);
+      },
+      onError(err) {
+        console.debug('🚧🚧 home main fail!! 🚧🚧 \n', err);
+      },
+    });
+
+  const handleLoadMoreData = () => {
+    if (!isFetchingNextPage) return;
+    fetchNextPage();
+  };
 
   const renderItem = useMemo(() => {
     switch (type) {
       case 'grid':
-        return ({ item }: { item: StuffListItemData }) =>
+        return ({ item }: { item: ItemResponse }) =>
           GridItem({
             item,
             withTitleOnly,
@@ -86,7 +137,7 @@ const ItemListContent = ({
           });
 
       case 'list':
-        return ({ item }: { item: StuffListItemData }) =>
+        return ({ item }: { item: ItemResponse }) =>
           ListItem({
             item,
             withTitleOnly,
@@ -97,15 +148,16 @@ const ItemListContent = ({
     }
   }, [withTitleOnly, onClickList, type]);
 
-  const flatListProps = useFlatList<StuffListItemData>({
+  const flatListProps = useFlatList<ItemResponse>({
     type,
-    onEndReached: loadMoreData,
+    onEndReached: handleLoadMoreData,
     renderItem,
   });
 
   return (
-    <ListView<StuffListItemData>
+    <ListView<ItemResponse>
       {...flatListProps}
+      // data={getPageableContent(data)}
       data={STUFF_LIST_MOCK}
       optionBar={
         <Flexbox
@@ -145,4 +197,4 @@ const ItemListContent = ({
   );
 };
 
-export { ItemListContent };
+export { ItemListContent, SELECT_OPTIONS_QUERY };
