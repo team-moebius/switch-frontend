@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem, PressableIcon } from 'src/components/molecule';
@@ -8,7 +8,7 @@ import ChatBubble from './content/ChatBubble';
 import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
-import useSocket from 'src/hooks/useSocket';
+import useWebSocket from 'src/hooks/useWebSocket';
 import { AccessDeviceModal } from './content/modals/AccessDeviceModal';
 import { SwitchCompleteModal } from './content/modals/SwitchCompleteModal';
 import { StackScreenProps } from '@react-navigation/stack';
@@ -174,103 +174,71 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 const ChatDetailScreen = ({
   navigation,
 }: StackScreenProps<ChatRouteParamList, 'ChatDetail'>) => {
-  const { stompObj, subList, send, subscribe, unsubscribe, disconnect } =
-    useSocket();
-  
   const [chatText, setChatText] = useState('');
   const [accessModalVisible, setAccessModalVisible] = useState(false);
   const [completeModalVisible, setCompleteModalVisible] = useState(false);
 
+  const [messageData, setMessageData] = useState<typeof CHAT_MOCK_DATA>([]);
+  const scrollViewRef = useRef<FlatList | null>(null);
+  const [firstRendered, setFirstRendered] = useState<boolean>(false);
 
-  const handleChatChange = (str: string) => {
-    setChatValue(str);
-  };
-
-  const handleSubmit = () => {
-    send('/topics/chats/1', {
-      type: 'CHAT',
-      chatId: 1,
-      senderId: 1,
-      content: chatValue,
-    });
-
-    setChatValue('');
-  };
+  const { pickImage } = useExpoImagePicker();
+  const { photoUri, openCamera } = useExpoCamera();
+  // const { sendMessage } = useWebSocket();
 
   // console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
 
+  const checkForCameraRollPermission = async () => {
+    const result = await pickImage();
+
+    if (!Array.isArray(result)) {
+      switch (result?.error) {
+        case 'denied':
+          Alert.alert('카메라 롤 접근이 거부되었습니다.');
+          break;
+        case 'canceled':
+          Alert.alert('이미지 선택이 취소되었습니다.');
+          break;
+        // 특정 포맷만 요구 될 경우
+        case 'format':
+          Alert.alert('지원되지 않는 이미지 포맷입니다');
+          break;
+      }
+    }
+
+    // 앨범 사진 서버로 보내기
+    setAccessModalVisible(false);
+  };
+
+  const openCameraHandler = async () => {
+    const result = await openCamera();
+
+    switch (result?.error) {
+      case 'denied':
+        Alert.alert('사진 촬영 접근이 거부되었습니다.');
+        break;
+      case 'canceled':
+        Alert.alert('촬영이 취소되었습니다.');
+        break;
+    }
+
+    // 찍은 사진 서버로 보내기
+    setAccessModalVisible(false);
+  };
+
+  const onChatTextHandler = (text: string) => {
+    setChatText(text);
+  };
+
+  const onSendChatMessage = async () => {
+    // sendMessage(chatText);
+    setChatText('');
+  };
+
   useEffect(() => {
-    if (stompObj.connected) subscribe('/topics/chats/1');
-
-
-    return () => {
-      unsubscribe('/topics/chats/1');
-    };
-  }, [stompObj.connected]);
-
-//   return (
-//     <>
-//       <View style={{ padding: 30, backgroundColor: 'orange' }}>
-//         <TextInput
-//           onChangeText={handleChatChange}
-//           value={chatValue}
-//           style={{ backgroundColor: 'white' }}
-//         />
-//         <Button onPress={handleSubmit} title='전송' />
-//       </View>
-//     </>
-//   );
-// };
-
-//     if (!Array.isArray(result)) {
-//       switch (result?.error) {
-//         case 'denied':
-//           Alert.alert('카메라 롤 접근이 거부되었습니다.');
-//           break;
-//         case 'canceled':
-//           Alert.alert('이미지 선택이 취소되었습니다.');
-//           break;
-//         // 특정 포맷만 요구 될 경우
-//         case 'format':
-//           Alert.alert('지원되지 않는 이미지 포맷입니다');
-//           break;
-//       }
-//     }
-
-//     // 앨범 사진 서버로 보내기
-//     setAccessModalVisible(false);
-//   };
-
-// const ChatDetailScreen = ({ navigation }) => {
-//   const [chatText, setChatText] = useState('');
-//   const [modalVisible, setModalVisible] = useState(false);
-
-
-//     switch (result?.error) {
-//       case 'denied':
-//         Alert.alert('사진 촬영 접근이 거부되었습니다.');
-//         break;
-//       case 'canceled':
-//         Alert.alert('촬영이 취소되었습니다.');
-//         break;
-//     }
-
-//     // 찍은 사진 서버로 보내기
-//     setAccessModalVisible(false);
-//   };
-
-//   const onChatTextHandler = (text: string) => {
-//     setChatText(text);
-//   };
-
-//   const onSendChatMessage = async () => {
-//     // sendMessage(chatText);
-//     setChatText('');
-//   };
-
-//     // 앨범 사진 서버로 보내기
-//     setModalVisible(false);
-//   };
+    if (!firstRendered) setFirstRendered(true);
+    setMessageData([...CHAT_MOCK_DATA].reverse());
+  }, [firstRendered]);
 
   return (
     <ScreenWrapper>
