@@ -8,13 +8,13 @@ import ChatBubble from './content/ChatBubble';
 import { FlatList } from 'react-native-gesture-handler';
 import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 import useExpoCamera from 'src/hooks/useExpoCamera';
-import useWebSocket from 'src/hooks/useWebSocket';
 import { AccessDeviceModal } from './content/modals/AccessDeviceModal';
 import { SwitchCompleteModal } from './content/modals/SwitchCompleteModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatRouteParamList } from '.';
 import { Alert } from 'react-native';
 import { COLORS } from 'src/assets/theme/base';
+import useSocket from 'src/hooks/useSocket';
 
 type SwitchChatData = {
   id: number;
@@ -184,7 +184,8 @@ const ChatDetailScreen = ({
 
   const { pickImage } = useExpoImagePicker();
   const { photoUri, openCamera } = useExpoCamera();
-  // const { sendMessage } = useWebSocket();
+  const { stompObj, subList, send, subscribe, unsubscribe, disconnect } =
+    useSocket();
 
   // console.log('앨범: ' + selectedImages, ', 카메라: ' + photoUri);
 
@@ -232,6 +233,12 @@ const ChatDetailScreen = ({
 
   const onSendChatMessage = async () => {
     // sendMessage(chatText);
+    send('/topics/chats/1', {
+      type: 'CHAT',
+      chatId: 1,
+      senderId: 1,
+      content: chatText,
+    });
     setChatText('');
   };
 
