@@ -15,6 +15,7 @@ const useSocket = () => {
     if (!stompObj) {
       stompObj = new Client({
         brokerURL: SOCKET_URL,
+        connectHeaders: {},
         debug(message) {
           console.debug(
             '☎️ ☎️ ☎️ useStomp의 connect의 객체 debug \n\n',
@@ -38,6 +39,7 @@ const useSocket = () => {
         onWebSocketError(error) {
           console.error('🚨\n webSocket에서 에러 발생!\n', error);
         },
+        reconnectDelay: 5000,
         forceBinaryWSFrames: true,
       });
 
