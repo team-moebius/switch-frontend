@@ -242,10 +242,17 @@ const ChatDetailScreen = ({
     setChatText('');
   };
 
+  // 이 useEffect는 필요가 없을 거 같은데?..
   useEffect(() => {
     if (!firstRendered) setFirstRendered(true);
     setMessageData([...CHAT_MOCK_DATA].reverse());
   }, [firstRendered]);
+
+  useEffect(() => {
+    if (stompObj.connected) subscribe('/topics/chats/1');
+
+    return () => unsubscribe('/topics/chats/1');
+  }, [stompObj.connected]);
 
   return (
     <ScreenWrapper>
