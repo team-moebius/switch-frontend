@@ -105,11 +105,8 @@ const useSocket = () => {
     );
   }, []);
 
-  useEffect(() => {
-    connect();
-  }, []);
-
   return {
+    connect,
     stompObj,
     subList,
     send,

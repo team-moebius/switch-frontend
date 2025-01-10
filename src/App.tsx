@@ -13,7 +13,6 @@ import { AppPasswordProvider } from './context/password';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { TextEncoder, TextDecoder } from 'text-encoding';
-import useSocket from './hooks/useSocket';
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
@@ -23,7 +22,6 @@ const queryClient = new QueryClient();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [assetLoaded] = useAssets({ fonts: FONT_MAP });
-  const { disconnect } = useSocket();
 
   useEffect(() => {
     const init = async () => {
@@ -31,10 +29,6 @@ export default function App() {
       setLoading(false);
     };
     init();
-
-    return () => {
-      disconnect();
-    };
   }, []);
 
   const initialized = useMemo(() => {

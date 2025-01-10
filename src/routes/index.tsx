@@ -1,4 +1,4 @@
-import { useContext, useMemo, useRef } from 'react';
+import { useContext, useEffect, useMemo, useRef } from 'react';
 import {
   NavigationContainer,
   NavigatorScreenParams,
@@ -11,6 +11,7 @@ import { SignRoute, SignRouteParamList } from './sign';
 import { RootTabs, RootTabsParamList } from './root';
 import { AppPasswordContext } from 'src/context/password';
 import { AppUnlock } from './AppUnlock';
+import useSocket from 'src/hooks/useSocket';
 
 export type NavigationRouterParamList = {
   Root: NavigatorScreenParams<RootTabsParamList>;
@@ -25,6 +26,7 @@ const NavigationRouter = () => {
   const {
     appPasswordList: { isSetPassword },
   } = useContext(AppPasswordContext);
+  const { disconnect, connect } = useSocket();
 
   const initRouteName = useRef<keyof NavigationRouterParamList | null>(null);
 
@@ -34,7 +36,13 @@ const NavigationRouter = () => {
         ? 'AppUnlock'
         : 'Root'
       : 'Sign';
+    // initRouteName.current = 'Sign';
   }
+
+  useEffect(() => {
+    if (userId) connect();
+    return () => disconnect();
+  }, [userId]);
 
   return (
     <NavigationContainer>
