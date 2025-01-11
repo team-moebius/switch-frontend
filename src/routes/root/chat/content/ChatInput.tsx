@@ -1,4 +1,5 @@
 import { ReactNode } from 'react';
+import { Color } from 'src/@types/unit';
 import { Box, Flexbox, Textarea } from 'src/components/atom';
 
 interface ChatInputProps {
@@ -7,6 +8,7 @@ interface ChatInputProps {
   onChangeText: (value: string) => void;
   value: string;
   placeholder?: string;
+  backgroundColor?: Color;
 }
 
 const ChatInput = ({
@@ -15,9 +17,15 @@ const ChatInput = ({
   onChangeText,
   value = '',
   placeholder = '',
+  backgroundColor,
 }: ChatInputProps) => {
   return (
-    <Box width={'100%'} border={'1 solid #cccccc'} borderRadius={4}>
+    <Box
+      width={'100%'}
+      border={'1 solid #cccccc'}
+      borderRadius={4}
+      backgroundColor={backgroundColor}
+    >
       <Flexbox width={'100%'} flexDirection={'row'} alignItems={'center'}>
         {left && (
           <Box width={'auto'} pl={10} pr={10}>
