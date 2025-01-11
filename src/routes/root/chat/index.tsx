@@ -40,11 +40,7 @@ const ChatRoute = () => {
                     {...props}
                     center={'채팅'}
                     right={
-                      <Flexbox
-                        width={'100%'}
-                        justifyContent={'flex-end'}
-                        pr={16}
-                      >
+                      <Flexbox width={'100%'} justifyContent={'flex-end'}>
                         <PressableIcon
                           size={24}
                           name={'notifications-outline'}
@@ -78,7 +74,7 @@ const ChatRoute = () => {
                     {...props}
                     center={'채팅 상대 닉네임'}
                     right={
-                      <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                      <Flexbox justifyContent={'flex-end'}>
                         <PressableIcon
                           size={24}
                           name={'menu'}
