@@ -20,9 +20,11 @@ const ChatInput = ({
   return (
     <Box width={'100%'} border={'1 solid #cccccc'} borderRadius={4}>
       <Flexbox width={'100%'} flexDirection={'row'} alignItems={'center'}>
-        <Box width={'auto'} ml={5}>
-          {left}
-        </Box>
+        {left && (
+          <Box width={'auto'} pl={10} pr={10}>
+            {left}
+          </Box>
+        )}
         <TextInput
           name={'chatInput'}
           onChangeText={onChangeText}
@@ -30,9 +32,11 @@ const ChatInput = ({
           placeholder={placeholder}
           style={{ borderWidth: 0 }}
         />
-        <Box width={'auto'} mr={5}>
-          {right}
-        </Box>
+        {right && (
+          <Box width={'auto'} pl={10} pr={10}>
+            {right}
+          </Box>
+        )}
       </Flexbox>
     </Box>
   );
