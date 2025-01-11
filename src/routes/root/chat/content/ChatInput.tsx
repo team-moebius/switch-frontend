@@ -1,6 +1,5 @@
-import React, { ReactNode } from 'react';
-import { LengthElement } from 'src/@types/unit';
-import { Box, Flexbox, TextInput } from 'src/components/atom';
+import { ReactNode } from 'react';
+import { Box, Flexbox, Textarea } from 'src/components/atom';
 
 interface ChatInputProps {
   left?: ReactNode;
@@ -25,12 +24,16 @@ const ChatInput = ({
             {left}
           </Box>
         )}
-        <TextInput
-          name={'chatInput'}
+        <Textarea
           onChangeText={onChangeText}
           value={value}
           placeholder={placeholder}
-          style={{ borderWidth: 0 }}
+          maxLength={300}
+          style={{
+            borderWidth: 0,
+            height: 'auto',
+            backgroundColor: 'transparent',
+          }}
         />
         {right && (
           <Box width={'auto'} pl={10} pr={10}>

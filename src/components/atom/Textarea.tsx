@@ -12,7 +12,7 @@ interface TextareaProps {
 
 const { default: defaultStyles } = StyleSheet.create({
   default: {
-    width: '100%',
+    flex: 1,
     height: 100,
     backgroundColor: 'white',
     paddingHorizontal: 10,
