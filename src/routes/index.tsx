@@ -1,4 +1,4 @@
-import { useContext, useEffect, useMemo, useRef } from 'react';
+import { useContext, useEffect, useRef } from 'react';
 import {
   NavigationContainer,
   NavigatorScreenParams,
@@ -11,7 +11,7 @@ import { SignRoute, SignRouteParamList } from './sign';
 import { RootTabs, RootTabsParamList } from './root';
 import { AppPasswordContext } from 'src/context/password';
 import { AppUnlock } from './AppUnlock';
-import useSocket from 'src/hooks/useSocket';
+import { useSocket } from 'src/context/socket';
 
 export type NavigationRouterParamList = {
   Root: NavigatorScreenParams<RootTabsParamList>;
@@ -23,10 +23,10 @@ const Stack = createStackNavigator<NavigationRouterParamList>();
 
 const NavigationRouter = () => {
   const { userId } = useContext(UserContext);
+  const { connect, disconnect } = useSocket();
   const {
     appPasswordList: { isSetPassword },
   } = useContext(AppPasswordContext);
-  const { disconnect, connect } = useSocket();
 
   const initRouteName = useRef<keyof NavigationRouterParamList | null>(null);
 
