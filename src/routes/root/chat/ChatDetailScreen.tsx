@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from 'react';
-import { Button, Flexbox } from 'src/components/atom';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Box, Button, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { HistoryListItem, PressableIcon } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
@@ -10,7 +10,8 @@ import { SwitchCompleteModal } from './content/modals/SwitchCompleteModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { ChatRouteParamList } from '.';
 import { COLORS } from 'src/assets/theme/base';
-import useSocket, { SubCallbackProps } from 'src/hooks/useSocket';
+import { UserContext } from 'src/context/user';
+import { SubCallbackProps, useSocket } from 'src/context/socket';
 
 type SwitchChatData = {
   id: number;
@@ -170,34 +171,36 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 const ChatDetailScreen = ({
   navigation,
 }: StackScreenProps<ChatRouteParamList, 'ChatDetail'>) => {
+  const { userId } = useContext(UserContext);
+  const { send, subscribe, unsubscribe, isConnected } = useSocket();
+
   const [chatText, setChatText] = useState('');
   const [completeModalVisible, setCompleteModalVisible] = useState(false);
-  const [messageData, setMessageData] = useState<SwitchChatData[]>([]);
-
-  const scrollViewRef = useRef<FlatList | null>(null);
-
-  const { stompObj, subList, send, subscribe, unsubscribe, disconnect } =
-    useSocket();
+  const [messageData, setMessageData] = useState<SubCallbackProps[]>([]);
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
   };
 
-  const onSendChatMessage = async () => {
+  const onSendChatMessage = () => {
     send('/topics/chats/1', {
       type: 'CHAT',
       chatId: 1,
-      senderId: 1,
+      senderId: userId,
       content: chatText,
     });
     setChatText('');
   };
 
+  const onSubMessage = (message: SubCallbackProps) => {
+    setMessageData((prev) => [message, ...prev]);
+  };
+
   useEffect(() => {
-    if (stompObj.connected) subscribe('/topics/chats/1');
+    if (isConnected) subscribe('/topics/chats/1', onSubMessage);
 
     return () => unsubscribe('/topics/chats/1');
-  }, [stompObj.connected]);
+  }, [isConnected]);
 
   return (
     <ScreenWrapper>
