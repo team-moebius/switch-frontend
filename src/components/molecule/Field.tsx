@@ -134,7 +134,6 @@ const Field = ({
         return (
           <TextInput
             {...props}
-            width={width}
             name={name}
             value={value}
             onChangeText={(text) => {

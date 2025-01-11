@@ -8,7 +8,6 @@ interface ChatInputProps {
   onChangeText: (value: string) => void;
   value: string;
   placeholder?: string;
-  width: LengthElement;
 }
 
 const ChatInput = ({
@@ -16,7 +15,6 @@ const ChatInput = ({
   right,
   onChangeText,
   value = '',
-  width = '100%',
   placeholder = '',
 }: ChatInputProps) => {
   return (
@@ -27,7 +25,6 @@ const ChatInput = ({
         </Box>
         <TextInput
           name={'chatInput'}
-          width={width}
           onChangeText={onChangeText}
           value={value}
           placeholder={placeholder}
