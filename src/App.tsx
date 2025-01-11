@@ -13,6 +13,7 @@ import { AppPasswordProvider } from './context/password';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { TextEncoder, TextDecoder } from 'text-encoding';
+import { SocketProvider } from './context/socket';
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
@@ -38,20 +39,22 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
-        <AppPasswordProvider>
-          <ThemeContextProvider>
-            <SafeAreaView
-              style={{
-                width: '100%',
-                height: '100%',
-                paddingTop:
-                  Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-              }}
-            >
-              {!initialized ? <SplashScreen /> : <NavigationRouter />}
-            </SafeAreaView>
-          </ThemeContextProvider>
-        </AppPasswordProvider>
+        <SocketProvider>
+          <AppPasswordProvider>
+            <ThemeContextProvider>
+              <SafeAreaView
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  paddingTop:
+                    Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+                }}
+              >
+                {!initialized ? <SplashScreen /> : <NavigationRouter />}
+              </SafeAreaView>
+            </ThemeContextProvider>
+          </AppPasswordProvider>
+        </SocketProvider>
       </UserContextProvider>
     </QueryClientProvider>
   );
