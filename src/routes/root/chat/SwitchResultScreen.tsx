@@ -1,6 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Pressable } from 'react-native';
-import { FONT_SIZE } from 'src/assets/theme/base';
+import { FONT_SIZE, PADDING } from 'src/assets/theme/base';
 import { Box, Button, Flexbox, Icon, Typography } from 'src/components/atom';
 import { ScoreQuestion } from 'src/components/molecule';
 import { ScreenWrapper, WithMirror } from 'src/components/template';
@@ -64,6 +64,8 @@ const SwitchResultScreen = () => {
         gap={40}
         flexDirection={'column'}
         justifyContent={'center'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
       >
         <Flexbox.Item alignSelf={'center'}>
           <Typography fontSize={24}>스위치를 완료했습니다.</Typography>
