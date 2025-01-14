@@ -1,4 +1,4 @@
-import React, { ReactNode, useContext } from 'react';
+import { ReactNode, useContext } from 'react';
 import { ThemeContext } from 'src/context/theme';
 import { Box } from '../atom';
 
@@ -7,6 +7,10 @@ interface ScreenWrapperProps {
 }
 const ScreenWrapper = ({ children }: ScreenWrapperProps) => {
   const { color } = useContext(ThemeContext);
-  return <Box backgroundColor={color.container_background}>{children}</Box>;
+  return (
+    <Box backgroundColor={color.container_background} height={'100%'}>
+      {children}
+    </Box>
+  );
 };
 export { ScreenWrapper };
