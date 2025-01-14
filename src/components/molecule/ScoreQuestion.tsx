@@ -1,13 +1,11 @@
-import React, { useRef } from 'react';
+import { useRef } from 'react';
 import { View, PanResponder, StyleSheet } from 'react-native';
 
-import { Flexbox, Icon, Typography } from '../atom';
+import { Flexbox, Icon } from '../atom';
 import { IconProps } from '../atom/Icon';
-import { TypographyProps } from '../atom/Typograph';
 import { itemJustifyStyle } from './TradingListItem';
 
-interface ScoreQuestionProps
-  extends Pick<TypographyProps, 'children' | 'fontSize'> {
+interface ScoreQuestionProps {
   maxRating: number;
   rating: number;
   ratingHandler: (rating: number) => void;
@@ -22,11 +20,9 @@ const containerStyle = StyleSheet.create({
 });
 
 const ScoreQuestion = ({
-  children,
   maxRating,
   rating,
   ratingHandler,
-  fontSize,
   ratingSize,
   itemJustify = 'left',
 }: ScoreQuestionProps) => {
@@ -73,7 +69,6 @@ const ScoreQuestion = ({
       {...panResponder.panHandlers}
       style={containerStyle.default}
     >
-      <Typography fontSize={fontSize}>{children}</Typography>
       <Flexbox flexDirection='row' {...itemJustifyStyle[itemJustify]}>
         {renderStars}
       </Flexbox>
