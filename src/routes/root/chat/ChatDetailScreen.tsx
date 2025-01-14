@@ -283,6 +283,7 @@ const ChatDetailScreen = ({
       </KeyboardAvoidingView>
       <SwitchCompleteModal
         visible={completeModalVisible}
+        opponentUsername='청둥오리'
         onPressBack={() => setCompleteModalVisible(false)}
         onConfirm={() => {
           setCompleteModalVisible(false);
