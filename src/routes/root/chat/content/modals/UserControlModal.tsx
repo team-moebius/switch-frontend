@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Button, Flexbox } from 'src/components/atom';
+import { Box, Button, Flexbox } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { DeclineSwitchModal } from './DeclineSwitchModal';
 import { COLORS } from 'src/assets/theme/base';
@@ -39,28 +39,26 @@ const UserControlModal = ({
       onPressBack={onPressBack}
       backgroundColor={COLORS.container_background}
       width={'50%'}
-      height={'15%'}
+      height={'20%'}
       position={'center'}
     >
       <Flexbox
-        width={'100%'}
         height={'100%'}
-        margin={'auto'}
         flexDirection={'column'}
         justifyContent={'center'}
         alignItems={'center'}
-        gap={10}
+        rowGap={25}
       >
-        <Flexbox.Item margin={'auto'}>
-          <Button type='normal' size='medium' onPress={handleDeclineSwitch}>
+        <Box width={'80%'}>
+          <Button type='warning' size='medium' onPress={onPressDecline}>
             스위치 거절
           </Button>
-        </Flexbox.Item>
-        <Flexbox.Item margin={'auto'}>
+        </Box>
+        <Box width={'80%'}>
           <Button type='warning' size='medium' onPress={onReportBlock}>
             신고 및 차단
           </Button>
-        </Flexbox.Item>
+        </Box>
       </Flexbox>
 
       {showDeclineSwitchModal && (
