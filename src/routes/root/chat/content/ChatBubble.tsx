@@ -1,21 +1,15 @@
-import React from 'react';
-import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 import { Box, Flexbox, Typography } from 'src/components/atom';
-
-interface ChatBubbleProps {
-  index: number;
-  item: {
-    id: number;
-    user: string;
-    message: string;
-    timestamp: string;
-  };
-}
 
 //TODO: 추후 if 조건문 수정 필요
 
-const ChatBubble = ({ index, item }: ChatBubbleProps) => {
-  if (item.user === 'Alice') {
+export interface ChatBubbleProps {
+  isMine: boolean;
+  content: string;
+}
+
+const ChatBubble = ({ content, isMine }: ChatBubbleProps) => {
+  if (isMine) {
     return (
       <Box>
         <Flexbox.Item
@@ -23,18 +17,13 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
           padding={10}
           ml={'45%'}
           borderRadius={10}
-          mt={5}
-          mr={'5%'}
+          mb={10}
+          mr={PADDING.wrapper.horizontal}
           maxWidth={'50%'}
           alignSelf='flex-end'
-          key={index}
         >
-          <Typography
-            fontSize={FONT_SIZE.bigger}
-            color={COLORS.text}
-            key={index}
-          >
-            {item.message}
+          <Typography fontSize={FONT_SIZE.bigger} color={COLORS.text}>
+            {content}
           </Typography>
           <Flexbox.Item
             position={'absolute'}
@@ -64,19 +53,14 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
           backgroundColor={COLORS.neutral.gray}
           padding={10}
           borderRadius={10}
-          mt={5}
-          ml={'5%'}
+          mb={10}
+          ml={PADDING.wrapper.horizontal}
           maxWidth={'50%'}
           alignSelf={'flex-start'}
-          key={index}
         >
           <Flexbox justifyContent='center'>
-            <Typography
-              fontSize={FONT_SIZE.bigger}
-              color={COLORS.text}
-              key={index}
-            >
-              {item.message}
+            <Typography fontSize={FONT_SIZE.bigger} color={COLORS.text}>
+              {content}
             </Typography>
           </Flexbox>
           <Flexbox.Item

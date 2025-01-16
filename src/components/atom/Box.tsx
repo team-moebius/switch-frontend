@@ -15,7 +15,7 @@ const BoxStyle = StyleSheet.create({
     width: '100%',
     height: 'auto',
     padding: 0,
-    border: 'none',
+    borderWidth: 0,
     textAlign: 'center',
     backgroundColor: 'none',
   },

@@ -10,12 +10,14 @@ const DeclineSwitchModal = ({
   visible,
   onPressBack,
   onConfirm,
+  onModalHide,
 }: DeclineSwitchModalProps) => {
   return (
     <Modal
       visible={visible}
       onPressBack={onPressBack}
       backgroundColor={COLORS.container_background}
+      onModalHide={onModalHide}
       width={'70%'}
       height={'18%'}
       position={'center'}
@@ -33,7 +35,7 @@ const DeclineSwitchModal = ({
         <Flexbox.Item>
           <Typography
             fontSize={14}
-          >{`${'청둥오리'}님의 스위치 제안을 거절 하시겠어요?`}</Typography>
+          >{`스위치 제안을 거절 하시겠어요?`}</Typography>
         </Flexbox.Item>
         <Flexbox
           alignItems={'center'}

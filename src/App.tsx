@@ -13,7 +13,7 @@ import { AppPasswordProvider } from './context/password';
 import { QueryClient, QueryClientProvider } from 'react-query';
 
 import { TextEncoder, TextDecoder } from 'text-encoding';
-import useSocket from './hooks/useSocket';
+import { SocketProvider } from './context/socket';
 
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
@@ -23,7 +23,6 @@ const queryClient = new QueryClient();
 export default function App() {
   const [loading, setLoading] = useState(true);
   const [assetLoaded] = useAssets({ fonts: FONT_MAP });
-  const { disconnect } = useSocket();
 
   useEffect(() => {
     const init = async () => {
@@ -31,10 +30,6 @@ export default function App() {
       setLoading(false);
     };
     init();
-
-    return () => {
-      disconnect();
-    };
   }, []);
 
   const initialized = useMemo(() => {
@@ -44,20 +39,22 @@ export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <UserContextProvider>
-        <AppPasswordProvider>
-          <ThemeContextProvider>
-            <SafeAreaView
-              style={{
-                width: '100%',
-                height: '100%',
-                paddingTop:
-                  Platform.OS === 'android' ? StatusBar.currentHeight : 0,
-              }}
-            >
-              {!initialized ? <SplashScreen /> : <NavigationRouter />}
-            </SafeAreaView>
-          </ThemeContextProvider>
-        </AppPasswordProvider>
+        <SocketProvider>
+          <AppPasswordProvider>
+            <ThemeContextProvider>
+              <SafeAreaView
+                style={{
+                  width: '100%',
+                  height: '100%',
+                  paddingTop:
+                    Platform.OS === 'android' ? StatusBar.currentHeight : 0,
+                }}
+              >
+                {!initialized ? <SplashScreen /> : <NavigationRouter />}
+              </SafeAreaView>
+            </ThemeContextProvider>
+          </AppPasswordProvider>
+        </SocketProvider>
       </UserContextProvider>
     </QueryClientProvider>
   );

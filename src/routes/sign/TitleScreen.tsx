@@ -24,7 +24,7 @@ const TitleScreen = ({
         <Typography
           fontWeight={'300'}
           fontSize={40}
-          color={color.neutral['300']}
+          color={color.neutral.white['300']}
         >
           Switch
         </Typography>
