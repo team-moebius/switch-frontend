@@ -47,6 +47,7 @@ export interface ModalProps {
   height?: LengthElement;
   position?: Position;
   onPressBack?: () => void;
+  onModalHide?: () => void;
   children?: ReactNode;
 }
 
@@ -58,6 +59,7 @@ const Modal = ({
   position = 'bottom',
   mode = 'slideUp',
   onPressBack,
+  onModalHide,
   children,
 }: ModalProps) => {
   return (
@@ -69,6 +71,7 @@ const Modal = ({
       backdropTransitionOutTiming={300}
       hideModalContentWhileAnimating
       useNativeDriver={false}
+      onModalHide={onModalHide}
     >
       <Box backgroundColor={backgroundColor} height={height} width={width}>
         {children}
