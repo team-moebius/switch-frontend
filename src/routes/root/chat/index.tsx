@@ -1,30 +1,46 @@
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { useRef, useState } from 'react';
+
+import { Flexbox } from 'src/components/atom';
+import { PressableIcon, ScreenHeader } from 'src/components/molecule';
+
 import { ChatMainScreen } from './ChatMainScreen';
 import { SwitchResultScreen } from './SwitchResultScreen';
 import { ChatDetailScreen } from './ChatDetailScreen';
-import { PressableIcon, ScreenHeader } from 'src/components/molecule';
-import { Flexbox } from 'src/components/atom';
-import { useState } from 'react';
+import { ReportsScreen } from '../home/ReportsScreen';
+
 import { UserControlModal } from './content/modals/UserControlModal';
+import { DeclineSwitchModal } from './content/modals';
+
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { HomeRouteParamList } from '../home';
 
 type ChatRouteParamList = {
   ChatMain: undefined;
   SwitchResult: undefined;
   ChatDetail: undefined;
+  Report: { previousScreen?: string };
 };
 
 const Stack = createStackNavigator<ChatRouteParamList>();
 
 const ChatRoute = () => {
-  const [userModalVisible, setUserModalVisible] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<ChatRouteParamList>>();
+  const [isUserModal, setIsUserModal] = useState(false);
+  const [isDeclineModal, setIsDeclineModal] = useState(false);
+  const [confirmDecline, setConfirmDecline] = useState(false);
 
-  const navigation =
-    useNavigation<StackNavigationProp<HomeRouteParamList, 'ChatDetail'>>();
+  const openDeclineRef = useRef(false);
+  const openReportRef = useRef(false);
+
+  const handleCloseUser = () => setIsUserModal(false);
+  const handleCloseDecline = () => setIsDeclineModal(false);
+  const handleOpenDecline = () => {
+    handleCloseUser();
+    openDeclineRef.current = true;
+  };
 
   return (
     <>
@@ -78,7 +94,7 @@ const ChatRoute = () => {
                         <PressableIcon
                           size={24}
                           name={'menu'}
-                          onPress={() => setUserModalVisible((prev) => !prev)}
+                          onPress={() => setIsUserModal(true)}
                         />
                       </Flexbox>
                     }
@@ -88,16 +104,42 @@ const ChatRoute = () => {
             }}
           />
         </Stack.Group>
+        <Stack.Screen
+          name={'Report'}
+          component={ReportsScreen}
+          options={{
+            header: (props) => {
+              return <ScreenHeader {...props} center={'신고하기'} />;
+            },
+            // presentation:'modal'
+          }}
+        />
       </Stack.Navigator>
       <UserControlModal
-        navigation={navigation}
-        visible={userModalVisible}
-        onPressBack={() => setUserModalVisible(false)}
-        onDeclineSwitch={() => setUserModalVisible(false)}
+        visible={isUserModal}
+        onPressBack={handleCloseUser}
+        handleOpenDecline={handleOpenDecline}
         onReportBlock={() => {
-          setUserModalVisible(false);
-          navigation.navigate('Report', { previousScreen: 'ChatDetail' });
+          handleCloseUser();
+          openReportRef.current = true;
         }}
+        onModalHide={() => {
+          if (openReportRef.current) {
+            openReportRef.current = false;
+            navigation.navigate('Report', {
+              previousScreen: 'ChatDetail',
+            });
+          } else if (openDeclineRef.current) {
+            openDeclineRef.current = false;
+            setIsDeclineModal(true);
+          }
+        }}
+      />
+      <DeclineSwitchModal
+        visible={isDeclineModal}
+        onPressBack={handleCloseDecline}
+        // onModalHide={onDeclineSwitch} // 여기서 decline이 true면 onModalHide 이후에 Home으로 보내보자.
+        onConfirm={handleCloseDecline} // 여기서는  handleCloseDecline을 하고 confirmDecline을 true로 해줘야 한다.
       />
     </>
   );

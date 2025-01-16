@@ -1,38 +1,19 @@
-import { useState } from 'react';
 import { Box, Button, Flexbox } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
-import { DeclineSwitchModal } from './DeclineSwitchModal';
 import { COLORS } from 'src/assets/theme/base';
 
 interface UserControlModalProps extends ModalProps {
-  onDeclineSwitch: () => void;
+  handleOpenDecline: () => void;
   onReportBlock: () => void;
-  navigation?: any;
 }
 
 const UserControlModal = ({
   visible,
   onPressBack,
   onReportBlock,
-  onDeclineSwitch,
-  navigation,
+  handleOpenDecline,
+  ...props
 }: UserControlModalProps) => {
-  const [showDeclineSwitchModal, setShowDeclineSwitchModal] = useState(false);
-
-  const handleDeclineSwitch = () => {
-    setShowDeclineSwitchModal(true);
-  };
-
-  const handleDeclineSwitchModalConfirm = () => {
-    setShowDeclineSwitchModal(false);
-    onDeclineSwitch();
-    navigation.navigate('HomeMain');
-  };
-
-  const handleDeclineSwitchModalCancel = () => {
-    setShowDeclineSwitchModal(false);
-  };
-
   return (
     <Modal
       visible={visible}
@@ -41,6 +22,7 @@ const UserControlModal = ({
       width={'50%'}
       height={'20%'}
       position={'center'}
+      {...props}
     >
       <Flexbox
         height={'100%'}
@@ -50,7 +32,7 @@ const UserControlModal = ({
         rowGap={25}
       >
         <Box width={'80%'}>
-          <Button type='warning' size='medium' onPress={onPressDecline}>
+          <Button type='warning' size='medium' onPress={handleOpenDecline}>
             스위치 거절
           </Button>
         </Box>
@@ -60,14 +42,6 @@ const UserControlModal = ({
           </Button>
         </Box>
       </Flexbox>
-
-      {showDeclineSwitchModal && (
-        <DeclineSwitchModal
-          visible={true}
-          onPressBack={handleDeclineSwitchModalCancel}
-          onConfirm={handleDeclineSwitchModalConfirm}
-        />
-      )}
     </Modal>
   );
 };
