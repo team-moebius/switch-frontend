@@ -30,18 +30,41 @@ const ChatRoute = () => {
   const navigation = useNavigation<StackNavigationProp<ChatRouteParamList>>();
   const [isUserModal, setIsUserModal] = useState(false);
   const [isDeclineModal, setIsDeclineModal] = useState(false);
-  const [confirmDecline, setConfirmDecline] = useState(false);
 
-  const openDeclineRef = useRef(false);
-  const openReportRef = useRef(false);
+  const conditionInModalHide = useRef({
+    isOpenDeclineModal: false,
+    isOpenReportScreen: false,
+    isConfirmDecline: false,
+  });
 
   const handleCloseUser = () => setIsUserModal(false);
   const handleCloseDecline = () => setIsDeclineModal(false);
   const handleOpenDecline = () => {
     handleCloseUser();
-    openDeclineRef.current = true;
+    conditionInModalHide.current.isOpenDeclineModal = true;
+  };
+  const handleConfirmDecline = () => {
+    conditionInModalHide.current.isConfirmDecline = true;
+    handleCloseDecline();
   };
 
+  const handleUserControlHide = () => {
+    if (conditionInModalHide.current.isOpenReportScreen) {
+      conditionInModalHide.current.isOpenReportScreen = false;
+      navigation.navigate('Report', {
+        previousScreen: 'ChatDetail',
+      });
+    } else if (conditionInModalHide.current.isOpenDeclineModal) {
+      conditionInModalHide.current.isOpenDeclineModal = false;
+      setIsDeclineModal(true);
+    }
+  };
+  const handleDeclineHide = () => {
+    if (conditionInModalHide.current.isConfirmDecline) {
+      conditionInModalHide.current.isConfirmDecline = false;
+      navigation.getParent()?.navigate('Home');
+    }
+  };
   return (
     <>
       <Stack.Navigator>
@@ -121,25 +144,15 @@ const ChatRoute = () => {
         handleOpenDecline={handleOpenDecline}
         onReportBlock={() => {
           handleCloseUser();
-          openReportRef.current = true;
+          conditionInModalHide.current.isOpenReportScreen = true;
         }}
-        onModalHide={() => {
-          if (openReportRef.current) {
-            openReportRef.current = false;
-            navigation.navigate('Report', {
-              previousScreen: 'ChatDetail',
-            });
-          } else if (openDeclineRef.current) {
-            openDeclineRef.current = false;
-            setIsDeclineModal(true);
-          }
-        }}
+        onModalHide={handleUserControlHide}
       />
       <DeclineSwitchModal
         visible={isDeclineModal}
         onPressBack={handleCloseDecline}
-        // onModalHide={onDeclineSwitch} // 여기서 decline이 true면 onModalHide 이후에 Home으로 보내보자.
-        onConfirm={handleCloseDecline} // 여기서는  handleCloseDecline을 하고 confirmDecline을 true로 해줘야 한다.
+        onModalHide={handleDeclineHide}
+        onConfirm={handleConfirmDecline}
       />
     </>
   );
