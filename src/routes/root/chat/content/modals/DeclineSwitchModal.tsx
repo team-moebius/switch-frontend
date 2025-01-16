@@ -10,12 +10,14 @@ const DeclineSwitchModal = ({
   visible,
   onPressBack,
   onConfirm,
+  onModalHide,
 }: DeclineSwitchModalProps) => {
   return (
     <Modal
       visible={visible}
       onPressBack={onPressBack}
       backgroundColor={COLORS.container_background}
+      onModalHide={onModalHide}
       width={'70%'}
       height={'18%'}
       position={'center'}
