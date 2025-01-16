@@ -33,7 +33,7 @@ const DeclineSwitchModal = ({
         <Flexbox.Item>
           <Typography
             fontSize={14}
-          >{`${'청둥오리'}님의 스위치 제안을 거절 하시겠어요?`}</Typography>
+          >{`스위치 제안을 거절 하시겠어요?`}</Typography>
         </Flexbox.Item>
         <Flexbox
           alignItems={'center'}
