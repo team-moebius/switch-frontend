@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { StyleSheet } from 'react-native';
 import ReactNativeModal, {
   ModalProps as ReactNativeModalProps,
@@ -25,10 +25,14 @@ const animationModeMap: Record<string, Partial<ReactNativeModalProps>> = {
   slideUp: {
     animationIn: 'slideInUp',
     animationOut: 'slideOutDown',
+    animationInTiming: 500,
+    animationOutTiming: 500,
   },
   slideDown: {
     animationIn: 'slideInDown',
     animationOut: 'slideOutUp',
+    animationInTiming: 500,
+    animationOutTiming: 500,
   },
 } as const;
 
@@ -43,6 +47,7 @@ export interface ModalProps {
   height?: LengthElement;
   position?: Position;
   onPressBack?: () => void;
+  onModalHide?: () => void;
   children?: ReactNode;
 }
 
@@ -54,6 +59,7 @@ const Modal = ({
   position = 'bottom',
   mode = 'slideUp',
   onPressBack,
+  onModalHide,
   children,
 }: ModalProps) => {
   return (
@@ -62,7 +68,10 @@ const Modal = ({
       isVisible={visible}
       onBackdropPress={onPressBack}
       style={[defaultStyle, positionStyle[position]]}
-      backdropTransitionOutTiming={0}
+      backdropTransitionOutTiming={300}
+      hideModalContentWhileAnimating
+      useNativeDriver={false}
+      onModalHide={onModalHide}
     >
       <Box backgroundColor={backgroundColor} height={height} width={width}>
         {children}

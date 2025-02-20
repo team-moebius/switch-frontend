@@ -1,31 +1,70 @@
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
+import { useRef, useState } from 'react';
+
+import { Flexbox } from 'src/components/atom';
+import { PressableIcon, ScreenHeader } from 'src/components/molecule';
+
 import { ChatMainScreen } from './ChatMainScreen';
 import { SwitchResultScreen } from './SwitchResultScreen';
 import { ChatDetailScreen } from './ChatDetailScreen';
-import { PressableIcon, ScreenHeader } from 'src/components/molecule';
-import { Flexbox } from 'src/components/atom';
-import { useState } from 'react';
+import { ReportsScreen } from '../home/ReportsScreen';
+
 import { UserControlModal } from './content/modals/UserControlModal';
+import { DeclineSwitchModal } from './content/modals';
+
+import {
+  createStackNavigator,
+  StackNavigationProp,
+} from '@react-navigation/stack';
 import { useNavigation } from '@react-navigation/native';
-import { HomeRouteParamList } from '../home';
 
 type ChatRouteParamList = {
   ChatMain: undefined;
   SwitchResult: undefined;
   ChatDetail: undefined;
+  Report: { previousScreen?: string };
 };
 
 const Stack = createStackNavigator<ChatRouteParamList>();
 
 const ChatRoute = () => {
-  const [userModalVisible, setUserModalVisible] = useState(false);
+  const navigation = useNavigation<StackNavigationProp<ChatRouteParamList>>();
+  const [isUserModal, setIsUserModal] = useState(false);
+  const [isDeclineModal, setIsDeclineModal] = useState(false);
 
-  const navigation =
-    useNavigation<StackNavigationProp<HomeRouteParamList, 'ChatDetail'>>();
+  const conditionInModalHide = useRef({
+    isOpenDeclineModal: false,
+    isOpenReportScreen: false,
+    isConfirmDecline: false,
+  });
 
+  const handleCloseUser = () => setIsUserModal(false);
+  const handleCloseDecline = () => setIsDeclineModal(false);
+  const handleOpenDecline = () => {
+    handleCloseUser();
+    conditionInModalHide.current.isOpenDeclineModal = true;
+  };
+  const handleConfirmDecline = () => {
+    conditionInModalHide.current.isConfirmDecline = true;
+    handleCloseDecline();
+  };
+
+  const handleUserControlHide = () => {
+    if (conditionInModalHide.current.isOpenReportScreen) {
+      conditionInModalHide.current.isOpenReportScreen = false;
+      navigation.navigate('Report', {
+        previousScreen: 'ChatDetail',
+      });
+    } else if (conditionInModalHide.current.isOpenDeclineModal) {
+      conditionInModalHide.current.isOpenDeclineModal = false;
+      setIsDeclineModal(true);
+    }
+  };
+  const handleDeclineHide = () => {
+    if (conditionInModalHide.current.isConfirmDecline) {
+      conditionInModalHide.current.isConfirmDecline = false;
+      navigation.getParent()?.navigate('Home');
+    }
+  };
   return (
     <>
       <Stack.Navigator>
@@ -40,11 +79,7 @@ const ChatRoute = () => {
                     {...props}
                     center={'채팅'}
                     right={
-                      <Flexbox
-                        width={'100%'}
-                        justifyContent={'flex-end'}
-                        pr={16}
-                      >
+                      <Flexbox width={'100%'} justifyContent={'flex-end'}>
                         <PressableIcon
                           size={24}
                           name={'notifications-outline'}
@@ -78,11 +113,11 @@ const ChatRoute = () => {
                     {...props}
                     center={'채팅 상대 닉네임'}
                     right={
-                      <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                      <Flexbox justifyContent={'flex-end'}>
                         <PressableIcon
                           size={24}
                           name={'menu'}
-                          onPress={() => setUserModalVisible((prev) => !prev)}
+                          onPress={() => setIsUserModal(true)}
                         />
                       </Flexbox>
                     }
@@ -92,16 +127,32 @@ const ChatRoute = () => {
             }}
           />
         </Stack.Group>
+        <Stack.Screen
+          name={'Report'}
+          component={ReportsScreen}
+          options={{
+            header: (props) => {
+              return <ScreenHeader {...props} center={'신고하기'} />;
+            },
+            // presentation:'modal'
+          }}
+        />
       </Stack.Navigator>
       <UserControlModal
-        navigation={navigation}
-        visible={userModalVisible}
-        onPressBack={() => setUserModalVisible(false)}
-        onDeclineSwitch={() => setUserModalVisible(false)}
+        visible={isUserModal}
+        onPressBack={handleCloseUser}
+        handleOpenDecline={handleOpenDecline}
         onReportBlock={() => {
-          setUserModalVisible(false);
-          navigation.navigate('Report', { previousScreen: 'ChatDetail' });
+          handleCloseUser();
+          conditionInModalHide.current.isOpenReportScreen = true;
         }}
+        onModalHide={handleUserControlHide}
+      />
+      <DeclineSwitchModal
+        visible={isDeclineModal}
+        onPressBack={handleCloseDecline}
+        onModalHide={handleDeclineHide}
+        onConfirm={handleConfirmDecline}
       />
     </>
   );

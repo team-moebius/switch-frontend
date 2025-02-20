@@ -21,7 +21,7 @@ const DEFAULT_STYLE = {
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
-  pl: PADDING.wrapper.horizontal,
+  pl: 8,
   pr: PADDING.wrapper.horizontal,
   pt: 10,
   pb: 10,

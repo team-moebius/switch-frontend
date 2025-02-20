@@ -21,8 +21,6 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  children: '상대방의 매너는 어땠나요?',
   maxRating: 5,
-  fontSize: 16,
   ratingSize: 32,
 };
