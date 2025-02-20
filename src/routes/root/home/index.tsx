@@ -255,7 +255,7 @@ const HomeRoute = ({
         onDeclineSwitch={() => setUserModalVisible(false)}
         onReportBlock={() => {
           setUserModalVisible(false);
-          modalNavigation.navigate('Report', { previousScreen: 'ChatDetail' });
+          modalNavigation.navigate('Report', { previousScreen: 'ChatMain' });
         }}
       />
       <CancelEditModal
