@@ -195,11 +195,12 @@ const ChatDetailScreen = ({
   };
 
   const onSendChatMessage = () => {
+    if (chatText.length == 0) return;
     send('/topics/chats/1', {
       type: 'CHAT',
       chatId: 1,
       senderId: userId,
-      content: chatText,
+      content: chatText.trim(),
     });
     setChatText('');
   };
