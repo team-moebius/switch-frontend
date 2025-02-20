@@ -248,10 +248,9 @@ const HomeRoute = ({
         onDeleteModalControl={() => setMyItemModalVisible(false)}
       />
       <UserControlModal
-        navigation={navigation}
         visible={userModalVisible}
         onPressBack={() => setUserModalVisible(false)}
-        onDeclineSwitch={() => setUserModalVisible(false)}
+        handleOpenDecline={() => setUserModalVisible(false)}
         onReportBlock={() => {
           setUserModalVisible(false);
           modalNavigation.navigate('Report', { previousScreen: 'ChatMain' });
