@@ -58,6 +58,7 @@ const Content = ({
               disabled
               color={COLORS.text}
               children={preferredCategory}
+              key={preferredCategory}
             />
           ))
         : undefined,
@@ -68,10 +69,13 @@ const Content = ({
       preferredLocations
         ? preferredLocations.map((location, el, arr) =>
             arr.length - 1 === el ? (
-              <Typography fontSize={FONT_SIZE.normal}>{location}</Typography>
+              <Typography fontSize={FONT_SIZE.normal} key={location}>
+                {location}
+              </Typography>
             ) : (
               <Typography
                 fontSize={FONT_SIZE.normal}
+                key={location}
               >{`${location} | `}</Typography>
             )
           )
