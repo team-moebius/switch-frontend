@@ -5,9 +5,8 @@ import {
 } from '@react-navigation/stack';
 import { useCallback, useContext, useState } from 'react';
 
-import { Button, Flexbox, Icon, Tag, TextInput } from 'src/components/atom';
+import { Button, Flexbox, TextInput } from 'src/components/atom';
 import { PressableIcon } from 'src/components/molecule';
-import { WithImage } from 'src/components/template';
 
 import { HomeMainScreen } from './HomeMainScreen';
 import { SwitchDetailScreen } from './SwitchDetailScreen';
@@ -27,7 +26,7 @@ import {
 import { ItemResponse } from '@team-moebius/api-typescript';
 
 import { ThemeContext } from 'src/context/theme';
-import { COLORS, PADDING } from 'src/assets/theme/base';
+import { PADDING } from 'src/assets/theme/base';
 
 import { RootTabsParamList } from '..';
 import { RegisterRoute, RegisterRouteParamList } from '../register';
@@ -154,7 +153,7 @@ const HomeRoute = ({
                       <Flexbox width={'100%'} justifyContent={'flex-end'}>
                         <PressableIcon
                           size={24}
-                          name={'md-add-outline'}
+                          name={'add-outline'}
                           onPress={() => {
                             props.navigation?.navigate('Register');
                           }}
