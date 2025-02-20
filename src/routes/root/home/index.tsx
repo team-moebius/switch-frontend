@@ -70,12 +70,7 @@ const HomeRouteHeader = ({
       flexDirection={'row'}
     >
       <Flexbox.Item flex={4}>
-        <TextInput
-          width={'100%'}
-          name={'search'}
-          value={value}
-          onChangeText={changeHandler}
-        />
+        <TextInput name={'search'} value={value} onChangeText={changeHandler} />
       </Flexbox.Item>
       <Flexbox.Item flex={1}>{right}</Flexbox.Item>
     </Flexbox>
