@@ -117,21 +117,12 @@ const SwitchDetailFooter = ({
           pr={PADDING.wrapper.horizontal}
         >
           {/* TODO : 🚨 제안 여부에 따라 분기처리 */}
-          {false ? (
-            <>
-              <Box>
-                <Button
-                  type={'normal'}
-                  size={'medium'}
-                  onPress={onPressPropose}
-                >
-                  스위치 요청하기
-                </Button>
-              </Box>
-              <Flexbox justifyContent='center'>
-                <Typography fontSize={16}>3명이 줄서고 있어요</Typography>
-              </Flexbox>
-            </>
+          {true ? (
+            <Box>
+              <Button type={'normal'} size={'medium'} onPress={onPressPropose}>
+                스위치 요청하기
+              </Button>
+            </Box>
           ) : (
             <Box>
               <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
