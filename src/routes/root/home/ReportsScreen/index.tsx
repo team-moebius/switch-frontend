@@ -32,7 +32,7 @@ const ReportsScreen = ({
   navigation,
   route,
 }: StackScreenProps<HomeRouteParamList, 'Report'>) => {
-  const { previousScreen } = route.params;
+  const { previousScreen, itemTitle, opponentName } = route.params;
   const [isReportPost, setIsReportPost] = useState(false);
   const [reportModalVisible, setReportModalVisible] = useState(false);
 
@@ -61,7 +61,7 @@ const ReportsScreen = ({
             <Flexbox.Item pb={20}>
               <Typography
                 fontSize={18}
-              >{`'${'커스텀 키보드'}' 게시물을 신고합니다.`}</Typography>
+              >{`'${itemTitle}' 게시물을 신고합니다.`}</Typography>
             </Flexbox.Item>
             <Flexbox.Item width={'100%'}>
               <ReportButton onPress={() => handleReport(true)}>
@@ -96,7 +96,7 @@ const ReportsScreen = ({
           <Flexbox.Item pb={20}>
             <Typography
               fontSize={18}
-            >{`'${'청둥오리'}' 님을 신고합니다.`}</Typography>
+            >{`'${opponentName}'님을 신고합니다.`}</Typography>
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
             <ReportButton onPress={() => handleReport(false)}>
@@ -126,6 +126,8 @@ const ReportsScreen = ({
         onPressBack={() => setReportModalVisible(false)}
         isReportPost={isReportPost}
         onConfirmModalControl={() => setReportModalVisible(false)}
+        opponentName={opponentName}
+        itemTitle={itemTitle}
       />
     </ScreenWrapper>
   );
