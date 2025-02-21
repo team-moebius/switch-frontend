@@ -1,4 +1,10 @@
-import { useContext, useEffect, useLayoutEffect, useState } from 'react';
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import {
   InputAccessoryView,
   Platform,
@@ -26,7 +32,7 @@ import { ThemeContext } from 'src/context/theme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { PADDING } from 'src/assets/theme/base';
-import { UserControlModal } from './content/modals';
+import { DeclineSwitchModal, UserControlModal } from './content/modals';
 
 type SwitchChatData = {
   id: number;
@@ -195,9 +201,37 @@ const ChatDetailScreen = ({
   const [completeModalVisible, setCompleteModalVisible] = useState(false);
   const [messageData, setMessageData] = useState<SubCallbackProps[]>([]);
   const [userModalVisible, setUserModalVisible] = useState(false);
+  const [isDeclineModal, setIsDeclineModal] = useState(false);
+
+  const conditionInModalHide = useRef({
+    isOpenDeclineModal: false,
+    isOpenReportScreen: false,
+    isConfirmDecline: false,
+  });
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
+  };
+
+  const handleUserControlHide = () => {
+    if (conditionInModalHide.current.isOpenReportScreen) {
+      conditionInModalHide.current.isOpenReportScreen = false;
+      // TODO : 상대편 이름 추가해야 한다.
+      navigation.navigate('Report', {
+        previousScreen: 'ChatMain',
+        opponentName: '상대편 name',
+      });
+    } else if (conditionInModalHide.current.isOpenDeclineModal) {
+      conditionInModalHide.current.isOpenDeclineModal = false;
+      setIsDeclineModal(true);
+    }
+  };
+
+  const handleDeclineHide = () => {
+    if (conditionInModalHide.current.isConfirmDecline) {
+      conditionInModalHide.current.isConfirmDecline = false;
+      navigation.getParent()?.navigate('Home');
+    }
   };
 
   const onSendChatMessage = () => {
@@ -322,14 +356,23 @@ const ChatDetailScreen = ({
       <UserControlModal
         visible={userModalVisible}
         onPressBack={() => setUserModalVisible(false)}
-        handleOpenDecline={() => setUserModalVisible(false)}
+        handleOpenDecline={() => {
+          setUserModalVisible(false);
+          conditionInModalHide.current.isOpenDeclineModal = true;
+        }}
         onReportBlock={() => {
           setUserModalVisible(false);
-          // TODO : 상대편 이름 추가해야 한다.
-          navigation.navigate('Report', {
-            previousScreen: 'ChatMain',
-            opponentName: '상대편 name',
-          });
+          conditionInModalHide.current.isOpenReportScreen = true;
+        }}
+        onModalHide={handleUserControlHide}
+      />
+      <DeclineSwitchModal
+        visible={isDeclineModal}
+        onPressBack={() => setIsDeclineModal(false)}
+        onModalHide={handleDeclineHide}
+        onConfirm={() => {
+          conditionInModalHide.current.isConfirmDecline = true;
+          setIsDeclineModal(false);
         }}
       />
     </Flexbox.Item>
