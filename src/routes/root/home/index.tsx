@@ -1,5 +1,4 @@
 import {
-  StackNavigationProp,
   StackScreenProps,
   createStackNavigator,
 } from '@react-navigation/stack';
@@ -15,9 +14,6 @@ import { RegisteredListScreen } from './RegisteredListScreen';
 import { ReportScreenProps, ReportsScreen } from './ReportsScreen';
 import { ChatDetailScreen } from '../chat/ChatDetailScreen';
 
-import { UserControlModal } from '../chat/content/modals';
-import { CancelEditModal, MyItemOptionModal } from './modals';
-
 import {
   ScreenHeader,
   ScreenHeaderProps,
@@ -30,7 +26,7 @@ import { PADDING } from 'src/assets/theme/base';
 
 import { RootTabsParamList } from '..';
 import { RegisterRoute, RegisterRouteParamList } from '../register';
-import { NavigatorScreenParams, useNavigation } from '@react-navigation/native';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
@@ -80,11 +76,6 @@ const HomeRouteHeader = ({
 const HomeRoute = ({
   navigation,
 }: StackScreenProps<RootTabsParamList, 'Home'>) => {
-  const [cancelModalVisible, setCancelModalVisible] = useState(false);
-
-  const modalNavigation =
-    useNavigation<StackNavigationProp<HomeRouteParamList>>();
-
   return (
     <>
       <Stack.Navigator>
@@ -186,33 +177,9 @@ const HomeRoute = ({
             }}
           />
         </Stack.Group>
-        <Stack.Screen
-          name='EditItem'
-          component={RegisterRoute}
-          options={{
-            header: (props) => {
-              return (
-                <ScreenHeader
-                  {...props}
-                  center={'물품 수정하기'}
-                  setModalVisible={setCancelModalVisible}
-                  isConfirmGoBack
-                />
-              );
-            },
-          }}
-        />
         <Stack.Screen name={'ChatDetail'} component={ChatDetailScreen} />
+        <Stack.Screen name='EditItem' component={RegisterRoute} />
       </Stack.Navigator>
-      <CancelEditModal
-        visible={cancelModalVisible}
-        onPressBack={() => setCancelModalVisible(false)}
-        onConfirm={() => {
-          setCancelModalVisible(false);
-          navigation.goBack();
-        }}
-        onCancel={() => setCancelModalVisible(false)}
-      />
     </>
   );
 };

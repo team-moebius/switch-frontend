@@ -1,5 +1,5 @@
 /* react */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import {
   useWindowDimensions,
   Alert,
@@ -17,7 +17,11 @@ import {
   Select,
   TextInput,
 } from 'src/components/atom';
-import { CountingTextarea, PressableIcon } from 'src/components/molecule';
+import {
+  CountingTextarea,
+  PressableIcon,
+  ScreenHeader,
+} from 'src/components/molecule';
 import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
 import { ImageUploader } from './contents/ImageUploader';
 import { OptionValue } from 'src/components/atom/Select';
@@ -46,6 +50,7 @@ import {
 /* style */
 import PALETTE from 'src/assets/theme/colors/palettes';
 import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
+import { CancelEditModal } from '../../home/modals';
 
 const REGISTER_CATEGORY = [
   '수입명품',
@@ -137,6 +142,7 @@ const RegisterFormScreen = ({
     details: false,
     safety: false,
   });
+  const [cancelModalVisible, setCancelModalVisible] = useState(false);
   // 기본 state
   const [data, setData] = useState<RegisterDto>(initialData);
   const {
@@ -188,6 +194,7 @@ const RegisterFormScreen = ({
     } else {
       createMutate({
         ...data,
+        // TODO : api 파라미터가 preferredCategories에서 preferredCategory로 수정되어야 될 거 같음.
         preferredCategory,
         preferredLocations,
         type: 'GOODS',
@@ -256,6 +263,25 @@ const RegisterFormScreen = ({
     }));
   };
 
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        if (paramsData) {
+          return (
+            <ScreenHeader
+              {...props}
+              center={'물품 수정하기'}
+              setModalVisible={setCancelModalVisible}
+              isConfirmGoBack
+            />
+          );
+        } else {
+          return <ScreenHeader {...props} center={'물품등록하기'} />;
+        }
+      },
+    });
+  }, []);
+
   // TODO : 🚨 주소 설정 옵션 선택 모달과 관련된 변수는 주석처리
   /* useEffect */
   // useEffect(() => {
@@ -299,7 +325,6 @@ const RegisterFormScreen = ({
         />
         <Box mt={20}>
           <TextInput
-            width={'100%'}
             placeholder={'물품명'}
             value={name}
             name={'name'}
@@ -409,6 +434,15 @@ const RegisterFormScreen = ({
           handleCloseAttentionModal={handleCloseAttentionModal}
         />
       </Flexbox>
+      <CancelEditModal
+        visible={cancelModalVisible}
+        onPressBack={() => setCancelModalVisible(false)}
+        onConfirm={() => {
+          setCancelModalVisible(false);
+          navigation.goBack();
+        }}
+        onCancel={() => setCancelModalVisible(false)}
+      />
     </KeyboardScreenWrapper>
   );
 };
