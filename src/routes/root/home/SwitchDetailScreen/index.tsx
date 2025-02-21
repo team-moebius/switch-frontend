@@ -88,6 +88,8 @@ const SwitchDetailScreen = ({
               // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
               params: { initialData: undefined },
             });
+          onPressCurrentSwitch={() => {
+            Alert.alert('chatMain 페이지로 가야 됨');
           }}
           onDeleteModalControl={() => setMyItemModalVisible(false)}
         />
