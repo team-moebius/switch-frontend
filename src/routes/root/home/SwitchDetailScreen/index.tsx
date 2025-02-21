@@ -50,6 +50,10 @@ const SwitchDetailScreen = ({
     setRevokeModalVisible(false);
   };
 
+  const onPressSwitchInProgress = () => {
+    navigation.navigate('SwitchInProgress');
+  };
+
   return (
     <ScreenWrapper>
       <ScrollView>
@@ -66,9 +70,7 @@ const SwitchDetailScreen = ({
           onPressPropose={onPressPropose}
           onPressRevoke={onPressRevoke}
           userSummaryData={USERSUMMARY_MOCK}
-          onPressCurrentSwitch={() => {
-            Alert.alert('chatMain 페이지로 가야 됨');
-          }}
+          onPressSwitchInProgress={onPressSwitchInProgress}
           isMine={isMine}
         />
       </ScrollView>
