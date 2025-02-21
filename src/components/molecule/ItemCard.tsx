@@ -79,7 +79,7 @@ const Content = ({
               <Typography
                 fontSize={FONT_SIZE.normal}
                 key={location}
-              >{`${location} | `}</Typography>
+              >{`${location} |`}</Typography>
             )
           )
         : undefined,
