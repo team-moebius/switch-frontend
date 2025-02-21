@@ -81,7 +81,6 @@ const HomeRoute = ({
   navigation,
 }: StackScreenProps<RootTabsParamList, 'Home'>) => {
   const [myItemModalVisible, setMyItemModalVisible] = useState(false);
-  const [userModalVisible, setUserModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
 
   const modalNavigation =
@@ -189,29 +188,6 @@ const HomeRoute = ({
           />
         </Stack.Group>
         <Stack.Screen
-          name={'ChatDetail'}
-          component={ChatDetailScreen}
-          options={{
-            header: (props) => {
-              return (
-                <ScreenHeader
-                  {...props}
-                  center={'채팅 상대 닉네임'}
-                  right={
-                    <Flexbox width={'85%'} justifyContent={'flex-end'}>
-                      <PressableIcon
-                        size={24}
-                        name={'menu'}
-                        onPress={() => setUserModalVisible((prev) => !prev)}
-                      />
-                    </Flexbox>
-                  }
-                />
-              );
-            },
-          }}
-        />
-        <Stack.Screen
           name='EditItem'
           component={RegisterRoute}
           options={{
@@ -227,6 +203,7 @@ const HomeRoute = ({
             },
           }}
         />
+        <Stack.Screen name={'ChatDetail'} component={ChatDetailScreen} />
       </Stack.Navigator>
       {/* TODO : 이 곳에서 MyItemOptioinModal을 호출하면 initial데이터를 받아사용할 수 없을지도 모르겠는걸? 일단은 undefined로 지정 */}
       <MyItemOptionModal
@@ -241,15 +218,6 @@ const HomeRoute = ({
           });
         }}
         onDeleteModalControl={() => setMyItemModalVisible(false)}
-      />
-      <UserControlModal
-        visible={userModalVisible}
-        onPressBack={() => setUserModalVisible(false)}
-        handleOpenDecline={() => setUserModalVisible(false)}
-        onReportBlock={() => {
-          setUserModalVisible(false);
-          modalNavigation.navigate('Report', { previousScreen: 'ChatMain' });
-        }}
       />
       <CancelEditModal
         visible={cancelModalVisible}

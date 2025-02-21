@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useLayoutEffect, useState } from 'react';
 import {
   InputAccessoryView,
   Platform,
@@ -7,7 +7,11 @@ import {
 } from 'react-native';
 
 import { Box, Button, Flexbox, Separator } from 'src/components/atom';
-import { HistoryListItem, PressableIcon } from 'src/components/molecule';
+import {
+  HistoryListItem,
+  PressableIcon,
+  ScreenHeader,
+} from 'src/components/molecule';
 
 import { ChatInput } from './content/ChatInput';
 import ChatBubble from './content/ChatBubble';
@@ -22,6 +26,7 @@ import { ThemeContext } from 'src/context/theme';
 import { StackScreenProps } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { PADDING } from 'src/assets/theme/base';
+import { UserControlModal } from './content/modals';
 
 type SwitchChatData = {
   id: number;
@@ -189,6 +194,7 @@ const ChatDetailScreen = ({
   const [chatText, setChatText] = useState('');
   const [completeModalVisible, setCompleteModalVisible] = useState(false);
   const [messageData, setMessageData] = useState<SubCallbackProps[]>([]);
+  const [userModalVisible, setUserModalVisible] = useState(false);
 
   const onChatTextHandler = (text: string) => {
     setChatText(text);
@@ -209,6 +215,28 @@ const ChatDetailScreen = ({
     console.log(message);
     setMessageData((prev) => [message, ...prev]);
   };
+
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        return (
+          <ScreenHeader
+            {...props}
+            center={'채팅 상대 닉네임'}
+            right={
+              <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                <PressableIcon
+                  size={24}
+                  name={'menu'}
+                  onPress={() => setUserModalVisible((prev) => !prev)}
+                />
+              </Flexbox>
+            }
+          />
+        );
+      },
+    });
+  }, []);
 
   useEffect(() => {
     if (isConnected) subscribe('/topics/chats/1', onSubMessage);
@@ -289,6 +317,19 @@ const ChatDetailScreen = ({
         onConfirm={() => {
           setCompleteModalVisible(false);
           navigation.navigate('SwitchResult');
+        }}
+      />
+      <UserControlModal
+        visible={userModalVisible}
+        onPressBack={() => setUserModalVisible(false)}
+        handleOpenDecline={() => setUserModalVisible(false)}
+        onReportBlock={() => {
+          setUserModalVisible(false);
+          // TODO : 상대편 이름 추가해야 한다.
+          navigation.navigate('Report', {
+            previousScreen: 'ChatMain',
+            opponentName: '상대편 name',
+          });
         }}
       />
     </Flexbox.Item>
