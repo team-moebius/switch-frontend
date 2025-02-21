@@ -80,7 +80,6 @@ const HomeRouteHeader = ({
 const HomeRoute = ({
   navigation,
 }: StackScreenProps<RootTabsParamList, 'Home'>) => {
-  const [myItemModalVisible, setMyItemModalVisible] = useState(false);
   const [cancelModalVisible, setCancelModalVisible] = useState(false);
 
   const modalNavigation =
@@ -205,20 +204,6 @@ const HomeRoute = ({
         />
         <Stack.Screen name={'ChatDetail'} component={ChatDetailScreen} />
       </Stack.Navigator>
-      {/* TODO : 이 곳에서 MyItemOptioinModal을 호출하면 initial데이터를 받아사용할 수 없을지도 모르겠는걸? 일단은 undefined로 지정 */}
-      <MyItemOptionModal
-        navigation={navigation}
-        visible={myItemModalVisible}
-        onPressBack={() => setMyItemModalVisible(false)}
-        onEdit={() => {
-          setMyItemModalVisible(false);
-          modalNavigation.navigate('EditItem', {
-            screen: 'RegisterForm',
-            params: { initialData: undefined },
-          });
-        }}
-        onDeleteModalControl={() => setMyItemModalVisible(false)}
-      />
       <CancelEditModal
         visible={cancelModalVisible}
         onPressBack={() => setCancelModalVisible(false)}
