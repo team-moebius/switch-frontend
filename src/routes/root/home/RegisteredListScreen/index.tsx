@@ -123,7 +123,7 @@ const RegisteredListScreen = () => {
             justifyContent={'center'}
             gap={5}
           >
-            <Flexbox.Item margin={'auto'}>
+            <Flexbox.Item width={'50%'}>
               <Button
                 type='warning'
                 size='medium'
@@ -132,10 +132,11 @@ const RegisteredListScreen = () => {
                 취소
               </Button>
             </Flexbox.Item>
-            <Flexbox.Item margin={'auto'}>
+            <Flexbox.Item width={'50%'}>
               <Button
                 type='normal'
                 size='medium'
+                // TODO : chatting room 생성으로 이어져야 함
                 onPress={() => console.log('스위치')}
               >
                 확인
