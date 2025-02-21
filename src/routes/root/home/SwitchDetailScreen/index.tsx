@@ -66,34 +66,34 @@ const SwitchDetailScreen = ({
           onPressPropose={onPressPropose}
           onPressRevoke={onPressRevoke}
           userSummaryData={USERSUMMARY_MOCK}
-          offeredList={STUFF_LIST_MOCK}
-          isMine={isMine}
-        />
-        <RevokeModal
-          onPressRevoke={onPressRevokeConfirm}
-          onPressBack={onPresssRevokeModalBack}
-          visible={revokeModalVisible}
-          myItem={'제 아이템인데요...'} // TODO : 🚨 myItem, oppItem에 변수채워두기 및 prop명 데이터와 맞추기
-          oppItem={'상대 아이템인데요....'}
-        />
-        <MyItemOptionModal
-          navigation={navigation}
-          visible={myItemModalVisible}
-          onPressBack={() => setMyItemModalVisible(false)}
-          onEdit={() => {
-            setMyItemModalVisible(false);
-            navigation.navigate('EditItem', {
-              screen: 'RegisterForm',
-              // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
-              // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
-              params: { initialData: undefined },
-            });
           onPressCurrentSwitch={() => {
             Alert.alert('chatMain 페이지로 가야 됨');
           }}
-          onDeleteModalControl={() => setMyItemModalVisible(false)}
+          isMine={isMine}
         />
       </ScrollView>
+      <RevokeModal
+        onPressRevoke={onPressRevokeConfirm}
+        onPressBack={onPresssRevokeModalBack}
+        visible={revokeModalVisible}
+        myItem={'제 아이템인데요...'} // TODO : 🚨 myItem, oppItem에 변수채워두기 및 prop명 데이터와 맞추기
+        oppItem={'상대 아이템인데요....'}
+      />
+      <MyItemOptionModal
+        navigation={navigation}
+        visible={myItemModalVisible}
+        onPressBack={() => setMyItemModalVisible(false)}
+        onEdit={() => {
+          setMyItemModalVisible(false);
+          navigation.navigate('EditItem', {
+            screen: 'RegisterForm',
+            // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
+            // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
+            params: { initialData: undefined },
+          });
+        }}
+        onDeleteModalControl={() => setMyItemModalVisible(false)}
+      />
     </ScreenWrapper>
   );
 };
