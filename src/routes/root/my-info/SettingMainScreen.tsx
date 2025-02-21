@@ -17,7 +17,7 @@ import { NavigationRouterParamList } from 'src/routes';
 import { UserContext } from 'src/context/user';
 import { Field } from 'src/components/molecule';
 import { AppPasswordContext } from 'src/context/password';
-import { FONT_SIZE } from 'src/assets/theme/base';
+import { FONT_SIZE, PADDING } from 'src/assets/theme/base';
 
 const SettingButton = ({
   children,
@@ -25,7 +25,11 @@ const SettingButton = ({
 }: Pick<ButtonProps, 'onPress'> & { children: string }) => {
   return (
     <Flexbox justifyContent='flex-start'>
-      <Box width={'auto'} pl={25}>
+      <Box
+        width={'auto'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+      >
         <Button
           wide={false}
           type={'transparent'}

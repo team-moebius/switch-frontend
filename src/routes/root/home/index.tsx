@@ -1,23 +1,18 @@
 import {
-  StackNavigationProp,
   StackScreenProps,
   createStackNavigator,
 } from '@react-navigation/stack';
 import { useCallback, useContext, useState } from 'react';
 
-import { Button, Flexbox, Icon, Tag, TextInput } from 'src/components/atom';
+import { Button, Flexbox, TextInput } from 'src/components/atom';
 import { PressableIcon } from 'src/components/molecule';
-import { WithImage } from 'src/components/template';
 
 import { HomeMainScreen } from './HomeMainScreen';
 import { SwitchDetailScreen } from './SwitchDetailScreen';
 import { NotificationsScreen } from './NotificationsScreen';
 import { RegisteredListScreen } from './RegisteredListScreen';
-import { ReportsScreen } from './ReportsScreen';
+import { ReportScreenProps, ReportsScreen } from './ReportsScreen';
 import { ChatDetailScreen } from '../chat/ChatDetailScreen';
-
-import { UserControlModal } from '../chat/content/modals';
-import { CancelEditModal, MyItemOptionModal } from './modals';
 
 import {
   ScreenHeader,
@@ -27,18 +22,18 @@ import {
 import { ItemResponse } from '@team-moebius/api-typescript';
 
 import { ThemeContext } from 'src/context/theme';
-import { COLORS, PADDING } from 'src/assets/theme/base';
+import { PADDING } from 'src/assets/theme/base';
 
 import { RootTabsParamList } from '..';
 import { RegisterRoute, RegisterRouteParamList } from '../register';
-import { NavigatorScreenParams, useNavigation } from '@react-navigation/native';
+import { NavigatorScreenParams } from '@react-navigation/native';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
   SwitchDetail: ItemResponse;
   RegisteredList: undefined;
   Notifications: undefined;
-  Report: { previousScreen?: string };
+  Report: ReportScreenProps;
   ChatDetail: undefined;
   EditItem: NavigatorScreenParams<RegisterRouteParamList>;
 };
@@ -71,12 +66,7 @@ const HomeRouteHeader = ({
       flexDirection={'row'}
     >
       <Flexbox.Item flex={4}>
-        <TextInput
-          width={'100%'}
-          name={'search'}
-          value={value}
-          onChangeText={changeHandler}
-        />
+        <TextInput name={'search'} value={value} onChangeText={changeHandler} />
       </Flexbox.Item>
       <Flexbox.Item flex={1}>{right}</Flexbox.Item>
     </Flexbox>
@@ -86,13 +76,6 @@ const HomeRouteHeader = ({
 const HomeRoute = ({
   navigation,
 }: StackScreenProps<RootTabsParamList, 'Home'>) => {
-  const [myItemModalVisible, setMyItemModalVisible] = useState(false);
-  const [userModalVisible, setUserModalVisible] = useState(false);
-  const [cancelModalVisible, setCancelModalVisible] = useState(false);
-
-  const modalNavigation =
-    useNavigation<StackNavigationProp<HomeRouteParamList>>();
-
   return (
     <>
       <Stack.Navigator>
@@ -154,7 +137,7 @@ const HomeRoute = ({
                       <Flexbox width={'100%'} justifyContent={'flex-end'}>
                         <PressableIcon
                           size={24}
-                          name={'md-add-outline'}
+                          name={'add-outline'}
                           onPress={() => {
                             props.navigation?.navigate('Register');
                           }}
@@ -194,79 +177,9 @@ const HomeRoute = ({
             }}
           />
         </Stack.Group>
-        <Stack.Screen
-          name={'ChatDetail'}
-          component={ChatDetailScreen}
-          options={{
-            header: (props) => {
-              return (
-                <ScreenHeader
-                  {...props}
-                  center={'채팅 상대 닉네임'}
-                  right={
-                    <Flexbox width={'85%'} justifyContent={'flex-end'}>
-                      <PressableIcon
-                        size={24}
-                        name={'menu'}
-                        onPress={() => setUserModalVisible((prev) => !prev)}
-                      />
-                    </Flexbox>
-                  }
-                />
-              );
-            },
-          }}
-        />
-        <Stack.Screen
-          name='EditItem'
-          component={RegisterRoute}
-          options={{
-            header: (props) => {
-              return (
-                <ScreenHeader
-                  {...props}
-                  center={'물품 수정하기'}
-                  setModalVisible={setCancelModalVisible}
-                  isConfirmGoBack
-                />
-              );
-            },
-          }}
-        />
+        <Stack.Screen name={'ChatDetail'} component={ChatDetailScreen} />
+        <Stack.Screen name='EditItem' component={RegisterRoute} />
       </Stack.Navigator>
-      {/* TODO : 이 곳에서 MyItemOptioinModal을 호출하면 initial데이터를 받아사용할 수 없을지도 모르겠는걸? 일단은 undefined로 지정 */}
-      <MyItemOptionModal
-        navigation={navigation}
-        visible={myItemModalVisible}
-        onPressBack={() => setMyItemModalVisible(false)}
-        onEdit={() => {
-          setMyItemModalVisible(false);
-          modalNavigation.navigate('EditItem', {
-            screen: 'RegisterForm',
-            params: { initialData: undefined },
-          });
-        }}
-        onDeleteModalControl={() => setMyItemModalVisible(false)}
-      />
-      <UserControlModal
-        navigation={navigation}
-        visible={userModalVisible}
-        onPressBack={() => setUserModalVisible(false)}
-        onDeclineSwitch={() => setUserModalVisible(false)}
-        onReportBlock={() => {
-          setUserModalVisible(false);
-          modalNavigation.navigate('Report', { previousScreen: 'ChatDetail' });
-        }}
-      />
-      <CancelEditModal
-        visible={cancelModalVisible}
-        onPressBack={() => setCancelModalVisible(false)}
-        onConfirm={() => {
-          setCancelModalVisible(false);
-          navigation.goBack();
-        }}
-        onCancel={() => setCancelModalVisible(false)}
-      />
     </>
   );
 };

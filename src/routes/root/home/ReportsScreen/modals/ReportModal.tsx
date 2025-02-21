@@ -8,6 +8,8 @@ interface ReportModalProps extends ModalProps {
   isReportPost: boolean;
   onConfirmModalControl: () => void;
   navigation?: any;
+  opponentName: string;
+  itemTitle?: string;
 }
 
 const ReportModal = ({
@@ -16,6 +18,8 @@ const ReportModal = ({
   onPressBack,
   isReportPost,
   onConfirmModalControl,
+  opponentName,
+  itemTitle,
 }: ReportModalProps) => {
   const [showConfirmReportModal, setShowConfirmReportModal] = useState(false);
 
@@ -26,6 +30,10 @@ const ReportModal = ({
   const handelReportConfirmModal = () => {
     setShowConfirmReportModal(false);
     onConfirmModalControl();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'ChatMain' }],
+    });
     navigation.navigate('HomeMain');
   };
 
@@ -53,10 +61,11 @@ const ReportModal = ({
         justifyContent={'center'}
       >
         <Flexbox.Item>
+          {/* TODO : 변수로 사용자 이름 넣기 */}
           <Typography fontSize={FONT_SIZE.normal}>
             {isReportPost
-              ? '게시글을 신고할까요?'
-              : `${'청둥오리'}님을 신고할까요?`}
+              ? `${itemTitle}' 게시글을 신고할까요?`
+              : `'${opponentName}'님을 신고할까요?`}
           </Typography>
         </Flexbox.Item>
         <Flexbox

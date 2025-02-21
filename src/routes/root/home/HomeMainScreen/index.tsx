@@ -28,7 +28,7 @@ const HomeMainScreen = ({
         {isItemView ? (
           <ItemListContent
             onClickList={(data) => {
-              navigation?.navigate('SwitchDetail', { ...data });
+              navigation?.navigate('SwitchDetail', data);
             }}
             api={(params) =>
               ItemApi.getItems(undefined, params.page, params.size, params.sort)
