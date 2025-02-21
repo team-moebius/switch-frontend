@@ -9,8 +9,9 @@ import { PADDING } from 'src/assets/theme/base';
 
 type SwitchDetailViewProps = {
   itemData: Omit<SwitchDetailData, 'date'> & { date: string };
+  isMine: boolean;
 };
-const SwitchDetailView = ({ itemData }: SwitchDetailViewProps) => {
+const SwitchDetailView = ({ itemData, isMine }: SwitchDetailViewProps) => {
   const {
     name,
     date,
@@ -66,6 +67,7 @@ const SwitchDetailView = ({ itemData }: SwitchDetailViewProps) => {
             preferredCategories,
             liked,
           }}
+          isMine={isMine}
         />
       </Flexbox.Item>
       <Separator width={'100%'} />
