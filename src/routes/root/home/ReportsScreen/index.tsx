@@ -28,6 +28,12 @@ const ReportButton = ({
 
 const SWITCH_DETAIL = 'SwitchDetail';
 
+interface ReportScreenProps {
+  previousScreen?: string;
+  itemTitle?: string;
+  opponentName: string;
+}
+
 const ReportsScreen = ({
   navigation,
   route,
@@ -133,4 +139,4 @@ const ReportsScreen = ({
   );
 };
 
-export { ReportsScreen };
+export { ReportsScreen, type ReportScreenProps };

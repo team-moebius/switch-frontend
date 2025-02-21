@@ -12,7 +12,7 @@ import { HomeMainScreen } from './HomeMainScreen';
 import { SwitchDetailScreen } from './SwitchDetailScreen';
 import { NotificationsScreen } from './NotificationsScreen';
 import { RegisteredListScreen } from './RegisteredListScreen';
-import { ReportsScreen } from './ReportsScreen';
+import { ReportScreenProps, ReportsScreen } from './ReportsScreen';
 import { ChatDetailScreen } from '../chat/ChatDetailScreen';
 
 import { UserControlModal } from '../chat/content/modals';
@@ -37,7 +37,7 @@ type HomeRouteParamList = {
   SwitchDetail: ItemResponse;
   RegisteredList: undefined;
   Notifications: undefined;
-  Report: { previousScreen?: string; itemTitle?: string; opponentName: string };
+  Report: ReportScreenProps;
   ChatDetail: undefined;
   EditItem: NavigatorScreenParams<RegisterRouteParamList>;
 };

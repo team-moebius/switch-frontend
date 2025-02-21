@@ -6,7 +6,7 @@ import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 import { ChatMainScreen } from './ChatMainScreen';
 import { SwitchResultScreen } from './SwitchResultScreen';
 import { ChatDetailScreen } from './ChatDetailScreen';
-import { ReportsScreen } from '../home/ReportsScreen';
+import { ReportScreenProps, ReportsScreen } from '../home/ReportsScreen';
 
 import { UserControlModal } from './content/modals/UserControlModal';
 import { DeclineSwitchModal } from './content/modals';
@@ -21,7 +21,7 @@ type ChatRouteParamList = {
   ChatMain: undefined;
   SwitchResult: undefined;
   ChatDetail: undefined;
-  Report: { previousScreen?: string };
+  Report: ReportScreenProps;
 };
 
 const Stack = createStackNavigator<ChatRouteParamList>();
