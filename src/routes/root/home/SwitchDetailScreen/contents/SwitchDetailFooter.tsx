@@ -18,7 +18,7 @@ interface SwitchDetailFooterProp {
   onPressReport: () => void;
   onPressPropose: () => void;
   onPressRevoke: () => void;
-  onPressCurrentSwitch: () => void;
+  onPressSwitchInProgress: () => void;
   userSummaryData: UserSummaryData;
   isMine: boolean;
 }
@@ -28,7 +28,7 @@ const SwitchDetailFooter = ({
   onPressPropose,
   onPressRevoke,
   userSummaryData,
-  onPressCurrentSwitch,
+  onPressSwitchInProgress,
   isMine,
 }: SwitchDetailFooterProp) => {
   // TODO : 🚨 여기 pairedItemName 처럼 Switches 호출하면 있는 프로퍼티들이 존재한다면,
@@ -155,7 +155,7 @@ const SwitchDetailFooter = ({
           <Button
             type={'normal'}
             size={'medium'}
-            onPress={onPressCurrentSwitch}
+            onPress={onPressSwitchInProgress}
           >
             {/* TODO : props 추가해서 변수로 넣기 */}
             진행 중인 N건의 스위치 보기
