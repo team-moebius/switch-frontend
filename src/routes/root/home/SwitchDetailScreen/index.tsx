@@ -64,6 +64,7 @@ const SwitchDetailScreen = ({
               ? convertLocalTime(SWITCH_DETAIL_MOCK.date?.toUTCString())
               : '',
           }}
+          isMine={isMine}
         />
         <SwitchDetailFooter
           onPressReport={onPressReport}
