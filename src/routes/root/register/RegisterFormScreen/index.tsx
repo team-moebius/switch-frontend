@@ -94,7 +94,8 @@ const RegisterFormScreen = ({
   route,
 }: StackScreenProps<RegisterRouteParamList, 'RegisterForm'>) => {
   /* route params */
-  const { initialData: paramsData, getAddress } = route.params;
+  const paramsData = route.params?.initialData;
+  const getAddress = route.params?.getAddress;
   const initialData: RegisterDto = paramsData ?? {
     name: '',
     description: '',

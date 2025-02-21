@@ -27,6 +27,7 @@ import { PADDING } from 'src/assets/theme/base';
 import { RootTabsParamList } from '..';
 import { RegisterRoute, RegisterRouteParamList } from '../register';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { SwitchInProgressScreen } from './SwitchInProgressScreen';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
@@ -35,6 +36,7 @@ type HomeRouteParamList = {
   Notifications: undefined;
   Report: ReportScreenProps;
   ChatDetail: undefined;
+  SwitchInProgress: undefined; // TODO : sync-up 때 수정해야 될지도 모름
   EditItem: NavigatorScreenParams<RegisterRouteParamList>;
 };
 
@@ -116,6 +118,13 @@ const HomeRoute = ({
             }}
           />
           <Stack.Screen
+            name={'SwitchInProgress'}
+            component={SwitchInProgressScreen}
+            options={{
+              header: (props) => <ScreenHeader {...props} />,
+            }}
+          />
+          <Stack.Screen
             name={'Report'}
             component={ReportsScreen}
             options={{
@@ -133,6 +142,7 @@ const HomeRoute = ({
                 return (
                   <ScreenHeader
                     {...props}
+                    center='등록된 내 물품'
                     right={
                       <Flexbox width={'100%'} justifyContent={'flex-end'}>
                         <PressableIcon

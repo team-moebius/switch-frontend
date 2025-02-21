@@ -18,8 +18,8 @@ interface SwitchDetailFooterProp {
   onPressReport: () => void;
   onPressPropose: () => void;
   onPressRevoke: () => void;
+  onPressSwitchInProgress: () => void;
   userSummaryData: UserSummaryData;
-  offeredList: ItemResponse[];
   isMine: boolean;
 }
 
@@ -28,16 +28,12 @@ const SwitchDetailFooter = ({
   onPressPropose,
   onPressRevoke,
   userSummaryData,
-  offeredList,
+  onPressSwitchInProgress,
   isMine,
 }: SwitchDetailFooterProp) => {
-  const onPressOfferList = (item: any) => {
-    // TODO : 🚨 해당 아이템으로 navigation 걸어야 됨
-    Alert.alert(item, '을 클릭했습니다.');
-  };
   // TODO : 🚨 여기 pairedItemName 처럼 Switches 호출하면 있는 프로퍼티들이 존재한다면,
   // 여기에 걸릴 수 있도록 하기. 일단 Mock data 활용해서 UI 만들기
-  if (true) {
+  if (false) {
     return (
       <Flexbox
         alignItems='center'
@@ -121,21 +117,12 @@ const SwitchDetailFooter = ({
           pr={PADDING.wrapper.horizontal}
         >
           {/* TODO : 🚨 제안 여부에 따라 분기처리 */}
-          {false ? (
-            <>
-              <Box>
-                <Button
-                  type={'normal'}
-                  size={'medium'}
-                  onPress={onPressPropose}
-                >
-                  스위치 요청하기
-                </Button>
-              </Box>
-              <Flexbox justifyContent='center'>
-                <Typography fontSize={16}>3명이 줄서고 있어요</Typography>
-              </Flexbox>
-            </>
+          {true ? (
+            <Box>
+              <Button type={'normal'} size={'medium'} onPress={onPressPropose}>
+                스위치 요청하기
+              </Button>
+            </Box>
           ) : (
             <Box>
               <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
@@ -156,28 +143,14 @@ const SwitchDetailFooter = ({
           pr={PADDING.wrapper.horizontal}
           pb={25}
         >
-          <Flexbox justifyContent='center' mb={20}>
-            <Typography
-              children={'이 물품으로 제안한 스위치'}
-              fontSize={FONT_SIZE.header}
-            />
-          </Flexbox>
-          {offeredList.map((offer, index) => {
-            return (
-              <TradingListItem
-                key={index}
-                onPress={() => onPressOfferList(offer.name)}
-                childDirection='column'
-                data={{
-                  src: offer.images ? offer.images[0] : '',
-                  name: offer.name ? offer.name : '',
-                  preferredLocation: offer.preferredLocations
-                    ? Array.from(offer.preferredLocations)[0]
-                    : '',
-                }}
-              />
-            );
-          })}
+          <Button
+            type={'normal'}
+            size={'medium'}
+            onPress={onPressSwitchInProgress}
+          >
+            {/* TODO : props 추가해서 변수로 넣기 */}
+            진행 중인 N건의 스위치 보기
+          </Button>
         </Box>
       );
     }

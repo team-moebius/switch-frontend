@@ -11,6 +11,7 @@ interface ItemCardProps {
   data: Omit<SwitchDetailData, 'date'> & { date: string };
   margin?: Margin;
   onLikeHandler?: () => void;
+  isMine: boolean;
 }
 
 const Header = ({
@@ -42,12 +43,14 @@ const Content = ({
   preferredLocations,
   liked,
   onLikeHandler,
+  isMine,
 }: {
   description: string;
   preferredCategories?: string[];
   preferredLocations?: string[];
   liked: boolean;
   onLikeHandler: () => void;
+  isMine: boolean;
 }) => {
   const PreferredCategories = useCallback(
     () =>
@@ -76,7 +79,7 @@ const Content = ({
               <Typography
                 fontSize={FONT_SIZE.normal}
                 key={location}
-              >{`${location} | `}</Typography>
+              >{`${location} |`}</Typography>
             )
           )
         : undefined,
@@ -105,19 +108,21 @@ const Content = ({
               <PreferredLocations />
             </Flexbox>
           </Flexbox.Item>
-          <PressableIcon
-            name={liked ? 'heart' : 'heart-outline'}
-            size={32}
-            onPress={onLikeHandler}
-            color={PALETTE.red[200]}
-          />
+          {isMine ? undefined : (
+            <PressableIcon
+              name={liked ? 'heart' : 'heart-outline'}
+              size={32}
+              onPress={onLikeHandler}
+              color={PALETTE.red[200]}
+            />
+          )}
         </Flexbox>
       ) : undefined}
     </Flexbox>
   );
 };
 
-const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
+const ItemCard = ({ data, onLikeHandler, isMine }: ItemCardProps) => {
   const {
     name = '',
     date = '',
@@ -140,6 +145,7 @@ const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
           preferredLocations={preferredLocations}
           liked={liked}
           onLikeHandler={onLikeHandler ? onLikeHandler : () => {}}
+          isMine={isMine}
         />
       }
     />
