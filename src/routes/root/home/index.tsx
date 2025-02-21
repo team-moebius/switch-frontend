@@ -37,7 +37,7 @@ type HomeRouteParamList = {
   SwitchDetail: ItemResponse;
   RegisteredList: undefined;
   Notifications: undefined;
-  Report: { previousScreen?: string };
+  Report: { previousScreen?: string; itemTitle?: string; opponentName: string };
   ChatDetail: undefined;
   EditItem: NavigatorScreenParams<RegisterRouteParamList>;
 };
