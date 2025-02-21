@@ -142,6 +142,7 @@ const HomeRoute = ({
                 return (
                   <ScreenHeader
                     {...props}
+                    center='등록된 내 물품'
                     right={
                       <Flexbox width={'100%'} justifyContent={'flex-end'}>
                         <PressableIcon
