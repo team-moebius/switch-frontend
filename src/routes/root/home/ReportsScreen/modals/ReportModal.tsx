@@ -30,6 +30,10 @@ const ReportModal = ({
   const handelReportConfirmModal = () => {
     setShowConfirmReportModal(false);
     onConfirmModalControl();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'ChatMain' }],
+    });
     navigation.navigate('HomeMain');
   };
 
