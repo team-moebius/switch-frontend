@@ -16,6 +16,8 @@ interface FlexboxProps extends BoxProps {
   rowGap?: number;
   columnGap?: number;
   gap?: number;
+  flexShrink?: number;
+  flexGrow?: number;
 }
 
 interface FlexItemProps extends BoxProps {
@@ -33,6 +35,8 @@ const Flexbox = ({
   children,
   flexWrap,
   width = 'auto',
+  flexShrink,
+  flexGrow,
   ...props
 }: FlexboxProps) => {
   return (
@@ -48,6 +52,8 @@ const Flexbox = ({
           columnGap,
           rowGap,
           gap,
+          flexGrow,
+          flexShrink,
         },
       ]}
     >
