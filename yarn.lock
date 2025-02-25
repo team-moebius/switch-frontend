@@ -3516,10 +3516,10 @@
   dependencies:
     "@swc/counter" "^0.1.3"
 
-"@team-moebius/api-typescript@=0.0.27":
-  version "0.0.27"
-  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.27/352382272e5cfcb4e3f8cc28a633a7551dacf07a#352382272e5cfcb4e3f8cc28a633a7551dacf07a"
-  integrity sha512-kDYHHQIF6XSN8hF5SR+KvJWBWss35Y26VOBhiooQzaodffZK0eCfKpYw7Qs4qMjzBzsljbJ9FB3ijdb8qRQIgg==
+"@team-moebius/api-typescript@=0.0.28":
+  version "0.0.28"
+  resolved "https://npm.pkg.github.com/download/@team-moebius/api-typescript/0.0.28/6dc05db4700966fac318f31eca780a07be79a105#6dc05db4700966fac318f31eca780a07be79a105"
+  integrity sha512-1q6rJfuJRLkn4RkRdMoj65D1d6uZ/dzI9QroelL2DXceQGo7GnxP6HtPCEse2ciF8O8JwHif6I08Xd2Ks3/CKQ==
   dependencies:
     axios "^1.4.0"
     typescript "^5.2.2"
