@@ -1,10 +1,12 @@
 import { StackScreenProps } from '@react-navigation/stack';
 import React from 'react';
-import { Flexbox } from 'src/components/atom';
+import { Box, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ChattingListItem } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { ChatRouteParamList } from '.';
+import { PADDING } from 'src/assets/theme/base';
+import { STUFF_LIST_MOCK } from '../home/SwitchDetailScreen/SwitchList.mock';
 
 const CHAT_MOCK_DATA = [
   {
@@ -29,11 +31,15 @@ const ChatMainScreen = ({
 }: StackScreenProps<ChatRouteParamList, 'ChatMain'>) => {
   return (
     <ScreenWrapper>
-      <Flexbox width={'100%'} height={'100%'}>
+      <Flexbox
+        width={'100%'}
+        height={'100%'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+      >
         <Flexbox.Item width={'100%'} height={100}>
           {CHAT_MOCK_DATA.map((data, idx) => (
-            <React.Fragment key={idx}>
-              <Separator />
+            <Box key={idx} pb={30}>
               <ChattingListItem
                 data={{
                   username: data.username,
@@ -42,12 +48,12 @@ const ChatMainScreen = ({
                   ago: data.ago,
                   isUnread: data.isUnread,
                 }}
-                onPress={() => navigation.navigate('ChatDetail')}
+                onPressChatDetail={() => navigation.navigate('ChatDetail')}
+                onPressSwitchDetail={() =>
+                  navigation.navigate('SwitchDetail', STUFF_LIST_MOCK[0])
+                }
               />
-              {idx === CHAT_MOCK_DATA.length - 1 && (
-                <Separator key={'separator' + idx} />
-              )}
-            </React.Fragment>
+            </Box>
           ))}
         </Flexbox.Item>
       </Flexbox>
