@@ -7,12 +7,15 @@ import { ChatDetailScreen } from './ChatDetailScreen';
 import { ReportScreenProps, ReportsScreen } from '../home/ReportsScreen';
 
 import { createStackNavigator } from '@react-navigation/stack';
+import { SwitchDetailScreen } from '../home/SwitchDetailScreen';
+import { ItemResponse } from '@team-moebius/api-typescript';
 
 type ChatRouteParamList = {
   ChatMain: undefined;
   SwitchResult: undefined;
   ChatDetail: undefined;
   Report: ReportScreenProps;
+  SwitchDetail: ItemResponse;
 };
 
 const Stack = createStackNavigator<ChatRouteParamList>();
@@ -66,6 +69,13 @@ const ChatRoute = () => {
               return <ScreenHeader {...props} center={'신고하기'} />;
             },
             // presentation:'modal'
+          }}
+        />
+        <Stack.Screen
+          name={'SwitchDetail'}
+          component={SwitchDetailScreen}
+          options={{
+            header: (props) => <ScreenHeader {...props} />,
           }}
         />
       </Stack.Navigator>
