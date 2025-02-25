@@ -34,9 +34,9 @@ const WithMirror = ({
 }: WithMirrorProps) => {
   return (
     <Flexbox {...mirrorDirectionStyle[mirrorDirection]} {...WidthStyle.default}>
-      <Flexbox.Item>{renderItem[0]}</Flexbox.Item>
+      <Flexbox.Item flex={1}>{renderItem[0]}</Flexbox.Item>
       <Flexbox.Item>{centerAxis}</Flexbox.Item>
-      <Flexbox.Item>{renderItem[1]}</Flexbox.Item>
+      <Flexbox.Item flex={1}>{renderItem[1]}</Flexbox.Item>
     </Flexbox>
   );
 };
