@@ -9,6 +9,7 @@ import { PADDING } from 'src/assets/theme/base';
 import { STUFF_LIST_MOCK } from '../home/SwitchDetailScreen/SwitchList.mock';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { HomeRouteParamList } from '../home';
+import { Alert } from 'react-native';
 
 const CHAT_MOCK_DATA = [
   {
@@ -27,6 +28,18 @@ This is usually because the modules which have changed (and their parents) do no
     isUnread: true,
   },
 ];
+
+type ApiType = 'ChatMain' | 'SwitchInProgress';
+
+const apiList: Record<ApiType, () => void> = {
+  ChatMain: () => Alert.alert('ChatMain 입니다'),
+  SwitchInProgress: () => Alert.alert('SwitchInProgress 입니다'),
+};
+
+interface ChatMainScreenProps {
+  api?: ApiType;
+  id?: number;
+}
 
 const ChatMainScreen = ({
   navigation,
