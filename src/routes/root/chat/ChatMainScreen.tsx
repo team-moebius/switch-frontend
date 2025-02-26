@@ -80,4 +80,4 @@ const ChatMainScreen = ({
   );
 };
 
-export { ChatMainScreen };
+export { ChatMainScreen, type ChatMainScreenProps };

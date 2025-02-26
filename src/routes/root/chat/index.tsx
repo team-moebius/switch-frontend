@@ -1,7 +1,7 @@
 import { Flexbox } from 'src/components/atom';
 import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 
-import { ChatMainScreen } from './ChatMainScreen';
+import { ChatMainScreen, ChatMainScreenProps } from './ChatMainScreen';
 import { SwitchResultScreen } from './SwitchResultScreen';
 import { ChatDetailScreen } from './ChatDetailScreen';
 import { ReportScreenProps, ReportsScreen } from '../home/ReportsScreen';
@@ -11,7 +11,7 @@ import { SwitchDetailScreen } from '../home/SwitchDetailScreen';
 import { ItemResponse } from '@team-moebius/api-typescript';
 
 type ChatRouteParamList = {
-  ChatMain: undefined;
+  ChatMain: ChatMainScreenProps;
   SwitchResult: undefined;
   ChatDetail: undefined;
   Report: ReportScreenProps;

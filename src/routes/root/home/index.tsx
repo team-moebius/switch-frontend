@@ -27,7 +27,7 @@ import { PADDING } from 'src/assets/theme/base';
 import { RootTabsParamList } from '..';
 import { RegisterRoute, RegisterRouteParamList } from '../register';
 import { NavigatorScreenParams } from '@react-navigation/native';
-import { SwitchInProgressScreen } from './SwitchInProgressScreen';
+import { ChatMainScreen, ChatMainScreenProps } from '../chat/ChatMainScreen';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
@@ -36,7 +36,7 @@ type HomeRouteParamList = {
   Notifications: undefined;
   Report: ReportScreenProps;
   ChatDetail: undefined;
-  SwitchInProgress: undefined; // TODO : sync-up 때 수정해야 될지도 모름
+  ChatMain: ChatMainScreenProps;
   EditItem: NavigatorScreenParams<RegisterRouteParamList>;
 };
 
@@ -118,10 +118,12 @@ const HomeRoute = ({
             }}
           />
           <Stack.Screen
-            name={'SwitchInProgress'}
-            component={SwitchInProgressScreen}
+            name={'ChatMain'}
+            component={ChatMainScreen}
             options={{
-              header: (props) => <ScreenHeader {...props} />,
+              header: (props) => (
+                <ScreenHeader center='진행 중인 스위치' {...props} />
+              ),
             }}
           />
           <Stack.Screen
