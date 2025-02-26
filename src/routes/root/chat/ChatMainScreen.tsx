@@ -1,5 +1,5 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Box, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ChattingListItem } from 'src/components/molecule';
@@ -48,6 +48,7 @@ const ChatMainScreen = ({
   StackScreenProps<ChatRouteParamList, 'ChatMain'>,
   StackScreenProps<HomeRouteParamList, 'ChatMain'>
 >) => {
+  useEffect(() => apiList[route.params?.api ?? 'ChatMain'](), []);
   return (
     <ScreenWrapper>
       <Flexbox
@@ -69,6 +70,7 @@ const ChatMainScreen = ({
                 }}
                 onPressChatDetail={() => navigation.navigate('ChatDetail')}
                 onPressSwitchDetail={() =>
+                  // TODO : SwitchDetail로 navigate할 때 params 수정해야 된다.
                   navigation.navigate('SwitchDetail', STUFF_LIST_MOCK[0])
                 }
               />
