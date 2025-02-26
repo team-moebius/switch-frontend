@@ -33,6 +33,8 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { useBottomTabBarHeight } from '@react-navigation/bottom-tabs';
 import { PADDING } from 'src/assets/theme/base';
 import { DeclineSwitchModal, UserControlModal } from './content/modals';
+import { HomeRouteParamList } from '../home';
+import { CompositeScreenProps } from '@react-navigation/native';
 
 type SwitchChatData = {
   id: number;
@@ -191,7 +193,10 @@ const CHAT_MOCK_DATA: SwitchChatData[] = [
 
 const ChatDetailScreen = ({
   navigation,
-}: StackScreenProps<ChatRouteParamList, 'ChatDetail'>) => {
+}: CompositeScreenProps<
+  StackScreenProps<ChatRouteParamList, 'ChatDetail'>,
+  StackScreenProps<HomeRouteParamList, 'ChatDetail'>
+>) => {
   const { color } = useContext(ThemeContext);
   const { userId } = useContext(UserContext);
   const { send, subscribe, unsubscribe, isConnected } = useSocket();

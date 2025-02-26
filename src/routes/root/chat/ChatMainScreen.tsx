@@ -7,6 +7,8 @@ import { ScreenWrapper } from 'src/components/template';
 import { ChatRouteParamList } from '.';
 import { PADDING } from 'src/assets/theme/base';
 import { STUFF_LIST_MOCK } from '../home/SwitchDetailScreen/SwitchList.mock';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { HomeRouteParamList } from '../home';
 
 const CHAT_MOCK_DATA = [
   {
@@ -28,7 +30,11 @@ This is usually because the modules which have changed (and their parents) do no
 
 const ChatMainScreen = ({
   navigation,
-}: StackScreenProps<ChatRouteParamList, 'ChatMain'>) => {
+  route,
+}: CompositeScreenProps<
+  StackScreenProps<ChatRouteParamList, 'ChatMain'>,
+  StackScreenProps<HomeRouteParamList, 'ChatMain'>
+>) => {
   return (
     <ScreenWrapper>
       <Flexbox
