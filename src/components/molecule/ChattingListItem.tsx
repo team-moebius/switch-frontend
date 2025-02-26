@@ -117,9 +117,14 @@ const ChattingListItem = ({
               )}
             </Flexbox>
           </Box>
-          <Flexbox.Item alignSelf={'center'} width={'20%'}>
+          <Flexbox
+            alignItems='center'
+            justifyContent='center'
+            width={'20%'}
+            height={'100%'}
+          >
             <Typography fontSize={13}>{ago}</Typography>
-          </Flexbox.Item>
+          </Flexbox>
         </Flexbox>
       </Pressable>
     </Flexbox>
