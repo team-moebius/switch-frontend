@@ -47,14 +47,14 @@ const ChattingListItem = ({
 
   const childrenA = useMemo(() => {
     return renderChildren(
-      'aosdfjaowefjoijoijoijoijoijoeifjaowefijaweofijaaowefhaowefh',
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus blanditiis quaerat error dolore,',
       fontSize
     );
   }, [username, fontSize]);
 
   const childrenB = useMemo(() => {
     return renderChildren(
-      'aoefiajweofjiaojoijoijoioiefjaleoihfgalweifhjewfjaoweijf',
+      'Lorem ipsum dolor sit, amet consectetur adipisicing elit. Ducimus blanditiis quaerat error dolore,',
       fontSize
     );
   }, [selectedItem, fontSize]);
@@ -85,17 +85,17 @@ const ChattingListItem = ({
         onPress={onPressChatDetail}
         style={{
           flexShrink: 1,
-          paddingHorizontal: 10,
+          marginLeft: 10,
         }}
       >
         <Flexbox>
-          <Box width={'80%'}>
+          <Flexbox flexDirection='column' width={'100%'} flexShrink={1}>
             <WithMirror
               renderItem={[childrenA, childrenB]}
               mirrorDirection={mirrorDirection}
               centerAxis={<Icon name={'swap-horizontal'} size={20} />}
             />
-            <Flexbox mt={10}>
+            <Flexbox mt={10} width={'100%'}>
               <Flexbox.Item flex={1}>
                 <Typography
                   fontSize={FONT_SIZE.normal}
@@ -116,12 +116,13 @@ const ChattingListItem = ({
                 />
               )}
             </Flexbox>
-          </Box>
+          </Flexbox>
           <Flexbox
             alignItems='center'
             justifyContent='center'
-            width={'20%'}
+            width={'100%'}
             height={'100%'}
+            flexShrink={4}
           >
             <Typography fontSize={13}>{ago}</Typography>
           </Flexbox>
