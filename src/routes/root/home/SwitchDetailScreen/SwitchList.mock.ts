@@ -28,10 +28,10 @@ type SwitchDetailData = {
   name?: string;
   description?: string;
   images?: string[];
-  preferredCategories?: string[];
+  preferredCategory?: string;
   preferredLocations?: string[];
   waitingCount?: number;
-  status?: ItemResponseStatusEnum;
+  status: ItemResponseStatusEnum;
   category?: string;
   date?: Date;
   liked?: boolean;
@@ -47,9 +47,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -60,9 +59,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -73,9 +71,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -86,9 +83,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -99,9 +95,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -112,9 +107,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -125,9 +119,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -138,9 +131,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -151,9 +143,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -164,9 +155,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -177,9 +167,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -190,9 +179,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -203,9 +191,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -216,9 +203,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -229,9 +215,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -242,9 +227,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -255,9 +239,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -268,9 +251,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -281,9 +263,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
   {
     type: 'GOODS',
@@ -294,9 +275,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
       'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     ],
-    preferredCategories: new Set(['Electronics']),
+    preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
-    waitingCount: 5,
   },
 ];
 
@@ -421,14 +401,10 @@ const SWITCH_DETAIL_MOCK: SwitchDetailData = {
     'https://img.danawa.com/images/descFiles/6/68/5067243_CxXEIN2WXm_1654690609267.jpeg',
     'https://i.pinimg.com/736x/31/51/2a/31512a374041bcc7ba0983f37b67016e.jpg',
   ],
-  preferredCategories: [
-    '여성 신발',
-    '잡화',
-    'loremloremloremloremloremloremlorem',
-  ],
+  preferredCategory: '잡화',
   preferredLocations: ['서울 천왕동', '서울 동작구', '서울 종로'],
   waitingCount: 4,
-  status: 'READY',
+  status: 'CANCELED',
   liked: false,
   category: 'PC 주변기기',
 };

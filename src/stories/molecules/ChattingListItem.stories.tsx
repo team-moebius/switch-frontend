@@ -23,7 +23,7 @@ This is usually because the modules which have changed (and their parents) do no
     ago: '20분전',
     isUnread: true,
   },
-  onPress: () => {
+  onPressChatDetail: () => {
     alert('list click');
   },
   mirrorDirection: 'row',
