@@ -10,8 +10,13 @@ import { PADDING } from 'src/assets/theme/base';
 type SwitchDetailViewProps = {
   itemData: Omit<SwitchDetailData, 'date'> & { date: string };
   isMine: boolean;
+  onPressBookMark: () => void;
 };
-const SwitchDetailView = ({ itemData, isMine }: SwitchDetailViewProps) => {
+const SwitchDetailView = ({
+  itemData,
+  isMine,
+  onPressBookMark,
+}: SwitchDetailViewProps) => {
   const {
     name,
     date,
@@ -68,6 +73,7 @@ const SwitchDetailView = ({ itemData, isMine }: SwitchDetailViewProps) => {
             liked,
           }}
           isMine={isMine}
+          onLikeHandler={onPressBookMark}
         />
       </Flexbox.Item>
       <Separator width={'100%'} />

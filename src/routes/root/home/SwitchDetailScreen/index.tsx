@@ -17,6 +17,16 @@ import { RevokeModal } from './contents/RevokeModal';
 import { MyItemOptionModal } from '../modals';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { ChatRouteParamList } from '../../chat';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
+import { useCommonQuery } from 'src/hooks/useCommonQuery';
+import {
+  BookmarkRequest,
+  BookmarkResponse,
+  ItemResponse,
+  UserInfoResponse,
+} from '@team-moebius/api-typescript';
+import { BookMarkApi, ItemApi, UserApi } from 'src/api';
+import { useQueryClient } from 'react-query';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -32,6 +42,32 @@ const SwitchDetailScreen = ({
   // const isMine = userId === '물품id';
   const isMine = false;
   // console.log('params 입니다 ::: ', route.params, userId);
+  const queryClient = useQueryClient();
+  const { mutate: createBookMark } = useCommonMutation<
+    BookmarkResponse,
+    BookmarkRequest
+  >({
+    api: ({ userId, itemId }: { userId: number; itemId: number }) =>
+      BookMarkApi.createBookmark({ userId, itemId }),
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_bookMarkApi_createBookmark data ✅ \n\n',
+        data,
+        variables
+      );
+      queryClient.invalidateQueries([
+        'SwitchDetail_bookMarkApi_createBookmark',
+      ]);
+    },
+    onError(error, variables) {
+      console.debug(
+        '\n\n\n 🚨 SwitchDetail_bookMarkApi_createBookmark error 🚨 \n\n',
+        error,
+        variables
+      );
+    },
+  });
+
   // TODO : 🚨 아이템 api 받아서 이 아이템이 내 아이템인지 확인하는 반응형 변수 만들기
   // TODO : 🚨 북마크 api 달아야 됨
   const onPressReport = () =>
@@ -72,6 +108,12 @@ const SwitchDetailScreen = ({
               : '',
           }}
           isMine={isMine}
+          onPressBookMark={() =>
+            createBookMark({
+              userId: +(userId as string),
+              itemId: switchDetailData.id as number,
+            })
+          }
         />
         <SwitchDetailFooter
           onPressReport={onPressReport}
