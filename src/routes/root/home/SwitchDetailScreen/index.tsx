@@ -56,7 +56,9 @@ const SwitchDetailScreen = ({
   };
 
   const onPressSwitchInProgress = () => {
-    navigation.navigate('SwitchInProgress');
+    navigation.navigate('ChatMain', {
+      api: 'SwitchInProgress',
+    });
   };
 
   return (
