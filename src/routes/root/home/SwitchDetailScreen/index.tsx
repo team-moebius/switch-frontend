@@ -35,13 +35,30 @@ const SwitchDetailScreen = ({
   StackScreenProps<HomeRouteParamList, 'SwitchDetail'>,
   StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
 >) => {
+  // TODO : main에서 내려오는 item 보고 해당 item의 id를 이용해서 개별 item 조회 api 호출해야 될지도 모름
   const [revokeModalVisible, setRevokeModalVisible] = useState(false);
   const [myItemModalVisible, setMyItemModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
   // TODO : 🚨 내꺼면 헤더에 햄버거 버튼? 그 있ㅓ야 됨. 게시글 수정&삭제 보여주는
-  // const isMine = userId === '물품id';
-  const isMine = false;
+  const switchDetailData = route.params;
+  const isMine = userId ? switchDetailData.userId === +userId : false;
+  // const isMine = true;
   // console.log('params 입니다 ::: ', route.params, userId);
+
+  const {
+    data: userInfo,
+    isLoading: isUserInfoLoading,
+    isSuccess: isUserInfoSuccess,
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
+    api: UserApi.getUserInfo,
+    queryKey: ['switchDetail_userApi_getUserInfo', switchDetailData.userId],
+    onSuccess(data) {
+      console.debug('\n\n✅ switchDetail_userApi_getUserInfo ✅\n', data);
+    },
+    onError(err) {
+      console.debug('\n\n🚨 switchDetail_userApi_getUserInfo 🚨\n', err);
+    },
+  });
   const queryClient = useQueryClient();
   const { mutate: createBookMark } = useCommonMutation<
     BookmarkResponse,
@@ -119,7 +136,13 @@ const SwitchDetailScreen = ({
           onPressReport={onPressReport}
           onPressPropose={onPressPropose}
           onPressRevoke={onPressRevoke}
-          userSummaryData={USERSUMMARY_MOCK}
+          userSummaryData={{
+            score: userInfo?.score ?? 0,
+            verified: true,
+            switchCount: userInfo?.switchCount ?? 0,
+            nickname: userInfo?.nickname ?? 'undefined',
+            introduction: userInfo?.introduction ?? 'undefined',
+          }}
           onPressSwitchInProgress={onPressSwitchInProgress}
           isMine={isMine}
         />
