@@ -45,14 +45,11 @@ const SwitchDetailScreen = ({
   // TODO : 🚨 내꺼면 헤더에 햄버거 버튼? 그 있ㅓ야 됨. 게시글 수정&삭제 보여주는
   const switchDetailData = route.params;
   const isMine = userId ? switchDetailData.userId === +userId : false;
-  // const isMine = true;
-  // console.log('params 입니다 ::: ', route.params, userId);
 
-  const {
-    data: userInfo,
-    isLoading: isUserInfoLoading,
-    isSuccess: isUserInfoSuccess,
-  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
+  const { data: userInfo } = useCommonQuery<
+    UserInfoResponse,
+    Parameters<typeof UserApi.getUserInfo>
+  >({
     api: UserApi.getUserInfo,
     queryKey: ['switchDetail_userApi_getUserInfo', switchDetailData.userId],
     onSuccess(data) {
@@ -102,15 +99,11 @@ const SwitchDetailScreen = ({
     },
   });
 
-  // TODO : 🚨 아이템 api 받아서 이 아이템이 내 아이템인지 확인하는 반응형 변수 만들기
-  // TODO : 🚨 북마크 api 달아야 됨
   const onPressReport = () =>
     navigation.navigate('Report', {
       previousScreen: 'SwitchDetail',
-      // TODO : 상대 아이템 이름 전달해야 됨
-      itemTitle: '상대 아이템 이름',
-      // TODO : 상대 이름 전달해야 됨
-      opponentName: '상대 닉네임',
+      itemTitle: itemInfo?.name,
+      opponentName: userInfo?.nickname ?? '',
     });
   const onPressPropose = () => navigation.navigate('RegisteredList');
   const onPressRevoke = () => {
@@ -204,8 +197,8 @@ const SwitchDetailScreen = ({
         onPressRevoke={onPressRevokeConfirm}
         onPressBack={onPresssRevokeModalBack}
         visible={revokeModalVisible}
-        myItem={'제 아이템인데요...'} // TODO : 🚨 myItem, oppItem에 변수채워두기 및 prop명 데이터와 맞추기
-        oppItem={'상대 아이템인데요....'}
+        myItem={itemInfo?.name ?? ''}
+        oppItem={userInfo?.nickname ?? ''}
       />
       <MyItemOptionModal
         navigation={navigation}
