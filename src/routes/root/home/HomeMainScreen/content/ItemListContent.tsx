@@ -37,6 +37,10 @@ const GridItem = ({
   withTitleOnly?: boolean;
   onClick?: () => void;
 }) => {
+  const isDummy = item?.name ? item?.name.length === 0 : true;
+  if (isDummy) {
+    return <Flexbox.Item flex={1}></Flexbox.Item>;
+  }
   return (
     <Flexbox.Item flex={1} width={'100%'}>
       <ImageCard
@@ -119,6 +123,8 @@ const ItemListContent = ({
       },
     });
 
+  const itemListData = useMemo(() => getPageableContent(data), [data]);
+
   const handleLoadMoreData = () => {
     if (!isFetchingNextPage) return;
     fetchNextPage();
@@ -154,11 +160,19 @@ const ItemListContent = ({
     renderItem,
   });
 
+  const plusMockOne = (data: ItemResponse[]) => {
+    const copy = data.slice();
+    copy.push({ name: '' });
+    return copy;
+  };
+
   return (
     <ListView<ItemResponse>
       {...flatListProps}
-      // data={getPageableContent(data)}
-      data={STUFF_LIST_MOCK}
+      data={
+        itemListData.length % 2 !== 0 ? plusMockOne(itemListData) : itemListData
+      }
+      // data={STUFF_LIST_MOCK}
       optionBar={
         <Flexbox
           width={'100%'}
