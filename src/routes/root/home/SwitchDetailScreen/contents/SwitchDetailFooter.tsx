@@ -116,45 +116,6 @@ const SwitchDetailFooter = ({
           pl={PADDING.wrapper.horizontal}
           pr={PADDING.wrapper.horizontal}
         >
-          {/* TODO : 🚨 제안 여부에 따라 분기처리 */}
-          {true ? (
-            <Box>
-              <Button type={'normal'} size={'medium'} onPress={onPressPropose}>
-                스위치 요청하기
-              </Button>
-            </Box>
-          ) : (
-            <Box>
-              <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
-                요청 취소하기
-              </Button>
-            </Box>
-          )}
-        </Flexbox>
-      </>
-    );
-  }
-  // else if (userId === '글쓴이') {
-  else {
-    if (true) {
-      return (
-        <Box
-          pl={PADDING.wrapper.horizontal}
-          pr={PADDING.wrapper.horizontal}
-          pb={25}
-        >
-          <Button
-            type={'normal'}
-            size={'medium'}
-            onPress={onPressSwitchInProgress}
-          >
-            {/* TODO : props 추가해서 변수로 넣기 */}
-            진행 중인 N건의 스위치 보기
-          </Button>
-        </Box>
-      );
-    }
-  }
 };
 
 export { SwitchDetailFooter };
