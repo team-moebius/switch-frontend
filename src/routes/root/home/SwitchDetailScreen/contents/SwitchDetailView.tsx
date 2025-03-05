@@ -6,9 +6,10 @@ import { ItemCard } from 'src/components/molecule';
 import Swiper from 'react-native-swiper';
 import { SwitchDetailData } from '../SwitchList.mock';
 import { PADDING } from 'src/assets/theme/base';
+import { ItemResponse } from '@team-moebius/api-typescript';
 
 type SwitchDetailViewProps = {
-  itemData: Omit<SwitchDetailData, 'date'> & { date: string };
+  itemData: Omit<ItemResponse, 'date'> & { date: string };
   isMine: boolean;
   onPressBookMark: () => void;
 };
@@ -22,9 +23,9 @@ const SwitchDetailView = ({
     date,
     description,
     preferredLocations,
-    preferredCategories,
+    preferredCategory,
     images,
-    liked,
+    bookmark,
     category,
   } = itemData;
   const { width: screenWidth } = useWindowDimensions();
@@ -69,8 +70,8 @@ const SwitchDetailView = ({
             description,
             category,
             preferredLocations,
-            preferredCategories,
-            liked,
+            preferredCategory,
+            bookmark,
           }}
           isMine={isMine}
           onLikeHandler={onPressBookMark}
