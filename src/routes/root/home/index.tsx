@@ -110,13 +110,7 @@ const HomeRoute = ({
               },
             }}
           />
-          <Stack.Screen
-            name={'SwitchDetail'}
-            component={SwitchDetailScreen}
-            options={{
-              header: (props) => <ScreenHeader {...props} />,
-            }}
-          />
+          <Stack.Screen name={'SwitchDetail'} component={SwitchDetailScreen} />
           <Stack.Screen
             name={'ChatMain'}
             component={ChatMainScreen}

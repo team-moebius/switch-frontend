@@ -1,4 +1,4 @@
-import { Suspense, useContext, useMemo, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
 
 import { ScreenWrapper } from 'src/components/template';
@@ -29,6 +29,8 @@ import { ChatRouteParamList } from '../../chat';
 
 import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
 import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
+import { PressableIcon, ScreenHeader } from 'src/components/molecule';
+import { Flexbox } from 'src/components/atom';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -115,6 +117,31 @@ const SwitchDetailScreen = ({
       api: 'SwitchInProgress',
     });
   };
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        if (isMine) {
+          return (
+            <ScreenHeader
+              {...props}
+              right={
+                <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                  <PressableIcon
+                    size={24}
+                    name={'menu'}
+                    onPress={() => setMyItemModalVisible((prev) => !prev)}
+                  />
+                </Flexbox>
+              }
+            />
+          );
+        } else {
+          <ScreenHeader {...props} />;
+        }
+      },
+    });
+  }, []);
 
   return (
     <ScreenWrapper>
