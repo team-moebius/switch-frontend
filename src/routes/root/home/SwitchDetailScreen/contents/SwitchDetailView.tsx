@@ -77,7 +77,6 @@ const SwitchDetailView = ({
           onLikeHandler={onPressBookMark}
         />
       </Flexbox.Item>
-      <Separator width={'100%'} />
     </Flexbox>
   );
 };
