@@ -39,7 +39,6 @@ const SwitchDetailScreen = ({
   StackScreenProps<HomeRouteParamList, 'SwitchDetail'>,
   StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
 >) => {
-  // TODO : main에서 내려오는 item 보고 해당 item의 id를 이용해서 개별 item 조회 api 호출해야 될지도 모름
   const [revokeModalVisible, setRevokeModalVisible] = useState(false);
   const [myItemModalVisible, setMyItemModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
@@ -63,6 +62,20 @@ const SwitchDetailScreen = ({
       console.debug('\n\n🚨 switchDetail_userApi_getUserInfo 🚨\n', err);
     },
   });
+  const { data: itemInfo } = useCommonQuery<
+    ItemResponse,
+    Parameters<typeof ItemApi.getItem>
+  >({
+    api: ItemApi.getItem,
+    queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+    onSuccess(data) {
+      console.debug('\n\n✅ switchDetail_itemApi_getItem ✅\n', data);
+    },
+    onError(err) {
+      console.debug('\n\n🚨 switchDetail_itemApi_getItem 🚨\n', err);
+    },
+  });
+
   const queryClient = useQueryClient();
   const { mutate: createBookMark } = useCommonMutation<
     BookmarkResponse,
@@ -148,10 +161,18 @@ const SwitchDetailScreen = ({
       <ScrollView>
         <SwitchDetailView
           itemData={{
-            ...SWITCH_DETAIL_MOCK,
-            date: SWITCH_DETAIL_MOCK.date
-              ? convertLocalTime(SWITCH_DETAIL_MOCK.date?.toUTCString())
-              : '',
+            images: itemInfo?.images ?? [''],
+            description: itemInfo?.description ?? '',
+            preferredCategory: itemInfo?.preferredCategory ?? '',
+            preferredLocations: itemInfo?.preferredLocations ?? new Set(),
+            category: itemInfo?.category ?? '',
+            name: itemInfo?.name ?? '',
+            bookmark: itemInfo?.bookmark ?? false,
+            date: convertLocalTime(
+              itemInfo?.updatedAt
+                ? new Date(itemInfo?.updatedAt).toUTCString()
+                : new Date().toUTCString()
+            ),
           }}
           isMine={isMine}
           onPressBookMark={() =>
