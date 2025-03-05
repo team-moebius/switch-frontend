@@ -6,9 +6,10 @@ import { useCallback } from 'react';
 import { SwitchDetailData } from 'src/routes/root/home/SwitchDetailScreen/SwitchList.mock';
 import { FONT_SIZE, COLORS } from 'src/assets/theme/base';
 import PALETTE from 'src/assets/theme/colors/palettes';
+import { ItemResponse } from '@team-moebius/api-typescript';
 
 interface ItemCardProps {
-  data: Omit<SwitchDetailData, 'date'> & { date: string };
+  data: Omit<ItemResponse, 'date'> & { date: string };
   margin?: Margin;
   onLikeHandler?: () => void;
   isMine: boolean;
@@ -39,38 +40,31 @@ const Header = ({
 
 const Content = ({
   description,
-  preferredCategories,
+  preferredCategory,
   preferredLocations,
-  liked,
+  bookmark,
   onLikeHandler,
   isMine,
-}: {
-  description: string;
-  preferredCategories?: string[];
-  preferredLocations?: string[];
-  liked: boolean;
-  onLikeHandler: () => void;
-  isMine: boolean;
-}) => {
+}: Pick<
+  ItemResponse,
+  'bookmark' | 'description' | 'preferredCategory' | 'preferredLocations'
+> & { onLikeHandler: () => void; isMine: boolean }) => {
   const PreferredCategories = useCallback(
-    () =>
-      preferredCategories
-        ? preferredCategories.map((preferredCategory) => (
-            <Tag
-              backgroundColor={PALETTE.yellow[100]}
-              disabled
-              color={COLORS.text}
-              children={preferredCategory}
-              key={preferredCategory}
-            />
-          ))
-        : undefined,
-    [preferredCategories]
+    () => (
+      <Tag
+        backgroundColor={PALETTE.yellow[100]}
+        disabled
+        color={COLORS.text}
+        children={preferredCategory ?? ''}
+        key={preferredCategory}
+      />
+    ),
+    [preferredCategory]
   );
   const PreferredLocations = useCallback(
     () =>
       preferredLocations
-        ? preferredLocations.map((location, el, arr) =>
+        ? [...preferredLocations.values()].map((location, el, arr) =>
             arr.length - 1 === el ? (
               <Typography fontSize={FONT_SIZE.normal} key={location}>
                 {location}
@@ -88,9 +82,9 @@ const Content = ({
   return (
     <Flexbox flexDirection={'column'} width={'100%'} gap={10}>
       <Flexbox.Item pb={30}>
-        <Typography fontSize={FONT_SIZE.bigger}>{description}</Typography>
+        <Typography fontSize={FONT_SIZE.bigger}>{description ?? ''}</Typography>
       </Flexbox.Item>
-      {preferredCategories ? (
+      {preferredCategory ? (
         <Flexbox alignItems='center' gap={5} flexWrap='wrap'>
           <Icon name={'swap-horizontal'} size={20} />
           <PreferredCategories />
@@ -110,7 +104,7 @@ const Content = ({
           </Flexbox.Item>
           {isMine ? undefined : (
             <PressableIcon
-              name={liked ? 'heart' : 'heart-outline'}
+              name={bookmark ? 'heart' : 'heart-outline'}
               size={32}
               onPress={onLikeHandler}
               color={PALETTE.red[200]}
@@ -127,10 +121,10 @@ const ItemCard = ({ data, onLikeHandler, isMine }: ItemCardProps) => {
     name = '',
     date = '',
     description = '',
-    preferredCategories,
+    preferredCategory,
     preferredLocations,
     category = '',
-    liked = false,
+    bookmark = false,
   } = data;
 
   return (
@@ -141,9 +135,9 @@ const ItemCard = ({ data, onLikeHandler, isMine }: ItemCardProps) => {
       content={
         <Content
           description={description}
-          preferredCategories={preferredCategories}
+          preferredCategory={preferredCategory}
           preferredLocations={preferredLocations}
-          liked={liked}
+          bookmark={bookmark}
           onLikeHandler={onLikeHandler ? onLikeHandler : () => {}}
           isMine={isMine}
         />
