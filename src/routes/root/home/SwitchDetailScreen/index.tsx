@@ -1,22 +1,16 @@
-import { useContext, useState } from 'react';
+import { Suspense, useContext, useMemo, useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
 
 import { ScreenWrapper } from 'src/components/template';
 import { SwitchDetailView } from './contents/SwitchDetailView';
-import { SwitchDetailFooter } from './contents/SwitchDetailFooter';
+import { SwitchDetailUser } from './contents/SwitchDetailUser';
+import { RevokeModal } from './contents/RevokeModal';
+import { MyItemOptionModal } from '../modals';
+import { SwitchDetailButton } from './contents/SwitchDetailButton';
 
 import { UserContext } from 'src/context/user';
 import { convertLocalTime } from 'src/utils/convertLocalTime';
 
-import { HomeRouteParamList } from '..';
-import { StackScreenProps } from '@react-navigation/stack';
-
-import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
-import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
-import { RevokeModal } from './contents/RevokeModal';
-import { MyItemOptionModal } from '../modals';
-import { CompositeScreenProps } from '@react-navigation/native';
-import { ChatRouteParamList } from '../../chat';
 import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import { useCommonQuery } from 'src/hooks/useCommonQuery';
 import {
@@ -27,6 +21,14 @@ import {
 } from '@team-moebius/api-typescript';
 import { BookMarkApi, ItemApi, UserApi } from 'src/api';
 import { useQueryClient } from 'react-query';
+
+import { CompositeScreenProps } from '@react-navigation/native';
+import { StackScreenProps } from '@react-navigation/stack';
+import { HomeRouteParamList } from '..';
+import { ChatRouteParamList } from '../../chat';
+
+import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
+import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -132,10 +134,8 @@ const SwitchDetailScreen = ({
             })
           }
         />
-        <SwitchDetailFooter
+        <SwitchDetailUser
           onPressReport={onPressReport}
-          onPressPropose={onPressPropose}
-          onPressRevoke={onPressRevoke}
           userSummaryData={{
             score: userInfo?.score ?? 0,
             verified: true,
@@ -143,10 +143,15 @@ const SwitchDetailScreen = ({
             nickname: userInfo?.nickname ?? 'undefined',
             introduction: userInfo?.introduction ?? 'undefined',
           }}
-          onPressSwitchInProgress={onPressSwitchInProgress}
           isMine={isMine}
         />
       </ScrollView>
+      <SwitchDetailButton
+        onPressPropose={onPressPropose}
+        onPressRevoke={onPressRevoke}
+        onPressSwitchInProgress={onPressSwitchInProgress}
+        isMine={isMine}
+      />
       <RevokeModal
         onPressRevoke={onPressRevokeConfirm}
         onPressBack={onPresssRevokeModalBack}
