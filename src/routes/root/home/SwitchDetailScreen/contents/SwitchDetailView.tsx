@@ -1,7 +1,6 @@
 // import Swiper from 'react-native-swiper';
 import { useWindowDimensions } from 'react-native';
 import { Box, Flexbox, Image } from 'src/components/atom';
-import { Separator } from 'src/components/atom/Separator';
 import { ItemCard } from 'src/components/molecule';
 import Swiper from 'react-native-swiper';
 import { SwitchDetailData } from '../SwitchList.mock';
