@@ -14,23 +14,17 @@ import { TradingListItem, UserSummary } from 'src/components/molecule';
 import { UserSummaryData } from 'src/components/molecule/UserSummary';
 import { WithImage } from 'src/components/template';
 
-interface SwitchDetailFooterProp {
+interface SwitchDetailUserProp {
   onPressReport: () => void;
-  onPressPropose: () => void;
-  onPressRevoke: () => void;
-  onPressSwitchInProgress: () => void;
   userSummaryData: UserSummaryData;
   isMine: boolean;
 }
 
-const SwitchDetailFooter = ({
+const SwitchDetailUser = ({
   onPressReport,
-  onPressPropose,
-  onPressRevoke,
   userSummaryData,
-  onPressSwitchInProgress,
   isMine,
-}: SwitchDetailFooterProp) => {
+}: SwitchDetailUserProp) => {
   // TODO : 🚨 여기 pairedItemName 처럼 Switches 호출하면 있는 프로퍼티들이 존재한다면,
   // 여기에 걸릴 수 있도록 하기. 일단 Mock data 활용해서 UI 만들기
   if (false) {
@@ -90,6 +84,7 @@ const SwitchDetailFooter = ({
     // 스위치 제안을 하지 않았다면
     return (
       <>
+        <Separator width={'100%'} />
         <Flexbox.Item width={'100%'}>
           <Pressable onPress={onPressReport} style={{ width: '100%' }}>
             <Flexbox alignItems='center' justifyContent='center'>
@@ -108,14 +103,9 @@ const SwitchDetailFooter = ({
           <UserSummary data={userSummaryData} />
         </Flexbox>
         <Separator width={'100%'} />
-        <Flexbox
-          alignItems={'center'}
-          flexDirection={'column'}
-          gap={10}
-          pb={20}
-          pl={PADDING.wrapper.horizontal}
-          pr={PADDING.wrapper.horizontal}
-        >
+      </>
+    );
+  }
 };
 
-export { SwitchDetailFooter };
+export { SwitchDetailUser };
