@@ -1,0 +1,12 @@
+diff --git a/node_modules/react-native-modal/dist/modal.js b/node_modules/react-native-modal/dist/modal.js
+index 80f4e75..6eca45e 100644
+--- a/node_modules/react-native-modal/dist/modal.js
++++ b/node_modules/react-native-modal/dist/modal.js
+@@ -407,6 +407,7 @@ export class ReactNativeModal extends React.Component {
+                     backgroundColor: this.state.showContent && !hasCustomBackdrop
+                         ? backdropColor
+                         : 'transparent',
++                    opacity: this.props.backdropOpacity
+                 },
+             ];
+             const backdropWrapper = (React.createElement(animatable.View, { ref: ref => (this.backdropRef = ref), useNativeDriver: useNativeDriverForBackdrop !== undefined
