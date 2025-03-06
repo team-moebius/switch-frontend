@@ -1,12 +1,15 @@
 import { useContext, useEffect, useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
 
+import { Flexbox } from 'src/components/atom';
+import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { SwitchDetailView } from './contents/SwitchDetailView';
 import { SwitchDetailUser } from './contents/SwitchDetailUser';
-import { RevokeModal } from './contents/RevokeModal';
-import { MyItemOptionModal } from '../modals';
 import { SwitchDetailButton } from './contents/SwitchDetailButton';
+import { MyItemOptionModal } from './modals/MyItemOptionModal';
+import { DeleteItemModal } from './modals/DeleteItemModal';
+import { RevokeModal } from './contents/RevokeModal';
 
 import { UserContext } from 'src/context/user';
 import { convertLocalTime } from 'src/utils/convertLocalTime';
@@ -29,8 +32,6 @@ import { ChatRouteParamList } from '../../chat';
 
 import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
 import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
-import { PressableIcon, ScreenHeader } from 'src/components/molecule';
-import { Flexbox } from 'src/components/atom';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -39,13 +40,17 @@ const SwitchDetailScreen = ({
   StackScreenProps<HomeRouteParamList, 'SwitchDetail'>,
   StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
 >) => {
-  const [revokeModalVisible, setRevokeModalVisible] = useState(false);
-  const [myItemModalVisible, setMyItemModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
   // TODO : 🚨 내꺼면 헤더에 햄버거 버튼? 그 있ㅓ야 됨. 게시글 수정&삭제 보여주는
   const switchDetailData = route.params;
   const isMine = userId ? switchDetailData.userId === +userId : false;
 
+  // states
+  const [revokeModalVisible, setRevokeModalVisible] = useState(false);
+  const [myItemModalVisible, setMyItemModalVisible] = useState(false);
+  const [showDeleteSwitchModal, setShowDeleteSwitchModal] = useState(false);
+
+  // apis
   const { data: userInfo } = useCommonQuery<
     UserInfoResponse,
     Parameters<typeof UserApi.getUserInfo>
@@ -87,7 +92,8 @@ const SwitchDetailScreen = ({
         variables
       );
       queryClient.invalidateQueries([
-        'SwitchDetail_bookMarkApi_createBookmark',
+        'switchDetail_itemApi_getItem',
+        switchDetailData.id,
       ]);
     },
     onError(error, variables) {
@@ -99,6 +105,7 @@ const SwitchDetailScreen = ({
     },
   });
 
+  // handlers
   const onPressReport = () =>
     navigation.navigate('Report', {
       previousScreen: 'SwitchDetail',
@@ -117,11 +124,31 @@ const SwitchDetailScreen = ({
   const onPresssRevokeModalBack = () => {
     setRevokeModalVisible(false);
   };
-
   const onPressSwitchInProgress = () => {
     navigation.navigate('ChatMain', {
       api: 'SwitchInProgress',
     });
+  };
+  const onCloseDeleteItemModal = () => {
+    setShowDeleteSwitchModal(false);
+  };
+  const onConfirmDeleteItem = () => {
+    onCloseDeleteItemModal();
+  };
+  const onCloseMyItemInfoModal = () => setMyItemModalVisible(false);
+  const onPressEditButton = () => {
+    onCloseMyItemInfoModal();
+    navigation.navigate('EditItem', {
+      screen: 'RegisterForm',
+      // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
+      // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
+      params: { initialData: undefined },
+    });
+  };
+  const onPressDeleteButton = () => {
+    onCloseMyItemInfoModal();
+    setShowDeleteSwitchModal(true);
+    console.log('check');
   };
 
   useEffect(() => {
@@ -201,19 +228,15 @@ const SwitchDetailScreen = ({
         oppItem={userInfo?.nickname ?? ''}
       />
       <MyItemOptionModal
-        navigation={navigation}
         visible={myItemModalVisible}
-        onPressBack={() => setMyItemModalVisible(false)}
-        onEdit={() => {
-          setMyItemModalVisible(false);
-          navigation.navigate('EditItem', {
-            screen: 'RegisterForm',
-            // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
-            // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
-            params: { initialData: undefined },
-          });
-        }}
-        onDeleteModalControl={() => setMyItemModalVisible(false)}
+        onPressBack={onCloseMyItemInfoModal}
+        onPressEditButton={onPressEditButton}
+        onPressDeleteModal={onPressDeleteButton}
+      />
+      <DeleteItemModal
+        visible={showDeleteSwitchModal}
+        onPressBack={onCloseDeleteItemModal}
+        onDeleteConfirm={onConfirmDeleteItem}
       />
     </ScreenWrapper>
   );
