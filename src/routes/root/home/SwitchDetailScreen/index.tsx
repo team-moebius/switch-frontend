@@ -9,7 +9,7 @@ import { SwitchDetailUser } from './contents/SwitchDetailUser';
 import { SwitchDetailButton } from './contents/SwitchDetailButton';
 import { MyItemOptionModal } from './modals/MyItemOptionModal';
 import { DeleteItemModal } from './modals/DeleteItemModal';
-import { RevokeModal } from './contents/RevokeModal';
+import { RevokeModal } from './modals/RevokeModal';
 
 import { UserContext } from 'src/context/user';
 import { convertLocalTime } from 'src/utils/convertLocalTime';
@@ -46,9 +46,9 @@ const SwitchDetailScreen = ({
   const isMine = userId ? switchDetailData.userId === +userId : false;
 
   // states
-  const [revokeModalVisible, setRevokeModalVisible] = useState(false);
-  const [myItemModalVisible, setMyItemModalVisible] = useState(false);
-  const [showDeleteSwitchModal, setShowDeleteSwitchModal] = useState(false);
+  const [modalState, setModalState] = useState<
+    'revoke' | 'delete' | 'user' | undefined
+  >(undefined);
 
   // apis
   const { data: userInfo } = useCommonQuery<
@@ -114,30 +114,25 @@ const SwitchDetailScreen = ({
     });
   const onPressPropose = () => navigation.navigate('RegisteredList');
   const onPressRevoke = () => {
-    Alert.alert('스위치 취소 모달 실행!');
-    setRevokeModalVisible(true);
+    setModalState('revoke');
   };
   const onPressRevokeConfirm = () => {
-    Alert.alert('요청 성공!');
-    setRevokeModalVisible(false);
+    setModalState(undefined);
   };
   const onPresssRevokeModalBack = () => {
-    setRevokeModalVisible(false);
+    setModalState(undefined);
   };
   const onPressSwitchInProgress = () => {
     navigation.navigate('ChatMain', {
       api: 'SwitchInProgress',
     });
   };
-  const onCloseDeleteItemModal = () => {
-    setShowDeleteSwitchModal(false);
-  };
   const onConfirmDeleteItem = () => {
-    onCloseDeleteItemModal();
+    // TODO : 삭제 api 호출
+    setModalState(undefined);
   };
-  const onCloseMyItemInfoModal = () => setMyItemModalVisible(false);
   const onPressEditButton = () => {
-    onCloseMyItemInfoModal();
+    setModalState(undefined);
     navigation.navigate('EditItem', {
       screen: 'RegisterForm',
       // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
@@ -146,8 +141,8 @@ const SwitchDetailScreen = ({
     });
   };
   const onPressDeleteButton = () => {
-    onCloseMyItemInfoModal();
-    setShowDeleteSwitchModal(true);
+    setModalState(undefined);
+    setModalState('delete');
     console.log('check');
   };
 
@@ -163,7 +158,7 @@ const SwitchDetailScreen = ({
                   <PressableIcon
                     size={24}
                     name={'menu'}
-                    onPress={() => setMyItemModalVisible((prev) => !prev)}
+                    onPress={() => setModalState('user')}
                   />
                 </Flexbox>
               }
@@ -223,19 +218,19 @@ const SwitchDetailScreen = ({
       <RevokeModal
         onPressRevoke={onPressRevokeConfirm}
         onPressBack={onPresssRevokeModalBack}
-        visible={revokeModalVisible}
+        visible={modalState === 'revoke'}
         myItem={itemInfo?.name ?? ''}
         oppItem={userInfo?.nickname ?? ''}
       />
       <MyItemOptionModal
-        visible={myItemModalVisible}
-        onPressBack={onCloseMyItemInfoModal}
+        visible={modalState === 'user'}
+        onPressBack={() => setModalState(undefined)}
         onPressEditButton={onPressEditButton}
         onPressDeleteModal={onPressDeleteButton}
       />
       <DeleteItemModal
-        visible={showDeleteSwitchModal}
-        onPressBack={onCloseDeleteItemModal}
+        visible={modalState === 'delete'}
+        onPressBack={() => setModalState(undefined)}
         onDeleteConfirm={onConfirmDeleteItem}
       />
     </ScreenWrapper>
