@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
 
-import { Flexbox } from 'src/components/atom';
+import { Flexbox, Typography } from 'src/components/atom';
 import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { SwitchDetailView } from './contents/SwitchDetailView';
@@ -32,6 +32,7 @@ import { ChatRouteParamList } from '../../chat';
 
 import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
 import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
+import { ErrorFallbackUI } from './contents/ErrorFallback';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -51,10 +52,11 @@ const SwitchDetailScreen = ({
   >(undefined);
 
   // apis
-  const { data: userInfo } = useCommonQuery<
-    UserInfoResponse,
-    Parameters<typeof UserApi.getUserInfo>
-  >({
+  const {
+    data: userInfo,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
     api: UserApi.getUserInfo,
     queryKey: ['switchDetail_userApi_getUserInfo', switchDetailData.userId],
     onSuccess(data) {
@@ -64,10 +66,11 @@ const SwitchDetailScreen = ({
       console.debug('\n\n🚨 switchDetail_userApi_getUserInfo 🚨\n', err);
     },
   });
-  const { data: itemInfo } = useCommonQuery<
-    ItemResponse,
-    Parameters<typeof ItemApi.getItem>
-  >({
+  const {
+    data: itemInfo,
+    isLoading: isItemLoading,
+    isError: isItemError,
+  } = useCommonQuery<ItemResponse, Parameters<typeof ItemApi.getItem>>({
     api: ItemApi.getItem,
     queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
     onSuccess(data) {
@@ -173,66 +176,72 @@ const SwitchDetailScreen = ({
 
   return (
     <ScreenWrapper>
-      <ScrollView>
-        <SwitchDetailView
-          itemData={{
-            images: itemInfo?.images ?? [''],
-            description: itemInfo?.description ?? '',
-            preferredCategory: itemInfo?.preferredCategory ?? '',
-            preferredLocations: itemInfo?.preferredLocations ?? new Set(),
-            category: itemInfo?.category ?? '',
-            name: itemInfo?.name ?? '',
-            bookmark: itemInfo?.bookmark ?? false,
-            date: convertLocalTime(
-              itemInfo?.updatedAt
-                ? new Date(itemInfo?.updatedAt).toUTCString()
-                : new Date().toUTCString()
-            ),
-          }}
-          isMine={isMine}
-          onPressBookMark={() =>
-            createBookMark({
-              userId: +(userId as string),
-              itemId: switchDetailData.id as number,
-            })
-          }
-        />
-        <SwitchDetailUser
-          onPressReport={onPressReport}
-          userSummaryData={{
-            score: userInfo?.score ?? 0,
-            verified: true,
-            switchCount: userInfo?.switchCount ?? 0,
-            nickname: userInfo?.nickname ?? 'undefined',
-            introduction: userInfo?.introduction ?? 'undefined',
-          }}
-          isMine={isMine}
-        />
-      </ScrollView>
-      <SwitchDetailButton
-        onPressPropose={onPressPropose}
-        onPressRevoke={onPressRevoke}
-        onPressSwitchInProgress={onPressSwitchInProgress}
-        isMine={isMine}
-      />
-      <RevokeModal
-        onPressRevoke={onPressRevokeConfirm}
-        onPressBack={onPresssRevokeModalBack}
-        visible={modalState === 'revoke'}
-        myItem={itemInfo?.name ?? ''}
-        oppItem={userInfo?.nickname ?? ''}
-      />
-      <MyItemOptionModal
-        visible={modalState === 'user'}
-        onPressBack={() => setModalState(undefined)}
-        onPressEditButton={onPressEditButton}
-        onPressDeleteModal={onPressDeleteButton}
-      />
-      <DeleteItemModal
-        visible={modalState === 'delete'}
-        onPressBack={() => setModalState(undefined)}
-        onDeleteConfirm={onConfirmDeleteItem}
-      />
+      {isItemError || isUserError ? (
+        <ErrorFallbackUI navigation={navigation} />
+      ) : (
+        <>
+          <ScrollView>
+            <SwitchDetailView
+              itemData={{
+                images: itemInfo?.images ?? [''],
+                description: itemInfo?.description ?? '',
+                preferredCategory: itemInfo?.preferredCategory ?? '',
+                preferredLocations: itemInfo?.preferredLocations ?? new Set(),
+                category: itemInfo?.category ?? '',
+                name: itemInfo?.name ?? '',
+                bookmark: itemInfo?.bookmark ?? false,
+                date: convertLocalTime(
+                  itemInfo?.updatedAt
+                    ? new Date(itemInfo?.updatedAt).toUTCString()
+                    : new Date().toUTCString()
+                ),
+              }}
+              isMine={isMine}
+              onPressBookMark={() =>
+                createBookMark({
+                  userId: +(userId as string),
+                  itemId: switchDetailData.id as number,
+                })
+              }
+            />
+            <SwitchDetailUser
+              onPressReport={onPressReport}
+              userSummaryData={{
+                score: userInfo?.score ?? 0,
+                verified: true,
+                switchCount: userInfo?.switchCount ?? 0,
+                nickname: userInfo?.nickname ?? 'undefined',
+                introduction: userInfo?.introduction ?? 'undefined',
+              }}
+              isMine={isMine}
+            />
+          </ScrollView>
+          <SwitchDetailButton
+            onPressPropose={onPressPropose}
+            onPressRevoke={onPressRevoke}
+            onPressSwitchInProgress={onPressSwitchInProgress}
+            isMine={isMine}
+          />
+          <RevokeModal
+            onPressRevoke={onPressRevokeConfirm}
+            onPressBack={onPresssRevokeModalBack}
+            visible={modalState === 'revoke'}
+            myItem={itemInfo?.name ?? ''}
+            oppItem={userInfo?.nickname ?? ''}
+          />
+          <MyItemOptionModal
+            visible={modalState === 'user'}
+            onPressBack={() => setModalState(undefined)}
+            onPressEditButton={onPressEditButton}
+            onPressDeleteModal={onPressDeleteButton}
+          />
+          <DeleteItemModal
+            visible={modalState === 'delete'}
+            onPressBack={() => setModalState(undefined)}
+            onDeleteConfirm={onConfirmDeleteItem}
+          />
+        </>
+      )}
     </ScreenWrapper>
   );
 };
