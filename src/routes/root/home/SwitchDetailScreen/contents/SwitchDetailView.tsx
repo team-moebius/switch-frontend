@@ -27,7 +27,7 @@ const SwitchDetailView = ({
     bookmark,
     category,
   } = itemData;
-  const { width: screenWidth } = useWindowDimensions();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   return (
     <Flexbox
@@ -41,7 +41,7 @@ const SwitchDetailView = ({
           horizontal
           containerStyle={{
             width: screenWidth,
-            height: 285,
+            height: screenHeight / 3,
           }}
         >
           {images &&
