@@ -195,7 +195,7 @@ const SwitchDetailScreen = ({
                 bookmark: itemInfo?.bookmark ?? false,
                 date: convertLocalTime(
                   itemInfo?.updatedAt
-                    ? new Date(itemInfo?.updatedAt).toUTCString()
+                    ? new Date(itemInfo?.updatedAt as string).toUTCString()
                     : new Date().toUTCString()
                 ),
               }}
