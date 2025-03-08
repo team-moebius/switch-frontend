@@ -33,6 +33,7 @@ import { ChatRouteParamList } from '../../chat';
 import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
 import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { ErrorFallbackUI } from './contents/ErrorFallback';
+import LoadingFallback from './contents/LoadingFallback';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -176,7 +177,9 @@ const SwitchDetailScreen = ({
 
   return (
     <ScreenWrapper>
-      {isItemError || isUserError ? (
+      {isItemLoading || isUserLoading ? (
+        <LoadingFallback />
+      ) : isItemError || isUserError ? (
         <ErrorFallbackUI navigation={navigation} />
       ) : (
         <>
