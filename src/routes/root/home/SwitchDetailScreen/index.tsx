@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { Alert, ScrollView } from 'react-native';
 
 import { Flexbox, Typography } from 'src/components/atom';
@@ -43,14 +43,17 @@ const SwitchDetailScreen = ({
   StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
 >) => {
   const { userId } = useContext(UserContext);
-  // TODO : 🚨 내꺼면 헤더에 햄버거 버튼? 그 있ㅓ야 됨. 게시글 수정&삭제 보여주는
   const switchDetailData = route.params;
   const isMine = userId ? switchDetailData.userId === +userId : false;
 
   // states
-  const [modalState, setModalState] = useState<
-    'revoke' | 'delete' | 'user' | undefined
-  >(undefined);
+  const [isRevokeModalOpen, setIsRevokeModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const conditionInModalHide = useRef({
+    isOpenDeleteModal: false,
+    isOpenEditScreen: false,
+  });
 
   // apis
   const {
@@ -118,13 +121,15 @@ const SwitchDetailScreen = ({
     });
   const onPressPropose = () => navigation.navigate('RegisteredList');
   const onPressRevoke = () => {
-    setModalState('revoke');
+    setIsRevokeModalOpen(true);
   };
   const onPressRevokeConfirm = () => {
-    setModalState(undefined);
+    setIsRevokeModalOpen(false);
+    Alert.alert('요청 취소 api가 호출되어야 합니다.');
+    // TODO : 요청 취소 api 호출하기
   };
   const onPresssRevokeModalBack = () => {
-    setModalState(undefined);
+    setIsRevokeModalOpen(false);
   };
   const onPressSwitchInProgress = () => {
     navigation.navigate('ChatMain', {
@@ -132,22 +137,17 @@ const SwitchDetailScreen = ({
     });
   };
   const onConfirmDeleteItem = () => {
-    // TODO : 삭제 api 호출
-    setModalState(undefined);
+    setIsDeleteModalOpen(false);
+    deleteMutate(itemInfo?.id as number);
+    navigation.goBack();
   };
   const onPressEditButton = () => {
-    setModalState(undefined);
-    navigation.navigate('EditItem', {
-      screen: 'RegisterForm',
-      // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
-      // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
-      params: { initialData: undefined },
-    });
+    setIsUserModalOpen(false);
+    conditionInModalHide.current.isOpenEditScreen = true;
   };
   const onPressDeleteButton = () => {
-    setModalState(undefined);
-    setModalState('delete');
-    console.log('check');
+    setIsUserModalOpen(false);
+    conditionInModalHide.current.isOpenDeleteModal = true;
   };
 
   useEffect(() => {
@@ -162,7 +162,7 @@ const SwitchDetailScreen = ({
                   <PressableIcon
                     size={24}
                     name={'menu'}
-                    onPress={() => setModalState('user')}
+                    onPress={() => setIsUserModalOpen(true)}
                   />
                 </Flexbox>
               }
@@ -228,19 +228,33 @@ const SwitchDetailScreen = ({
           <RevokeModal
             onPressRevoke={onPressRevokeConfirm}
             onPressBack={onPresssRevokeModalBack}
-            visible={modalState === 'revoke'}
+            visible={isRevokeModalOpen}
             myItem={itemInfo?.name ?? ''}
             oppItem={userInfo?.nickname ?? ''}
           />
           <MyItemOptionModal
-            visible={modalState === 'user'}
-            onPressBack={() => setModalState(undefined)}
+            visible={isUserModalOpen}
+            onPressBack={() => setIsUserModalOpen(false)}
             onPressEditButton={onPressEditButton}
             onPressDeleteModal={onPressDeleteButton}
+            onModalHide={() => {
+              if (conditionInModalHide.current.isOpenDeleteModal) {
+                setIsDeleteModalOpen(true);
+                conditionInModalHide.current.isOpenDeleteModal = false;
+              } else if (conditionInModalHide.current.isOpenEditScreen) {
+                conditionInModalHide.current.isOpenEditScreen = false;
+                navigation.navigate('EditItem', {
+                  screen: 'RegisterForm',
+                  // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
+                  // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
+                  params: { initialData: undefined },
+                });
+              }
+            }}
           />
           <DeleteItemModal
-            visible={modalState === 'delete'}
-            onPressBack={() => setModalState(undefined)}
+            visible={isDeleteModalOpen}
+            onPressBack={() => setIsDeleteModalOpen(false)}
             onDeleteConfirm={onConfirmDeleteItem}
           />
         </>
