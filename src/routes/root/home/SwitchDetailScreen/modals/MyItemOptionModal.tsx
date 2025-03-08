@@ -12,6 +12,7 @@ const MyItemOptionModal = ({
   onPressBack,
   onPressEditButton,
   onPressDeleteModal,
+  onModalHide,
 }: MyItemOptionModalProps) => {
   return (
     <Modal
@@ -21,6 +22,7 @@ const MyItemOptionModal = ({
       width={'70%'}
       height={'18%'}
       position={'center'}
+      onModalHide={onModalHide}
     >
       <Flexbox
         width={'100%'}
