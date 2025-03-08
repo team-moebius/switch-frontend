@@ -102,6 +102,16 @@ const SwitchDetailScreen = ({
         'switchDetail_itemApi_getItem',
         switchDetailData.id,
       ]);
+  const { mutate: deleteMutate } = useCommonMutation<string, number>({
+    api: ItemApi.deleteItem,
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_itemApi_deleteItem data ✅ \n\n',
+        data,
+        variables
+      );
+      queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+      navigation.goBack();
     },
     onError(error, variables) {
       console.debug(
