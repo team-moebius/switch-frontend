@@ -38,6 +38,7 @@ import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 /* navigation */
 import { RegisterRouteParamList } from '..';
 import { StackScreenProps } from '@react-navigation/stack';
+import { CompositeScreenProps } from '@react-navigation/native';
 
 /* api */
 import { ItemApi } from 'src/api';
@@ -51,6 +52,7 @@ import {
 import PALETTE from 'src/assets/theme/colors/palettes';
 import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 import { CancelEditModal } from '../../home/modals';
+import { HomeRouteParamList } from '../../home';
 
 const REGISTER_CATEGORY = [
   '수입명품',
@@ -92,7 +94,10 @@ interface RegisterFormProps {
 const RegisterFormScreen = ({
   navigation,
   route,
-}: StackScreenProps<RegisterRouteParamList, 'RegisterForm'>) => {
+}: CompositeScreenProps<
+  StackScreenProps<RegisterRouteParamList, 'RegisterForm'>,
+  StackScreenProps<HomeRouteParamList, 'RegisterForm'>
+>) => {
   /* route params */
   const paramsData = route.params?.initialData;
   const getAddress = route.params?.getAddress;
