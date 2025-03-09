@@ -209,7 +209,7 @@ const SwitchDetailScreen = ({
   };
   const onConfirmDeleteItem = () => {
     setIsDeleteModalOpen(false);
-    deleteMutate(itemInfo?.id as number);
+    deleteItemMutate(itemInfo?.id as number);
     navigation.goBack();
   };
   const onPressEditButton = () => {
