@@ -190,13 +190,13 @@ const RegisterFormScreen = ({
 
   const handleCloseAttentionModal = () => {
     // api call
-    if (paramsData) {
-    } else if (
-      name.length <= 0 ||
-      description.length <= 0 ||
-      category.length <= 0
-    ) {
+    if (name.length <= 0 || description.length <= 0) {
       Alert.alert('알림', '제목, 설명, 카테고리는 반드시 채워주셔야 합니다.');
+    } else if (
+      category === '카테고리 선택' ||
+      preferredCategory === '스위치 희망 카테고리 선택'
+    ) {
+      Alert.alert('물품 카테고리와 스위치 희망 카테고리를 선택해주세요');
     } else if (!checkboxState.details || !checkboxState.safety) {
       Alert.alert('알림', '주의사항에 모두 동의해 주셔야 합니다.');
     } else {
