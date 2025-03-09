@@ -172,7 +172,6 @@ const SwitchDetailScreen = ({
         variables
       );
       queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
-      navigation.goBack();
     },
     onError(error, variables) {
       console.debug(
