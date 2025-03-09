@@ -52,6 +52,7 @@ import {
 import PALETTE from 'src/assets/theme/colors/palettes';
 import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 import { CancelEditModal } from '../../home/modals';
+import { useQueryClient } from 'react-query';
 import { HomeRouteParamList } from '../../home';
 
 const REGISTER_CATEGORY = [
@@ -203,13 +204,14 @@ const RegisterFormScreen = ({
     } else if (!checkboxState.details || !checkboxState.safety) {
       Alert.alert('알림', '주의사항에 모두 동의해 주셔야 합니다.');
     } else {
-      createMutate({
-        ...data,
-        // TODO : api 파라미터가 preferredCategories에서 preferredCategory로 수정되어야 될 거 같음.
-        preferredCategory,
-        preferredLocations,
-        type: 'GOODS',
-      });
+      if (itemId) {
+        editMutate({ ...data, id: itemId });
+      } else {
+        createMutate({
+          ...data,
+          type: 'GOODS',
+        });
+      }
     }
 
     setCheckboxState({ details: false, safety: false });
@@ -458,4 +460,4 @@ const RegisterFormScreen = ({
   );
 };
 
-export { RegisterFormScreen, type RegisterFormProps };
+export { RegisterFormScreen, type RegisterFormProps, RegisterDto };
