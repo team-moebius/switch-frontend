@@ -34,6 +34,8 @@ import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
 import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { ErrorFallbackUI } from './contents/ErrorFallback';
 import LoadingFallback from './contents/LoadingFallback';
+import { RegisterDto } from '../../register/RegisterFormScreen';
+// import { RegisterDto } from '../../register/RegisterFormScreen';
 
 const SwitchDetailScreen = ({
   navigation,
@@ -319,11 +321,18 @@ const SwitchDetailScreen = ({
                 conditionInModalHide.current.isOpenDeleteModal = false;
               } else if (conditionInModalHide.current.isOpenEditScreen) {
                 conditionInModalHide.current.isOpenEditScreen = false;
-                navigation.navigate('EditItem', {
-                  screen: 'RegisterForm',
-                  // TODO : 내 아이템이라면 편집을 할 수 있고, 초깃값을 전달해줘야 한다. 아니면
-                  // 그냥 아이템 id만 넘겨서 그 아이템 데이터를 조회해 와서 넘기든지
-                  params: { initialData: undefined },
+                navigation.navigate('RegisterForm', {
+                  initialData: itemInfo
+                    ? ({
+                        name: itemInfo.name,
+                        description: itemInfo.description,
+                        images: itemInfo.images,
+                        category: itemInfo.category,
+                        preferredCategory: itemInfo.preferredCategory,
+                        preferredLocations: itemInfo.preferredLocations,
+                      } as unknown as RegisterDto)
+                    : undefined,
+                  itemId: switchDetailData.id,
                 });
               }
             }}
