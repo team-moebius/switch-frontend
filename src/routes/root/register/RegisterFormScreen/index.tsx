@@ -113,13 +113,14 @@ const RegisterFormScreen = ({
   };
 
   /* apis */
-  // initData 여부로 api 달아줘도 될듯?
+  const queryClient = useQueryClient();
   const { mutate: createMutate } = useCommonMutation<ItemResponse, ItemRequest>(
     {
       api: ItemApi.createItem, // TODO : 유효성 검사하기
       onSuccess(data, variables) {
         console.debug(data, variables);
-        // queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+        queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+        navigation.goBack();
       },
       onError(error, variables) {
         console.error(error, variables);
@@ -134,7 +135,9 @@ const RegisterFormScreen = ({
     api: ItemApi.updateItem, // TODO : 유효성 검사하기
     onSuccess(data, variables) {
       console.debug(data, variables);
-      // queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+      queryClient.invalidateQueries(['switchDetail_itemApi_getItem', itemId]);
+      queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+      navigation.goBack();
     },
     onError(error, variables) {
       console.error(error, variables);
