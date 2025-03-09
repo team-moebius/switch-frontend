@@ -124,11 +124,46 @@ const SwitchDetailScreen = ({
         data,
         variables
       );
-      queryClient.invalidateQueries([
+    },
+  });
+  const { mutate: deleteBookMarkMutate } = useCommonMutation<void, number>({
+    api: BookMarkApi.deleteBookmark,
+    onError(error, variables, context) {
+      console.debug(
+        '\n\n\n 🚨 SwitchDetail_bookMarkApi_deleteBookmark error 🚨 \n\n',
+        error,
+        variables
+      );
+      queryClient.setQueryData(['todos'], context);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({
+        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+      });
+    },
+    onMutate() {
+      queryClient.cancelQueries({
+        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+      });
+      const prevItem = queryClient.getQueryData([
         'switchDetail_itemApi_getItem',
         switchDetailData.id,
-      ]);
-  const { mutate: deleteMutate } = useCommonMutation<string, number>({
+      ]) as ItemResponse;
+      queryClient.setQueryData(
+        ['switchDetail_itemApi_getItem', switchDetailData.id],
+        { ...prevItem, bookmark: false }
+      );
+      return prevItem;
+    },
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_bookMarkApi_deleteBookmark data ✅ \n\n',
+        data,
+        variables
+      );
+    },
+  });
+  const { mutate: deleteItemMutate } = useCommonMutation<string, number>({
     api: ItemApi.deleteItem,
     onSuccess(data, variables) {
       console.debug(
