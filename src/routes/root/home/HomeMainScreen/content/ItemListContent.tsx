@@ -46,7 +46,6 @@ const GridItem = ({
       <ImageCard
         title={item.name}
         src={item.images ? item.images[0] : ''}
-        desc={withTitleOnly ? '' : item.description}
         width={'100%'}
         height={150}
         resizeMode={'cover'}
