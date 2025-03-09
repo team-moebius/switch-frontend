@@ -271,12 +271,18 @@ const SwitchDetailScreen = ({
                 ),
               }}
               isMine={isMine}
-              onPressBookMark={() =>
-                createBookMark({
-                  userId: +(userId as string),
-                  itemId: switchDetailData.id as number,
-                })
-              }
+              onPressBookMark={() => {
+                if (itemInfo?.bookmark) {
+                  if (itemInfo.bookmark) {
+                    deleteBookMarkMutate(switchDetailData.id as number);
+                  } else {
+                    createBookMark({
+                      itemId: switchDetailData.id as number,
+                    });
+                  }
+                  // itemInfo.bookmark = !itemInfo.bookmark;
+                }
+              }}
             />
             <SwitchDetailUser
               onPressReport={onPressReport}
