@@ -88,6 +88,7 @@ interface RegisterDto {
 interface RegisterFormProps {
   // initialData?: ItemResponse; TODO : 🚨
   initialData?: RegisterDto;
+  itemId?: number;
   getAddress?: string;
 }
 
@@ -101,6 +102,7 @@ const RegisterFormScreen = ({
   /* route params */
   const paramsData = route.params?.initialData;
   const getAddress = route.params?.getAddress;
+  const itemId = route.params?.itemId;
   const initialData: RegisterDto = paramsData ?? {
     name: '',
     description: '',
