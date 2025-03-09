@@ -279,7 +279,7 @@ const RegisterFormScreen = ({
   useLayoutEffect(() => {
     navigation.setOptions({
       header: (props) => {
-        if (paramsData) {
+        if (itemId) {
           return (
             <ScreenHeader
               {...props}
