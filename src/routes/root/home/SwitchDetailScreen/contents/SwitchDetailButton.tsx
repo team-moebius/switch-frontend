@@ -7,6 +7,7 @@ interface SwitchDetailButtonProp {
   onPressRevoke: () => void;
   onPressSwitchInProgress: () => void;
   isMine: boolean;
+  isSuggested: boolean;
 }
 
 const SwitchDetailButton = ({
@@ -14,10 +15,11 @@ const SwitchDetailButton = ({
   onPressRevoke,
   onPressSwitchInProgress,
   isMine,
+  isSuggested,
 }: SwitchDetailButtonProp) => {
   return (
     <>
-      {isMine ? (
+      {!isMine ? (
         <Box
           pl={PADDING.wrapper.horizontal}
           pr={PADDING.wrapper.horizontal}
@@ -41,16 +43,16 @@ const SwitchDetailButton = ({
           pl={PADDING.wrapper.horizontal}
           pr={PADDING.wrapper.horizontal}
         >
-          {true ? (
+          {isSuggested ? (
             <Box>
-              <Button type={'normal'} size={'medium'} onPress={onPressPropose}>
-                스위치 요청하기
+              <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
+                요청 취소하기
               </Button>
             </Box>
           ) : (
             <Box>
-              <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
-                요청 취소하기
+              <Button type={'normal'} size={'medium'} onPress={onPressPropose}>
+                스위치 요청하기
               </Button>
             </Box>
           )}
