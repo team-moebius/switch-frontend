@@ -9,7 +9,8 @@
     "web": "expo start --web",
     "clear-modules": "rm -rf node_modules",
     "storybook": "BABEL_ENV=storybook storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "postinstall": "patch-package"
   },
   "engines": {
     "npm": "npm 대신 yarn 혹은 expo를 사용해주세요"
@@ -21,7 +22,7 @@
     "@react-navigation/native": "^6.1.6",
     "@react-navigation/stack": "^6.3.17",
     "@stomp/stompjs": "^7.0.0",
-    "@team-moebius/api-typescript": "=0.0.28",
+    "@team-moebius/api-typescript": "=0.0.30",
     "@types/text-encoding": "^0.0.39",
     "dayjs": "^1.11.11",
     "expo": "^52.0.0",
@@ -32,6 +33,7 @@
     "expo-secure-store": "~14.0.0",
     "expo-splash-screen": "~0.29.19",
     "expo-status-bar": "~2.0.0",
+    "patch-package": "^8.0.0",
     "react": "18.3.1",
     "react-native": "~0.76.0",
     "react-native-bouncy-checkbox": "^3.0.7",

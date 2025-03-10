@@ -29,7 +29,7 @@ const ReportButton = ({
 const SWITCH_DETAIL = 'SwitchDetail';
 
 interface ReportScreenProps {
-  previousScreen?: string;
+  previousScreen: string;
   itemTitle?: string;
   opponentName: string;
 }

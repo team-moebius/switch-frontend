@@ -29,13 +29,10 @@ const DeleteItemModal = ({
         alignItems={'center'}
         justifyContent={'space-between'}
       >
-        <Flexbox flexDirection={'column'} alignItems={'center'} gap={30}>
+        <Flexbox flexDirection={'column'} alignItems={'center'} gap={20}>
           <Flexbox flexDirection={'column'} alignItems={'center'}>
             <Typography fontSize={FONT_SIZE.normal}>
-              {`- ${'5'}명이 이 물품을 대기중이예요`}
-            </Typography>
-            <Typography fontSize={FONT_SIZE.normal}>
-              {`- ${'페이커'}님과 스위치 협의 중이예요`}
+              {`${'5'}명과 스위치 중이었습니다.`}
             </Typography>
           </Flexbox>
           <Typography fontSize={FONT_SIZE.normal}>

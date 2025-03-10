@@ -25,9 +25,11 @@ import { ThemeContext } from 'src/context/theme';
 import { PADDING } from 'src/assets/theme/base';
 
 import { RootTabsParamList } from '..';
-import { RegisterRoute, RegisterRouteParamList } from '../register';
-import { NavigatorScreenParams } from '@react-navigation/native';
 import { ChatMainScreen, ChatMainScreenProps } from '../chat/ChatMainScreen';
+import {
+  RegisterFormProps,
+  RegisterFormScreen,
+} from '../register/RegisterFormScreen';
 
 type HomeRouteParamList = {
   HomeMain: undefined;
@@ -37,7 +39,7 @@ type HomeRouteParamList = {
   Report: ReportScreenProps;
   ChatDetail: undefined;
   ChatMain: ChatMainScreenProps;
-  EditItem: NavigatorScreenParams<RegisterRouteParamList>;
+  RegisterForm: RegisterFormProps;
 };
 
 const Stack = createStackNavigator<HomeRouteParamList>();
@@ -110,13 +112,7 @@ const HomeRoute = ({
               },
             }}
           />
-          <Stack.Screen
-            name={'SwitchDetail'}
-            component={SwitchDetailScreen}
-            options={{
-              header: (props) => <ScreenHeader {...props} />,
-            }}
-          />
+          <Stack.Screen name={'SwitchDetail'} component={SwitchDetailScreen} />
           <Stack.Screen
             name={'ChatMain'}
             component={ChatMainScreen}
@@ -190,7 +186,7 @@ const HomeRoute = ({
           />
         </Stack.Group>
         <Stack.Screen name={'ChatDetail'} component={ChatDetailScreen} />
-        <Stack.Screen name='EditItem' component={RegisterRoute} />
+        <Stack.Screen name='RegisterForm' component={RegisterFormScreen} />
       </Stack.Navigator>
     </>
   );

@@ -1,28 +1,33 @@
 // import Swiper from 'react-native-swiper';
 import { useWindowDimensions } from 'react-native';
 import { Box, Flexbox, Image } from 'src/components/atom';
-import { Separator } from 'src/components/atom/Separator';
 import { ItemCard } from 'src/components/molecule';
 import Swiper from 'react-native-swiper';
 import { SwitchDetailData } from '../SwitchList.mock';
 import { PADDING } from 'src/assets/theme/base';
+import { ItemResponse } from '@team-moebius/api-typescript';
 
 type SwitchDetailViewProps = {
-  itemData: Omit<SwitchDetailData, 'date'> & { date: string };
+  itemData: Omit<ItemResponse, 'date'> & { date: string };
   isMine: boolean;
+  onPressBookMark: () => void;
 };
-const SwitchDetailView = ({ itemData, isMine }: SwitchDetailViewProps) => {
+const SwitchDetailView = ({
+  itemData,
+  isMine,
+  onPressBookMark,
+}: SwitchDetailViewProps) => {
   const {
     name,
     date,
     description,
     preferredLocations,
-    preferredCategories,
+    preferredCategory,
     images,
-    liked,
+    bookmark,
     category,
   } = itemData;
-  const { width: screenWidth } = useWindowDimensions();
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   return (
     <Flexbox
@@ -36,7 +41,7 @@ const SwitchDetailView = ({ itemData, isMine }: SwitchDetailViewProps) => {
           horizontal
           containerStyle={{
             width: screenWidth,
-            height: 285,
+            height: screenHeight / 3,
           }}
         >
           {images &&
@@ -64,13 +69,13 @@ const SwitchDetailView = ({ itemData, isMine }: SwitchDetailViewProps) => {
             description,
             category,
             preferredLocations,
-            preferredCategories,
-            liked,
+            preferredCategory,
+            bookmark,
           }}
           isMine={isMine}
+          onLikeHandler={onPressBookMark}
         />
       </Flexbox.Item>
-      <Separator width={'100%'} />
     </Flexbox>
   );
 };
