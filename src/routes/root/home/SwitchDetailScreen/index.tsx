@@ -302,6 +302,7 @@ const SwitchDetailScreen = ({
             onPressRevoke={onPressRevoke}
             onPressSwitchInProgress={onPressSwitchInProgress}
             isMine={isMine}
+            isSuggested={itemInfo?.isSuggested ?? false}
           />
           <RevokeModal
             onPressRevoke={onPressRevokeConfirm}
