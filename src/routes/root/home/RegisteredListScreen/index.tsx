@@ -1,6 +1,6 @@
 import { ScreenWrapper, WithMirror } from 'src/components/template';
 import { ItemListContent } from '../HomeMainScreen/content/ItemListContent';
-import { useCallback, useContext, useMemo, useState } from 'react';
+import { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { Button, Flexbox, Icon, Modal, Typography } from 'src/components/atom';
 import { ItemDetail } from 'src/components/molecule/SwitchListItem';
 import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
@@ -8,6 +8,7 @@ import { ItemApi } from 'src/api';
 import { UserContext } from 'src/context/user';
 import { Alert } from 'react-native';
 import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
+import { ItemResponse, SwitchRequest } from '@team-moebius/api-typescript';
 
 const MY_ITEM = {
   name: '이브이',
@@ -63,6 +64,7 @@ const RegisteredListScreen = ({
 }: RegisteredListProp) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
+  const myItem = useRef<ItemResponse>(undefined);
 
   const handleModalOpen = useCallback(() => {
     setModalVisible((prev) => !prev);
