@@ -79,8 +79,8 @@ const RegisteredListScreen = () => {
           api={
             userId
               ? (params) =>
-                  ItemApi.getItems(
-                    +userId,
+                  ItemApi.getItemsByLoginUser(
+                    'in-progress',
                     params.page,
                     params.size,
                     params.sort
