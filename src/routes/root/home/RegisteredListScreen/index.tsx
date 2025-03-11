@@ -7,7 +7,7 @@ import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
 import { ItemApi } from 'src/api';
 import { UserContext } from 'src/context/user';
 import { Alert } from 'react-native';
-import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
+import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 
 const MY_ITEM = {
   name: '이브이',
@@ -67,27 +67,34 @@ const RegisteredListScreen = () => {
 
   return (
     <ScreenWrapper>
-      <ItemListContent
-        onClickList={handleModalOpen}
-        withTitleOnly
-        api={
-          userId
-            ? (params) =>
-                ItemApi.getItems(
-                  Number(userId),
-                  params.page,
-                  params.size,
-                  params.sort
-                )
-            : () =>
-                Promise.reject(
-                  Alert.alert(
-                    '알림',
-                    '비정상적인 접근입니다. 다시 로그인 해주세요.'
+      <Flexbox
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+        height={'100%'}
+      >
+        <ItemListContent
+          onClickList={handleModalOpen}
+          withTitleOnly
+          queryKey={}
+          api={
+            userId
+              ? (params) =>
+                  ItemApi.getItems(
+                    +userId,
+                    params.page,
+                    params.size,
+                    params.sort
                   )
-                )
-        }
-      />
+              : () =>
+                  Promise.reject(
+                    Alert.alert(
+                      '알림',
+                      '비정상적인 접근입니다. 다시 로그인 해주세요.'
+                    )
+                  )
+          }
+        />
+      </Flexbox>
       <Modal
         visible={modalVisible}
         width={'80%'}
