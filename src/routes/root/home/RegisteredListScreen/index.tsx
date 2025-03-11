@@ -107,11 +107,19 @@ const RegisteredListScreen = ({
   };
 
   const childrenA = useMemo(
-    () => renderChildren(MY_ITEM, 'switchList', true),
+    () =>
+      renderChildren(
+        {
+          name: myItem.current?.name ?? '',
+          src: myItem.current?.images ? myItem.current?.images[0] : '',
+        },
+        'switchList',
+        true
+      ),
     []
   );
   const childrenB = useMemo(
-    () => renderChildren(SELECTED_ITEM, 'switchList'),
+    () => renderChildren({ name: pairedName, src: pairedImage }, 'switchList'),
     []
   );
 
