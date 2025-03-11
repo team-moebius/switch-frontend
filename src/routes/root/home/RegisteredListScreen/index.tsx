@@ -4,11 +4,12 @@ import { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { Button, Flexbox, Icon, Modal, Typography } from 'src/components/atom';
 import { ItemDetail } from 'src/components/molecule/SwitchListItem';
 import { WithImage, fontSizeStyle } from 'src/components/template/WithImage';
-import { ItemApi } from 'src/api';
+import { ItemApi, SwitchAPI } from 'src/api';
 import { UserContext } from 'src/context/user';
 import { Alert } from 'react-native';
 import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 import { ItemResponse, SwitchRequest } from '@team-moebius/api-typescript';
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
 
 const MY_ITEM = {
   name: '이브이',
@@ -68,6 +69,23 @@ const RegisteredListScreen = ({
 
   const handleModalOpen = useCallback(() => {
     setModalVisible((prev) => !prev);
+  const { mutate: createMutate } = useCommonMutation<number, SwitchRequest>({
+    api: SwitchAPI.createSwitch,
+    onSuccess(data, varaiables) {
+      console.debug(
+        '\n\n\n ✅ RegisterList_SwitchApi_createSwitch data ✅ \n\n',
+        data,
+        varaiables
+      );
+    },
+    onError(error, varaiables) {
+      console.debug(
+        '\n\n\n 🚨 RegisterList_SwitchApi_createSwitch error 🚨 \n\n',
+        error,
+        varaiables
+      );
+    },
+  });
   }, []);
 
   const childrenA = useMemo(
