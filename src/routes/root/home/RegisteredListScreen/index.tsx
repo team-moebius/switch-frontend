@@ -67,8 +67,6 @@ const RegisteredListScreen = ({
   const { userId } = useContext(UserContext);
   const myItem = useRef<ItemResponse>(undefined);
 
-  const handleModalOpen = useCallback(() => {
-    setModalVisible((prev) => !prev);
   const { mutate: createMutate } = useCommonMutation<number, SwitchRequest>({
     api: SwitchAPI.createSwitch,
     onSuccess(data, varaiables) {
@@ -86,6 +84,10 @@ const RegisteredListScreen = ({
       );
     },
   });
+
+  const handleModalOpen = useCallback((data: ItemResponse) => {
+    myItem.current = data;
+    setModalVisible(true);
   }, []);
 
   const childrenA = useMemo(
