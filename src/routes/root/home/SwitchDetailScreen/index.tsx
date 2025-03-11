@@ -285,17 +285,18 @@ const SwitchDetailScreen = ({
                 }
               }}
             />
-            <SwitchDetailUser
-              onPressReport={onPressReport}
-              userSummaryData={{
-                score: userInfo?.score ?? 0,
-                verified: true,
-                switchCount: userInfo?.switchCount ?? 0,
-                nickname: userInfo?.nickname ?? 'undefined',
-                introduction: userInfo?.introduction ?? 'undefined',
-              }}
-              isMine={isMine}
-            />
+            {!isMine && (
+              <SwitchDetailUser
+                onPressReport={onPressReport}
+                userSummaryData={{
+                  score: userInfo?.score ?? 0,
+                  verified: userInfo?.phone ? true : false,
+                  switchCount: userInfo?.switchCount ?? 0,
+                  nickname: userInfo?.nickname ?? 'undefined',
+                  introduction: userInfo?.introduction ?? 'undefined',
+                }}
+              />
+            )}
           </ScrollView>
           <SwitchDetailButton
             onPressPropose={onPressPropose}
