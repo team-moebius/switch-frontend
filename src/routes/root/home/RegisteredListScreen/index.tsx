@@ -90,6 +90,22 @@ const RegisteredListScreen = ({
     setModalVisible(true);
   }, []);
 
+  const onPressSwitch = () => {
+    if (myItem.current && myItem.current.id) {
+      createMutate({
+        itemId: myItem.current.id,
+        userId: +(userId as string),
+        pairedItemId,
+        pairedUserId,
+      });
+    }
+  };
+
+  const onPressCancel = () => {
+    setModalVisible(false);
+    myItem.current = undefined;
+  };
+
   const childrenA = useMemo(
     () => renderChildren(MY_ITEM, 'switchList', true),
     []
@@ -165,11 +181,7 @@ const RegisteredListScreen = ({
             gap={5}
           >
             <Flexbox.Item width={'50%'}>
-              <Button
-                type='warning'
-                size='medium'
-                onPress={() => setModalVisible(false)}
-              >
+              <Button type='warning' size='medium' onPress={onPressCancel}>
                 취소
               </Button>
             </Flexbox.Item>
@@ -178,7 +190,7 @@ const RegisteredListScreen = ({
                 type='normal'
                 size='medium'
                 // TODO : chatting room 생성으로 이어져야 함
-                onPress={() => console.log('스위치')}
+                onPress={onPressSwitch}
               >
                 확인
               </Button>
