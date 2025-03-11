@@ -87,7 +87,7 @@ interface ItemListContentProps {
   onClickList: (data: ItemResponse) => void;
   withTitleOnly?: boolean;
   api: (args: Pageable) => Promise<AxiosResponse<SliceItemResponse, any>>;
-  queryKey?: string[];
+  queryKey?: string;
 }
 
 const ItemListContent = ({
@@ -103,8 +103,8 @@ const ItemListContent = ({
     useCommonInfiniteQuery<SliceItemResponse>({
       api,
       queryString: { size: 20, sort: SELECT_OPTIONS_QUERY[sort] },
-      queryKey: queryKey ?? [
-        'homeMain_itemApi_getAllItems',
+      queryKey: [
+        queryKey ?? 'homeMain_itemApi_getAllItems',
         SELECT_OPTIONS_QUERY[sort],
       ],
       getNextPageParam(page) {
