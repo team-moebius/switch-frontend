@@ -48,7 +48,19 @@ const renderChildren = (
   );
 };
 
-const RegisteredListScreen = () => {
+interface RegisteredListProp {
+  pairedItemId: number;
+  pairedUserId: number;
+  pairedName: string;
+  pairedImage: string;
+}
+
+const RegisteredListScreen = ({
+  pairedItemId,
+  pairedUserId,
+  pairedName,
+  pairedImage,
+}: RegisteredListProp) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
 
