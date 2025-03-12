@@ -22,7 +22,7 @@ import {
   ItemResponse,
   UserInfoResponse,
 } from '@team-moebius/api-typescript';
-import { BookMarkApi, ItemApi, UserApi } from 'src/api';
+import { BookMarkApi, ItemAPI, UserAPI } from 'src/api';
 import { useQueryClient } from 'react-query';
 
 import { CompositeScreenProps } from '@react-navigation/native';
@@ -62,22 +62,22 @@ const SwitchDetailScreen = ({
     data: userInfo,
     isLoading: isUserLoading,
     isError: isUserError,
-  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
-    api: UserApi.getUserInfo,
-    queryKey: ['switchDetail_userApi_getUserInfo', switchDetailData.userId],
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserAPI.getUserInfo>>({
+    api: UserAPI.getUserInfo,
+    queryKey: ['switchDetail_UserAPI_getUserInfo', switchDetailData.userId],
     onSuccess(data) {
-      console.debug('\n\n✅ switchDetail_userApi_getUserInfo ✅\n', data);
+      console.debug('\n\n✅ switchDetail_UserAPI_getUserInfo ✅\n', data);
     },
     onError(err) {
-      console.debug('\n\n🚨 switchDetail_userApi_getUserInfo 🚨\n', err);
+      console.debug('\n\n🚨 switchDetail_UserAPI_getUserInfo 🚨\n', err);
     },
   });
   const {
     data: itemInfo,
     isLoading: isItemLoading,
     isError: isItemError,
-  } = useCommonQuery<ItemResponse, Parameters<typeof ItemApi.getItem>>({
-    api: ItemApi.getItem,
+  } = useCommonQuery<ItemResponse, Parameters<typeof ItemAPI.getItem>>({
+    api: ItemAPI.getItem,
     queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
     onSuccess(data) {
       console.debug('\n\n✅ switchDetail_itemApi_getItem ✅\n', data);
@@ -166,7 +166,7 @@ const SwitchDetailScreen = ({
     },
   });
   const { mutate: deleteItemMutate } = useCommonMutation<string, number>({
-    api: ItemApi.deleteItem,
+    api: ItemAPI.deleteItem,
     onSuccess(data, variables) {
       console.debug(
         '\n\n\n ✅ SwitchDetail_itemApi_deleteItem data ✅ \n\n',

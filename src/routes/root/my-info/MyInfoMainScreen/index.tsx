@@ -11,7 +11,7 @@ import { useCommonQuery } from 'src/hooks/useCommonQuery';
 import { UserContext } from 'src/context/user';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 
-import { ItemApi, UserApi } from 'src/api';
+import { ItemAPI, UserAPI } from 'src/api';
 import {
   ItemResponse,
   SliceItemResponse,
@@ -39,14 +39,14 @@ const MyInfoMainScreen = ({
     data: myInfoData,
     isLoading,
     isSuccess,
-  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
-    api: UserApi.getUserInfo,
-    queryKey: ['myInfoMain_userApi_getUserInfo', userId],
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserAPI.getUserInfo>>({
+    api: UserAPI.getUserInfo,
+    queryKey: ['myInfoMain_userAPI_getUserInfo', userId],
     onSuccess(data) {
-      console.debug('\n\n✅ myInfoMain_userApi_getUserInfo ✅\n', data);
+      console.debug('\n\n✅ myInfoMain_userAPI_getUserInfo ✅\n', data);
     },
     onError(err) {
-      console.debug('\n\n🚨 myInfoMain_userApi_getUserInfo 🚨\n', err);
+      console.debug('\n\n🚨 myInfoMain_userAPI_getUserInfo 🚨\n', err);
     },
   });
 
@@ -55,10 +55,10 @@ const MyInfoMainScreen = ({
     data: myItemData,
     isFetchingNextPage,
   } = useCommonInfiniteQuery<SliceItemResponse>({
-    api: ItemApi.getItemsByLoginUser,
+    api: ItemAPI.getItemsByLoginUser,
     queryString: { size: 20, sort: SELECT_OPTIONS_QUERY['최신순'] },
     queryKey: [
-      'myInfoMain_ItemApi_getItemsByLoginUser',
+      'myInfoMain_ItemAPI_getItemsByLoginUser',
       SELECT_OPTIONS_QUERY['최신순'],
     ],
     getNextPageParam(page) {
@@ -73,13 +73,13 @@ const MyInfoMainScreen = ({
     },
     onSuccess(data) {
       console.debug(
-        '\n\n ✅ myInfoMain_ItemApi_getItemsByLoginUser ✅\n\n',
+        '\n\n ✅ myInfoMain_ItemAPI_getItemsByLoginUser ✅\n\n',
         data
       );
     },
     onError(error) {
       console.debug(
-        '\n\n 🚨 myInfoMain_ItemApi_getItemsByLoginUser 🚨\n\n',
+        '\n\n 🚨 myInfoMain_ItemAPI_getItemsByLoginUser 🚨\n\n',
         error
       );
     },

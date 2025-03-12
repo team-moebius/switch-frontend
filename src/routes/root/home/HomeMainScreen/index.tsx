@@ -5,7 +5,7 @@ import { ScreenWrapper } from 'src/components/template';
 
 import { HistoryListContent } from './content/HistoryListContent';
 import { ItemListContent } from './content/ItemListContent';
-import { ItemApi } from 'src/api';
+import { ItemAPI } from 'src/api';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';
 import { PADDING } from 'src/assets/theme/base';
@@ -31,7 +31,7 @@ const HomeMainScreen = ({
               navigation?.navigate('SwitchDetail', data);
             }}
             api={(params) =>
-              ItemApi.getItems(undefined, params.page, params.size, params.sort)
+              ItemAPI.getItems(undefined, params.page, params.size, params.sort)
             }
           />
         ) : (
