@@ -39,9 +39,10 @@ globalAxios.interceptors.response.use(
 );
 
 const BookMarkApi = new API.BookmarkAPIApi();
-const ItemApi = new API.ItemAPIApi();
+const ItemAPI = new API.ItemAPIApi();
 const ReportAPI = new API.UserAPIApi();
 const SwitchAPI = new API.SwitchAPIApi();
-const UserApi = new API.UserAPIApi();
+const UserAPI = new API.UserAPIApi();
+const ChatAPI = new API.ChatAPIApi();
 
-export { BookMarkApi, ItemApi, ReportAPI, SwitchAPI, UserApi };
+export { BookMarkApi, ItemAPI, ReportAPI, SwitchAPI, UserAPI, ChatAPI };
