@@ -22,7 +22,10 @@ import {
 import { StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '..';
 
-import { SELECT_OPTIONS_QUERY } from '../../home/HomeMainScreen/content/ItemListContent';
+import {
+  GridItem,
+  SELECT_OPTIONS_QUERY,
+} from '../../home/HomeMainScreen/content/ItemListContent';
 import { getPageableContent } from 'src/utils/getPageableContent';
 import {
   StuffListItemData,
@@ -97,14 +100,7 @@ const MyInfoMainScreen = ({
   };
 
   const renderItem = useCallback(({ item }: { item: ItemResponse }) => {
-    return (
-      <ItemListCard
-        title={item.name ?? ''}
-        count={item.waitingCount}
-        imageSrc={item.images ? item.images[0] : ''}
-        status={item.status}
-      />
-    );
+    return <GridItem item={item} />;
   }, []);
 
   const flatListProps = useFlatList<ItemResponse>({
