@@ -16,7 +16,8 @@ import { NavigatorScreenParams } from '@react-navigation/native';
 import { BlockUsersList } from './BlockUsersList';
 
 type MyInfoParamList = {
-  MyInfoMain: { otherUserId?: number };
+  // MyInfoMain: { otherUserId?: number };
+  MyInfoMain: undefined;
   MyInfoEdit: { userInfo: UserInfoResponse | undefined };
   Withdraw: NavigatorScreenParams<WithdrawParamList>;
   SettingMain: undefined;
