@@ -1,4 +1,4 @@
-import { useCallback, useContext, useMemo, useRef } from 'react';
+import { useCallback, useContext, useMemo, useRef, useState } from 'react';
 import { Animated, useWindowDimensions } from 'react-native';
 
 import { Box, Button, Flexbox, Typography } from 'src/components/atom';
@@ -15,6 +15,7 @@ import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 import { ItemApi, UserApi } from 'src/api';
 import {
   ItemResponse,
+  ItemResponseStatusEnum,
   SliceItemResponse,
   UserInfoResponse,
 } from '@team-moebius/api-typescript';
@@ -43,8 +44,11 @@ const MyInfoMainScreen = ({
   const screenWidth = useWindowDimensions().width;
   // const otherUserId = route.params?.otherUserId;
 
+  const [isStandy, setIsStandy] =
+    useState<ItemResponseStatusEnum>('IN_PROGRESS');
+
   const {
-    data: myInfoData,
+    data: userData,
     isLoading,
     isSuccess,
   } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
@@ -64,10 +68,10 @@ const MyInfoMainScreen = ({
     isFetchingNextPage,
   } = useCommonInfiniteQuery<SliceItemResponse>({
     api: (param) =>
-      ItemApi.getItemsByLoginUser(param.page, param.size, param.sort),
+      ItemApi.getItemsByLoginUser(isStandy, param.page, param.size, param.sort),
     queryString: { size: 20, sort: SELECT_OPTIONS_QUERY['최신순'] },
     queryKey: [
-      'myInfoMain_ItemApi_getItemsByLoginUser',
+      `myInfoMain_ItemApi_getItemByLoginUser_${isStandy}`,
       SELECT_OPTIONS_QUERY['최신순'],
     ],
     getNextPageParam(page) {
@@ -82,13 +86,13 @@ const MyInfoMainScreen = ({
     },
     onSuccess(data) {
       console.debug(
-        '\n\n ✅ myInfoMain_ItemApi_getItemsByLoginUser ✅\n\n',
+        `\n\n ✅ myInfoMain_ItemApi_getItemByLoginUser_${isStandy} ✅\n\n`,
         data
       );
     },
     onError(error) {
       console.debug(
-        '\n\n 🚨 myInfoMain_ItemApi_getItemsByLoginUser 🚨\n\n',
+        `\n\n 🚨 myInfoMain_ItemApi_getItemByLoginUser_${isStandy} 🚨\n\n`,
         error
       );
     },
@@ -111,9 +115,17 @@ const MyInfoMainScreen = ({
     renderItem,
   });
 
-  const handleButtonPress = (toValue: number) => {
+  const handleButtonPress = (isStandy: ItemResponseStatusEnum) => {
+    if (isStandy === 'IN_PROGRESS') {
+      setIsStandy('IN_PROGRESS');
+    } else {
+      setIsStandy('DONE');
+    }
     Animated.timing(slideAnim, {
-      toValue: toValue * (screenWidth / 2),
+      toValue:
+        isStandy === 'IN_PROGRESS'
+          ? 0 * (screenWidth / 2)
+          : 1 * (screenWidth / 2),
       duration: 500,
       useNativeDriver: false,
     }).start();
@@ -135,21 +147,21 @@ const MyInfoMainScreen = ({
       <Box pl={PADDING.wrapper.horizontal} pr={PADDING.wrapper.horizontal}>
         <UserSummary
           data={{
-            nickname: myInfoData?.nickname ?? (userId as string),
-            verified: !!myInfoData?.phone,
-            switchCount: myInfoData?.switchCount ?? 0,
-            score: myInfoData?.score ?? 0,
-            introduction: myInfoData?.introduction,
+            nickname: userData?.nickname ?? (userId as string),
+            verified: !!userData?.phone,
+            switchCount: userData?.switchCount ?? 0,
+            score: userData?.score ?? 0,
+            introduction: userData?.introduction,
           }}
         />
         <Flexbox justifyContent='center' alignItems='center' mt={10} mb={10}>
-          {Number(myInfoData?.id) === Number(userId) ? (
+          {Number(userData?.id) === Number(userId) ? (
             <Box width={200}>
               <Button
                 type={'normal'}
                 size={'medium'}
                 onPress={function (): void {
-                  navigation.navigate('MyInfoEdit', { userInfo: myInfoData });
+                  navigation.navigate('MyInfoEdit', { userInfo: userData });
                 }}
               >
                 내 정보 편집하기
@@ -164,7 +176,7 @@ const MyInfoMainScreen = ({
             <Button
               type={'transparent'}
               size={'medium'}
-              onPress={() => handleButtonPress(0)}
+              onPress={() => handleButtonPress('IN_PROGRESS')}
             >
               <Typography fontSize={17}>대기중</Typography>
             </Button>
@@ -173,7 +185,7 @@ const MyInfoMainScreen = ({
             <Button
               type={'transparent'}
               size={'medium'}
-              onPress={() => handleButtonPress(1)}
+              onPress={() => handleButtonPress('DONE')}
             >
               <Typography fontSize={17}>완료</Typography>
             </Button>
