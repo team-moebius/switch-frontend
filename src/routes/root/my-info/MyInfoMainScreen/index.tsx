@@ -32,6 +32,7 @@ import {
   STUFF_LIST_MOCK,
 } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import { USERINFO_MOCK } from './UserInfo.mock';
+import { plusMockOne } from 'src/utils/plusMockOne';
 import { PADDING } from 'src/assets/theme/base';
 
 const MyInfoMainScreen = ({
@@ -60,7 +61,7 @@ const MyInfoMainScreen = ({
 
   const {
     fetchNextPage,
-    data: myItemData,
+    data: itemData,
     isFetchingNextPage,
   } = useCommonInfiniteQuery<SliceItemResponse>({
     api: (param) =>
@@ -93,6 +94,8 @@ const MyInfoMainScreen = ({
       );
     },
   });
+
+  const memoItemData = useMemo(() => getPageableContent(itemData), [itemData]);
 
   const handleLoadMoreData = () => {
     if (!isFetchingNextPage) return;
@@ -196,7 +199,11 @@ const MyInfoMainScreen = ({
       >
         <ListView<ItemResponse>
           {...flatListProps}
-          data={getPageableContent(myItemData)}
+          data={
+            memoItemData.length % 2 !== 0
+              ? plusMockOne(memoItemData)
+              : memoItemData
+          }
           // data={STUFF_LIST_MOCK}
         />
       </Flexbox>
