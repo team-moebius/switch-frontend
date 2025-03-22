@@ -29,6 +29,7 @@ import {
   STUFF_LIST_MOCK,
 } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import { USERINFO_MOCK } from './UserInfo.mock';
+import { PADDING } from 'src/assets/theme/base';
 
 const MyInfoMainScreen = ({
   navigation,
@@ -133,7 +134,7 @@ const MyInfoMainScreen = ({
 
   return (
     <ScreenWrapper>
-      <Box pl={15} pr={15}>
+      <Box pl={PADDING.wrapper.horizontal} pr={PADDING.wrapper.horizontal}>
         <UserSummary
           data={{
             nickname: myInfoData?.nickname ?? (userId as string),
@@ -192,7 +193,11 @@ const MyInfoMainScreen = ({
         />
       </Box>
       {/* <Separator /> */}
-      <Flexbox height={'100%'}>
+      <Flexbox
+        height={'100%'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+      >
         <ListView<ItemResponse>
           {...flatListProps}
           data={getPageableContent(myItemData)}
