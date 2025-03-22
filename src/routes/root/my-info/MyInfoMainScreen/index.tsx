@@ -37,12 +37,11 @@ import { PADDING } from 'src/assets/theme/base';
 
 const MyInfoMainScreen = ({
   navigation,
-  route,
 }: StackScreenProps<MyInfoParamList, 'MyInfoMain'>) => {
   const { userId } = useContext(UserContext);
   const slideAnim = useRef(new Animated.Value(0)).current;
   const screenWidth = useWindowDimensions().width;
-  const { otherUserId } = route.params;
+  // const otherUserId = route.params?.otherUserId;
 
   const {
     data: myInfoData,
@@ -50,7 +49,7 @@ const MyInfoMainScreen = ({
     isSuccess,
   } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
     api: UserApi.getUserInfo,
-    queryKey: ['myInfoMain_userApi_getUserInfo', otherUserId || userId],
+    queryKey: ['myInfoMain_userApi_getUserInfo', userId],
     onSuccess(data) {
       console.debug('\n\n✅ myInfoMain_userApi_getUserInfo ✅\n', data);
     },
