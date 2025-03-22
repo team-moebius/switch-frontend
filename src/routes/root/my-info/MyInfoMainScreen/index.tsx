@@ -35,11 +35,13 @@ import {
 import { USERINFO_MOCK } from './UserInfo.mock';
 import { plusMockOne } from 'src/utils/plusMockOne';
 import { PADDING } from 'src/assets/theme/base';
+import { ThemeContext } from 'src/context/theme';
 
 const MyInfoMainScreen = ({
   navigation,
 }: StackScreenProps<MyInfoParamList, 'MyInfoMain'>) => {
   const { userId } = useContext(UserContext);
+  const { color } = useContext(ThemeContext);
   const slideAnim = useRef(new Animated.Value(0)).current;
   const screenWidth = useWindowDimensions().width;
   // const otherUserId = route.params?.otherUserId;
@@ -196,7 +198,7 @@ const MyInfoMainScreen = ({
             {
               height: 1,
               width: '50%',
-              backgroundColor: '#3489eb',
+              backgroundColor: color.primary[200],
             },
             animatedStyle,
           ]}
