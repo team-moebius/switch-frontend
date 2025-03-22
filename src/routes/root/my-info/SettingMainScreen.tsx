@@ -17,6 +17,7 @@ import { NavigationRouterParamList } from 'src/routes';
 import { UserContext } from 'src/context/user';
 import { Field } from 'src/components/molecule';
 import { AppPasswordContext } from 'src/context/password';
+import { FONT_SIZE, PADDING } from 'src/assets/theme/base';
 
 const SettingButton = ({
   children,
@@ -24,14 +25,18 @@ const SettingButton = ({
 }: Pick<ButtonProps, 'onPress'> & { children: string }) => {
   return (
     <Flexbox justifyContent='flex-start'>
-      <Box width={'auto'} pl={25}>
+      <Box
+        width={'auto'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+      >
         <Button
           wide={false}
           type={'transparent'}
           size={'large'}
           onPress={onPress}
         >
-          <Typography fontSize={20}>{children}</Typography>
+          <Typography fontSize={FONT_SIZE.header}>{children}</Typography>
         </Button>
       </Box>
     </Flexbox>
@@ -103,8 +108,10 @@ const SettingMainScreen = ({
           labelAlign='center'
           label={
             <Flexbox flexDirection='column' gap={5}>
-              <Typography fontSize={20}>앱 비밀번호 사용</Typography>
-              <Typography fontSize={12}>
+              <Typography fontSize={FONT_SIZE.header}>
+                앱 비밀번호 사용
+              </Typography>
+              <Typography fontSize={FONT_SIZE.smaller}>
                 앱을 시작할 때 비밀 번호를 사용합니다.
               </Typography>
             </Flexbox>
@@ -124,8 +131,10 @@ const SettingMainScreen = ({
             labelAlign='center'
             label={
               <Flexbox flexDirection='column' gap={5}>
-                <Typography fontSize={20}>생체 정보 등록</Typography>
-                <Typography fontSize={12}>
+                <Typography fontSize={FONT_SIZE.header}>
+                  생체 정보 등록
+                </Typography>
+                <Typography fontSize={FONT_SIZE.smaller}>
                   앱을 시작할 때 생체 인식을 사용합니다.
                 </Typography>
               </Flexbox>
@@ -141,7 +150,11 @@ const SettingMainScreen = ({
       )}
 
       <Separator width={'100%'} />
+      <SettingButton onPress={() => navigation.navigate('BlockUsers')}>
+        차단 회원 관리
+      </SettingButton>
 
+      <Separator width={'100%'} />
       <SettingButton onPress={() => navigation.navigate('Version')}>
         버전
       </SettingButton>

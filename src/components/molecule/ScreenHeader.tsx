@@ -4,6 +4,7 @@ import { Pressable } from 'react-native';
 import { ThemeContext } from 'src/context/theme';
 import { Flexbox, Icon, Typography } from '../atom';
 import { FlexboxProps } from '../atom/Flexbox';
+import { FONT_SIZE, PADDING } from 'src/assets/theme/base';
 
 interface ScreenHeaderProps extends StackHeaderProps {
   center?: ReactNode;
@@ -16,10 +17,14 @@ interface ScreenHeaderProps extends StackHeaderProps {
 
 const DEFAULT_STYLE = {
   width: '100%',
-  height: 60,
+  height: 50,
   flexDirection: 'row',
   justifyContent: 'space-between',
   alignItems: 'center',
+  pl: 8,
+  pr: PADDING.wrapper.horizontal,
+  pt: 10,
+  pb: 10,
 } as FlexboxProps;
 
 const ScreenHeader = ({
@@ -44,24 +49,22 @@ const ScreenHeader = ({
       }
     >
       <Flexbox.Item flex={1}>
-        <Flexbox width={'100%'} pl={8}>
-          {backVisible && navigation.canGoBack() && (
-            <Pressable
-              onPress={() => {
-                if (isConfirmGoBack && setModalVisible) {
-                  setModalVisible(true);
-                } else navigation.goBack();
-              }}
-            >
-              <Icon size={24} name={'chevron-back'} />
-            </Pressable>
-          )}
-        </Flexbox>
+        {backVisible && navigation.canGoBack() && (
+          <Pressable
+            onPress={() => {
+              if (isConfirmGoBack && setModalVisible) {
+                setModalVisible(true);
+              } else navigation.goBack();
+            }}
+          >
+            <Icon size={24} name={'chevron-back'} />
+          </Pressable>
+        )}
       </Flexbox.Item>
       <Flexbox.Item flex={3}>
         <Flexbox width={'100%'} justifyContent={'center'}>
           {typeof center === 'string' ? (
-            <Typography fontSize={20} color={color.neutral['300']}>
+            <Typography fontSize={FONT_SIZE.header} color={color.text}>
               {center}
             </Typography>
           ) : (

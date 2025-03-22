@@ -1,8 +1,6 @@
 /* react */
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useLayoutEffect, useState } from 'react';
 import {
-  ScrollView,
-  Pressable,
   useWindowDimensions,
   Alert,
   NativeSyntheticEvent,
@@ -13,20 +11,20 @@ import {
 import {
   Box,
   Flexbox,
-  Icon,
   Typography,
   Button,
   Separator,
+  Select,
+  TextInput,
 } from 'src/components/atom';
 import {
-  Field,
-  HashTagInput,
+  CountingTextarea,
   PressableIcon,
-  TagInput,
+  ScreenHeader,
 } from 'src/components/molecule';
 import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWrapper';
-
 import { ImageUploader } from './contents/ImageUploader';
+import { OptionValue } from 'src/components/atom/Select';
 
 import { AddressModal } from './contents/modals/AddressModal';
 import { AttentionModal, DETAILS } from './contents/modals/AttentionModal';
@@ -40,6 +38,7 @@ import useExpoImagePicker from 'src/hooks/useExpoImagePicker';
 /* navigation */
 import { RegisterRouteParamList } from '..';
 import { StackScreenProps } from '@react-navigation/stack';
+import { CompositeScreenProps } from '@react-navigation/native';
 
 /* api */
 import { ItemApi } from 'src/api';
@@ -48,62 +47,88 @@ import {
   ItemResponse,
   ItemUpdateRequest,
 } from '@team-moebius/api-typescript';
-import { RegisterDto } from './contents/type';
 
-/* mock */
-import { HASHTAGS_MOCK, INPUT_TAG_MOCK } from '../Tags.mock';
-import { SWITCH_DETAIL_MOCK } from '../../home/SwitchDetailScreen/SwitchList.mock';
+/* style */
+import PALETTE from 'src/assets/theme/colors/palettes';
+import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
+import { CancelEditModal } from '../../home/modals';
+import { useQueryClient } from 'react-query';
+import { HomeRouteParamList } from '../../home';
 
-interface RegisterFormProps {
-  initialData?: ItemResponse;
-  getAddress?: string;
+const REGISTER_CATEGORY = [
+  '수입명품',
+  '패션의류',
+  '패션잡화',
+  '뷰티',
+  '출산 / 유아동',
+  '모바일 / 태블릿',
+  '가전제품',
+  '노트북 / PC',
+  '카메라 / 캠코더',
+  '가구 / 인테리어',
+  '리빙 / 생활',
+  '게임',
+  '반려동물 / 취미',
+  '도서 / 음반 / 문구',
+  '티켓 / 쿠폰',
+  '스포츠',
+  '레저 / 여행',
+  '공구 / 산업용품',
+] as const;
+type RegisterCategory = (typeof REGISTER_CATEGORY)[number];
+
+interface RegisterDto {
+  category: RegisterCategory | '카테고리 선택';
+  name: string;
+  description: string;
+  images: Array<string>;
+  preferredCategory: RegisterCategory | '스위치 희망 카테고리 선택';
+  preferredLocations: Array<string>;
 }
 
-const defaultForm = {
-  name: '',
-  description: '',
-  images: [],
-  category: '',
-  preferredCategories: [],
-  hashtags: [],
-  preferredLocations: [],
-};
+interface RegisterFormProps {
+  // initialData?: ItemResponse; TODO : 🚨
+  initialData?: RegisterDto;
+  itemId?: number;
+  getAddress?: string;
+}
 
 const RegisterFormScreen = ({
   navigation,
   route,
-}: StackScreenProps<RegisterRouteParamList, 'RegisterForm'>) => {
+}: CompositeScreenProps<
+  StackScreenProps<RegisterRouteParamList, 'RegisterForm'>,
+  StackScreenProps<HomeRouteParamList, 'RegisterForm'>
+>) => {
   /* route params */
-  const { initialData: paramsData, getAddress } = route.params;
-  const initialData: RegisterDto | undefined = paramsData && {
-    name: paramsData.name ?? '',
-    description: paramsData.description ?? '',
-    images: paramsData.images ?? [],
-    // category: paramsData.category,
-    category: '',
-    hashtags: Array.from(paramsData.hashtags?.values() ?? []),
-    preferredCategories: Array.from(
-      paramsData.preferredCategories?.values() ?? []
-    ),
-    preferredLocations: Array.from(
-      paramsData.preferredLocations?.values() ?? []
-    ),
+  const paramsData = route.params?.initialData;
+  const getAddress = route.params?.getAddress;
+  const itemId = route.params?.itemId;
+  const initialData: RegisterDto = paramsData ?? {
+    name: '',
+    description: '',
+    images: [],
+    category: '카테고리 선택',
+    preferredCategory: '스위치 희망 카테고리 선택',
+    preferredLocations: [],
   };
 
   /* apis */
-  // initData 여부로 api 달아줘도 될듯?
+  const queryClient = useQueryClient();
   const { mutate: createMutate } = useCommonMutation<ItemResponse, ItemRequest>(
     {
       api: ItemApi.createItem, // TODO : 유효성 검사하기
       onSuccess(data, variables) {
         console.debug(data, variables);
-        // queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+        queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+        navigation.goBack();
       },
       onError(error, variables) {
         console.error(error, variables);
       },
     }
   );
+  // 게시글 id가 있을 거 같은데 있으면 이거 쓰면 될 듯?
   const { mutate: editMutate } = useCommonMutation<
     ItemResponse,
     ItemUpdateRequest
@@ -111,7 +136,9 @@ const RegisterFormScreen = ({
     api: ItemApi.updateItem, // TODO : 유효성 검사하기
     onSuccess(data, variables) {
       console.debug(data, variables);
-      // queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+      queryClient.invalidateQueries(['switchDetail_itemApi_getItem', itemId]);
+      queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+      navigation.goBack();
     },
     onError(error, variables) {
       console.error(error, variables);
@@ -127,29 +154,23 @@ const RegisterFormScreen = ({
     details: false,
     safety: false,
   });
+  const [cancelModalVisible, setCancelModalVisible] = useState(false);
   // 기본 state
-  const [data, setData] = useState<RegisterDto>(defaultForm);
+  const [data, setData] = useState<RegisterDto>(initialData);
   const {
     name,
-    description = '',
+    description,
     images,
-    hashtags,
     category,
-    preferredCategories,
+    preferredCategory,
     preferredLocations,
   } = data;
 
-  // 등록하는 물건 종류 input
-  const [categoryTagInput, setCategoryTagInput] = useState<string>();
-  // 스위치 원하는 물건 종류 input
-  const [oCategoryTagInput, setOCategoryTagInput] = useState<string>();
-  // 해시 태그 input
-  const [hashTagInput, setHashTagInput] = useState<string>();
-
-  const [addressModalVisible, setAddressModalVisible] = useState(false);
+  // TODO : 🚨 주소 설정 옵션 선택 모달과 관련된 변수는 주석처리
+  // const { expoPostalCode, getExpoLocation } = useExpoLocation();
+  // const { fetchAddress, province, city, dong } = useFetchAddress();
+  // const [addressModalVisible, setAddressModalVisible] = useState(false);
   const [attentionModalVisible, setAttentionModalVisible] = useState(false);
-  const { expoPostalCode, getExpoLocation } = useExpoLocation();
-  const { fetchAddress, province, city, dong } = useFetchAddress();
 
   /* handlers */
   // name, desc 입력 핸들러
@@ -173,37 +194,37 @@ const RegisterFormScreen = ({
 
   const handleCloseAttentionModal = () => {
     // api call
-    if (paramsData) {
-    } else if (
-      name.length <= 0 ||
-      description.length <= 0 ||
-      category.length <= 0
-    ) {
+    if (name.length <= 0 || description.length <= 0) {
       Alert.alert('알림', '제목, 설명, 카테고리는 반드시 채워주셔야 합니다.');
+    } else if (
+      category === '카테고리 선택' ||
+      preferredCategory === '스위치 희망 카테고리 선택'
+    ) {
+      Alert.alert('물품 카테고리와 스위치 희망 카테고리를 선택해주세요');
     } else if (!checkboxState.details || !checkboxState.safety) {
       Alert.alert('알림', '주의사항에 모두 동의해 주셔야 합니다.');
     } else {
-      createMutate({
-        ...data,
-        hashtags,
-        preferredCategories,
-        preferredLocations,
-        type: 'GOODS',
-      });
+      if (itemId) {
+        editMutate({ ...data, id: itemId });
+      } else {
+        createMutate({
+          ...data,
+          type: 'GOODS',
+        });
+      }
     }
 
     setCheckboxState({ details: false, safety: false });
     setAttentionModalVisible(false);
   };
-
-  const handleGetLocation = useCallback(async () => {
-    await getExpoLocation();
-  }, [getExpoLocation]);
-
-  const onPressSelectAddress = () => {
-    setAddressModalVisible(false);
-    navigation.navigate('PreferredAddress');
-  };
+  // TODO : 🚨 주소 설정 옵션 선택 모달과 관련된 변수는 주석처리
+  // const handleGetLocation = useCallback(async () => {
+  //   await getExpoLocation();
+  // }, [getExpoLocation]);
+  // const onPressSelectAddress = () => {
+  //   setAddressModalVisible(false);
+  //   navigation.navigate('PreferredAddress');
+  // };
 
   const onPressAddPhotos = async () => {
     const result = await pickImage(images.length);
@@ -236,74 +257,14 @@ const RegisterFormScreen = ({
     }));
   };
 
-  const onSubmitCategory = (
-    event: NativeSyntheticEvent<TextInputEndEditingEventData>
+  const onClickCategory = (value: RegisterCategory | '카테고리 선택') => {
+    setData({ ...data, category: value });
+  };
+
+  const onClickPreferredCategory = (
+    value: RegisterCategory | '스위치 희망 카테고리 선택'
   ) => {
-    if (category.length > 0) {
-      Alert.alert('알림', '카테고리는 하나만 입력 가능합니다.');
-    } else if (categoryTagInput && categoryTagInput.length > 0) {
-      setData((prev) => ({
-        ...prev,
-        category: categoryTagInput,
-      }));
-    }
-    setCategoryTagInput('');
-  };
-
-  const onSubmitPreferredCategory = (
-    event: NativeSyntheticEvent<TextInputEndEditingEventData>
-  ) => {
-    if (preferredCategories.length >= 3) {
-      Alert.alert('알림', '선호 카테고리는 3개까지 입력 가능합니다.');
-    } else if (
-      oCategoryTagInput &&
-      oCategoryTagInput.length > 0 &&
-      !preferredCategories.includes(oCategoryTagInput)
-    ) {
-      setData((prev) => ({
-        ...prev,
-        preferredCategories: [...preferredCategories, oCategoryTagInput],
-      }));
-    }
-    setOCategoryTagInput('');
-  };
-
-  const onSubmitHashTags = (
-    event: NativeSyntheticEvent<TextInputEndEditingEventData>
-  ) => {
-    if (hashtags.length >= 5) {
-      Alert.alert('알림', '해쉬태그는 5개까지 입력 가능합니다.');
-    } else if (
-      hashTagInput &&
-      hashTagInput.length > 0 &&
-      !hashtags.includes(hashTagInput)
-    ) {
-      setData((prev) => ({
-        ...prev,
-        hashtags: [...hashtags, `#${hashTagInput}`],
-      }));
-    }
-    setHashTagInput('');
-  };
-
-  const onPressCategory = () => {
-    setData((prev) => ({ ...prev, category: '' }));
-  };
-
-  const onPressPreferredCategory = (preferredCategory: string) => {
-    setData((prev) => ({
-      ...prev,
-      preferredCategories: preferredCategories.filter(
-        (preferred) => preferred !== preferredCategory
-      ),
-    }));
-  };
-
-  const onPressHashtags = (hashtag: string) => {
-    setData((prev) => ({
-      ...prev,
-      hashtags: hashtags.filter((tag) => tag !== hashtag),
-    }));
+    setData({ ...data, preferredCategory: value });
   };
 
   const onPressPreferredLocations = (location: string) => {
@@ -315,16 +276,32 @@ const RegisterFormScreen = ({
     }));
   };
 
-  /* useEffect */
-  useEffect(() => {
-    if (expoPostalCode) {
-      fetchAddress(expoPostalCode);
-    }
-  }, [expoPostalCode, fetchAddress]);
-
-  useEffect(() => {
-    if (paramsData && initialData) setData(initialData);
+  useLayoutEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        if (itemId) {
+          return (
+            <ScreenHeader
+              {...props}
+              center={'물품 수정하기'}
+              setModalVisible={setCancelModalVisible}
+              isConfirmGoBack
+            />
+          );
+        } else {
+          return <ScreenHeader {...props} center={'물품등록하기'} />;
+        }
+      },
+    });
   }, []);
+
+  // TODO : 🚨 주소 설정 옵션 선택 모달과 관련된 변수는 주석처리
+  /* useEffect */
+  // useEffect(() => {
+  //   if (expoPostalCode) {
+  //     fetchAddress(expoPostalCode);
+  //   }
+  // }, [expoPostalCode, fetchAddress]);
 
   useEffect(() => {
     if (getAddress) {
@@ -345,208 +322,123 @@ const RegisterFormScreen = ({
   return (
     <KeyboardScreenWrapper>
       <Flexbox
-        height={'100%'}
-        width={'100%'}
         flexDirection={'column'}
-        justifyContent={'center'}
-        alignItems={'center'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
       >
-        <ScrollView>
-          <ImageUploader
-            images={images}
-            onAdd={
-              images.length >= 5
-                ? () =>
-                    Alert.alert('사진 갯수 제한', '5개를 초과할 수 없습니다.')
-                : onPressAddPhotos
-            }
-            onDeleteItem={onPressDeletePhoto}
-            screenWidth={screenWidth}
-          />
-          <Separator width={'100%'} />
-          <Field
-            width={'100%'}
+        <ImageUploader
+          images={images}
+          onClickAdd={
+            images.length >= 5
+              ? () => Alert.alert('사진 갯수 제한', '5개를 초과할 수 없습니다.')
+              : onPressAddPhotos
+          }
+          onDeleteItem={onPressDeletePhoto}
+          screenWidth={screenWidth}
+        />
+        <Box mt={20}>
+          <TextInput
             placeholder={'물품명'}
-            fieldType={'textInput'}
             value={name}
             name={'name'}
-            style={{ borderWidth: 0 }}
-            onChange={changeHandler}
+            style={{ borderWidth: 1, borderColor: 'black' }}
+            onChangeText={(str: string) => changeHandler({ name: str })}
           />
-          <Separator />
-
-          <Field
-            fieldType={'countingTextarea'}
-            name={'description'}
-            placeholder={'물품에 대한 설명이나 스토리를 작성해주세요.'}
-            value={description}
-            onChange={changeHandler}
-            maxLength={200}
-            border={'0 solid #979797'}
+        </Box>
+        <Box mt={20}>
+          <Select<RegisterCategory | '카테고리 선택'>
+            options={[...REGISTER_CATEGORY]}
+            value={category}
+            onPressItem={onClickCategory}
           />
-
-          <Separator />
-          <TagInput
-            tags={
-              category.length > 0
-                ? [
-                    {
-                      children: category,
-                      color: 'white',
-                      backgroundColor: '#ff480084',
-                      onPress: onPressCategory,
-                    },
-                  ]
-                : []
-            }
-            width={'100%'}
-            name={'tagInput'}
-            onChangeText={setCategoryTagInput}
-            placeholder={'등록하는 물건의 종류를 작성해주세요.'}
-            value={categoryTagInput}
-            functionalElement={
-              <Flexbox
-                flexDirection={'column'}
-                justifyContent={'space-between'}
-                gap={5}
-              >
-                <Typography color={'black'} fontSize={12}>
-                  {category ? '1/1' : '0/1'}
-                </Typography>
-              </Flexbox>
-            }
-            onSubmitEditing={onSubmitCategory}
+        </Box>
+        <Box mt={20} mb={20}>
+          <Select<RegisterCategory | '스위치 희망 카테고리 선택'>
+            options={[...REGISTER_CATEGORY]}
+            onPressItem={onClickPreferredCategory}
+            value={preferredCategory}
           />
-          <Separator />
-          <TagInput
-            tags={preferredCategories.map((preferredCategory) => ({
-              children: preferredCategory,
-              onPress: () => onPressPreferredCategory(preferredCategory),
-              color: 'white',
-              backgroundColor: '#ff480084',
-            }))}
-            width={'100%'}
-            name={'tagInput'}
-            onChangeText={setOCategoryTagInput}
-            placeholder={'스위치를 희망하는 물품이나 종류를 작성해주세요.'}
-            value={oCategoryTagInput}
-            functionalElement={
-              <Flexbox
-                flexDirection={'column'}
-                justifyContent={'space-between'}
-                gap={5}
-              >
-                <Typography color={'black'} fontSize={12}>
-                  {preferredCategories.length + '/3'}
-                </Typography>
-              </Flexbox>
-            }
-            onSubmitEditing={onSubmitPreferredCategory}
-          />
-          <Separator />
-          <HashTagInput
-            value={hashTagInput}
-            width={'100%'}
-            itemsWrap={'wrap'}
-            name={'tagInput'}
-            placeholder={'물품에 대한 해시태그를 작성해주세요.(선택사항)'}
-            disabled={false}
-            onChangeText={setHashTagInput}
-            hashTags={hashtags.map((hashtag) => ({
-              children: hashtag,
-              color: 'black',
-              backgroundColor: 'white',
-              onPress: () => onPressHashtags(hashtag),
-            }))}
-            functionalElement={
-              <Flexbox
-                flexDirection={'column'}
-                justifyContent={'space-between'}
-                gap={5}
-              >
-                <Typography color={'black'} fontSize={12}>
-                  {hashtags.length + '/5'}
-                </Typography>
-              </Flexbox>
-            }
-            onSubmitEditing={onSubmitHashTags}
-          />
-          <Separator />
-          <Typography fontSize={14}>선호 주소</Typography>
-          <Flexbox width={'100%'} flexDirection={'column'} gap={20}>
-            <Flexbox
-              width={'100%'}
-              alignItems={'center'}
-              justifyContent={'center'}
-            >
-              {preferredLocations.length < 3 && (
-                <PressableIcon
-                  size={32}
-                  name={'add-circle'}
-                  onPress={() => setAddressModalVisible((prev) => !prev)}
-                />
-              )}
-            </Flexbox>
-            <Flexbox
-              width={'100%'}
-              justifyContent='center'
-              alignItems='center'
-              gap={10}
-              flexDirection='column'
-            >
-              {preferredLocations.map((location) => (
-                <Flexbox
-                  width={'90%'}
-                  padding={10}
-                  backgroundColor={'#0cd092'}
-                  borderRadius={6}
-                  alignItems={'center'}
-                  key={location}
-                >
-                  <Flexbox
-                    width={'100%'}
-                    alignItems={'center'}
-                    justifyContent={'space-between'}
-                  >
-                    <Typography fontSize={18} fontWeight={'200'} color={'#fff'}>
-                      {location}
-                    </Typography>
-                    <PressableIcon
-                      name='close'
-                      size={24}
-                      color={'#fff'}
-                      onPress={() => onPressPreferredLocations(location)}
-                    />
-                  </Flexbox>
-                </Flexbox>
-              ))}
-            </Flexbox>
-          </Flexbox>
-          <Separator />
+        </Box>
+        <CountingTextarea
+          placeholder='물품에 대한 설명이나 스토리를 작성해주세요.'
+          value={description}
+          maxLength={200}
+          onChange={(str) => changeHandler({ description: str })}
+        />
+        <Box mt={20}>
+          <Typography fontSize={FONT_SIZE.normal}>
+            선호 주소 (최대 3곳까지 추가가능)
+          </Typography>
           <Flexbox
-            width={'100%'}
             alignItems={'center'}
             justifyContent={'center'}
+            mt={10}
+            mb={10}
           >
-            <Box width={'90%'} pt={20} pb={20}>
-              <Button
-                type='normal'
-                size='medium'
-                onPress={() => {
-                  setAttentionModalVisible(true);
-                }}
-              >
-                확인
-              </Button>
-            </Box>
+            {preferredLocations.length < 3 && (
+              <PressableIcon
+                size={32}
+                name={'add-circle'}
+                // TODO : 🚨 주소 설정 옵션 선택 모달과 관련된 변수는 주석처리
+                // onPress={() => setAddressModalVisible((prev) => !prev)}
+                onPress={() =>
+                  navigation.navigate('PreferredAddress', {
+                    prevAddress: preferredLocations.at(-1),
+                  })
+                }
+              />
+            )}
           </Flexbox>
-        </ScrollView>
-        <AddressModal
+          <Flexbox gap={10} flexDirection='column'>
+            {preferredLocations.map((location) => (
+              <Flexbox
+                padding={10}
+                backgroundColor={COLORS.secondary[200]}
+                borderRadius={6}
+                key={location}
+              >
+                <Flexbox
+                  width={'100%'}
+                  alignItems={'center'}
+                  justifyContent={'space-between'}
+                >
+                  <Typography
+                    fontSize={FONT_SIZE.bigger}
+                    fontWeight={'200'}
+                    color={COLORS.neutral.white}
+                  >
+                    {location}
+                  </Typography>
+                  <PressableIcon
+                    name='close'
+                    size={24}
+                    color={COLORS.neutral.white}
+                    onPress={() => onPressPreferredLocations(location)}
+                  />
+                </Flexbox>
+              </Flexbox>
+            ))}
+          </Flexbox>
+        </Box>
+        <Separator width={'100%'} />
+        <Box width={'100%'}>
+          <Button
+            type='normal'
+            size='medium'
+            onPress={() => {
+              setAttentionModalVisible(true);
+            }}
+          >
+            확인
+          </Button>
+        </Box>
+        {/* TODO : 🚨 주소 설정 옵션 선택 모달과 관련된 변수는 주석처리 */}
+        {/* <AddressModal
           visible={addressModalVisible}
           onPressBack={() => setAddressModalVisible(false)}
           onPressSelectAddress={onPressSelectAddress}
           handleGetLocation={handleGetLocation}
-        />
+        /> */}
         <AttentionModal
           visible={attentionModalVisible}
           onPressBack={() => setAttentionModalVisible(false)}
@@ -555,8 +447,17 @@ const RegisterFormScreen = ({
           handleCloseAttentionModal={handleCloseAttentionModal}
         />
       </Flexbox>
+      <CancelEditModal
+        visible={cancelModalVisible}
+        onPressBack={() => setCancelModalVisible(false)}
+        onConfirm={() => {
+          setCancelModalVisible(false);
+          navigation.goBack();
+        }}
+        onCancel={() => setCancelModalVisible(false)}
+      />
     </KeyboardScreenWrapper>
   );
 };
 
-export { RegisterFormScreen, type RegisterFormProps };
+export { RegisterFormScreen, type RegisterFormProps, RegisterDto };

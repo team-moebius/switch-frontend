@@ -1,8 +1,7 @@
 import { createContext, ReactNode, useMemo, useState } from 'react';
-import React from 'react';
-import PALETTE from 'src/assets/theme/palettes';
+import { COLORS } from 'src/assets/theme/base';
 
-type Theme = typeof PALETTE;
+type Theme = { color: typeof COLORS };
 
 type ThemeKey = 'white';
 
@@ -11,7 +10,7 @@ interface ThemeContextProps extends Theme {
 }
 
 const THEME_CONTEXT_DEFAULT: ThemeContextProps = {
-  ...PALETTE,
+  color: { ...COLORS },
   changeTheme: () => undefined,
 };
 
@@ -27,12 +26,14 @@ const ThemeContextProvider = ({ children }: ThemeContextProviderProps) => {
     switch (themeKey) {
       case 'white':
       default:
-        return PALETTE;
+        return COLORS;
     }
   }, [themeKey]);
 
   return (
-    <ThemeContext.Provider value={{ ...theme, changeTheme: setThemeKey }}>
+    <ThemeContext.Provider
+      value={{ color: { ...theme }, changeTheme: setThemeKey }}
+    >
       {children}
     </ThemeContext.Provider>
   );

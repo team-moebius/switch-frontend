@@ -2,11 +2,14 @@ import { useState } from 'react';
 import { Flexbox, Typography, Button } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 import { ConfirmReportModal } from './ConfirmReportModal';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 interface ReportModalProps extends ModalProps {
   isReportPost: boolean;
   onConfirmModalControl: () => void;
   navigation?: any;
+  opponentName: string;
+  itemTitle?: string;
 }
 
 const ReportModal = ({
@@ -15,6 +18,8 @@ const ReportModal = ({
   onPressBack,
   isReportPost,
   onConfirmModalControl,
+  opponentName,
+  itemTitle,
 }: ReportModalProps) => {
   const [showConfirmReportModal, setShowConfirmReportModal] = useState(false);
 
@@ -25,6 +30,10 @@ const ReportModal = ({
   const handelReportConfirmModal = () => {
     setShowConfirmReportModal(false);
     onConfirmModalControl();
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'ChatMain' }],
+    });
     navigation.navigate('HomeMain');
   };
 
@@ -36,7 +45,7 @@ const ReportModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'18%'}
       position={'center'}
@@ -52,10 +61,11 @@ const ReportModal = ({
         justifyContent={'center'}
       >
         <Flexbox.Item>
-          <Typography fontSize={14}>
+          {/* TODO : 변수로 사용자 이름 넣기 */}
+          <Typography fontSize={FONT_SIZE.normal}>
             {isReportPost
-              ? '게시글을 신고할까요?'
-              : `${'청둥오리'}님을 신고할까요?`}
+              ? `${itemTitle}' 게시글을 신고할까요?`
+              : `'${opponentName}'님을 신고할까요?`}
           </Typography>
         </Flexbox.Item>
         <Flexbox
@@ -67,7 +77,7 @@ const ReportModal = ({
           <Flexbox.Item flex={1}>
             <Button
               size='medium'
-              type='cancel'
+              type='warning'
               onPress={() => onPressBack && onPressBack()}
             >
               취소

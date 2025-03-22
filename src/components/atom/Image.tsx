@@ -1,6 +1,8 @@
-import React from 'react';
-import { Image as OriginalImage, StyleSheet } from 'react-native';
-import { LengthElement } from 'src/@types/unit';
+import {
+  DimensionValue,
+  Image as OriginalImage,
+  StyleSheet,
+} from 'react-native';
 
 const ImageStyle = StyleSheet.create({
   default: {
@@ -11,15 +13,16 @@ const ImageStyle = StyleSheet.create({
 
 type ImageProps = {
   src?: string;
-  width?: LengthElement;
-  height?: LengthElement;
+  width?: DimensionValue;
+  height?: DimensionValue;
   resizeMode?: 'contain' | 'center' | 'cover';
+  radius?: DimensionValue;
 };
 
-const Image = ({ src, width, height, resizeMode }: ImageProps) => {
+const Image = ({ src, width, height, resizeMode, radius }: ImageProps) => {
   return (
     <OriginalImage
-      style={[ImageStyle.default, { width, height }]}
+      style={[ImageStyle.default, { width, height, borderRadius: radius ?? 0 }]}
       source={{ uri: src }}
       resizeMode={resizeMode}
     />

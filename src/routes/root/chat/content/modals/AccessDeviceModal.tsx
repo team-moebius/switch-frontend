@@ -1,4 +1,5 @@
 import React from 'react';
+import { COLORS } from 'src/assets/theme/base';
 import { Button, Flexbox } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -17,7 +18,7 @@ const AccessDeviceModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'25%'}
       position={'center'}

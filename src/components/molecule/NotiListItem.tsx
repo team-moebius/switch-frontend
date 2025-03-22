@@ -2,6 +2,7 @@ import React from 'react';
 import { Flexbox, Icon, Typography } from '../atom';
 import { Pressable } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface NotiListItemProps {
   data: {
@@ -28,13 +29,13 @@ const NotiListItem = ({ data, onPress }: NotiListItemProps) => {
             <Icon name={iconName} size={iconSize} />
           </Flexbox.Item>
           <Flexbox.Item alignSelf={'center'} flex={1}>
-            <Typography fontSize={13} numberOfLines={3}>
+            <Typography fontSize={FONT_SIZE.smaller} numberOfLines={3}>
               {notification}
             </Typography>
           </Flexbox.Item>
         </Flexbox>
         <Flexbox.Item pl={iconSize + 14}>
-          <Typography fontSize={13}>{ago}</Typography>
+          <Typography fontSize={FONT_SIZE.smaller}>{ago}</Typography>
         </Flexbox.Item>
       </Flexbox>
     </Pressable>

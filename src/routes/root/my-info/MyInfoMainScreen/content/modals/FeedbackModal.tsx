@@ -1,4 +1,4 @@
-import React from 'react';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -19,7 +19,7 @@ const FeedbackModal = ({
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
       width={'70%'}
       height={'35%'}
       position={'center'}
@@ -34,7 +34,9 @@ const FeedbackModal = ({
         justifyContent={'center'}
       >
         <Flexbox.Item>
-          <Typography fontSize={14}>피드백을 어디에 남기시겠어요?</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            피드백을 어디에 남기시겠어요?
+          </Typography>
         </Flexbox.Item>
         <Flexbox
           alignItems={'center'}
@@ -54,7 +56,7 @@ const FeedbackModal = ({
             </Button>
           </Flexbox.Item>
           <Flexbox.Item width='90%'>
-            <Button size='medium' type='cancel' onPress={onPressCancel}>
+            <Button size='medium' type='warning' onPress={onPressCancel}>
               취소
             </Button>
           </Flexbox.Item>

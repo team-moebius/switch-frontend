@@ -1,115 +1,145 @@
-import React from 'react';
 import { Flexbox, Icon, Tag, Typography } from '../atom';
-import { TagProps } from '../atom/Tag';
 import { Margin } from 'src/@types/unit';
 import { Card } from './Card';
 import { PressableIcon } from './PressableIcon';
+import { useCallback } from 'react';
+import { SwitchDetailData } from 'src/routes/root/home/SwitchDetailScreen/SwitchList.mock';
+import { FONT_SIZE, COLORS } from 'src/assets/theme/base';
+import PALETTE from 'src/assets/theme/colors/palettes';
+import { ItemResponse } from '@team-moebius/api-typescript';
 
 interface ItemCardProps {
-  data: {
-    title?: string;
-    date?: string;
-    desc?: string;
-    wantedItem?: string;
-    location?: string;
-    hashTags?: TagProps[];
-    liked?: boolean;
-  };
+  data: Omit<ItemResponse, 'date'> & { date: string };
   margin?: Margin;
   onLikeHandler?: () => void;
+  isMine: boolean;
 }
 
-const Header = ({ title, date }: { title: string; date: string }) => {
+const Header = ({
+  name,
+  date,
+  category,
+}: {
+  name: string;
+  date: string;
+  category: string;
+}) => {
   return (
-    <Flexbox flexDirection='column' gap={10}>
-      <Typography fontSize={20}>{title}</Typography>
-      <Typography fontSize={15}>{date}</Typography>
+    <Flexbox flexDirection='column' gap={5}>
+      <Tag
+        backgroundColor={PALETTE.yellow[100]}
+        disabled
+        color={COLORS.text}
+        children={category}
+      />
+      <Typography fontSize={FONT_SIZE.header}>{name}</Typography>
+      <Typography fontSize={FONT_SIZE.smaller}>{date}</Typography>
     </Flexbox>
   );
 };
 
 const Content = ({
-  desc,
-  wantedItem,
-  location,
-}: {
-  desc: string;
-  wantedItem: string;
-  location: string;
-}) => {
+  description,
+  preferredCategory,
+  preferredLocations,
+  bookmark,
+  onLikeHandler,
+  isMine,
+}: Pick<
+  ItemResponse,
+  'bookmark' | 'description' | 'preferredCategory' | 'preferredLocations'
+> & { onLikeHandler: () => void; isMine: boolean }) => {
+  const PreferredCategories = useCallback(
+    () => (
+      <Tag
+        backgroundColor={PALETTE.yellow[100]}
+        disabled
+        color={COLORS.text}
+        children={preferredCategory ?? ''}
+        key={preferredCategory}
+      />
+    ),
+    [preferredCategory]
+  );
+  const PreferredLocations = useCallback(
+    () =>
+      preferredLocations
+        ? [...preferredLocations.values()].map((location, el, arr) =>
+            arr.length - 1 === el ? (
+              <Typography fontSize={FONT_SIZE.normal} key={location}>
+                {location}
+              </Typography>
+            ) : (
+              <Typography
+                fontSize={FONT_SIZE.normal}
+                key={location}
+              >{`${location} |`}</Typography>
+            )
+          )
+        : undefined,
+    [preferredLocations]
+  );
   return (
     <Flexbox flexDirection={'column'} width={'100%'} gap={10}>
-      <Flexbox.Item pb={20}>
-        <Typography fontSize={15}>{desc}</Typography>
+      <Flexbox.Item pb={30}>
+        <Typography fontSize={FONT_SIZE.bigger}>{description ?? ''}</Typography>
       </Flexbox.Item>
-      <Flexbox alignItems='center' gap={5}>
-        <Icon name={'swap-horizontal'} size={20} />
-        <Typography fontSize={15}>{wantedItem}</Typography>
-      </Flexbox>
-      <Flexbox alignItems='center' gap={5}>
-        <Icon name={'location-outline'} size={20} />
-        <Typography fontSize={15}>{location}</Typography>
-      </Flexbox>
-    </Flexbox>
-  );
-};
-const Footer = ({
-  hashTags,
-  onLikeHandler,
-  liked,
-}: {
-  hashTags: TagProps[];
-  onLikeHandler: () => void;
-  liked: boolean;
-}) => {
-  return (
-    <Flexbox width={'100%'} alignItems='center' justifyContent='space-between'>
-      <Flexbox.Item>
-        <Flexbox>
-          {hashTags.map(({ children, ...props }: any, i) => (
-            <Tag key={`${props.children}_${i}`} {...props} disabled>
-              {children}
-            </Tag>
-          ))}
+      {preferredCategory ? (
+        <Flexbox alignItems='center' gap={5} flexWrap='wrap'>
+          <Icon name={'swap-horizontal'} size={20} />
+          <PreferredCategories />
         </Flexbox>
-      </Flexbox.Item>
-      <Flexbox.Item>
-        <PressableIcon
-          name={liked ? 'heart' : 'heart-outline'}
-          size={32}
-          onPress={onLikeHandler}
-        />
-      </Flexbox.Item>
+      ) : undefined}
+      {preferredLocations ? (
+        <Flexbox
+          alignItems='center'
+          justifyContent='space-between'
+          width={'100%'}
+        >
+          <Flexbox.Item flex={0.9}>
+            <Flexbox alignItems='center' gap={5} flexWrap='wrap'>
+              <Icon name={'location-outline'} size={20} />
+              <PreferredLocations />
+            </Flexbox>
+          </Flexbox.Item>
+          {isMine ? undefined : (
+            <PressableIcon
+              name={bookmark ? 'heart' : 'heart-outline'}
+              size={32}
+              onPress={onLikeHandler}
+              color={PALETTE.red[200]}
+            />
+          )}
+        </Flexbox>
+      ) : undefined}
     </Flexbox>
   );
 };
 
-const ItemCard = ({ data, onLikeHandler }: ItemCardProps) => {
+const ItemCard = ({ data, onLikeHandler, isMine }: ItemCardProps) => {
   const {
-    title = '',
+    name = '',
     date = '',
-    desc = '',
-    wantedItem = '',
-    location = '',
-    hashTags = [],
-    liked = false,
+    description = '',
+    preferredCategory,
+    preferredLocations,
+    category = '',
+    bookmark = false,
   } = data;
 
   return (
     <Card
-      contentWrapperStyle={{ pt: 30 }}
-      footerWrapperStyle={{ pt: 30 }}
-      header={<Header title={title} date={date} />}
+      contentWrapperStyle={{ pt: 20 }}
+      footerWrapperStyle={{ pt: 10 }}
+      header={<Header name={name} date={date} category={category} />}
       content={
-        <Content desc={desc} wantedItem={wantedItem} location={location} />
-      }
-      footer={
-        <Footer
-          hashTags={hashTags}
-          onLikeHandler={() => {
-            if (onLikeHandler) onLikeHandler();
-          }}
-          liked={liked}
+        <Content
+          description={description}
+          preferredCategory={preferredCategory}
+          preferredLocations={preferredLocations}
+          bookmark={bookmark}
+          onLikeHandler={onLikeHandler ? onLikeHandler : () => {}}
+          isMine={isMine}
         />
       }
     />

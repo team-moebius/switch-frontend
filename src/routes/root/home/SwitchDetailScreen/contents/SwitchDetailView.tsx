@@ -1,24 +1,33 @@
 // import Swiper from 'react-native-swiper';
-import { Pressable, useWindowDimensions } from 'react-native';
-import { Box, Flexbox, Typography, Image } from 'src/components/atom';
-import { Separator } from 'src/components/atom/Separator';
-import { ItemCard, UserSummary } from 'src/components/molecule';
-import { SwitchDetailData } from '../../../register/RegisterFormScreen/contents/type';
-import { UserSummaryData } from 'src/components/molecule/UserSummary';
+import { useWindowDimensions } from 'react-native';
+import { Box, Flexbox, Image } from 'src/components/atom';
+import { ItemCard } from 'src/components/molecule';
 import Swiper from 'react-native-swiper';
+import { SwitchDetailData } from '../SwitchList.mock';
+import { PADDING } from 'src/assets/theme/base';
+import { ItemResponse } from '@team-moebius/api-typescript';
 
 type SwitchDetailViewProps = {
-  itemData: SwitchDetailData;
-  userData: UserSummaryData;
-  onClickReport: () => void;
+  itemData: Omit<ItemResponse, 'date'> & { date: string };
+  isMine: boolean;
+  onPressBookMark: () => void;
 };
 const SwitchDetailView = ({
-  userData,
   itemData,
-  onClickReport,
+  isMine,
+  onPressBookMark,
 }: SwitchDetailViewProps) => {
-  const { title, date, description, hashTags, location, thumbnails } = itemData;
-  const { width: screenWidth } = useWindowDimensions();
+  const {
+    name,
+    date,
+    description,
+    preferredLocations,
+    preferredCategory,
+    images,
+    bookmark,
+    category,
+  } = itemData;
+  const { width: screenWidth, height: screenHeight } = useWindowDimensions();
 
   return (
     <Flexbox
@@ -32,48 +41,41 @@ const SwitchDetailView = ({
           horizontal
           containerStyle={{
             width: screenWidth,
-            height: 285,
+            height: screenHeight / 3,
           }}
         >
-          {thumbnails.map((src, index) => (
-            <Box key={index} width={'100%'} height={'100%'}>
-              <Image
-                src={src}
-                width={'100%'}
-                height={'100%'}
-                resizeMode={'contain'}
-              />
-            </Box>
-          ))}
+          {images &&
+            images.map((src, index) => (
+              <Box key={index} width={'100%'} height={'100%'}>
+                <Image
+                  src={src}
+                  width={'100%'}
+                  height={'100%'}
+                  resizeMode={'cover'}
+                />
+              </Box>
+            ))}
         </Swiper>
       </Flexbox.Item>
-      <Flexbox.Item width={'90%'} pt={20}>
+      <Flexbox.Item
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+        pt={20}
+      >
         <ItemCard
           data={{
-            title: title,
-            date: date?.toDateString(),
-            desc: description,
-            // wantedItem: oppositeCategories.map(({ children }) => children),
-            location: location,
-            hashTags: hashTags,
-            // liked: SWITCH_DETAIL_MOCK.liked,
+            name,
+            date,
+            description,
+            category,
+            preferredLocations,
+            preferredCategory,
+            bookmark,
           }}
+          isMine={isMine}
+          onLikeHandler={onPressBookMark}
         />
       </Flexbox.Item>
-      <Separator width={'100%'} />
-      <Flexbox.Item width={'100%'}>
-        <Flexbox alignItems='center' justifyContent='center'>
-          <Pressable onPress={onClickReport}>
-            <Typography fontSize={20} color={'#F1952B'}>
-              신고하기
-            </Typography>
-          </Pressable>
-        </Flexbox>
-      </Flexbox.Item>
-      <Separator width={'100%'} />
-      <Flexbox width={'90%'}>
-        <UserSummary data={userData} />
-      </Flexbox>
     </Flexbox>
   );
 };

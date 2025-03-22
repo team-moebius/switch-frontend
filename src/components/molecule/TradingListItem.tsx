@@ -1,15 +1,15 @@
-import React from 'react';
 import { Pressable, StyleSheet } from 'react-native';
 import { WithImage } from '../template';
 import { flexDirectionStyle, fontSizeStyle } from '../template/WithImage';
 import { Flexbox, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 interface TradingListItemProps {
   data: {
     src: string;
-    title: string;
-    location?: string;
+    name: string;
+    preferredLocation: string;
   };
   onPress?: () => void;
   childDirection?: keyof typeof flexDirectionStyle;
@@ -40,22 +40,24 @@ const TradingListItem = ({
   fontSize,
   imageResizeMode,
 }: TradingListItemProps) => {
-  const { src, title, location } = data;
+  const { src, name, preferredLocation } = data;
 
   return (
     <Pressable onPress={onPress}>
       <Flexbox {...itemJustifyStyle[itemJustify]}>
         <Flexbox.Item width={'100%'}>
           <WithImage
-            text={title}
+            text={name}
             src={src}
             fontSize={fontSize}
             imageWidth={100}
             imageHeight={70}
             imageResizeMode={imageResizeMode}
             renderItem={
-              location ? (
-                <Typography fontSize={13}>{location}</Typography>
+              preferredLocation ? (
+                <Typography fontSize={FONT_SIZE.smaller}>
+                  {preferredLocation}
+                </Typography>
               ) : (
                 <></>
               )

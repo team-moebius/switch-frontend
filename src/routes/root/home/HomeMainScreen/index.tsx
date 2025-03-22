@@ -8,6 +8,7 @@ import { ItemListContent } from './content/ItemListContent';
 import { ItemApi } from 'src/api';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';
+import { PADDING } from 'src/assets/theme/base';
 
 const HomeMainScreen = ({
   navigation,
@@ -21,11 +22,13 @@ const HomeMainScreen = ({
         position={'relative'}
         flexDirection={'column'}
         justifyContent={'space-between'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
       >
         {isItemView ? (
           <ItemListContent
             onClickList={(data) => {
-              navigation?.navigate('SwitchDetail', { ...data });
+              navigation?.navigate('SwitchDetail', data);
             }}
             api={(params) =>
               ItemApi.getItems(undefined, params.page, params.size, params.sort)

@@ -8,6 +8,7 @@ import { ScreenWrapper, UnlockPassword } from 'src/components/template';
 import { AppPasswordContext } from 'src/context/password';
 
 import { SecuritySettingParamList } from '..';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 const SecurityUnlock = ({
   navigation,
@@ -71,7 +72,11 @@ const SecurityUnlock = ({
   return (
     <ScreenWrapper>
       <UnlockPassword
-        notice={<Typography fontSize={16}>비밀번호를 입력하세요.</Typography>}
+        notice={
+          <Typography fontSize={FONT_SIZE.normal}>
+            비밀번호를 입력하세요.
+          </Typography>
+        }
         value={password}
         maxLength={4}
         onChange={handlePassword}

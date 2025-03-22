@@ -13,6 +13,7 @@ import { SettingMainScreen } from './SettingMainScreen';
 import { MyInfoEditScreen } from './MyInfoEditScreen';
 import { UserInfoResponse } from '@team-moebius/api-typescript';
 import { NavigatorScreenParams } from '@react-navigation/native';
+import { BlockUsersList } from './BlockUsersList';
 
 type MyInfoParamList = {
   MyInfoMain: { otherUserId?: number };
@@ -22,6 +23,7 @@ type MyInfoParamList = {
   Security: NavigatorScreenParams<SecuritySettingParamList>;
   Version: undefined;
   Feedback: undefined;
+  BlockUsers: undefined;
 };
 
 const Stack = createStackNavigator<MyInfoParamList>();
@@ -98,6 +100,15 @@ const MyInfoRoute = () => {
         name={'Feedback'}
         component={FeedbackScreen}
         options={{ header: ScreenHeader }}
+      />
+      <Stack.Screen
+        name={'BlockUsers'}
+        component={BlockUsersList}
+        options={{
+          header: (props) => (
+            <ScreenHeader center='차단 회원 관리' {...props} />
+          ),
+        }}
       />
     </Stack.Navigator>
   );

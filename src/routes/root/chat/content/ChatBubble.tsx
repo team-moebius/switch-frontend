@@ -1,39 +1,33 @@
-import React from 'react';
+import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 import { Box, Flexbox, Typography } from 'src/components/atom';
-
-interface ChatBubbleProps {
-  index: number;
-  item: {
-    id: number;
-    user: string;
-    message: string;
-    timestamp: string;
-  };
-}
 
 //TODO: 추후 if 조건문 수정 필요
 
-const ChatBubble = ({ index, item }: ChatBubbleProps) => {
-  if (item.user === 'Alice') {
+export interface ChatBubbleProps {
+  isMine: boolean;
+  content: string;
+}
+
+const ChatBubble = ({ content, isMine }: ChatBubbleProps) => {
+  if (isMine) {
     return (
       <Box>
         <Flexbox.Item
-          backgroundColor='#0078fe'
+          backgroundColor={COLORS.primary[100]}
           padding={10}
           ml={'45%'}
           borderRadius={10}
-          mt={5}
-          mr={'5%'}
+          mb={10}
+          mr={PADDING.wrapper.horizontal}
           maxWidth={'50%'}
           alignSelf='flex-end'
-          key={index}
         >
-          <Typography fontSize={16} color={'#fff'} key={index}>
-            {item.message}
+          <Typography fontSize={FONT_SIZE.bigger} color={COLORS.text}>
+            {content}
           </Typography>
           <Flexbox.Item
             position={'absolute'}
-            backgroundColor={'#0078fe'}
+            backgroundColor={COLORS.primary[100]}
             width={20}
             height={25}
             bottom={0}
@@ -42,7 +36,7 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
           />
           <Flexbox.Item
             position={'absolute'}
-            backgroundColor={'#ffffff'}
+            backgroundColor={COLORS.neutral.white}
             width={20}
             height={35}
             bottom={-6}
@@ -56,23 +50,22 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
     return (
       <Box>
         <Flexbox.Item
-          backgroundColor='#dedede'
+          backgroundColor={COLORS.neutral.gray}
           padding={10}
           borderRadius={10}
-          mt={5}
-          ml={'5%'}
+          mb={10}
+          ml={PADDING.wrapper.horizontal}
           maxWidth={'50%'}
           alignSelf={'flex-start'}
-          key={index}
         >
           <Flexbox justifyContent='center'>
-            <Typography fontSize={16} color={'#000'} key={index}>
-              {item.message}
+            <Typography fontSize={FONT_SIZE.bigger} color={COLORS.text}>
+              {content}
             </Typography>
           </Flexbox>
           <Flexbox.Item
             position='absolute'
-            backgroundColor='#dedede'
+            backgroundColor={COLORS.neutral.gray}
             width={20}
             height={25}
             bottom={0}
@@ -81,7 +74,7 @@ const ChatBubble = ({ index, item }: ChatBubbleProps) => {
           />
           <Flexbox.Item
             position='absolute'
-            backgroundColor='#ffffff'
+            backgroundColor={COLORS.container_background}
             width={20}
             height={35}
             bottom={-6}

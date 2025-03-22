@@ -5,7 +5,7 @@ import { AxiosResponse } from 'axios';
 interface UseCommonMutationParam<Response, Request>
   extends Pick<
     UseMutationOptions<Response, unknown, Request>,
-    'mutationKey' | 'onSuccess' | 'onError'
+    'mutationKey' | 'onSuccess' | 'onError' | 'onMutate' | 'onSettled'
   > {
   api: (request1: Request) => Promise<AxiosResponse<Response>>;
 }
@@ -27,6 +27,7 @@ export const useCommonMutation = <
     [api]
   );
   const mutate = useMutation<Response, TError, Request, TContext>({
+    // @ts-expect-error
     mutationFn: func,
     ...props,
   });

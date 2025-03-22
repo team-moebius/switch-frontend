@@ -1,31 +1,26 @@
-import {
-  StackNavigationProp,
-  createStackNavigator,
-} from '@react-navigation/stack';
-import { ChatMainScreen } from './ChatMainScreen';
+import { Flexbox } from 'src/components/atom';
+import { PressableIcon, ScreenHeader } from 'src/components/molecule';
+
+import { ChatMainScreen, ChatMainScreenProps } from './ChatMainScreen';
 import { SwitchResultScreen } from './SwitchResultScreen';
 import { ChatDetailScreen } from './ChatDetailScreen';
-import { PressableIcon, ScreenHeader } from 'src/components/molecule';
-import { Flexbox } from 'src/components/atom';
-import { useState } from 'react';
-import { UserControlModal } from './content/modals/UserControlModal';
-import { useNavigation } from '@react-navigation/native';
-import { HomeRouteParamList } from '../home';
+import { ReportScreenProps, ReportsScreen } from '../home/ReportsScreen';
+
+import { createStackNavigator } from '@react-navigation/stack';
+import { SwitchDetailScreen } from '../home/SwitchDetailScreen';
+import { ItemResponse } from '@team-moebius/api-typescript';
 
 type ChatRouteParamList = {
-  ChatMain: undefined;
+  ChatMain: ChatMainScreenProps;
   SwitchResult: undefined;
   ChatDetail: undefined;
+  Report: ReportScreenProps;
+  SwitchDetail: ItemResponse;
 };
 
 const Stack = createStackNavigator<ChatRouteParamList>();
 
 const ChatRoute = () => {
-  const [userModalVisible, setUserModalVisible] = useState(false);
-
-  const navigation =
-    useNavigation<StackNavigationProp<HomeRouteParamList, 'ChatDetail'>>();
-
   return (
     <>
       <Stack.Navigator>
@@ -40,11 +35,7 @@ const ChatRoute = () => {
                     {...props}
                     center={'채팅'}
                     right={
-                      <Flexbox
-                        width={'100%'}
-                        justifyContent={'flex-end'}
-                        pr={16}
-                      >
+                      <Flexbox width={'100%'} justifyContent={'flex-end'}>
                         <PressableIcon
                           size={24}
                           name={'notifications-outline'}
@@ -68,41 +59,26 @@ const ChatRoute = () => {
               },
             }}
           />
-          <Stack.Screen
-            name={'ChatDetail'}
-            component={ChatDetailScreen}
-            options={{
-              header: (props) => {
-                return (
-                  <ScreenHeader
-                    {...props}
-                    center={'채팅 상대 닉네임'}
-                    right={
-                      <Flexbox width={'85%'} justifyContent={'flex-end'}>
-                        <PressableIcon
-                          size={24}
-                          name={'menu'}
-                          onPress={() => setUserModalVisible((prev) => !prev)}
-                        />
-                      </Flexbox>
-                    }
-                  />
-                );
-              },
-            }}
-          />
+          <Stack.Screen name={'ChatDetail'} component={ChatDetailScreen} />
         </Stack.Group>
+        <Stack.Screen
+          name={'Report'}
+          component={ReportsScreen}
+          options={{
+            header: (props) => {
+              return <ScreenHeader {...props} center={'신고하기'} />;
+            },
+            // presentation:'modal'
+          }}
+        />
+        <Stack.Screen
+          name={'SwitchDetail'}
+          component={SwitchDetailScreen}
+          options={{
+            header: (props) => <ScreenHeader {...props} />,
+          }}
+        />
       </Stack.Navigator>
-      <UserControlModal
-        navigation={navigation}
-        visible={userModalVisible}
-        onPressBack={() => setUserModalVisible(false)}
-        onDeclineSwitch={() => setUserModalVisible(false)}
-        onReportBlock={() => {
-          setUserModalVisible(false);
-          navigation.navigate('Report', { previousScreen: 'ChatDetail' });
-        }}
-      />
     </>
   );
 };

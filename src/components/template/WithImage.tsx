@@ -3,6 +3,7 @@ import { Flexbox, Image, Typography } from '../atom';
 import { ImageProps } from '../atom/Image';
 import { StyleSheet } from 'react-native';
 import { FlexAlign, LengthElement } from 'src/@types/unit';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 type modifiedImageProps = {
   imageWidth?: ImageProps['width'];
@@ -32,16 +33,20 @@ interface WithImageProps extends modifiedImageProps {
 
 export const fontSizeStyle = StyleSheet.create({
   cardList: {
-    fontSize: 15,
+    fontSize: FONT_SIZE.normal,
   },
   switchList: {
-    fontSize: 17,
+    fontSize: FONT_SIZE.bigger,
   },
 });
 
 export const flexDirectionStyle = StyleSheet.create({
   column: {
     flexDirection: 'column',
+  },
+  columnCentral: {
+    flexDirection: 'column',
+    alignItems: 'center',
   },
   row: {
     flexDirection: 'row',
@@ -77,18 +82,20 @@ const WithImage = ({
       gap={10}
       {...layoutStyle.mostOutlineLayout}
     >
-      <Flexbox>
-        <Image
-          width={imageWidth}
-          height={imageHeight}
-          src={src}
-          resizeMode={imageResizeMode}
-        />
-      </Flexbox>
+      <Image
+        width={imageWidth}
+        height={imageHeight}
+        src={src}
+        resizeMode={imageResizeMode}
+      />
       <Flexbox.Item {...layoutStyle.titleContainerLayout}>
         <Flexbox {...flexDirectionStyle[childDirection]} gap={10}>
           <Flexbox.Item {...layoutStyle.textBoxLayout}>
-            <Typography {...fontSizeStyle[fontSize]} numberOfLines={6}>
+            <Typography
+              {...fontSizeStyle[fontSize]}
+              numberOfLines={6}
+              ellipsizeMode={'tail'}
+            >
               {text}
             </Typography>
           </Flexbox.Item>

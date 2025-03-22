@@ -1,6 +1,7 @@
 import React from 'react';
 import { StoryFn, Meta } from '@storybook/react';
 import { Flexbox } from 'src/components/atom';
+import { COLORS } from 'src/assets/theme/base';
 
 export default {
   title: 'Flexbox',
@@ -45,7 +46,7 @@ export const FlexBoxTemplate = Template.bind({});
 FlexBoxTemplate.storyName = 'container';
 FlexBoxTemplate.args = {
   flexDirection: 'row',
-  backgroundColor: '#000000',
+  backgroundColor: COLORS.neutral.black,
   border: '1 solid orange',
   padding: 12,
   gap: 4,

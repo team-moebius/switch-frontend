@@ -136,11 +136,11 @@ const MyInfoMainScreen = ({
       <Box pl={15} pr={15}>
         <UserSummary
           data={{
-            user: myInfoData?.nickname ?? (userId as string),
+            nickname: myInfoData?.nickname ?? (userId as string),
             verified: !!myInfoData?.phone,
-            countSwitch: myInfoData?.switchCount ?? 0,
-            userRate: myInfoData?.score ?? 0,
-            bio: myInfoData?.introduction,
+            switchCount: myInfoData?.switchCount ?? 0,
+            score: myInfoData?.score ?? 0,
+            introduction: myInfoData?.introduction,
           }}
         />
         <Flexbox justifyContent='center' alignItems='center' mt={10} mb={10}>

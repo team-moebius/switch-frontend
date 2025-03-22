@@ -1,10 +1,15 @@
 import { StackScreenProps } from '@react-navigation/stack';
-import React from 'react';
-import { Flexbox } from 'src/components/atom';
+import React, { useEffect } from 'react';
+import { Box, Flexbox } from 'src/components/atom';
 import { Separator } from 'src/components/atom/Separator';
 import { ChattingListItem } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { ChatRouteParamList } from '.';
+import { PADDING } from 'src/assets/theme/base';
+import { STUFF_LIST_MOCK } from '../home/SwitchDetailScreen/SwitchList.mock';
+import { CompositeScreenProps } from '@react-navigation/native';
+import { HomeRouteParamList } from '../home';
+import { Alert } from 'react-native';
 
 const CHAT_MOCK_DATA = [
   {
@@ -24,16 +29,37 @@ This is usually because the modules which have changed (and their parents) do no
   },
 ];
 
+type ApiType = 'ChatMain' | 'SwitchInProgress';
+
+const apiList: Record<ApiType, () => void> = {
+  ChatMain: () => Alert.alert('ChatMain 입니다'),
+  SwitchInProgress: () => Alert.alert('SwitchInProgress 입니다'),
+};
+
+interface ChatMainScreenProps {
+  api?: ApiType;
+  id?: number;
+}
+
 const ChatMainScreen = ({
   navigation,
-}: StackScreenProps<ChatRouteParamList, 'ChatMain'>) => {
+  route,
+}: CompositeScreenProps<
+  StackScreenProps<ChatRouteParamList, 'ChatMain'>,
+  StackScreenProps<HomeRouteParamList, 'ChatMain'>
+>) => {
+  useEffect(() => apiList[route.params?.api ?? 'ChatMain'](), []);
   return (
     <ScreenWrapper>
-      <Flexbox width={'100%'} height={'100%'}>
+      <Flexbox
+        width={'100%'}
+        height={'100%'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+      >
         <Flexbox.Item width={'100%'} height={100}>
           {CHAT_MOCK_DATA.map((data, idx) => (
-            <React.Fragment key={idx}>
-              <Separator />
+            <Box key={idx} pb={30}>
               <ChattingListItem
                 data={{
                   username: data.username,
@@ -42,12 +68,13 @@ const ChatMainScreen = ({
                   ago: data.ago,
                   isUnread: data.isUnread,
                 }}
-                onPress={() => navigation.navigate('ChatDetail')}
+                onPressChatDetail={() => navigation.navigate('ChatDetail')}
+                onPressSwitchDetail={() =>
+                  // TODO : SwitchDetail로 navigate할 때 params 수정해야 된다.
+                  navigation.navigate('SwitchDetail', STUFF_LIST_MOCK[0])
+                }
               />
-              {idx === CHAT_MOCK_DATA.length - 1 && (
-                <Separator key={'separator' + idx} />
-              )}
-            </React.Fragment>
+            </Box>
           ))}
         </Flexbox.Item>
       </Flexbox>
@@ -55,4 +82,4 @@ const ChatMainScreen = ({
   );
 };
 
-export { ChatMainScreen };
+export { ChatMainScreen, type ChatMainScreenProps };

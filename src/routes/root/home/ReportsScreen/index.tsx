@@ -6,6 +6,7 @@ import { ScreenWrapper } from 'src/components/template';
 import { ReportModal } from './modals/ReportModal';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';
+import { FONT_SIZE } from 'src/assets/theme/base';
 
 const ReportButton = ({
   children,
@@ -18,8 +19,8 @@ const ReportButton = ({
         alignItems='center'
         justifyContent='space-between'
       >
-        <Typography fontSize={16}>{children}</Typography>
-        <Icon name='ios-chevron-forward' size={20} />
+        <Typography fontSize={FONT_SIZE.normal}>{children}</Typography>
+        <Icon name='chevron-forward' size={20} />
       </Flexbox>
     </Pressable>
   );
@@ -27,11 +28,17 @@ const ReportButton = ({
 
 const SWITCH_DETAIL = 'SwitchDetail';
 
+interface ReportScreenProps {
+  previousScreen: string;
+  itemTitle?: string;
+  opponentName: string;
+}
+
 const ReportsScreen = ({
   navigation,
   route,
 }: StackScreenProps<HomeRouteParamList, 'Report'>) => {
-  const { previousScreen } = route.params;
+  const { previousScreen, itemTitle, opponentName } = route.params;
   const [isReportPost, setIsReportPost] = useState(false);
   const [reportModalVisible, setReportModalVisible] = useState(false);
 
@@ -60,16 +67,21 @@ const ReportsScreen = ({
             <Flexbox.Item pb={20}>
               <Typography
                 fontSize={18}
-              >{`'${'커스텀 키보드'}' 게시물을 신고합니다.`}</Typography>
+              >{`'${itemTitle}' 게시물을 신고합니다.`}</Typography>
             </Flexbox.Item>
             <Flexbox.Item width={'100%'}>
               <ReportButton onPress={() => handleReport(true)}>
-                판매 금지 물품
+                음란/폭력 게시글
               </ReportButton>
             </Flexbox.Item>
             <Flexbox.Item width={'100%'}>
               <ReportButton onPress={() => handleReport(true)}>
                 광고성 게시글
+              </ReportButton>
+            </Flexbox.Item>
+            <Flexbox.Item width={'100%'}>
+              <ReportButton onPress={() => handleReport(true)}>
+                스위치 금지 물품
               </ReportButton>
             </Flexbox.Item>
             <Flexbox.Item width={'100%'}>
@@ -90,7 +102,7 @@ const ReportsScreen = ({
           <Flexbox.Item pb={20}>
             <Typography
               fontSize={18}
-            >{`'${'청둥오리'}' 님을 신고합니다.`}</Typography>
+            >{`'${opponentName}'님을 신고합니다.`}</Typography>
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
             <ReportButton onPress={() => handleReport(false)}>
@@ -99,7 +111,7 @@ const ReportsScreen = ({
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
             <ReportButton onPress={() => handleReport(false)}>
-              업자 의심
+              현금 요구
             </ReportButton>
           </Flexbox.Item>
           <Flexbox.Item width={'100%'}>
@@ -120,9 +132,11 @@ const ReportsScreen = ({
         onPressBack={() => setReportModalVisible(false)}
         isReportPost={isReportPost}
         onConfirmModalControl={() => setReportModalVisible(false)}
+        opponentName={opponentName}
+        itemTitle={itemTitle}
       />
     </ScreenWrapper>
   );
 };
 
-export { ReportsScreen };
+export { ReportsScreen, type ReportScreenProps };

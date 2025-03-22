@@ -1,160 +1,350 @@
-import { Box, Button, Flexbox } from 'src/components/atom';
-import { Separator } from 'src/components/atom/Separator';
+import { useContext, useEffect, useRef, useState } from 'react';
+import { Alert, ScrollView } from 'react-native';
+
+import { Flexbox, Typography } from 'src/components/atom';
+import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
-import {
-  UserInfoData,
-  USERINFO_MOCK,
-} from '../../my-info/MyInfoMainScreen/UserInfo.mock';
-import { SwitchDetailData, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
 import { SwitchDetailView } from './contents/SwitchDetailView';
-import { SwitchDetailViewProps } from './contents/SwitchDetailView';
-import { ScrollView } from 'react-native';
+import { SwitchDetailUser } from './contents/SwitchDetailUser';
+import { SwitchDetailButton } from './contents/SwitchDetailButton';
+import { MyItemOptionModal } from './modals/MyItemOptionModal';
+import { DeleteItemModal } from './modals/DeleteItemModal';
+import { RevokeModal } from './modals/RevokeModal';
+
+import { UserContext } from 'src/context/user';
+import { convertLocalTime } from 'src/utils/convertLocalTime';
+
+import { useCommonMutation } from 'src/hooks/useCommonMutation';
+import { useCommonQuery } from 'src/hooks/useCommonQuery';
+import {
+  BookmarkRequest,
+  BookmarkResponse,
+  ItemResponse,
+  UserInfoResponse,
+} from '@team-moebius/api-typescript';
+import { BookMarkApi, ItemApi, UserApi } from 'src/api';
+import { useQueryClient } from 'react-query';
+
+import { CompositeScreenProps } from '@react-navigation/native';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';
+import { ChatRouteParamList } from '../../chat';
 
-const userDataResolver = ({
-  userName,
-  verified,
-  switchCount,
-  userRate,
-  introduce,
-}: UserInfoData): SwitchDetailViewProps['userData'] => {
-  return {
-    user: userName,
-    verified: verified,
-    countSwitch: switchCount,
-    userRate: userRate,
-    bio: introduce,
-  };
-};
-
-const itemDataResolver = ({
-  title,
-  date = '',
-  desc,
-  images,
-  // wantedItem,
-  location,
-  hashTags,
-}: // liked,
-SwitchDetailData): SwitchDetailViewProps['itemData'] => {
-  return {
-    title: title,
-    description: desc,
-    date: new Date(date),
-    thumbnails: images || [],
-    location: location,
-    hashTags: hashTags || [],
-    categories: [],
-    oppositeCategories: [],
-  };
-};
+import { STUFF_LIST_MOCK, SWITCH_DETAIL_MOCK } from './SwitchList.mock';
+import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
+import { ErrorFallbackUI } from './contents/ErrorFallback';
+import LoadingFallback from './contents/LoadingFallback';
+import { RegisterDto } from '../../register/RegisterFormScreen';
+// import { RegisterDto } from '../../register/RegisterFormScreen';
 
 const SwitchDetailScreen = ({
   navigation,
-}: StackScreenProps<HomeRouteParamList, 'SwitchDetail'>) => {
-  // 스위치 제안이 안 온 경우 최상위 Flexbox의 pt={0}
+  route,
+}: CompositeScreenProps<
+  StackScreenProps<HomeRouteParamList, 'SwitchDetail'>,
+  StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
+>) => {
+  const { userId } = useContext(UserContext);
+  const switchDetailData = route.params;
+  const isMine = userId ? switchDetailData.userId === +userId : false;
+
+  // states
+  const [isRevokeModalOpen, setIsRevokeModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isUserModalOpen, setIsUserModalOpen] = useState(false);
+  const conditionInModalHide = useRef({
+    isOpenDeleteModal: false,
+    isOpenEditScreen: false,
+  });
+
+  // apis
+  const {
+    data: userInfo,
+    isLoading: isUserLoading,
+    isError: isUserError,
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
+    api: UserApi.getUserInfo,
+    queryKey: ['switchDetail_userApi_getUserInfo', switchDetailData.userId],
+    onSuccess(data) {
+      console.debug('\n\n✅ switchDetail_userApi_getUserInfo ✅\n', data);
+    },
+    onError(err) {
+      console.debug('\n\n🚨 switchDetail_userApi_getUserInfo 🚨\n', err);
+    },
+  });
+  const {
+    data: itemInfo,
+    isLoading: isItemLoading,
+    isError: isItemError,
+  } = useCommonQuery<ItemResponse, Parameters<typeof ItemApi.getItem>>({
+    api: ItemApi.getItem,
+    queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+    onSuccess(data) {
+      console.debug('\n\n✅ switchDetail_itemApi_getItem ✅\n', data);
+    },
+    onError(err) {
+      console.debug('\n\n🚨 switchDetail_itemApi_getItem 🚨\n', err);
+    },
+  });
+
+  const queryClient = useQueryClient();
+  const { mutate: createBookMark } = useCommonMutation<
+    BookmarkResponse,
+    BookmarkRequest
+  >({
+    api: BookMarkApi.createBookmark,
+    onError(error, variables, context) {
+      console.debug(
+        '\n\n\n 🚨 SwitchDetail_bookMarkApi_createBookmark error 🚨 \n\n',
+        error,
+        variables
+      );
+      queryClient.setQueryData(['todos'], context);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({
+        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+      });
+    },
+    onMutate() {
+      queryClient.cancelQueries({
+        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+      });
+      const prevItem = queryClient.getQueryData([
+        'switchDetail_itemApi_getItem',
+        switchDetailData.id,
+      ]) as ItemResponse;
+      queryClient.setQueryData(
+        ['switchDetail_itemApi_getItem', switchDetailData.id],
+        { ...prevItem, bookmark: true }
+      );
+      return prevItem;
+    },
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_bookMarkApi_createBookmark data ✅ \n\n',
+        data,
+        variables
+      );
+    },
+  });
+  const { mutate: deleteBookMarkMutate } = useCommonMutation<void, number>({
+    api: BookMarkApi.deleteBookmark,
+    onError(error, variables, context) {
+      console.debug(
+        '\n\n\n 🚨 SwitchDetail_bookMarkApi_deleteBookmark error 🚨 \n\n',
+        error,
+        variables
+      );
+      queryClient.setQueryData(['todos'], context);
+    },
+    onSettled() {
+      queryClient.invalidateQueries({
+        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+      });
+    },
+    onMutate() {
+      queryClient.cancelQueries({
+        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+      });
+      const prevItem = queryClient.getQueryData([
+        'switchDetail_itemApi_getItem',
+        switchDetailData.id,
+      ]) as ItemResponse;
+      queryClient.setQueryData(
+        ['switchDetail_itemApi_getItem', switchDetailData.id],
+        { ...prevItem, bookmark: false }
+      );
+      return prevItem;
+    },
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_bookMarkApi_deleteBookmark data ✅ \n\n',
+        data,
+        variables
+      );
+    },
+  });
+  const { mutate: deleteItemMutate } = useCommonMutation<string, number>({
+    api: ItemApi.deleteItem,
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_itemApi_deleteItem data ✅ \n\n',
+        data,
+        variables
+      );
+      queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+    },
+    onError(error, variables) {
+      console.debug(
+        '\n\n\n 🚨 SwitchDetail_bookMarkApi_createBookmark error 🚨 \n\n',
+        error,
+        variables
+      );
+    },
+  });
+
+  // handlers
+  const onPressReport = () =>
+    navigation.navigate('Report', {
+      previousScreen: 'SwitchDetail',
+      itemTitle: itemInfo?.name,
+      opponentName: userInfo?.nickname ?? '',
+    });
+  const onPressPropose = () => navigation.navigate('RegisteredList');
+  const onPressRevoke = () => {
+    setIsRevokeModalOpen(true);
+  };
+  const onPressRevokeConfirm = () => {
+    setIsRevokeModalOpen(false);
+    Alert.alert('요청 취소 api가 호출되어야 합니다.');
+    // TODO : 요청 취소 api 호출하기
+  };
+  const onPresssRevokeModalBack = () => {
+    setIsRevokeModalOpen(false);
+  };
+  const onPressSwitchInProgress = () => {
+    navigation.navigate('ChatMain', {
+      api: 'SwitchInProgress',
+    });
+  };
+  const onConfirmDeleteItem = () => {
+    setIsDeleteModalOpen(false);
+    deleteItemMutate(itemInfo?.id as number);
+    navigation.goBack();
+  };
+  const onPressEditButton = () => {
+    setIsUserModalOpen(false);
+    conditionInModalHide.current.isOpenEditScreen = true;
+  };
+  const onPressDeleteButton = () => {
+    setIsUserModalOpen(false);
+    conditionInModalHide.current.isOpenDeleteModal = true;
+  };
+
+  useEffect(() => {
+    navigation.setOptions({
+      header: (props) => {
+        if (isMine) {
+          return (
+            <ScreenHeader
+              {...props}
+              right={
+                <Flexbox width={'85%'} justifyContent={'flex-end'}>
+                  <PressableIcon
+                    size={24}
+                    name={'menu'}
+                    onPress={() => setIsUserModalOpen(true)}
+                  />
+                </Flexbox>
+              }
+            />
+          );
+        } else {
+          <ScreenHeader {...props} />;
+        }
+      },
+    });
+  }, []);
 
   return (
     <ScreenWrapper>
-      <ScrollView>
-        <Flexbox pt={120} width={'100%'} flexDirection={'column'}>
-          <Flexbox.Item>
-            <Separator width={'100%'} />
-          </Flexbox.Item>
-          <Flexbox.Item width={'100%'} flex={1}>
+      {isItemLoading || isUserLoading ? (
+        <LoadingFallback />
+      ) : isItemError || isUserError ? (
+        <ErrorFallbackUI navigation={navigation} />
+      ) : (
+        <>
+          <ScrollView>
             <SwitchDetailView
-              onClickReport={() =>
-                navigation.navigate('Report', {
-                  previousScreen: 'SwitchDetail',
-                })
-              }
-              userData={userDataResolver(USERINFO_MOCK)}
-              itemData={itemDataResolver(SWITCH_DETAIL_MOCK)}
+              itemData={{
+                images: itemInfo?.images ?? [''],
+                description: itemInfo?.description ?? '',
+                preferredCategory: itemInfo?.preferredCategory ?? '',
+                preferredLocations: itemInfo?.preferredLocations ?? new Set(),
+                category: itemInfo?.category ?? '',
+                name: itemInfo?.name ?? '',
+                bookmark: itemInfo?.bookmark ?? false,
+                date: convertLocalTime(
+                  itemInfo?.updatedAt
+                    ? new Date(itemInfo?.updatedAt as string).toUTCString()
+                    : new Date().toUTCString()
+                ),
+              }}
+              isMine={isMine}
+              onPressBookMark={() => {
+                if (itemInfo?.bookmark) {
+                  if (itemInfo.bookmark) {
+                    deleteBookMarkMutate(switchDetailData.id as number);
+                  } else {
+                    createBookMark({
+                      itemId: switchDetailData.id as number,
+                    });
+                  }
+                  // itemInfo.bookmark = !itemInfo.bookmark;
+                }
+              }}
             />
-          </Flexbox.Item>
-          <Separator width={'100%'} />
-          <Flexbox
-            width={'100%'}
-            alignItems={'center'}
-            flexDirection={'column'}
-            gap={10}
-          >
-            <Box width={'90%'}>
-              <Button
-                type={'normal'}
-                size={'medium'}
-                onPress={() => navigation.navigate('RegisteredList')}
-              >
-                스위치 제안하기
-              </Button>
-            </Box>
-            <Box width={'90%'}>
-              <Button
-                type={'transparent'}
-                size={'medium'}
-                onPress={() => window.alert('몇명이 줄서고 있어요')}
-              >
-                3명이 줄서고 있어요
-              </Button>
-            </Box>
-          </Flexbox>
-          {/*내가 스위치 제안 중인 경우 아래 버튼이 보이게 됩니다 */}
-          {/* <Flexbox
-            width={'100%'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            flexDirection={'row'}
-            gap={10}
-          >
-            <Box width={'44%'}>
-              <Button
-                type={'normal'}
-                size={'medium'}
-                onPress={() => window.alert('스위치 제안 중')}
-              >
-                스위치 제안 중
-              </Button>
-            </Box>
-            <Box width={'44%'}>
-              <Button
-                type={'cancel'}
-                size={'medium'}
-                onPress={() => navigation.navigate('HomeMain')}
-              >
-                제안 취소
-              </Button>
-            </Box>
-          </Flexbox> */}
-          {/*내가 스위치 제안 받은 경우 아래 버튼이 보이게 됩니다 */}
-          {/* <Flexbox
-            width={'100%'}
-            alignItems={'center'}
-            justifyContent={'center'}
-            flexDirection={'row'}
-            gap={10}
-          >
-            <Box width={'44%'}>
-              <Button
-                type={'normal'}
-                size={'medium'}
-                onPress={() => navigation.navigate('ChatDetail')}
-              >
-                협의
-              </Button>
-            </Box>
-            <Box width={'44%'}>
-              <Button
-                type={'cancel'}
-                size={'medium'}
-                onPress={() => console.debug('스위치 거절')}
-              >
-                거절
-              </Button>
-            </Box>
-          </Flexbox> */}
-        </Flexbox>
-      </ScrollView>
+            <SwitchDetailUser
+              onPressReport={onPressReport}
+              userSummaryData={{
+                score: userInfo?.score ?? 0,
+                verified: true,
+                switchCount: userInfo?.switchCount ?? 0,
+                nickname: userInfo?.nickname ?? 'undefined',
+                introduction: userInfo?.introduction ?? 'undefined',
+              }}
+              isMine={isMine}
+            />
+          </ScrollView>
+          <SwitchDetailButton
+            onPressPropose={onPressPropose}
+            onPressRevoke={onPressRevoke}
+            onPressSwitchInProgress={onPressSwitchInProgress}
+            isMine={isMine}
+            isSuggested={itemInfo?.isSuggested ?? false}
+          />
+          <RevokeModal
+            onPressRevoke={onPressRevokeConfirm}
+            onPressBack={onPresssRevokeModalBack}
+            visible={isRevokeModalOpen}
+            myItem={itemInfo?.name ?? ''}
+            oppItem={userInfo?.nickname ?? ''}
+          />
+          <MyItemOptionModal
+            visible={isUserModalOpen}
+            onPressBack={() => setIsUserModalOpen(false)}
+            onPressEditButton={onPressEditButton}
+            onPressDeleteModal={onPressDeleteButton}
+            onModalHide={() => {
+              if (conditionInModalHide.current.isOpenDeleteModal) {
+                setIsDeleteModalOpen(true);
+                conditionInModalHide.current.isOpenDeleteModal = false;
+              } else if (conditionInModalHide.current.isOpenEditScreen) {
+                conditionInModalHide.current.isOpenEditScreen = false;
+                navigation.navigate('RegisterForm', {
+                  initialData: itemInfo
+                    ? ({
+                        name: itemInfo.name,
+                        description: itemInfo.description,
+                        images: itemInfo.images,
+                        category: itemInfo.category,
+                        preferredCategory: itemInfo.preferredCategory,
+                        preferredLocations: itemInfo.preferredLocations,
+                      } as unknown as RegisterDto)
+                    : undefined,
+                  itemId: switchDetailData.id,
+                });
+              }
+            }}
+          />
+          <DeleteItemModal
+            visible={isDeleteModalOpen}
+            onPressBack={() => setIsDeleteModalOpen(false)}
+            onDeleteConfirm={onConfirmDeleteItem}
+          />
+        </>
+      )}
     </ScreenWrapper>
   );
 };

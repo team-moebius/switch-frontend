@@ -4,7 +4,6 @@ import { RadioGroup } from './RadioGroup';
 import { Field } from './Field';
 import { UserSummary } from './UserSummary';
 import { TagInput } from './TagInput';
-import { HashTagInput } from './HashTagInput';
 import { NotiListItem } from './NotiListItem';
 import { SwitchListItem } from './SwitchListItem';
 import { ChattingListItem } from './ChattingListItem';
@@ -26,7 +25,6 @@ export {
   Field,
   NumberPad,
   TagInput,
-  HashTagInput,
   UserSummary,
   NotiListItem,
   SwitchListItem,

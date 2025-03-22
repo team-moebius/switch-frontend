@@ -1,3 +1,4 @@
+import { COLORS } from 'src/assets/theme/base';
 import { ItemResponseStatusEnum } from '@team-moebius/api-typescript';
 import { Flexbox, Tag } from 'src/components/atom';
 import { ImageCard } from 'src/components/molecule';
@@ -26,7 +27,11 @@ const ItemListCard = ({
           justifyContent='center'
           alignItems='center'
         >
-          <Tag disabled={false} color={'#FFFFFF'} backgroundColor={'#21BD9E'}>
+          <Tag
+            disabled={false}
+            color={COLORS.neutral.white}
+            backgroundColor={COLORS.secondary[200]}
+          >
             {status === 'IN_PROGRESS' ? 'ing' : `+${count}`}
           </Tag>
         </Flexbox>

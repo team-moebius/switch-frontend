@@ -24,6 +24,7 @@ import {
   UserUpdateRequest,
 } from '@team-moebius/api-typescript';
 import { MyInfoParamList } from '.';
+import { COLORS, FONT_SIZE } from 'src/assets/theme/base';
 
 const MyInfoEditScreen = ({
   navigation,
@@ -122,7 +123,7 @@ const MyInfoEditScreen = ({
             fieldType={'textInput'}
             label={
               <Box width={80}>
-                <Typography fontSize={20}>이름</Typography>
+                <Typography fontSize={FONT_SIZE.header}>이름</Typography>
               </Box>
             }
             onChange={(value) => {
@@ -134,7 +135,7 @@ const MyInfoEditScreen = ({
             labelLayout={{ flex: 0.3, width: '30%' }}
             width={'100%'}
             placeholder='이름을 입력해주세요.'
-            style={{ borderWidth: 0, color: '#000000' }}
+            style={{ borderWidth: 0, color: COLORS.text }}
           />
         </Flexbox>
         <Separator />
@@ -143,7 +144,7 @@ const MyInfoEditScreen = ({
             fieldType={'textarea'}
             label={
               <Box width={80}>
-                <Typography fontSize={20}>소개글</Typography>
+                <Typography fontSize={FONT_SIZE.header}>소개글</Typography>
               </Box>
             }
             style={{ padding: 8, borderWidth: 0 }}
@@ -167,14 +168,14 @@ const MyInfoEditScreen = ({
               2차 인증
             </Button>
           </Box>
-          <Typography fontSize={15}>
+          <Typography fontSize={FONT_SIZE.normal}>
             {`실명과 휴대폰 번호를 인증합니다. 나의 프로필에 '인증 완료' 내역이 표시됩니다.`}
           </Typography>
         </Box>
         <Box mb={20}>
           <Flexbox alignItems='center'>
             <Flexbox.Item flex={1}>
-              <Typography fontSize={20}>휴대폰 번호</Typography>
+              <Typography fontSize={FONT_SIZE.header}>휴대폰 번호</Typography>
             </Flexbox.Item>
             <Flexbox.Item flex={0.3}>
               <Button
@@ -186,12 +187,14 @@ const MyInfoEditScreen = ({
               </Button>
             </Flexbox.Item>
           </Flexbox>
-          <Typography fontSize={15}>{phone === '' ? '-' : phone}</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            {phone === '' ? '-' : phone}
+          </Typography>
         </Box>
         <Box>
           <Flexbox alignItems='center'>
             <Flexbox.Item flex={1}>
-              <Typography fontSize={20}>이메일 주소</Typography>
+              <Typography fontSize={FONT_SIZE.header}>이메일 주소</Typography>
             </Flexbox.Item>
             <Flexbox.Item flex={0.3}>
               <Button
@@ -203,7 +206,9 @@ const MyInfoEditScreen = ({
               </Button>
             </Flexbox.Item>
           </Flexbox>
-          <Typography fontSize={15}>{email === '' ? '-' : email}</Typography>
+          <Typography fontSize={FONT_SIZE.normal}>
+            {email === '' ? '-' : email}
+          </Typography>
         </Box>
       </Flexbox.Item>
 

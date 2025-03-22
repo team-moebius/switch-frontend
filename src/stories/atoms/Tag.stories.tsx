@@ -1,6 +1,7 @@
 import React from 'react';
 import { StoryFn, Meta } from '@storybook/react';
 import { Tag } from 'src/components/atom';
+import { COLORS } from 'src/assets/theme/base';
 
 export default {
   title: 'Tag',
@@ -19,7 +20,7 @@ export const story = Template.bind({});
 
 story.storyName = 'default';
 story.args = {
-  color: '#fff',
+  color: COLORS.neutral.white,
   children: '다 좋아요',
-  backgroundColor: '#797979',
+  backgroundColor: COLORS.neutral.gray,
 };

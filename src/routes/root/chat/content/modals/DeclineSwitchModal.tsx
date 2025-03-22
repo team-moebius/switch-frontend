@@ -1,3 +1,4 @@
+import { COLORS } from 'src/assets/theme/base';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Modal, ModalProps } from 'src/components/atom/Modal';
 
@@ -9,12 +10,14 @@ const DeclineSwitchModal = ({
   visible,
   onPressBack,
   onConfirm,
+  onModalHide,
 }: DeclineSwitchModalProps) => {
   return (
     <Modal
       visible={visible}
       onPressBack={onPressBack}
-      backgroundColor={'#fefefe'}
+      backgroundColor={COLORS.container_background}
+      onModalHide={onModalHide}
       width={'70%'}
       height={'18%'}
       position={'center'}
@@ -32,7 +35,7 @@ const DeclineSwitchModal = ({
         <Flexbox.Item>
           <Typography
             fontSize={14}
-          >{`${'청둥오리'}님의 스위치 제안을 거절 하시겠어요?`}</Typography>
+          >{`스위치 제안을 거절 하시겠어요?`}</Typography>
         </Flexbox.Item>
         <Flexbox
           alignItems={'center'}
@@ -41,7 +44,11 @@ const DeclineSwitchModal = ({
           gap={10}
         >
           <Flexbox.Item flex={1}>
-            <Button size='medium' type='cancel' onPress={() => onPressBack?.()}>
+            <Button
+              size='medium'
+              type='warning'
+              onPress={() => onPressBack?.()}
+            >
               취소
             </Button>
           </Flexbox.Item>
