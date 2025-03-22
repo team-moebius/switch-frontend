@@ -20,7 +20,7 @@ const UserSummary = ({ data }: UserSummaryProps) => {
   return (
     <Box>
       <Flexbox justifyContent='space-between'>
-        <Flexbox.Item flex={1}>
+        <Flexbox.Item flex={1} height={'100%'}>
           <Flexbox flexDirection='column' alignItems='center' rowGap={5}>
             <Typography
               fontSize={FONT_SIZE.header}
@@ -34,9 +34,9 @@ const UserSummary = ({ data }: UserSummaryProps) => {
             </Tag>
           </Flexbox>
         </Flexbox.Item>
-        <Flexbox flexDirection='column' rowGap={8}>
+        <Flexbox flexDirection='column' rowGap={8} height={'100%'}>
           <Typography fontSize={FONT_SIZE.normal}>
-            {`스위치 횟수: ${switchCount} 점`}
+            {`스위치 횟수: ${switchCount} 건`}
           </Typography>
           <Typography
             fontSize={FONT_SIZE.normal}
