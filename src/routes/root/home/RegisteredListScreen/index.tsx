@@ -29,12 +29,7 @@ const renderChildren = (
   myItem?: boolean
 ) => {
   return (
-    <Flexbox
-      flexDirection='column'
-      alignItems='center'
-      justifyContent='center'
-      gap={10}
-    >
+    <Flexbox flexDirection='column' alignItems='center' gap={10}>
       {/** myItem prop 대신 data상에서 나의 아이템인지 확인 할 수 있는 속성이 있다면 대신 사용해도 좋을 것 같아요*/}
       <Typography fontSize={FONT_SIZE.bigger}>
         {myItem ? '나의' : '상대의'}
@@ -45,8 +40,13 @@ const renderChildren = (
         fontSize={fontSize}
         imageWidth={70}
         imageHeight={70}
-        imageResizeMode={'center'}
-        cardDirection={'column'}
+        imageResizeMode={'cover'}
+        cardDirection={'columnCentral'}
+        layoutStyle={{
+          titleContainerLayout: {},
+          textBoxLayout: { width: 'auto' },
+        }}
+        numberOfLines={2}
       />
     </Flexbox>
   );
@@ -174,13 +174,12 @@ const RegisteredListScreen = ({
           justifyContent={'center'}
           gap={50}
         >
-          <Flexbox.Item alignSelf='center'>
-            <WithMirror
-              renderItem={[childrenA, childrenB]}
-              mirrorDirection={'row'}
-              centerAxis={<Icon name={'swap-horizontal'} size={20} />}
-            />
-          </Flexbox.Item>
+          <WithMirror
+            renderItem={[childrenA, childrenB]}
+            mirrorDirection={'row'}
+            centerAxis={<Icon name={'swap-horizontal'} size={20} />}
+            itemAlignment={{ alignSelf: 'flex-start' }}
+          />
           <Flexbox.Item alignSelf='center'>
             <Typography fontSize={FONT_SIZE.bigger}>
               스위치를 제안합니다.
