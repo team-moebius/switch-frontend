@@ -194,7 +194,13 @@ const SwitchDetailScreen = ({
       itemTitle: itemInfo?.name,
       opponentName: userInfo?.nickname ?? '',
     });
-  const onPressPropose = () => navigation.navigate('RegisteredList');
+  const onPressPropose = () =>
+    navigation.navigate('RegisteredList', {
+      pairedImage: itemInfo?.images ? itemInfo.images[0] : undefined,
+      pairedItemId: itemInfo?.id,
+      pairedName: itemInfo?.name,
+      pairedUserId: itemInfo?.userId,
+    });
   const onPressRevoke = () => {
     setIsRevokeModalOpen(true);
   };
@@ -208,7 +214,7 @@ const SwitchDetailScreen = ({
   };
   const onPressSwitchInProgress = () => {
     navigation.navigate('ChatMain', {
-      api: 'SwitchInProgress',
+      itemId: itemInfoFromRouteParams.id,
     });
   };
   const onConfirmDeleteItem = () => {
