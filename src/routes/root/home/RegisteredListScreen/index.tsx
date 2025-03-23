@@ -78,6 +78,7 @@ const RegisteredListScreen = ({
         data,
         varaiables
       );
+      // TODO : chatting room 생성으로 이어져야 함
     },
     onError(error, varaiables) {
       console.debug(
@@ -85,6 +86,7 @@ const RegisteredListScreen = ({
         error,
         varaiables
       );
+      // TODO : 예외처리하기
     },
   });
 
@@ -154,10 +156,12 @@ const RegisteredListScreen = ({
                     params.sort
                   )
               : () =>
+                  // TODO : 예외처리하기
                   Promise.reject(
                     Alert.alert(
                       '알림',
-                      '비정상적인 접근입니다. 다시 로그인 해주세요.'
+                      // '비정상적인 접근입니다. 다시 로그인 해주세요.'
+                      '비정상적인 접근입니다.'
                     )
                   )
           }
