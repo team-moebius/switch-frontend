@@ -64,7 +64,9 @@ const RegisteredListScreen = ({
 }: StackScreenProps<HomeRouteParamList, 'RegisteredList'>) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
-  const myItem = useRef<ItemResponse>(undefined);
+  const [mySwitchItem, setMySwitchItem] = useState<ItemResponse | undefined>(
+    undefined
+  );
   const pairedItemId = route.params?.pairedItemId;
   const pairedUserId = route.params?.pairedUserId;
   const pairedName = route.params?.pairedName;
@@ -89,14 +91,14 @@ const RegisteredListScreen = ({
   });
 
   const handleModalOpen = useCallback((data: ItemResponse) => {
-    myItem.current = data;
+    setMySwitchItem(data);
     setModalVisible(true);
   }, []);
 
   const onPressSwitch = () => {
-    if (myItem.current && myItem.current.id) {
+    if (mySwitchItem && mySwitchItem.id && pairedItemId && pairedUserId) {
       createMutate({
-        itemId: myItem.current.id,
+        itemId: mySwitchItem.id,
         userId: +(userId as string),
         pairedItemId,
         pairedUserId,
@@ -106,15 +108,15 @@ const RegisteredListScreen = ({
 
   const onPressCancel = () => {
     setModalVisible(false);
-    myItem.current = undefined;
+    setMySwitchItem(undefined);
   };
 
   const childrenA = useMemo(
     () =>
       renderChildren(
         {
-          name: myItem.current?.name ?? '',
-          src: myItem.current?.images ? myItem.current?.images[0] : '',
+          name: mySwitchItem?.name ?? '',
+          src: mySwitchItem?.images ? mySwitchItem.images[0] : '',
         },
         'switchList',
         true
