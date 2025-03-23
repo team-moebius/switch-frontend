@@ -45,8 +45,8 @@ const SwitchDetailScreen = ({
   StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
 >) => {
   const { userId } = useContext(UserContext);
-  const switchDetailData = route.params;
-  const isMine = userId ? switchDetailData.userId === +userId : false;
+  const itemInfoFromRouteParams = route.params;
+  const isMine = userId ? itemInfoFromRouteParams.userId === +userId : false;
 
   // states
   const [isRevokeModalOpen, setIsRevokeModalOpen] = useState(false);
@@ -64,7 +64,10 @@ const SwitchDetailScreen = ({
     isError: isUserError,
   } = useCommonQuery<UserInfoResponse, Parameters<typeof UserAPI.getUserInfo>>({
     api: UserAPI.getUserInfo,
-    queryKey: ['switchDetail_UserAPI_getUserInfo', switchDetailData.userId],
+    queryKey: [
+      'switchDetail_UserAPI_getUserInfo',
+      itemInfoFromRouteParams.userId,
+    ],
     onSuccess(data) {
       console.debug('\n\n✅ switchDetail_UserAPI_getUserInfo ✅\n', data);
     },
@@ -78,7 +81,7 @@ const SwitchDetailScreen = ({
     isError: isItemError,
   } = useCommonQuery<ItemResponse, Parameters<typeof ItemAPI.getItem>>({
     api: ItemAPI.getItem,
-    queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+    queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
     onSuccess(data) {
       console.debug('\n\n✅ switchDetail_itemApi_getItem ✅\n', data);
     },
@@ -103,19 +106,19 @@ const SwitchDetailScreen = ({
     },
     onSettled() {
       queryClient.invalidateQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
     },
     onMutate() {
       queryClient.cancelQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
       const prevItem = queryClient.getQueryData([
         'switchDetail_itemApi_getItem',
-        switchDetailData.id,
+        itemInfoFromRouteParams.id,
       ]) as ItemResponse;
       queryClient.setQueryData(
-        ['switchDetail_itemApi_getItem', switchDetailData.id],
+        ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
         { ...prevItem, bookmark: true }
       );
       return prevItem;
@@ -140,19 +143,19 @@ const SwitchDetailScreen = ({
     },
     onSettled() {
       queryClient.invalidateQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
     },
     onMutate() {
       queryClient.cancelQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
       const prevItem = queryClient.getQueryData([
         'switchDetail_itemApi_getItem',
-        switchDetailData.id,
+        itemInfoFromRouteParams.id,
       ]) as ItemResponse;
       queryClient.setQueryData(
-        ['switchDetail_itemApi_getItem', switchDetailData.id],
+        ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
         { ...prevItem, bookmark: false }
       );
       return prevItem;
@@ -273,12 +276,12 @@ const SwitchDetailScreen = ({
               }}
               isMine={isMine}
               onPressBookMark={() => {
-                if (itemInfo?.bookmark) {
+                if (itemInfo?.bookmark !== undefined) {
                   if (itemInfo.bookmark) {
-                    deleteBookMarkMutate(switchDetailData.id as number);
+                    deleteBookMarkMutate(itemInfoFromRouteParams.id as number);
                   } else {
                     createBookMark({
-                      itemId: switchDetailData.id as number,
+                      itemId: itemInfoFromRouteParams.id as number,
                     });
                   }
                   // itemInfo.bookmark = !itemInfo.bookmark;
@@ -334,7 +337,7 @@ const SwitchDetailScreen = ({
                         preferredLocations: itemInfo.preferredLocations,
                       } as unknown as RegisterDto)
                     : undefined,
-                  itemId: switchDetailData.id,
+                  itemId: itemInfoFromRouteParams.id,
                 });
               }
             }}
