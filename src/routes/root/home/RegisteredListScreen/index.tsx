@@ -64,9 +64,7 @@ const RegisteredListScreen = ({
 }: StackScreenProps<HomeRouteParamList, 'RegisteredList'>) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
-  const [mySwitchItem, setMySwitchItem] = useState<ItemResponse | undefined>(
-    undefined
-  );
+  const mySwitchItem = useRef<ItemResponse>(undefined);
   const pairedItemId = route.params?.pairedItemId;
   const pairedUserId = route.params?.pairedUserId;
   const pairedName = route.params?.pairedName;
@@ -91,14 +89,19 @@ const RegisteredListScreen = ({
   });
 
   const handleModalOpen = useCallback((data: ItemResponse) => {
-    setMySwitchItem(data);
+    mySwitchItem.current = data;
     setModalVisible(true);
   }, []);
 
   const onPressSwitch = () => {
-    if (mySwitchItem && mySwitchItem.id && pairedItemId && pairedUserId) {
+    if (
+      mySwitchItem &&
+      mySwitchItem.current?.id &&
+      pairedItemId &&
+      pairedUserId
+    ) {
       createMutate({
-        itemId: mySwitchItem.id,
+        itemId: mySwitchItem.current.id,
         userId: +(userId as string),
         pairedItemId,
         pairedUserId,
@@ -108,20 +111,22 @@ const RegisteredListScreen = ({
 
   const onPressCancel = () => {
     setModalVisible(false);
-    setMySwitchItem(undefined);
+    mySwitchItem.current = undefined;
   };
 
   const childrenA = useMemo(
     () =>
       renderChildren(
         {
-          name: mySwitchItem?.name ?? '',
-          src: mySwitchItem?.images ? mySwitchItem.images[0] : '',
+          name: mySwitchItem.current?.name ?? '',
+          src: mySwitchItem.current?.images
+            ? mySwitchItem.current.images[0]
+            : '',
         },
         'switchList',
         true
       ),
-    []
+    [mySwitchItem.current]
   );
   const childrenB = useMemo(
     () => renderChildren({ name: pairedName, src: pairedImage }, 'switchList'),
@@ -198,12 +203,7 @@ const RegisteredListScreen = ({
               </Button>
             </Flexbox.Item>
             <Flexbox.Item width={'50%'}>
-              <Button
-                type='normal'
-                size='medium'
-                // TODO : chatting room 생성으로 이어져야 함
-                onPress={onPressSwitch}
-              >
+              <Button type='normal' size='medium' onPress={onPressSwitch}>
                 확인
               </Button>
             </Flexbox.Item>
