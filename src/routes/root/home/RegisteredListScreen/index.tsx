@@ -10,6 +10,8 @@ import { Alert } from 'react-native';
 import { COLORS, FONT_SIZE, PADDING } from 'src/assets/theme/base';
 import { ItemResponse, SwitchRequest } from '@team-moebius/api-typescript';
 import { useCommonMutation } from 'src/hooks/useCommonMutation';
+import { StackScreenProps } from '@react-navigation/stack';
+import { HomeRouteParamList } from '..';
 
 const MY_ITEM = {
   name: '이브이',
@@ -51,21 +53,22 @@ const renderChildren = (
 };
 
 interface RegisteredListProp {
-  pairedItemId: number;
-  pairedUserId: number;
-  pairedName: string;
-  pairedImage: string;
+  pairedItemId?: number;
+  pairedUserId?: number;
+  pairedName?: string;
+  pairedImage?: string;
 }
 
 const RegisteredListScreen = ({
-  pairedItemId,
-  pairedUserId,
-  pairedName,
-  pairedImage,
-}: RegisteredListProp) => {
+  route,
+}: StackScreenProps<HomeRouteParamList, 'RegisteredList'>) => {
   const [modalVisible, setModalVisible] = useState(false);
   const { userId } = useContext(UserContext);
   const myItem = useRef<ItemResponse>(undefined);
+  const pairedItemId = route.params?.pairedItemId;
+  const pairedUserId = route.params?.pairedUserId;
+  const pairedName = route.params?.pairedName;
+  const pairedImage = route.params?.pairedImage;
 
   const { mutate: createMutate } = useCommonMutation<number, SwitchRequest>({
     api: SwitchAPI.createSwitch,
@@ -210,4 +213,4 @@ const RegisteredListScreen = ({
   );
 };
 
-export { RegisteredListScreen };
+export { RegisteredListScreen, type RegisteredListProp };
