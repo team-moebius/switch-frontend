@@ -10,7 +10,10 @@ import { PressableIcon } from 'src/components/molecule';
 import { HomeMainScreen } from './HomeMainScreen';
 import { SwitchDetailScreen } from './SwitchDetailScreen';
 import { NotificationsScreen } from './NotificationsScreen';
-import { RegisteredListScreen } from './RegisteredListScreen';
+import {
+  RegisteredListProp,
+  RegisteredListScreen,
+} from './RegisteredListScreen';
 import { ReportScreenProps, ReportsScreen } from './ReportsScreen';
 import { ChatDetailScreen } from '../chat/ChatDetailScreen';
 
@@ -34,7 +37,7 @@ import {
 type HomeRouteParamList = {
   HomeMain: undefined;
   SwitchDetail: ItemResponse;
-  RegisteredList: undefined;
+  RegisteredList: RegisteredListProp;
   Notifications: undefined;
   Report: ReportScreenProps;
   ChatDetail: undefined;
