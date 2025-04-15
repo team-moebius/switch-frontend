@@ -22,7 +22,7 @@ import {
   ItemResponse,
   UserInfoResponse,
 } from '@team-moebius/api-typescript';
-import { BookMarkApi, ItemAPI, UserAPI } from 'src/api';
+import { BookMarkApi, ItemAPI, SwitchAPI, UserAPI } from 'src/api';
 import { useQueryClient } from 'react-query';
 
 import { CompositeScreenProps } from '@react-navigation/native';
@@ -186,6 +186,27 @@ const SwitchDetailScreen = ({
       );
     },
   });
+  const { mutate: revokeSwitch } = useCommonMutation<any, number>({
+    api: SwitchAPI.deleteSwitch,
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_SwitchAPI_deleteSwitch data ✅ \n\n',
+        data,
+        variables
+      );
+      queryClient.invalidateQueries([
+        'switchDetail_itemApi_getItem',
+        itemInfoFromRouteParams.id,
+      ]);
+    },
+    onError(error, variables) {
+      console.debug(
+        '\n\n\n 🚨 SwitchDetail_SwitchAPI_deleteSwitch error 🚨 \n\n',
+        error,
+        variables
+      );
+    },
+  });
 
   // handlers
   const onPressReport = () =>
@@ -206,8 +227,7 @@ const SwitchDetailScreen = ({
   };
   const onPressRevokeConfirm = () => {
     setIsRevokeModalOpen(false);
-    Alert.alert('요청 취소 api가 호출되어야 합니다.');
-    // TODO : 요청 취소 api 호출하기
+    if (itemInfo && itemInfo.switchId) revokeSwitch(itemInfo.switchId);
   };
   const onPresssRevokeModalBack = () => {
     setIsRevokeModalOpen(false);
