@@ -12,6 +12,7 @@ import { ItemResponse, SwitchRequest } from '@team-moebius/api-typescript';
 import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import { StackScreenProps } from '@react-navigation/stack';
 import { HomeRouteParamList } from '..';
+import { useQueryClient } from 'react-query';
 
 const MY_ITEM = {
   name: '이브이',
@@ -70,6 +71,7 @@ const RegisteredListScreen = ({
   const pairedName = route.params?.pairedName;
   const pairedImage = route.params?.pairedImage;
 
+  const queryClient = useQueryClient();
   const { mutate: createMutate } = useCommonMutation<number, SwitchRequest>({
     api: SwitchAPI.createSwitch,
     onSuccess(data, varaiables) {
@@ -78,6 +80,10 @@ const RegisteredListScreen = ({
         data,
         varaiables
       );
+      queryClient.invalidateQueries([
+        'switchDetail_itemApi_getItem',
+        pairedItemId,
+      ]);
       // TODO : chatting room 생성으로 이어져야 함
     },
     onError(error, varaiables) {
