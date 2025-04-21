@@ -17,13 +17,11 @@ import { WithImage } from 'src/components/template';
 interface SwitchDetailUserProp {
   onPressReport: () => void;
   userSummaryData: UserSummaryData;
-  isMine: boolean;
 }
 
 const SwitchDetailUser = ({
   onPressReport,
   userSummaryData,
-  isMine,
 }: SwitchDetailUserProp) => {
   // TODO : 🚨 여기 pairedItemName 처럼 Switches 호출하면 있는 프로퍼티들이 존재한다면,
   // 여기에 걸릴 수 있도록 하기. 일단 Mock data 활용해서 UI 만들기
@@ -80,32 +78,27 @@ const SwitchDetailUser = ({
   }
   // TODO : 🚨 이 아이템 등록자 달아야 됨
   // if (userId !== '글쓴이') {
-  if (!isMine) {
-    // 스위치 제안을 하지 않았다면
-    return (
-      <>
-        <Separator width={'100%'} />
-        <Flexbox.Item width={'100%'}>
-          <Pressable onPress={onPressReport} style={{ width: '100%' }}>
-            <Flexbox alignItems='center' justifyContent='center'>
-              <Typography fontSize={FONT_SIZE.header} color={PALETTE.red[200]}>
-                신고하기
-              </Typography>
-            </Flexbox>
-          </Pressable>
-        </Flexbox.Item>
-        <Separator width={'100%'} />
-        <Flexbox
-          pl={PADDING.wrapper.horizontal}
-          pr={PADDING.wrapper.horizontal}
-        >
-          {/* TODO : 🚨 onPressUsername에 상대 유저 정보로 갈 수 있도록 핸들러 연결해줘야 됨 */}
-          <UserSummary data={userSummaryData} />
-        </Flexbox>
-        <Separator width={'100%'} />
-      </>
-    );
-  }
+  // 스위치 제안을 하지 않았다면
+  return (
+    <>
+      <Separator width={'100%'} />
+      <Flexbox.Item width={'100%'}>
+        <Pressable onPress={onPressReport} style={{ width: '100%' }}>
+          <Flexbox alignItems='center' justifyContent='center'>
+            <Typography fontSize={FONT_SIZE.header} color={PALETTE.red[200]}>
+              신고하기
+            </Typography>
+          </Flexbox>
+        </Pressable>
+      </Flexbox.Item>
+      <Separator width={'100%'} />
+      <Flexbox pl={PADDING.wrapper.horizontal} pr={PADDING.wrapper.horizontal}>
+        {/* TODO : 🚨 onPressUsername에 상대 유저 정보로 갈 수 있도록 핸들러 연결해줘야 됨 */}
+        <UserSummary data={userSummaryData} />
+      </Flexbox>
+      <Separator width={'100%'} />
+    </>
+  );
 };
 
 export { SwitchDetailUser };

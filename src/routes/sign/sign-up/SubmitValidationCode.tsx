@@ -13,7 +13,7 @@ import {
   UserVerificationRequest,
   UserVerificationResponse,
 } from '@team-moebius/api-typescript';
-import { UserApi } from 'src/api';
+import { UserAPI } from 'src/api';
 
 import { useNavigation } from '@react-navigation/native';
 import { StackNavigationProp, StackScreenProps } from '@react-navigation/stack';
@@ -36,9 +36,9 @@ const SubmitValidationCode = ({
     LoginResponse,
     LoginRequest
   >({
-    api: UserApi.login,
+    api: UserAPI.login,
     async onSuccess(data, variables) {
-      console.debug('[UserApi.login]on success:', data, variables);
+      console.debug('[UserAPI.login]on success:', data, variables);
 
       if (data.jwtToken) {
         await expoSecureStore.setToken(TOKEN, data.jwtToken.split(' ')[1]);
@@ -61,10 +61,10 @@ const SubmitValidationCode = ({
     UserVerificationResponse,
     UserVerificationRequest
   >({
-    api: UserApi.requestUserVerification,
+    api: UserAPI.requestUserVerification,
     onSuccess(data, variables) {
       console.debug(
-        '[UserApi.requestUserVerification] on success:',
+        '[UserAPI.requestUserVerification] on success:',
         data,
         variables
       );

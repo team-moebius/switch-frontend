@@ -87,23 +87,26 @@ interface ItemListContentProps {
   onClickList: (data: ItemResponse) => void;
   withTitleOnly?: boolean;
   api: (args: Pageable) => Promise<AxiosResponse<SliceItemResponse, any>>;
+  queryKey?: string;
 }
 
 const ItemListContent = ({
   onClickList,
   withTitleOnly,
   api,
+  queryKey,
 }: ItemListContentProps) => {
   const [type, setType] = useState<ListViewType>('grid');
   const [sort, setSort] = useState<SectionOptionType>('최신순');
-
-  const queryKey = ['homeMain_itemApi_getAllItems', SELECT_OPTIONS_QUERY[sort]];
 
   const { fetchNextPage, data, isFetchingNextPage } =
     useCommonInfiniteQuery<SliceItemResponse>({
       api,
       queryString: { size: 20, sort: SELECT_OPTIONS_QUERY[sort] },
-      queryKey,
+      queryKey: [
+        queryKey ?? 'homeMain_itemApi_getAllItems',
+        SELECT_OPTIONS_QUERY[sort],
+      ],
       getNextPageParam(page) {
         let nextPageNumber: number | undefined;
         if (page.pageable && !page.last) {

@@ -29,6 +29,7 @@ interface WithImageProps extends modifiedImageProps {
     titleContainerLayout?: ContainerLayout & { alignSelf?: FlexAlign };
     textBoxLayout?: ContainerLayout;
   };
+  numberOfLines?: number;
 }
 
 export const fontSizeStyle = StyleSheet.create({
@@ -64,6 +65,7 @@ const WithImage = ({
   fontSize = 'cardList',
   childDirection = 'row',
   cardDirection = 'row',
+  numberOfLines = 6,
   layoutStyle = {
     mostOutlineLayout: {
       width: '100%',
@@ -93,7 +95,7 @@ const WithImage = ({
           <Flexbox.Item {...layoutStyle.textBoxLayout}>
             <Typography
               {...fontSizeStyle[fontSize]}
-              numberOfLines={6}
+              numberOfLines={numberOfLines}
               ellipsizeMode={'tail'}
             >
               {text}

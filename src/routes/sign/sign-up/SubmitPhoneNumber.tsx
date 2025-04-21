@@ -5,7 +5,7 @@ import {
 } from '@team-moebius/api-typescript';
 import { useState } from 'react';
 
-import { UserApi } from 'src/api';
+import { UserAPI } from 'src/api';
 import { Button, Flexbox, Typography } from 'src/components/atom';
 import { Field } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
@@ -22,10 +22,10 @@ const SubmitPhoneNumber = ({
     UserVerificationResponse,
     UserVerificationRequest
   >({
-    api: UserApi.requestUserVerification,
+    api: UserAPI.requestUserVerification,
     onSuccess(data, variables) {
       console.debug(
-        '[UserApi.requestUserVerification] on success:',
+        '[UserAPI.requestUserVerification] on success:',
         data,
         variables
       );

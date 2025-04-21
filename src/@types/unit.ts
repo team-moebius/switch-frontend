@@ -2,7 +2,7 @@ type Pixel = `${number}px`;
 type Percent = `${number}%`;
 
 //Padding Type
-type LengthElement = Pixel | Percent | number;
+type LengthElement = Pixel | Percent | number | 'auto';
 type PaddingTuple = `${LengthElement} ${LengthElement}`;
 type PaddingQuarter =
   `${LengthElement} ${LengthElement} ${LengthElement} ${LengthElement}`;

@@ -13,7 +13,7 @@ import { KeyboardScreenWrapper } from 'src/components/template/KeyboardScreenWra
 import { UserContext } from 'src/context/user';
 import { useCommonMutation } from 'src/hooks/useCommonMutation';
 
-import { UserApi } from 'src/api';
+import { UserAPI } from 'src/api';
 import { UserWithdrawalRequest } from '@team-moebius/api-typescript';
 
 import { StackScreenProps } from '@react-navigation/stack';
@@ -33,7 +33,7 @@ const withdrawFeedbackMutation = (params: MutationType) => {
   const combineOptRes: UserWithdrawalRequest = {
     withdrawalReason: `${option} - ${reason}`,
   };
-  return UserApi.withdrawUser(userId, combineOptRes);
+  return UserAPI.withdrawUser(userId, combineOptRes);
 };
 
 const WithdrawFeedbackScreen = ({
@@ -45,14 +45,14 @@ const WithdrawFeedbackScreen = ({
     api: withdrawFeedbackMutation,
     onSuccess(data, varaiables) {
       console.debug(
-        '\n\n\n ✅ MyInfoEdit_UserApi_withdrawUser data ✅ \n\n',
+        '\n\n\n ✅ MyInfoEdit_UserAPI_withdrawUser data ✅ \n\n',
         data,
         varaiables
       );
     },
     onError(error, varaiables) {
       console.debug(
-        '\n\n\n 🚨 MyInfoEdit_UserApi_withdrawUser error 🚨 \n\n',
+        '\n\n\n 🚨 MyInfoEdit_UserAPI_withdrawUser error 🚨 \n\n',
         error,
         varaiables
       );
