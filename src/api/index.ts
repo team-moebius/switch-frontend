@@ -40,7 +40,7 @@ globalAxios.interceptors.response.use(
 
 const BookMarkApi = new API.BookmarkAPIApi();
 const ItemAPI = new API.ItemAPIApi();
-const ReportAPI = new API.UserAPIApi();
+const ReportAPI = new API.ReportAPIApi();
 const SwitchAPI = new API.SwitchAPIApi();
 const UserAPI = new API.UserAPIApi();
 const ChatAPI = new API.ChatAPIApi();
