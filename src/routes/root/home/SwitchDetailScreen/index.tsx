@@ -238,11 +238,7 @@ const SwitchDetailScreen = ({
   const onPresssRevokeModalBack = () => {
     setIsRevokeModalOpen(false);
   };
-  const onPressSwitchInProgress = () => {
-    navigation.navigate('ChatMain', {
-      itemId: itemInfoFromRouteParams.id,
-    });
-  };
+
   const onConfirmDeleteItem = () => {
     setIsDeleteModalOpen(false);
     deleteItemMutate(itemInfo?.id as number);
