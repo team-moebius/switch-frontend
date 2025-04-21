@@ -327,13 +327,13 @@ const SwitchDetailScreen = ({
               />
             )}
           </ScrollView>
-          <SwitchDetailButton
-            onPressPropose={onPressPropose}
-            onPressRevoke={onPressRevoke}
-            onPressSwitchInProgress={onPressSwitchInProgress}
-            isMine={isMine}
-            isSuggested={itemInfo?.isSuggested ?? false}
-          />
+          {!isMine && (
+            <SwitchDetailButton
+              onPressPropose={onPressPropose}
+              onPressRevoke={onPressRevoke}
+              isSuggested={itemInfo?.isSuggested ?? false}
+            />
+          )}
           <RevokeModal
             onPressRevoke={onPressRevokeConfirm}
             onPressBack={onPresssRevokeModalBack}
