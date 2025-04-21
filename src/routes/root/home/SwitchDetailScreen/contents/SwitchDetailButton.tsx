@@ -14,27 +14,22 @@ const SwitchDetailButton = ({
 }: SwitchDetailButtonProp) => {
   return (
     <>
-      {isSuggested ? (
-        <Box
-          pl={PADDING.wrapper.horizontal}
-          pr={PADDING.wrapper.horizontal}
-          pb={25}
-        >
+      <Box
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+        pb={25}
+        backgroundColor='trasparent'
+      >
+        {isSuggested ? (
           <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
             요청 취소하기
           </Button>
-        </Box>
-      ) : (
-        <Box
-          pl={PADDING.wrapper.horizontal}
-          pr={PADDING.wrapper.horizontal}
-          pb={25}
-        >
+        ) : (
           <Button type={'normal'} size={'medium'} onPress={onPressPropose}>
             스위치 요청하기
           </Button>
-        </Box>
-      )}
+        )}
+      </Box>
     </>
   );
 };
