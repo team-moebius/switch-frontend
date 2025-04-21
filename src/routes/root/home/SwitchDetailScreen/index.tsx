@@ -284,7 +284,7 @@ const SwitchDetailScreen = ({
         <ErrorFallbackUI navigation={navigation} />
       ) : (
         <>
-          <ScrollView>
+          <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
             <SwitchDetailView
               itemData={{
                 images: itemInfo?.images ?? [''],
