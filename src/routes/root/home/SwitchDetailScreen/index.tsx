@@ -41,14 +41,18 @@ import { USERSUMMARY_MOCK } from '../../my-info/MyInfoMainScreen/UserInfo.mock';
 import { ErrorFallbackUI } from './contents/ErrorFallback';
 import LoadingFallback from './contents/LoadingFallback';
 import { RegisterDto } from '../../register/RegisterFormScreen';
+import { MyInfoParamList } from '../../my-info';
 // import { RegisterDto } from '../../register/RegisterFormScreen';
 
 const SwitchDetailScreen = ({
   navigation,
   route,
 }: CompositeScreenProps<
-  StackScreenProps<HomeRouteParamList, 'SwitchDetail'>,
-  StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
+  CompositeScreenProps<
+    StackScreenProps<HomeRouteParamList, 'SwitchDetail'>,
+    StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
+  >,
+  StackScreenProps<MyInfoParamList, 'SwitchDetail'>
 >) => {
   const { userId } = useContext(UserContext);
   const itemInfoFromRouteParams = route.params;

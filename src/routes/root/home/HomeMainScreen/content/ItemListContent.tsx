@@ -19,6 +19,7 @@ import {
   StuffListItemData,
   STUFF_LIST_MOCK,
 } from '../../SwitchDetailScreen/SwitchList.mock';
+import { plusMockOne } from 'src/utils/plusMockOne';
 
 const SELECT_OPTIONS = ['무작위', '최신순', '내 위치와 가까운 순'] as const;
 type SectionOptionType = (typeof SELECT_OPTIONS)[number];
@@ -162,12 +163,6 @@ const ItemListContent = ({
     renderItem,
   });
 
-  const plusMockOne = (data: ItemResponse[]) => {
-    const copy = data.slice();
-    copy.push({ name: '' });
-    return copy;
-  };
-
   return (
     <ListView<ItemResponse>
       {...flatListProps}
@@ -213,4 +208,4 @@ const ItemListContent = ({
   );
 };
 
-export { ItemListContent, SELECT_OPTIONS_QUERY };
+export { ItemListContent, SELECT_OPTIONS_QUERY, GridItem };

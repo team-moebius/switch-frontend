@@ -1,6 +1,7 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useMemo, useRef, useState } from 'react';
+import { Animated, useWindowDimensions } from 'react-native';
 
-import { Box, Button, Flexbox, Separator } from 'src/components/atom';
+import { Box, Button, Flexbox, Typography } from 'src/components/atom';
 import { UserSummary } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { ListView } from 'src/components/template/ListView';
@@ -14,29 +15,42 @@ import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 import { ItemAPI, UserAPI } from 'src/api';
 import {
   ItemResponse,
+  ItemResponseStatusEnum,
   SliceItemResponse,
   UserInfoResponse,
 } from '@team-moebius/api-typescript';
-
-import { SELECT_OPTIONS_QUERY } from '../../home/HomeMainScreen/content/ItemListContent';
-import { getPageableContent } from 'src/utils/getPageableContent';
 
 import { StackScreenProps } from '@react-navigation/stack';
 import { MyInfoParamList } from '..';
 
 import {
+  GridItem,
+  SELECT_OPTIONS_QUERY,
+} from '../../home/HomeMainScreen/content/ItemListContent';
+import { getPageableContent } from 'src/utils/getPageableContent';
+import {
   StuffListItemData,
   STUFF_LIST_MOCK,
 } from '../../home/SwitchDetailScreen/SwitchList.mock';
 import { USERINFO_MOCK } from './UserInfo.mock';
+import { plusMockOne } from 'src/utils/plusMockOne';
+import { PADDING } from 'src/assets/theme/base';
+import { ThemeContext } from 'src/context/theme';
 
 const MyInfoMainScreen = ({
   navigation,
 }: StackScreenProps<MyInfoParamList, 'MyInfoMain'>) => {
   const { userId } = useContext(UserContext);
+  const { color } = useContext(ThemeContext);
+  const slideAnim = useRef(new Animated.Value(0)).current;
+  const screenWidth = useWindowDimensions().width;
+  // const otherUserId = route.params?.otherUserId;
+
+  const [isStandBy, setIsStandBy] =
+    useState<ItemResponseStatusEnum>('IN_PROGRESS');
 
   const {
-    data: myInfoData,
+    data: userData,
     isLoading,
     isSuccess,
   } = useCommonQuery<UserInfoResponse, Parameters<typeof UserAPI.getUserInfo>>({
@@ -52,13 +66,19 @@ const MyInfoMainScreen = ({
 
   const {
     fetchNextPage,
-    data: myItemData,
+    data: itemData,
     isFetchingNextPage,
   } = useCommonInfiniteQuery<SliceItemResponse>({
-    api: ItemAPI.getItemsByLoginUser,
+    api: (param) =>
+      ItemAPI.getItemsByLoginUser(
+        isStandBy,
+        param.page,
+        param.size,
+        param.sort
+      ),
     queryString: { size: 20, sort: SELECT_OPTIONS_QUERY['최신순'] },
     queryKey: [
-      'myInfoMain_ItemAPI_getItemsByLoginUser',
+      `myInfoMain_ItemApi_getItemByLoginUser_${isStandBy}`,
       SELECT_OPTIONS_QUERY['최신순'],
     ],
     getNextPageParam(page) {
@@ -73,17 +93,19 @@ const MyInfoMainScreen = ({
     },
     onSuccess(data) {
       console.debug(
-        '\n\n ✅ myInfoMain_ItemAPI_getItemsByLoginUser ✅\n\n',
+        `\n\n ✅ myInfoMain_ItemApi_getItemByLoginUser_${isStandBy} ✅\n\n`,
         data
       );
     },
     onError(error) {
       console.debug(
-        '\n\n 🚨 myInfoMain_ItemAPI_getItemsByLoginUser 🚨\n\n',
+        `\n\n 🚨 myInfoMain_ItemApi_getItemByLoginUser_${isStandBy} 🚨\n\n`,
         error
       );
     },
   });
+
+  const memoItemData = useMemo(() => getPageableContent(itemData), [itemData]);
 
   const handleLoadMoreData = () => {
     if (!isFetchingNextPage) return;
@@ -92,10 +114,9 @@ const MyInfoMainScreen = ({
 
   const renderItem = useCallback(({ item }: { item: ItemResponse }) => {
     return (
-      <ItemListCard
-        title={item.name ?? ''}
-        count={item.waitingCount}
-        imageSrc={item.images ? item.images[0] : ''}
+      <GridItem
+        item={item}
+        onClick={() => navigation.navigate('SwitchDetail', item)}
       />
     );
   }, []);
@@ -106,37 +127,106 @@ const MyInfoMainScreen = ({
     renderItem,
   });
 
+  const handleButtonPress = (isStandy: ItemResponseStatusEnum) => {
+    if (isStandy === 'IN_PROGRESS') {
+      setIsStandBy('IN_PROGRESS');
+    } else {
+      setIsStandBy('DONE');
+    }
+    Animated.timing(slideAnim, {
+      toValue:
+        isStandy === 'IN_PROGRESS'
+          ? 0 * (screenWidth / 2)
+          : 1 * (screenWidth / 2),
+      duration: 500,
+      useNativeDriver: false,
+    }).start();
+  };
+
+  const animatedStyle = useMemo(
+    () => ({
+      transform: [
+        {
+          translateX: slideAnim,
+        },
+      ],
+    }),
+    [slideAnim]
+  );
+
   return (
     <ScreenWrapper>
-      <Box>
+      <Box pl={PADDING.wrapper.horizontal} pr={PADDING.wrapper.horizontal}>
         <UserSummary
           data={{
-            nickname: myInfoData?.nickname ?? (userId as string),
-            verified: !!myInfoData?.phone,
-            switchCount: myInfoData?.switchCount ?? 0,
-            score: myInfoData?.score ?? 0,
-            introduction: myInfoData?.introduction,
+            nickname: userData?.nickname ?? (userId as string),
+            verified: !!userData?.phone,
+            switchCount: userData?.switchCount ?? 0,
+            score: userData?.score ?? 0,
+            introduction: userData?.introduction,
           }}
         />
         <Flexbox justifyContent='center' alignItems='center' mt={10} mb={10}>
-          <Box width={200}>
-            <Button
-              type={'normal'}
-              size={'medium'}
-              onPress={function (): void {
-                navigation.navigate('MyInfoEdit', { userInfo: myInfoData });
-              }}
-            >
-              내 정보 편집하기
-            </Button>
-          </Box>
+          {Number(userData?.id) === Number(userId) ? (
+            <Box width={200}>
+              <Button
+                type={'normal'}
+                size={'medium'}
+                onPress={function (): void {
+                  navigation.navigate('MyInfoEdit', { userInfo: userData });
+                }}
+              >
+                내 정보 편집하기
+              </Button>
+            </Box>
+          ) : null}
         </Flexbox>
       </Box>
-      <Separator />
-      <Flexbox height={'100%'}>
+      <Box mt={15}>
+        <Flexbox flexDirection='row'>
+          <Flexbox width={'50%'} justifyContent='center'>
+            <Button
+              type={'transparent'}
+              size={'medium'}
+              onPress={() => handleButtonPress('IN_PROGRESS')}
+            >
+              <Typography fontSize={17}>대기중</Typography>
+            </Button>
+          </Flexbox>
+          <Flexbox width={'50%'} justifyContent='center'>
+            <Button
+              type={'transparent'}
+              size={'medium'}
+              onPress={() => handleButtonPress('DONE')}
+            >
+              <Typography fontSize={17}>완료</Typography>
+            </Button>
+          </Flexbox>
+        </Flexbox>
+        <Animated.View
+          style={[
+            {
+              height: 1,
+              width: '50%',
+              backgroundColor: color.primary[200],
+            },
+            animatedStyle,
+          ]}
+        />
+      </Box>
+      {/* <Separator /> */}
+      <Flexbox
+        height={'100%'}
+        pl={PADDING.wrapper.horizontal}
+        pr={PADDING.wrapper.horizontal}
+      >
         <ListView<ItemResponse>
           {...flatListProps}
-          data={getPageableContent(myItemData)}
+          data={
+            memoItemData.length % 2 !== 0
+              ? plusMockOne(memoItemData)
+              : memoItemData
+          }
           // data={STUFF_LIST_MOCK}
         />
       </Flexbox>

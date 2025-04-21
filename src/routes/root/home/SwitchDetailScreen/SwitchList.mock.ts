@@ -49,6 +49,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -61,6 +63,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -73,6 +77,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -85,6 +91,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -97,6 +105,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'IN_PROGRESS',
   },
   {
     type: 'GOODS',
@@ -109,6 +119,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'IN_PROGRESS',
   },
   {
     type: 'GOODS',
@@ -121,6 +133,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'CANCELED',
   },
   {
     type: 'GOODS',
@@ -133,6 +147,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -145,6 +161,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'CANCELED',
   },
   {
     type: 'GOODS',
@@ -157,6 +175,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'DONE',
   },
   {
     type: 'GOODS',
@@ -169,6 +189,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -181,6 +203,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -193,6 +217,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -205,6 +231,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -217,6 +245,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -229,6 +259,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -241,6 +273,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
   {
     type: 'GOODS',
@@ -253,6 +287,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'DONE',
   },
   {
     type: 'GOODS',
@@ -265,6 +301,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'CANCELED',
   },
   {
     type: 'GOODS',
@@ -277,6 +315,8 @@ const STUFF_LIST_MOCK: Array<ItemResponse> = [
     ],
     preferredCategory: 'Electronics',
     preferredLocations: new Set(['City XYZ']),
+    waitingCount: 5,
+    status: 'READY',
   },
 ];
 

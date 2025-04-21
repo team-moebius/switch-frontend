@@ -11,11 +11,13 @@ import { FeedbackScreen } from './FeedbackScreen';
 import { VersionScreen } from './VersionScreen';
 import { SettingMainScreen } from './SettingMainScreen';
 import { MyInfoEditScreen } from './MyInfoEditScreen';
-import { UserInfoResponse } from '@team-moebius/api-typescript';
+import { ItemResponse, UserInfoResponse } from '@team-moebius/api-typescript';
 import { NavigatorScreenParams } from '@react-navigation/native';
 import { BlockUsersList } from './BlockUsersList';
+import { SwitchDetailScreen } from '../home/SwitchDetailScreen';
 
 type MyInfoParamList = {
+  // MyInfoMain: { otherUserId?: number };
   MyInfoMain: undefined;
   MyInfoEdit: { userInfo: UserInfoResponse | undefined };
   Withdraw: NavigatorScreenParams<WithdrawParamList>;
@@ -24,6 +26,7 @@ type MyInfoParamList = {
   Version: undefined;
   Feedback: undefined;
   BlockUsers: undefined;
+  SwitchDetail: ItemResponse;
 };
 
 const Stack = createStackNavigator<MyInfoParamList>();
@@ -101,6 +104,7 @@ const MyInfoRoute = () => {
         component={FeedbackScreen}
         options={{ header: ScreenHeader }}
       />
+      <Stack.Screen name={'SwitchDetail'} component={SwitchDetailScreen} />
       <Stack.Screen
         name={'BlockUsers'}
         component={BlockUsersList}
