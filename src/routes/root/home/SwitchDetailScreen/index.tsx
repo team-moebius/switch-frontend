@@ -323,8 +323,8 @@ const SwitchDetailScreen = ({
                   score: userInfo?.score ?? 0,
                   verified: userInfo?.phone ? true : false,
                   switchCount: userInfo?.switchCount ?? 0,
-                  nickname: userInfo?.nickname ?? 'undefined',
-                  introduction: userInfo?.introduction ?? 'undefined',
+                  nickname: userInfo?.nickname ?? '',
+                  introduction: userInfo?.introduction ?? '',
                 }}
               />
             )}
