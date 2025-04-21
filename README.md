@@ -11,6 +11,44 @@
 
 🗓️ **2022.09. ~ NOW**
 
+# —— How to Run
+
+## IOS 셋팅
+
+![image](https://github.com/user-attachments/assets/f9f4e89d-e920-45d8-b0f2-dfd637b3c805)
+
+1. Xcode 실행 후 왼쪽 상단 Xcode 클릭
+2. Open Developer Tool 클릭
+3. Simulator 클릭
+
+## Android 셋팅
+
+![image](https://github.com/user-attachments/assets/b35a96e2-c2f2-4c65-af42-f9af56ac7063)
+
+1. Android Studio 실행
+2. More Actions 클릭
+3. Virtual Device Manager 클릭
+
+## Mobile Device 셋팅
+
+1. 앱스토어나 구글 플레이스토어에서 Expo 설치
+
+## 어플리케이션 실행
+
+셋팅이 끝나면 아래 명령어를 실행하면 됩니다.
+
+```zsh
+// 패키지 설치
+yarn install
+```
+
+```zsh
+// 어플리케이션 실행
+yarn start
+```
+
+실행 후 터미널에 올라온 인터페이스 참고해서 실행하시면 됩니다.
+
 # —— ARCHITECTURE
 
 ![추가 요망]()
