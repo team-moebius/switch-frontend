@@ -215,12 +215,17 @@ const SwitchDetailScreen = ({
   });
 
   // handlers
-  const onPressReport = () =>
-    navigation.navigate('Report', {
-      previousScreen: 'SwitchDetail',
-      itemTitle: itemInfo?.name,
-      opponentName: userInfo?.nickname ?? '',
-    });
+  const onPressReport = () => {
+    if (itemInfo?.name && userInfo?.nickname && userInfo?.id && itemInfo?.id) {
+      navigation.navigate('Report', {
+        previousScreen: 'SwitchDetail',
+        itemTitle: itemInfo.name,
+        opponentName: userInfo.nickname,
+        opponentId: userInfo.id,
+        itemId: itemInfo.id,
+      });
+    }
+  };
   const onPressPropose = () =>
     navigation.navigate('RegisteredList', {
       pairedImage: itemInfo?.images ? itemInfo.images[0] : undefined,
