@@ -9,7 +9,11 @@ import { PADDING } from 'src/assets/theme/base';
 import { STUFF_LIST_MOCK } from '../home/SwitchDetailScreen/SwitchList.mock';
 import { CompositeScreenProps } from '@react-navigation/native';
 import { HomeRouteParamList } from '../home';
-import { Alert } from 'react-native';
+import { Alert, FlatList } from 'react-native';
+import { ChatAPI } from 'src/api';
+import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
+import { ChatResponse, SliceChatResponse } from '@team-moebius/api-typescript';
+import { getPageableContent } from 'src/utils/getPageableContent';
 
 const CHAT_MOCK_DATA = [
   {
@@ -29,16 +33,8 @@ This is usually because the modules which have changed (and their parents) do no
   },
 ];
 
-type ApiType = 'ChatMain' | 'SwitchInProgress';
-
-const apiList: Record<ApiType, () => void> = {
-  ChatMain: () => Alert.alert('ChatMain 입니다'),
-  SwitchInProgress: () => Alert.alert('SwitchInProgress 입니다'),
-};
-
 interface ChatMainScreenProps {
-  api?: ApiType;
-  id?: number;
+  itemId?: number;
 }
 
 const ChatMainScreen = ({
@@ -48,7 +44,39 @@ const ChatMainScreen = ({
   StackScreenProps<ChatRouteParamList, 'ChatMain'>,
   StackScreenProps<HomeRouteParamList, 'ChatMain'>
 >) => {
-  useEffect(() => apiList[route.params?.api ?? 'ChatMain'](), []);
+  const { params: routeParams } = route;
+  const { fetchNextPage, data, isFetchingNextPage } =
+    useCommonInfiniteQuery<SliceChatResponse>({
+      api: (params) => ChatAPI.getChats(params, routeParams.itemId),
+      queryString: { size: 20 },
+      queryKey: [
+        routeParams?.itemId
+          ? 'homeRoute_chatMain_ChatAPI_getChats'
+          : 'chatRoute_chatMain_ChatAPI_getChats',
+      ],
+      getNextPageParam(page) {
+        let nextPageNumber: number | undefined;
+        if (page.pageable && !page.last) {
+          nextPageNumber = (page.pageable.pageNumber as number) + 1;
+        } else {
+          nextPageNumber = undefined;
+        }
+
+        return nextPageNumber;
+      },
+      onSuccess(data) {
+        console.debug('✅ home main success!! \n', data);
+      },
+      onError(err) {
+        console.debug('🚧🚧 home main fail!! 🚧🚧 \n', err);
+      },
+    });
+
+  const handleLoadMoreData = () => {
+    if (!isFetchingNextPage) return;
+    fetchNextPage();
+  };
+
   return (
     <ScreenWrapper>
       <Flexbox
@@ -77,6 +105,14 @@ const ChatMainScreen = ({
             </Box>
           ))}
         </Flexbox.Item>
+        {/* <FlatList<ChatResponse>
+          data={getPageableContent(data)}
+          renderItem={ChattingListItem}
+          keyExtractor={(item) => `${item.id}`}
+          numColumns={1}
+          onEndReached={handleLoadMoreData}
+          onEndReachedThreshold={0.1}
+        /> */}
       </Flexbox>
     </ScreenWrapper>
   );

@@ -32,6 +32,8 @@ interface ReportScreenProps {
   previousScreen: string;
   itemTitle?: string;
   opponentName: string;
+  itemId: number;
+  opponentId: number;
 }
 
 const ReportsScreen = ({

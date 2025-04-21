@@ -41,7 +41,7 @@ import { StackScreenProps } from '@react-navigation/stack';
 import { CompositeScreenProps } from '@react-navigation/native';
 
 /* api */
-import { ItemApi } from 'src/api';
+import { ItemAPI } from 'src/api';
 import {
   ItemRequest,
   ItemResponse,
@@ -117,7 +117,7 @@ const RegisterFormScreen = ({
   const queryClient = useQueryClient();
   const { mutate: createMutate } = useCommonMutation<ItemResponse, ItemRequest>(
     {
-      api: ItemApi.createItem, // TODO : 유효성 검사하기
+      api: ItemAPI.createItem, // TODO : 유효성 검사하기
       onSuccess(data, variables) {
         console.debug(data, variables);
         queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
@@ -133,7 +133,7 @@ const RegisterFormScreen = ({
     ItemResponse,
     ItemUpdateRequest
   >({
-    api: ItemApi.updateItem, // TODO : 유효성 검사하기
+    api: ItemAPI.updateItem, // TODO : 유효성 검사하기
     onSuccess(data, variables) {
       console.debug(data, variables);
       queryClient.invalidateQueries(['switchDetail_itemApi_getItem', itemId]);

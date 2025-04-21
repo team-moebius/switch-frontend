@@ -1,7 +1,13 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Alert, ScrollView } from 'react-native';
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+import { ScrollView } from 'react-native';
 
-import { Flexbox, Typography } from 'src/components/atom';
+import { Flexbox } from 'src/components/atom';
 import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { SwitchDetailView } from './contents/SwitchDetailView';
@@ -22,7 +28,7 @@ import {
   ItemResponse,
   UserInfoResponse,
 } from '@team-moebius/api-typescript';
-import { BookMarkApi, ItemApi, UserApi } from 'src/api';
+import { BookMarkApi, ItemAPI, SwitchAPI, UserAPI } from 'src/api';
 import { useQueryClient } from 'react-query';
 
 import { CompositeScreenProps } from '@react-navigation/native';
@@ -45,8 +51,8 @@ const SwitchDetailScreen = ({
   StackScreenProps<ChatRouteParamList, 'SwitchDetail'>
 >) => {
   const { userId } = useContext(UserContext);
-  const switchDetailData = route.params;
-  const isMine = userId ? switchDetailData.userId === +userId : false;
+  const itemInfoFromRouteParams = route.params;
+  const isMine = userId ? itemInfoFromRouteParams.userId === +userId : false;
 
   // states
   const [isRevokeModalOpen, setIsRevokeModalOpen] = useState(false);
@@ -62,23 +68,26 @@ const SwitchDetailScreen = ({
     data: userInfo,
     isLoading: isUserLoading,
     isError: isUserError,
-  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
-    api: UserApi.getUserInfo,
-    queryKey: ['switchDetail_userApi_getUserInfo', switchDetailData.userId],
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserAPI.getUserInfo>>({
+    api: UserAPI.getUserInfo,
+    queryKey: [
+      'switchDetail_UserAPI_getUserInfo',
+      itemInfoFromRouteParams.userId,
+    ],
     onSuccess(data) {
-      console.debug('\n\n✅ switchDetail_userApi_getUserInfo ✅\n', data);
+      console.debug('\n\n✅ switchDetail_UserAPI_getUserInfo ✅\n', data);
     },
     onError(err) {
-      console.debug('\n\n🚨 switchDetail_userApi_getUserInfo 🚨\n', err);
+      console.debug('\n\n🚨 switchDetail_UserAPI_getUserInfo 🚨\n', err);
     },
   });
   const {
     data: itemInfo,
     isLoading: isItemLoading,
     isError: isItemError,
-  } = useCommonQuery<ItemResponse, Parameters<typeof ItemApi.getItem>>({
-    api: ItemApi.getItem,
-    queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+  } = useCommonQuery<ItemResponse, Parameters<typeof ItemAPI.getItem>>({
+    api: ItemAPI.getItem,
+    queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
     onSuccess(data) {
       console.debug('\n\n✅ switchDetail_itemApi_getItem ✅\n', data);
     },
@@ -103,19 +112,19 @@ const SwitchDetailScreen = ({
     },
     onSettled() {
       queryClient.invalidateQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
     },
     onMutate() {
       queryClient.cancelQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
       const prevItem = queryClient.getQueryData([
         'switchDetail_itemApi_getItem',
-        switchDetailData.id,
+        itemInfoFromRouteParams.id,
       ]) as ItemResponse;
       queryClient.setQueryData(
-        ['switchDetail_itemApi_getItem', switchDetailData.id],
+        ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
         { ...prevItem, bookmark: true }
       );
       return prevItem;
@@ -140,19 +149,19 @@ const SwitchDetailScreen = ({
     },
     onSettled() {
       queryClient.invalidateQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
     },
     onMutate() {
       queryClient.cancelQueries({
-        queryKey: ['switchDetail_itemApi_getItem', switchDetailData.id],
+        queryKey: ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
       });
       const prevItem = queryClient.getQueryData([
         'switchDetail_itemApi_getItem',
-        switchDetailData.id,
+        itemInfoFromRouteParams.id,
       ]) as ItemResponse;
       queryClient.setQueryData(
-        ['switchDetail_itemApi_getItem', switchDetailData.id],
+        ['switchDetail_itemApi_getItem', itemInfoFromRouteParams.id],
         { ...prevItem, bookmark: false }
       );
       return prevItem;
@@ -166,7 +175,7 @@ const SwitchDetailScreen = ({
     },
   });
   const { mutate: deleteItemMutate } = useCommonMutation<string, number>({
-    api: ItemApi.deleteItem,
+    api: ItemAPI.deleteItem,
     onSuccess(data, variables) {
       console.debug(
         '\n\n\n ✅ SwitchDetail_itemApi_deleteItem data ✅ \n\n',
@@ -183,31 +192,58 @@ const SwitchDetailScreen = ({
       );
     },
   });
+  const { mutate: revokeSwitch } = useCommonMutation<any, number>({
+    api: SwitchAPI.deleteSwitch,
+    onSuccess(data, variables) {
+      console.debug(
+        '\n\n\n ✅ SwitchDetail_SwitchAPI_deleteSwitch data ✅ \n\n',
+        data,
+        variables
+      );
+      queryClient.invalidateQueries([
+        'switchDetail_itemApi_getItem',
+        itemInfoFromRouteParams.id,
+      ]);
+    },
+    onError(error, variables) {
+      console.debug(
+        '\n\n\n 🚨 SwitchDetail_SwitchAPI_deleteSwitch error 🚨 \n\n',
+        error,
+        variables
+      );
+    },
+  });
 
   // handlers
-  const onPressReport = () =>
-    navigation.navigate('Report', {
-      previousScreen: 'SwitchDetail',
-      itemTitle: itemInfo?.name,
-      opponentName: userInfo?.nickname ?? '',
+  const onPressReport = () => {
+    if (itemInfo?.name && userInfo?.nickname && userInfo?.id && itemInfo?.id) {
+      navigation.navigate('Report', {
+        previousScreen: 'SwitchDetail',
+        itemTitle: itemInfo.name,
+        opponentName: userInfo.nickname,
+        opponentId: userInfo.id,
+        itemId: itemInfo.id,
+      });
+    }
+  };
+  const onPressPropose = () =>
+    navigation.navigate('RegisteredList', {
+      pairedImage: itemInfo?.images ? itemInfo.images[0] : undefined,
+      pairedItemId: itemInfo?.id,
+      pairedName: itemInfo?.name,
+      pairedUserId: itemInfo?.userId,
     });
-  const onPressPropose = () => navigation.navigate('RegisteredList');
   const onPressRevoke = () => {
     setIsRevokeModalOpen(true);
   };
   const onPressRevokeConfirm = () => {
     setIsRevokeModalOpen(false);
-    Alert.alert('요청 취소 api가 호출되어야 합니다.');
-    // TODO : 요청 취소 api 호출하기
+    if (itemInfo && itemInfo.switchId) revokeSwitch(itemInfo.switchId);
   };
   const onPresssRevokeModalBack = () => {
     setIsRevokeModalOpen(false);
   };
-  const onPressSwitchInProgress = () => {
-    navigation.navigate('ChatMain', {
-      api: 'SwitchInProgress',
-    });
-  };
+
   const onConfirmDeleteItem = () => {
     setIsDeleteModalOpen(false);
     deleteItemMutate(itemInfo?.id as number);
@@ -222,7 +258,7 @@ const SwitchDetailScreen = ({
     conditionInModalHide.current.isOpenDeleteModal = true;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: (props) => {
         if (isMine) {
@@ -241,11 +277,11 @@ const SwitchDetailScreen = ({
             />
           );
         } else {
-          <ScreenHeader {...props} />;
+          return <ScreenHeader {...props} />;
         }
       },
     });
-  }, []);
+  }, [isMine]);
 
   return (
     <ScreenWrapper>
@@ -255,7 +291,7 @@ const SwitchDetailScreen = ({
         <ErrorFallbackUI navigation={navigation} />
       ) : (
         <>
-          <ScrollView>
+          <ScrollView contentContainerStyle={{ paddingBottom: 80 }}>
             <SwitchDetailView
               itemData={{
                 images: itemInfo?.images ?? [''],
@@ -273,76 +309,82 @@ const SwitchDetailScreen = ({
               }}
               isMine={isMine}
               onPressBookMark={() => {
-                if (itemInfo?.bookmark) {
+                if (itemInfo?.bookmark !== undefined) {
                   if (itemInfo.bookmark) {
-                    deleteBookMarkMutate(switchDetailData.id as number);
+                    deleteBookMarkMutate(itemInfoFromRouteParams.id as number);
                   } else {
                     createBookMark({
-                      itemId: switchDetailData.id as number,
+                      itemId: itemInfoFromRouteParams.id as number,
                     });
                   }
                   // itemInfo.bookmark = !itemInfo.bookmark;
                 }
               }}
             />
-            <SwitchDetailUser
-              onPressReport={onPressReport}
-              userSummaryData={{
-                score: userInfo?.score ?? 0,
-                verified: true,
-                switchCount: userInfo?.switchCount ?? 0,
-                nickname: userInfo?.nickname ?? 'undefined',
-                introduction: userInfo?.introduction ?? 'undefined',
-              }}
-              isMine={isMine}
-            />
+            {!isMine && (
+              <SwitchDetailUser
+                onPressReport={onPressReport}
+                userSummaryData={{
+                  score: userInfo?.score ?? 0,
+                  verified: userInfo?.phone ? true : false,
+                  switchCount: userInfo?.switchCount ?? 0,
+                  nickname: userInfo?.nickname ?? '',
+                  introduction: userInfo?.introduction ?? '',
+                }}
+              />
+            )}
           </ScrollView>
-          <SwitchDetailButton
-            onPressPropose={onPressPropose}
-            onPressRevoke={onPressRevoke}
-            onPressSwitchInProgress={onPressSwitchInProgress}
-            isMine={isMine}
-            isSuggested={itemInfo?.isSuggested ?? false}
-          />
-          <RevokeModal
-            onPressRevoke={onPressRevokeConfirm}
-            onPressBack={onPresssRevokeModalBack}
-            visible={isRevokeModalOpen}
-            myItem={itemInfo?.name ?? ''}
-            oppItem={userInfo?.nickname ?? ''}
-          />
-          <MyItemOptionModal
-            visible={isUserModalOpen}
-            onPressBack={() => setIsUserModalOpen(false)}
-            onPressEditButton={onPressEditButton}
-            onPressDeleteModal={onPressDeleteButton}
-            onModalHide={() => {
-              if (conditionInModalHide.current.isOpenDeleteModal) {
-                setIsDeleteModalOpen(true);
-                conditionInModalHide.current.isOpenDeleteModal = false;
-              } else if (conditionInModalHide.current.isOpenEditScreen) {
-                conditionInModalHide.current.isOpenEditScreen = false;
-                navigation.navigate('RegisterForm', {
-                  initialData: itemInfo
-                    ? ({
-                        name: itemInfo.name,
-                        description: itemInfo.description,
-                        images: itemInfo.images,
-                        category: itemInfo.category,
-                        preferredCategory: itemInfo.preferredCategory,
-                        preferredLocations: itemInfo.preferredLocations,
-                      } as unknown as RegisterDto)
-                    : undefined,
-                  itemId: switchDetailData.id,
-                });
-              }
-            }}
-          />
-          <DeleteItemModal
-            visible={isDeleteModalOpen}
-            onPressBack={() => setIsDeleteModalOpen(false)}
-            onDeleteConfirm={onConfirmDeleteItem}
-          />
+          {isMine ? (
+            <>
+              <MyItemOptionModal
+                visible={isUserModalOpen}
+                onPressBack={() => setIsUserModalOpen(false)}
+                onPressEditButton={onPressEditButton}
+                onPressDeleteModal={onPressDeleteButton}
+                onModalHide={() => {
+                  if (conditionInModalHide.current.isOpenDeleteModal) {
+                    setIsDeleteModalOpen(true);
+                    conditionInModalHide.current.isOpenDeleteModal = false;
+                  } else if (conditionInModalHide.current.isOpenEditScreen) {
+                    conditionInModalHide.current.isOpenEditScreen = false;
+                    navigation.navigate('RegisterForm', {
+                      initialData: itemInfo
+                        ? ({
+                            name: itemInfo.name,
+                            description: itemInfo.description,
+                            images: itemInfo.images,
+                            category: itemInfo.category,
+                            preferredCategory: itemInfo.preferredCategory,
+                            preferredLocations: itemInfo.preferredLocations,
+                          } as unknown as RegisterDto)
+                        : undefined,
+                      itemId: itemInfoFromRouteParams.id,
+                    });
+                  }
+                }}
+              />
+              <DeleteItemModal
+                visible={isDeleteModalOpen}
+                onPressBack={() => setIsDeleteModalOpen(false)}
+                onDeleteConfirm={onConfirmDeleteItem}
+              />
+            </>
+          ) : (
+            <>
+              <SwitchDetailButton
+                onPressPropose={onPressPropose}
+                onPressRevoke={onPressRevoke}
+                isSuggested={itemInfo?.isSuggested ?? false}
+              />
+              <RevokeModal
+                onPressRevoke={onPressRevokeConfirm}
+                onPressBack={onPresssRevokeModalBack}
+                visible={isRevokeModalOpen}
+                myItem={itemInfo?.name ?? ''}
+                oppItem={userInfo?.nickname ?? ''}
+              />
+            </>
+          )}
         </>
       )}
     </ScreenWrapper>

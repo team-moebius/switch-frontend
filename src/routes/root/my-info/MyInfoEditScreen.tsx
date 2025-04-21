@@ -15,7 +15,7 @@ import { useCommonMutation } from 'src/hooks/useCommonMutation';
 import { UserContext } from 'src/context/user';
 
 import { useQueryClient } from 'react-query';
-import { UserApi } from 'src/api';
+import { UserAPI } from 'src/api';
 
 import { StackHeaderProps, StackScreenProps } from '@react-navigation/stack';
 
@@ -35,19 +35,19 @@ const MyInfoEditScreen = ({
 
   const { mutate } = useCommonMutation<UserInfoResponse, UserUpdateRequest>({
     api: (userData: UserUpdateRequest) =>
-      UserApi.updateUserInfo(Number(userId), userData),
+      UserAPI.updateUserInfo(Number(userId), userData),
     onSuccess(data, variables) {
       console.debug(
-        '\n\n\n ✅ myInfoEdit_userApi_updateUserInfo data ✅ \n\n',
+        '\n\n\n ✅ myInfoEdit_userAPI_updateUserInfo data ✅ \n\n',
         data,
         variables
       );
-      queryClient.invalidateQueries(['myInfoMain_userApi_getUserInfo']);
+      queryClient.invalidateQueries(['myInfoMain_userAPI_getUserInfo']);
       navigation.goBack();
     },
     onError(error, variables) {
       console.debug(
-        '\n\n\n 🚨 myInfoEdit_userApi_updateUserInfo error 🚨 \n\n',
+        '\n\n\n 🚨 myInfoEdit_userAPI_updateUserInfo error 🚨 \n\n',
         error,
         variables
       );

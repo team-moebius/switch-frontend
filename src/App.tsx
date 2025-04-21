@@ -18,7 +18,15 @@ import { SocketProvider } from './context/socket';
 global.TextEncoder = TextEncoder;
 global.TextDecoder = TextDecoder;
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 1000 * 60 * 30, // 30분
+      cacheTime: 1000 * 60 * 5, // 5분
+      retry: 5,
+    },
+  },
+});
 
 export default function App() {
   const [loading, setLoading] = useState(true);

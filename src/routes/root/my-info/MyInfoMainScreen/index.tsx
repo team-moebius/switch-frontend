@@ -12,7 +12,7 @@ import { useCommonQuery } from 'src/hooks/useCommonQuery';
 import { UserContext } from 'src/context/user';
 import { useCommonInfiniteQuery } from 'src/hooks/useCommonInfiniteQuery';
 
-import { ItemApi, UserApi } from 'src/api';
+import { ItemAPI, UserAPI } from 'src/api';
 import {
   ItemResponse,
   ItemResponseStatusEnum,
@@ -53,14 +53,14 @@ const MyInfoMainScreen = ({
     data: userData,
     isLoading,
     isSuccess,
-  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserApi.getUserInfo>>({
-    api: UserApi.getUserInfo,
-    queryKey: ['myInfoMain_userApi_getUserInfo', userId],
+  } = useCommonQuery<UserInfoResponse, Parameters<typeof UserAPI.getUserInfo>>({
+    api: UserAPI.getUserInfo,
+    queryKey: ['myInfoMain_userAPI_getUserInfo', userId],
     onSuccess(data) {
-      console.debug('\n\n✅ myInfoMain_userApi_getUserInfo ✅\n', data);
+      console.debug('\n\n✅ myInfoMain_userAPI_getUserInfo ✅\n', data);
     },
     onError(err) {
-      console.debug('\n\n🚨 myInfoMain_userApi_getUserInfo 🚨\n', err);
+      console.debug('\n\n🚨 myInfoMain_userAPI_getUserInfo 🚨\n', err);
     },
   });
 
