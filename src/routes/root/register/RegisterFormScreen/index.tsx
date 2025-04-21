@@ -121,6 +121,9 @@ const RegisterFormScreen = ({
       onSuccess(data, variables) {
         console.debug(data, variables);
         queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+        queryClient.invalidateQueries([
+          'myInfoMain_ItemApi_getItemByLoginUser_IN_PROGRESS',
+        ]);
         navigation.goBack();
       },
       onError(error, variables) {
@@ -138,6 +141,9 @@ const RegisterFormScreen = ({
       console.debug(data, variables);
       queryClient.invalidateQueries(['switchDetail_itemApi_getItem', itemId]);
       queryClient.invalidateQueries(['homeMain_itemApi_getAllItems']);
+      queryClient.invalidateQueries([
+        'myInfoMain_ItemApi_getItemByLoginUser_IN_PROGRESS',
+      ]);
       navigation.goBack();
     },
     onError(error, variables) {
