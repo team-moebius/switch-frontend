@@ -46,7 +46,7 @@ const MyInfoMainScreen = ({
   const screenWidth = useWindowDimensions().width;
   // const otherUserId = route.params?.otherUserId;
 
-  const [isStandy, setIsStandy] =
+  const [isStandBy, setIsStandBy] =
     useState<ItemResponseStatusEnum>('IN_PROGRESS');
 
   const {
@@ -70,10 +70,15 @@ const MyInfoMainScreen = ({
     isFetchingNextPage,
   } = useCommonInfiniteQuery<SliceItemResponse>({
     api: (param) =>
-      ItemApi.getItemsByLoginUser(isStandy, param.page, param.size, param.sort),
+      ItemAPI.getItemsByLoginUser(
+        isStandBy,
+        param.page,
+        param.size,
+        param.sort
+      ),
     queryString: { size: 20, sort: SELECT_OPTIONS_QUERY['최신순'] },
     queryKey: [
-      `myInfoMain_ItemApi_getItemByLoginUser_${isStandy}`,
+      `myInfoMain_ItemApi_getItemByLoginUser_${isStandBy}`,
       SELECT_OPTIONS_QUERY['최신순'],
     ],
     getNextPageParam(page) {
@@ -88,13 +93,13 @@ const MyInfoMainScreen = ({
     },
     onSuccess(data) {
       console.debug(
-        `\n\n ✅ myInfoMain_ItemApi_getItemByLoginUser_${isStandy} ✅\n\n`,
+        `\n\n ✅ myInfoMain_ItemApi_getItemByLoginUser_${isStandBy} ✅\n\n`,
         data
       );
     },
     onError(error) {
       console.debug(
-        `\n\n 🚨 myInfoMain_ItemApi_getItemByLoginUser_${isStandy} 🚨\n\n`,
+        `\n\n 🚨 myInfoMain_ItemApi_getItemByLoginUser_${isStandBy} 🚨\n\n`,
         error
       );
     },
@@ -119,9 +124,9 @@ const MyInfoMainScreen = ({
 
   const handleButtonPress = (isStandy: ItemResponseStatusEnum) => {
     if (isStandy === 'IN_PROGRESS') {
-      setIsStandy('IN_PROGRESS');
+      setIsStandBy('IN_PROGRESS');
     } else {
-      setIsStandy('DONE');
+      setIsStandBy('DONE');
     }
     Animated.timing(slideAnim, {
       toValue:
