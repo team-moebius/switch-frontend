@@ -18,7 +18,9 @@ const SwitchDetailButton = ({
         pl={PADDING.wrapper.horizontal}
         pr={PADDING.wrapper.horizontal}
         pb={25}
-        backgroundColor='trasparent'
+        position={'absolute'}
+        bottom={0}
+        width={'100%'}
       >
         {isSuggested ? (
           <Button type={'warning'} size={'medium'} onPress={onPressRevoke}>
