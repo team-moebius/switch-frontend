@@ -151,7 +151,7 @@ const RegisteredListScreen = ({
         <ItemListContent
           onClickList={handleModalOpen}
           withTitleOnly
-          queryKey={'myInfoMain_ItemAPI_getItemsByLoginUser'}
+          queryKey={'myInfoMain_ItemApi_getItemByLoginUser_IN_PROGRESS'}
           api={
             userId
               ? (params) =>
