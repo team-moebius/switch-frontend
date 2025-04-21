@@ -272,11 +272,11 @@ const SwitchDetailScreen = ({
             />
           );
         } else {
-          <ScreenHeader {...props} />;
+          return <ScreenHeader {...props} />;
         }
       },
     });
-  }, []);
+  }, [isMine]);
 
   return (
     <ScreenWrapper>
@@ -329,52 +329,57 @@ const SwitchDetailScreen = ({
               />
             )}
           </ScrollView>
-          {!isMine && (
-            <SwitchDetailButton
-              onPressPropose={onPressPropose}
-              onPressRevoke={onPressRevoke}
-              isSuggested={itemInfo?.isSuggested ?? false}
-            />
+          {isMine ? (
+            <>
+              <MyItemOptionModal
+                visible={isUserModalOpen}
+                onPressBack={() => setIsUserModalOpen(false)}
+                onPressEditButton={onPressEditButton}
+                onPressDeleteModal={onPressDeleteButton}
+                onModalHide={() => {
+                  if (conditionInModalHide.current.isOpenDeleteModal) {
+                    setIsDeleteModalOpen(true);
+                    conditionInModalHide.current.isOpenDeleteModal = false;
+                  } else if (conditionInModalHide.current.isOpenEditScreen) {
+                    conditionInModalHide.current.isOpenEditScreen = false;
+                    navigation.navigate('RegisterForm', {
+                      initialData: itemInfo
+                        ? ({
+                            name: itemInfo.name,
+                            description: itemInfo.description,
+                            images: itemInfo.images,
+                            category: itemInfo.category,
+                            preferredCategory: itemInfo.preferredCategory,
+                            preferredLocations: itemInfo.preferredLocations,
+                          } as unknown as RegisterDto)
+                        : undefined,
+                      itemId: itemInfoFromRouteParams.id,
+                    });
+                  }
+                }}
+              />
+              <DeleteItemModal
+                visible={isDeleteModalOpen}
+                onPressBack={() => setIsDeleteModalOpen(false)}
+                onDeleteConfirm={onConfirmDeleteItem}
+              />
+            </>
+          ) : (
+            <>
+              <SwitchDetailButton
+                onPressPropose={onPressPropose}
+                onPressRevoke={onPressRevoke}
+                isSuggested={itemInfo?.isSuggested ?? false}
+              />
+              <RevokeModal
+                onPressRevoke={onPressRevokeConfirm}
+                onPressBack={onPresssRevokeModalBack}
+                visible={isRevokeModalOpen}
+                myItem={itemInfo?.name ?? ''}
+                oppItem={userInfo?.nickname ?? ''}
+              />
+            </>
           )}
-          <RevokeModal
-            onPressRevoke={onPressRevokeConfirm}
-            onPressBack={onPresssRevokeModalBack}
-            visible={isRevokeModalOpen}
-            myItem={itemInfo?.name ?? ''}
-            oppItem={userInfo?.nickname ?? ''}
-          />
-          <MyItemOptionModal
-            visible={isUserModalOpen}
-            onPressBack={() => setIsUserModalOpen(false)}
-            onPressEditButton={onPressEditButton}
-            onPressDeleteModal={onPressDeleteButton}
-            onModalHide={() => {
-              if (conditionInModalHide.current.isOpenDeleteModal) {
-                setIsDeleteModalOpen(true);
-                conditionInModalHide.current.isOpenDeleteModal = false;
-              } else if (conditionInModalHide.current.isOpenEditScreen) {
-                conditionInModalHide.current.isOpenEditScreen = false;
-                navigation.navigate('RegisterForm', {
-                  initialData: itemInfo
-                    ? ({
-                        name: itemInfo.name,
-                        description: itemInfo.description,
-                        images: itemInfo.images,
-                        category: itemInfo.category,
-                        preferredCategory: itemInfo.preferredCategory,
-                        preferredLocations: itemInfo.preferredLocations,
-                      } as unknown as RegisterDto)
-                    : undefined,
-                  itemId: itemInfoFromRouteParams.id,
-                });
-              }
-            }}
-          />
-          <DeleteItemModal
-            visible={isDeleteModalOpen}
-            onPressBack={() => setIsDeleteModalOpen(false)}
-            onDeleteConfirm={onConfirmDeleteItem}
-          />
         </>
       )}
     </ScreenWrapper>
