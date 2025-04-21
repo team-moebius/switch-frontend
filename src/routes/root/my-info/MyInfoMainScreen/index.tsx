@@ -113,7 +113,12 @@ const MyInfoMainScreen = ({
   };
 
   const renderItem = useCallback(({ item }: { item: ItemResponse }) => {
-    return <GridItem item={item} />;
+    return (
+      <GridItem
+        item={item}
+        onClick={() => navigation.navigate('SwitchDetail', item)}
+      />
+    );
   }, []);
 
   const flatListProps = useFlatList<ItemResponse>({
