@@ -1,7 +1,13 @@
-import { useContext, useEffect, useRef, useState } from 'react';
-import { Alert, ScrollView } from 'react-native';
+import {
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
+import { ScrollView } from 'react-native';
 
-import { Flexbox, Typography } from 'src/components/atom';
+import { Flexbox } from 'src/components/atom';
 import { PressableIcon, ScreenHeader } from 'src/components/molecule';
 import { ScreenWrapper } from 'src/components/template';
 import { SwitchDetailView } from './contents/SwitchDetailView';
@@ -251,7 +257,7 @@ const SwitchDetailScreen = ({
     conditionInModalHide.current.isOpenDeleteModal = true;
   };
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     navigation.setOptions({
       header: (props) => {
         if (isMine) {
